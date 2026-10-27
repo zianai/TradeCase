@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_unconfirmed_rule_keeps_declared_conflicting_value_visible ________
+
+    def test_unconfirmed_rule_keeps_declared_conflicting_value_visible():
+        def change(_inquiry, seller, _evidence, rules):
+            seller['product_attributes']['tracking_label_present'] = False
+            rules['rules'][0]['source_current'] = False
+    
+        check = evaluate(change=change)['checks'][0]
+        assert check['status'] == 'needs_verification'
+        assert 'current_official_source_unconfirmed' in check['missing_items']
+>       assert 'tracking_label_present' in check['rationale']
+E       AssertionError: assert 'tracking_label_present' in 'Synthetic deterministic rule: tracking label attribute must be present; not real legal advice. Official current rule basis is incomplete: current_official_source_unconfirmed'
+
+tests/unit/test_compliance.py:226: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_compliance.py::test_unconfirmed_rule_keeps_declared_conflicting_value_visible
+1 failed, 38 deselected in 0.14s

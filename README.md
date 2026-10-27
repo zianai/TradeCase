@@ -48,7 +48,7 @@ uv run tradecase research --case cases/inquiry-001
 
 ## 证据、限制与演示
 
-[演示手册](docs/DEMO_RUNBOOK.md) · [能力状态](docs/CAPABILITY_STATUS.md) · [架构](docs/ARCHITECTURE.md) · [真实来源研究](docs/LIVE_SOURCE_RESEARCH.md) · [合规范围](docs/COMPLIANCE_SCOPE.md)
+[演示手册](docs/DEMO_RUNBOOK.md) · [能力状态](docs/CAPABILITY_STATUS.md) · [架构](docs/ARCHITECTURE.md) · [真实来源研究](docs/LIVE_SOURCE_RESEARCH.md) · [合规范围](docs/COMPLIANCE_SCOPE.md) · [P7真实环境验收](docs/PHASE_REPORTS/P7.md) · [P7业务案例](docs/P7_BUSINESS_EVALUATION.md)
 
 实测的两条企业来源是 IKEA 与 UL Solutions 的公开官网材料，只支持官网自述，未证明真实采购意图。动态网页验证使用宿主浏览器，不是 Web Access。Crawl4AI 未安装；Web Access 缺完整许可证；Jina 只支持显式导入已读取响应。真实客户端到端质量、Windows、远程 CI 和可选第三方运行栈没有被伪报为通过。
 

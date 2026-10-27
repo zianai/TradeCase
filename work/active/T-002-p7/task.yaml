@@ -1,0 +1,17 @@
+schema_version: 3
+protocol_version: "3.0"
+id: "T-002-p7"
+status: ready_for_review
+goal: "Evaluate TradeCase V1 in real public research environments and record the P7 V2 readiness decision"
+scope: ["Public read-only network and browser integration", "Five source-backed business scenarios", "P0-P6 regression and risk report"]
+non_goals: ["No external writes or email sends", "No new Agent runtime or V2 GUI", "No unapproved paid model or data calls"]
+acceptance: ["Real results and blocked steps are distinguished", "Evidence, costs, timing and failures are documented", "V2 Go or No-Go is evidence based"]
+risk: medium
+risk_reasons: [cross-component, local-reversible]
+protected_paths: []
+context_refs: [docs/PHASE_REPORTS/P6.md, docs/HOST_VALIDATION.md, docs/BROWSER_POLICY.md]
+decision_refs: [docs/DECISIONS.md]
+evidence_refs: [docs/PHASE_REPORTS/P7.md, docs/P7_BUSINESS_EVALUATION.md, docs/evidence/P7/final-regression.log, docs/evidence/P7/scenario-results.json]
+updated: "2026-10-27"
+implementation_started: true
+x_current_phase: P7

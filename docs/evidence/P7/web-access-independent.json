@@ -1,0 +1,86 @@
+{
+  "upstream_sha": "d173a75978ceb2c63fa0b27f7408cd2bf7fe4310",
+  "source_checkout": "independent temporary upstream checkout, not product source copy",
+  "captured_at": "2026-10-27T16:40:12.265437+00:00",
+  "site": "https://quotes.toscrape.com/js/",
+  "calls": [
+    {
+      "path": "/health",
+      "status": 200,
+      "response": {
+        "status": "ok",
+        "connected": false,
+        "browser": {
+          "id": "/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p7-browser-fhvotiif/profile",
+          "label": "profile",
+          "source": "override"
+        },
+        "sessions": 0,
+        "managedTabs": 0,
+        "chromePort": 61887,
+        "pid": 72967,
+        "instanceId": "677b0996-6a13-4c28-b940-5e16d2cc9c1f",
+        "startedAt": "2026-10-27T16:40:23.478Z",
+        "runningRevision": "0897ea8869dc",
+        "connectionState": "connecting",
+        "connectionAttempts": 1,
+        "pendingCommands": 0,
+        "activeRequests": 0,
+        "maintenance": false
+      }
+    },
+    {
+      "path": "/new",
+      "status": 200,
+      "response": {
+        "targetId": "6F298E288EE63BB306C5E730CBE2A7C0"
+      }
+    },
+    {
+      "path": "/eval",
+      "status": 200,
+      "response": {
+        "value": "{\"url\":\"https://quotes.toscrape.com/js/\",\"title\":\"Quotes to Scrape\",\"quotes\":10,\"authors\":10}"
+      }
+    },
+    {
+      "path": "/close",
+      "status": 200,
+      "response": {
+        "success": true
+      }
+    },
+    {
+      "path": "/health",
+      "status": 200,
+      "response": {
+        "status": "ok",
+        "connected": true,
+        "browser": {
+          "id": "/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p7-browser-fhvotiif/profile",
+          "label": "profile",
+          "source": "override"
+        },
+        "sessions": 0,
+        "managedTabs": 0,
+        "chromePort": 61887,
+        "pid": 72967,
+        "instanceId": "677b0996-6a13-4c28-b940-5e16d2cc9c1f",
+        "startedAt": "2026-10-27T16:40:23.478Z",
+        "runningRevision": "0897ea8869dc",
+        "connectionState": "connected",
+        "connectionAttempts": 1,
+        "pendingCommands": 0,
+        "activeRequests": 0,
+        "maintenance": false
+      }
+    }
+  ],
+  "login_used": false,
+  "user_profile_used": false,
+  "license": "README/frontmatter declares MIT; complete LICENSE missing; redistribution not approved",
+  "status": "tested_live",
+  "interpretation": "Upstream proxy and isolated Chrome were exercised; evaluate returned response to confirm dynamic content.",
+  "processes_stopped": true,
+  "elapsed_seconds": 16.604
+}

@@ -1,0 +1,126 @@
+{
+  "captured_at": "2026-10-27T16:39:18.167226+00:00",
+  "proxy_environment_presence": {
+    "HTTP_PROXY": false,
+    "HTTPS_PROXY": false,
+    "ALL_PROXY": false,
+    "NO_PROXY": false
+  },
+  "dns": [
+    {
+      "host": "www.ikea.com",
+      "addresses": [
+        {
+          "value": "198.18.1.71",
+          "is_global": false,
+          "ipv4_mapped": null,
+          "is_reserved": false,
+          "reader_decision": "rejected: non_public_address"
+        },
+        {
+          "value": "::ffff:0:c612:147",
+          "is_global": true,
+          "ipv4_mapped": null,
+          "is_reserved": true,
+          "reader_decision": "rejected: non_public_address"
+        }
+      ]
+    },
+    {
+      "host": "www.ul.com",
+      "addresses": [
+        {
+          "value": "198.18.1.72",
+          "is_global": false,
+          "ipv4_mapped": null,
+          "is_reserved": false,
+          "reader_decision": "rejected: non_public_address"
+        },
+        {
+          "value": "::ffff:0:c612:148",
+          "is_global": true,
+          "ipv4_mapped": null,
+          "is_reserved": true,
+          "reader_decision": "rejected: non_public_address"
+        }
+      ]
+    },
+    {
+      "host": "quotes.toscrape.com",
+      "addresses": [
+        {
+          "value": "198.18.1.70",
+          "is_global": false,
+          "ipv4_mapped": null,
+          "is_reserved": false,
+          "reader_decision": "rejected: non_public_address"
+        },
+        {
+          "value": "::ffff:0:c612:146",
+          "is_global": true,
+          "ipv4_mapped": null,
+          "is_reserved": true,
+          "reader_decision": "rejected: non_public_address"
+        }
+      ]
+    },
+    {
+      "host": "www.cpsc.gov",
+      "addresses": [
+        {
+          "value": "198.18.1.73",
+          "is_global": false,
+          "ipv4_mapped": null,
+          "is_reserved": false,
+          "reader_decision": "rejected: non_public_address"
+        },
+        {
+          "value": "::ffff:0:c612:149",
+          "is_global": true,
+          "ipv4_mapped": null,
+          "is_reserved": true,
+          "reader_decision": "rejected: non_public_address"
+        }
+      ]
+    }
+  ],
+  "reader": {
+    "elapsed_seconds": 0.002,
+    "result": {
+      "requested_url": "https://quotes.toscrape.com/js/",
+      "captured_at": "2026-10-27T16:39:16.725364Z",
+      "status": "blocked",
+      "final_url": null,
+      "http_status": null,
+      "source_title": null,
+      "content_type": null,
+      "text": "",
+      "sha256": null,
+      "text_sha256": null,
+      "byte_count": 0,
+      "retrieved_by": "tradecase.public-http",
+      "untrusted": true,
+      "assertion_status": "unverified",
+      "is_synthetic": false,
+      "redirects": [],
+      "blockers": [
+        "non_public_address"
+      ],
+      "budget": {
+        "pages_used": 1,
+        "requests_used": 0,
+        "origin_last_requested_at": {},
+        "origin_min_interval": {}
+      },
+      "warnings": [],
+      "robots": [],
+      "hash_basis": "raw HTTP response bytes"
+    }
+  },
+  "system_https_robots_probe": {
+    "error_type": "HTTPError",
+    "error": "HTTP Error 404: NOT FOUND",
+    "elapsed_seconds": 1.442
+  },
+  "note": "Known public diagnostic URL only; urllib robots probe is separate from TradeCase reader. Python reports is_global=True for these IPv6 values but also is_reserved=True; the reader rejects them independently. No DNS or security policy override was made."
+}

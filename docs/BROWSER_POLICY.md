@@ -54,3 +54,7 @@ When such a rule is present this reader returns `unsupported_robots_pattern`
 before fetching content. This is conservative blocking, not complete RFC robots
 pattern support. Scoped IPv6, explicit port zero and semicolon session parameters
 are rejected before DNS/network operations.
+
+## P7 independent integration test
+
+The locked upstream Web Access checkout was run independently against a temporary, clean Chrome profile on a random loopback port. A process sandbox denied reads of the user's `~/.web-access` directory. A public dynamic page rendered 10 quote and author nodes; the owned tab and both processes were stopped. The precise calls, result, elapsed time, revision and limitations are in `docs/evidence/P7/web-access-independent.json`. This is runtime evidence, not license clearance, a product integration, authorization to inspect user profiles, or a guarantee that the local HTTP proxy is safe to expose. The locked upstream tree still lacks a complete license file, so redistribution remains blocked. No Crawl4AI dependency was installed.

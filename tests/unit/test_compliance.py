@@ -213,3 +213,15 @@ def test_live_research_rules_cannot_pass_without_effective_and_current_basis():
     rules = json.loads((ROOT / "rules/live-research-2026-10-27.json").read_text())
     result = evaluate_compliance(i, s, [], rules, checked_at=STAMP)
     assert {row["status"] for row in result["checks"]} == {"needs_verification"}
+
+
+def test_unconfirmed_rule_keeps_declared_conflicting_value_visible():
+    def change(_inquiry, seller, _evidence, rules):
+        seller['product_attributes']['tracking_label_present'] = False
+        rules['rules'][0]['source_current'] = False
+
+    check = evaluate(change=change)['checks'][0]
+    assert check['status'] == 'needs_verification'
+    assert 'current_official_source_unconfirmed' in check['missing_items']
+    assert 'tracking_label_present' in check['rationale']
+    assert 'potential' in check['rationale'].lower()

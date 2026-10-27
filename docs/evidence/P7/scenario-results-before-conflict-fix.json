@@ -1,0 +1,436 @@
+[
+  {
+    "case_id": "ikea-entity-ambiguity",
+    "case_path": "cases/p7/ikea-entity-ambiguity",
+    "test_question": "Resolve IKEA brand, retailer and franchisor legal entity before assuming a buyer.",
+    "input_synthetic": true,
+    "public_sources_synthetic": false,
+    "candidate_count": 2,
+    "selected_candidate_id": null,
+    "assessment": "needs_review",
+    "score": null,
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:20.526699Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": true
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:20.526699Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": true
+      }
+    ],
+    "state": "needs_review",
+    "strict_valid": true,
+    "evidence_ids": [
+      "p7-ikea",
+      "p7-ul",
+      "live-cpsc-tracking-guidance",
+      "live-amazon-listing-safety",
+      "p7-dynamic"
+    ],
+    "elapsed_case_seconds": 0.352,
+    "case_new_model_calls": 0,
+    "case_new_model_cost_usd": 0,
+    "shared_host_model_usage_tokens": null,
+    "shared_host_model_cost_usd": null,
+    "human_accuracy_review": "not independently measured"
+  },
+  {
+    "case_id": "ul-evidence-insufficient",
+    "case_path": "cases/p7/ul-evidence-insufficient",
+    "test_question": "Does the public website establish this company has purchasing intent for our products?",
+    "input_synthetic": true,
+    "public_sources_synthetic": false,
+    "candidate_count": 1,
+    "selected_candidate_id": null,
+    "assessment": "needs_review",
+    "score": null,
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:20.854599Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": true
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:20.854599Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": true
+      }
+    ],
+    "state": "needs_review",
+    "strict_valid": true,
+    "evidence_ids": [
+      "p7-ikea",
+      "p7-ul",
+      "live-cpsc-tracking-guidance",
+      "live-amazon-listing-safety",
+      "p7-dynamic"
+    ],
+    "elapsed_case_seconds": 0.132,
+    "case_new_model_calls": 0,
+    "case_new_model_cost_usd": 0,
+    "shared_host_model_usage_tokens": null,
+    "shared_host_model_cost_usd": null,
+    "human_accuracy_review": "not independently measured"
+  },
+  {
+    "case_id": "dynamic-public-page",
+    "case_path": "cases/p7/dynamic-public-page",
+    "test_question": "Can a dynamic public page be rendered and does it establish a buyer relationship?",
+    "input_synthetic": true,
+    "public_sources_synthetic": false,
+    "candidate_count": 0,
+    "selected_candidate_id": null,
+    "assessment": "needs_review",
+    "score": null,
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:21.000718Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": true
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:21.000718Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": true
+      }
+    ],
+    "state": "needs_review",
+    "strict_valid": true,
+    "evidence_ids": [
+      "p7-ikea",
+      "p7-ul",
+      "live-cpsc-tracking-guidance",
+      "live-amazon-listing-safety",
+      "p7-dynamic"
+    ],
+    "elapsed_case_seconds": 0.162,
+    "case_new_model_calls": 0,
+    "case_new_model_cost_usd": 0,
+    "shared_host_model_usage_tokens": null,
+    "shared_host_model_cost_usd": null,
+    "human_accuracy_review": "not independently measured"
+  },
+  {
+    "case_id": "children-label-conflict",
+    "case_path": "cases/p7/children-label-conflict",
+    "test_question": "Hypothetical children product has no tracking label; identify the official guidance conflict.",
+    "input_synthetic": true,
+    "public_sources_synthetic": false,
+    "candidate_count": 1,
+    "selected_candidate_id": null,
+    "assessment": "needs_review",
+    "score": null,
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:21.144970Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [
+          "tracking_label_present"
+        ],
+        "status": "needs_verification",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Official current rule basis is incomplete: current_official_source_unconfirmed, effective_date, valid_until",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "current_official_source_unconfirmed",
+          "effective_date",
+          "valid_until"
+        ],
+        "is_synthetic": true
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:21.144970Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing required product attributes: listing_safety_reviewed",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "listing_safety_reviewed"
+        ],
+        "is_synthetic": true
+      }
+    ],
+    "state": "needs_review",
+    "strict_valid": true,
+    "evidence_ids": [
+      "p7-ikea",
+      "p7-ul",
+      "live-cpsc-tracking-guidance",
+      "live-amazon-listing-safety",
+      "p7-dynamic"
+    ],
+    "elapsed_case_seconds": 0.092,
+    "case_new_model_calls": 0,
+    "case_new_model_cost_usd": 0,
+    "shared_host_model_usage_tokens": null,
+    "shared_host_model_cost_usd": null,
+    "human_accuracy_review": "not independently measured"
+  },
+  {
+    "case_id": "amazon-missing-context",
+    "case_path": "cases/p7/amazon-missing-context",
+    "test_question": "Can an Amazon US product listing be declared compliant without actual category and safety documents?",
+    "input_synthetic": true,
+    "public_sources_synthetic": false,
+    "candidate_count": 0,
+    "selected_candidate_id": null,
+    "assessment": "needs_review",
+    "score": null,
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:21.237680Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": true
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "US",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:41:21.237680Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing required product attributes: listing_safety_reviewed",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "listing_safety_reviewed"
+        ],
+        "is_synthetic": true
+      }
+    ],
+    "state": "needs_review",
+    "strict_valid": true,
+    "evidence_ids": [
+      "p7-ikea",
+      "p7-ul",
+      "live-cpsc-tracking-guidance",
+      "live-amazon-listing-safety",
+      "p7-dynamic"
+    ],
+    "elapsed_case_seconds": 0.111,
+    "case_new_model_calls": 0,
+    "case_new_model_cost_usd": 0,
+    "shared_host_model_usage_tokens": null,
+    "shared_host_model_cost_usd": null,
+    "human_accuracy_review": "not independently measured"
+  }
+]

@@ -1,0 +1,577 @@
+[
+  {
+    "case_id": "unicef-318181",
+    "case_path": "cases/p7-public-verified/unicef-318181",
+    "source_url": "https://www.ungm.org/Public/Notice/318181",
+    "source_evidence_id": "p7-public-318181",
+    "deadline": "2026-10-20",
+    "expired_at_capture": true,
+    "real_public_procurement_notice": true,
+    "not_a_direct_customer_inquiry": true,
+    "status": "needs_review",
+    "strict_valid": true,
+    "assessment": "needs_review",
+    "score": null,
+    "reason_codes": [
+      "BUYER_ROLE_NOT_SUPPORTED",
+      "BUYER_UNRESOLVED",
+      "ENTITY_NOT_SELECTED",
+      "IDENTITY_NOT_SUPPORTED",
+      "INSUFFICIENT_EVIDENCE_COVERAGE"
+    ],
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.724711Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "UA",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.724711Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-missing-country",
+        "check_type": "country",
+        "jurisdiction": "UA",
+        "platform": null,
+        "product_scope": "Request for expression of Interest of Contractors for 4 LOTs of frequently procured by UNICEF and UNICEF partners items (Stationary, Visibility, ICT Equipment, Office furniture)",
+        "rule_id": "missing-country",
+        "rule_version": "compliance-v1",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.724711Z",
+        "source_url": null,
+        "required_attributes": [],
+        "observed_attributes": [],
+        "status": "needs_verification",
+        "severity": "high",
+        "rationale": "No rules cover the declared target_country.",
+        "affected_content": null,
+        "suggested_action": "Provide target_country and research the current official rules for the actual product scope.",
+        "evidence_ids": [],
+        "missing_items": [
+          "applicable_official_rule"
+        ],
+        "is_synthetic": false
+      }
+    ],
+    "source_capture_seconds": 3.27,
+    "elapsed_case_seconds": 0.157,
+    "model_tokens": null,
+    "model_cost_usd": null,
+    "case_build_model_calls": 0,
+    "case_build_model_cost_usd": 0,
+    "attachment_review": "not performed",
+    "seller_eligibility": "unknown",
+    "case_source_excerpt_not_full_notice": true
+  },
+  {
+    "case_id": "unicef-301686",
+    "case_path": "cases/p7-public-verified/unicef-301686",
+    "source_url": "https://www.ungm.org/Public/Notice/301686",
+    "source_evidence_id": "p7-public-301686",
+    "deadline": "2026-06-11",
+    "expired_at_capture": true,
+    "real_public_procurement_notice": true,
+    "not_a_direct_customer_inquiry": true,
+    "status": "needs_review",
+    "strict_valid": true,
+    "assessment": "needs_review",
+    "score": null,
+    "reason_codes": [
+      "BUYER_ROLE_NOT_SUPPORTED",
+      "BUYER_UNRESOLVED",
+      "ENTITY_NOT_SELECTED",
+      "IDENTITY_NOT_SUPPORTED",
+      "INSUFFICIENT_EVIDENCE_COVERAGE"
+    ],
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.867695Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "JO",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.867695Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-missing-country",
+        "check_type": "country",
+        "jurisdiction": "JO",
+        "platform": null,
+        "product_scope": "UNICEF 2026 - 9204092 - Procurement of furniture for UNICEF offices in Amman - Jordan",
+        "rule_id": "missing-country",
+        "rule_version": "compliance-v1",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.867695Z",
+        "source_url": null,
+        "required_attributes": [],
+        "observed_attributes": [],
+        "status": "needs_verification",
+        "severity": "high",
+        "rationale": "No rules cover the declared target_country.",
+        "affected_content": null,
+        "suggested_action": "Provide target_country and research the current official rules for the actual product scope.",
+        "evidence_ids": [],
+        "missing_items": [
+          "applicable_official_rule"
+        ],
+        "is_synthetic": false
+      }
+    ],
+    "source_capture_seconds": 3.338,
+    "elapsed_case_seconds": 0.103,
+    "model_tokens": null,
+    "model_cost_usd": null,
+    "case_build_model_calls": 0,
+    "case_build_model_cost_usd": 0,
+    "attachment_review": "not performed",
+    "seller_eligibility": "unknown",
+    "case_source_excerpt_not_full_notice": true
+  },
+  {
+    "case_id": "unicef-299179",
+    "case_path": "cases/p7-public-verified/unicef-299179",
+    "source_url": "https://www.ungm.org/Public/Notice/299179",
+    "source_evidence_id": "p7-public-299179",
+    "deadline": "2026-05-21",
+    "expired_at_capture": true,
+    "real_public_procurement_notice": true,
+    "not_a_direct_customer_inquiry": true,
+    "status": "needs_review",
+    "strict_valid": true,
+    "assessment": "needs_review",
+    "score": null,
+    "reason_codes": [
+      "BUYER_ROLE_NOT_SUPPORTED",
+      "BUYER_UNRESOLVED",
+      "ENTITY_NOT_SELECTED",
+      "IDENTITY_NOT_SUPPORTED",
+      "INSUFFICIENT_EVIDENCE_COVERAGE"
+    ],
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.951807Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "MY",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.951807Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-missing-country",
+        "check_type": "country",
+        "jurisdiction": "MY",
+        "platform": null,
+        "product_scope": "Supply, Installation and Delivery of Office Furniture for United Nations Children’s Fund office in Wisma E&C, Damansara Heights, Kuala Lumpur (Malaysia -Based Company only)",
+        "rule_id": "missing-country",
+        "rule_version": "compliance-v1",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:18.951807Z",
+        "source_url": null,
+        "required_attributes": [],
+        "observed_attributes": [],
+        "status": "needs_verification",
+        "severity": "high",
+        "rationale": "No rules cover the declared target_country.",
+        "affected_content": null,
+        "suggested_action": "Provide target_country and research the current official rules for the actual product scope.",
+        "evidence_ids": [],
+        "missing_items": [
+          "applicable_official_rule"
+        ],
+        "is_synthetic": false
+      }
+    ],
+    "source_capture_seconds": 4.626,
+    "elapsed_case_seconds": 0.082,
+    "model_tokens": null,
+    "model_cost_usd": null,
+    "case_build_model_calls": 0,
+    "case_build_model_cost_usd": 0,
+    "attachment_review": "not performed",
+    "seller_eligibility": "unknown",
+    "case_source_excerpt_not_full_notice": true
+  },
+  {
+    "case_id": "unicef-290489",
+    "case_path": "cases/p7-public-verified/unicef-290489",
+    "source_url": "https://www.ungm.org/Public/Notice/290489",
+    "source_evidence_id": "p7-public-290489",
+    "deadline": "2026-02-12",
+    "expired_at_capture": true,
+    "real_public_procurement_notice": true,
+    "not_a_direct_customer_inquiry": true,
+    "status": "needs_review",
+    "strict_valid": true,
+    "assessment": "needs_review",
+    "score": null,
+    "reason_codes": [
+      "BUYER_ROLE_NOT_SUPPORTED",
+      "BUYER_UNRESOLVED",
+      "ENTITY_NOT_SELECTED",
+      "IDENTITY_NOT_SUPPORTED",
+      "INSUFFICIENT_EVIDENCE_COVERAGE"
+    ],
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:19.042761Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "EC",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:19.042761Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-missing-country",
+        "check_type": "country",
+        "jurisdiction": "EC",
+        "platform": null,
+        "product_scope": "Compra de mobiliario para equipamiento del Espacio de Apoyo Integral (EAI) de Riobamba",
+        "rule_id": "missing-country",
+        "rule_version": "compliance-v1",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:19.042761Z",
+        "source_url": null,
+        "required_attributes": [],
+        "observed_attributes": [],
+        "status": "needs_verification",
+        "severity": "high",
+        "rationale": "No rules cover the declared target_country.",
+        "affected_content": null,
+        "suggested_action": "Provide target_country and research the current official rules for the actual product scope.",
+        "evidence_ids": [],
+        "missing_items": [
+          "applicable_official_rule"
+        ],
+        "is_synthetic": false
+      }
+    ],
+    "source_capture_seconds": 3.339,
+    "elapsed_case_seconds": 0.094,
+    "model_tokens": null,
+    "model_cost_usd": null,
+    "case_build_model_calls": 0,
+    "case_build_model_cost_usd": 0,
+    "attachment_review": "not performed",
+    "seller_eligibility": "unknown",
+    "case_source_excerpt_not_full_notice": true
+  },
+  {
+    "case_id": "unicef-310066",
+    "case_path": "cases/p7-public-verified/unicef-310066",
+    "source_url": "https://www.ungm.org/Public/Notice/310066",
+    "source_evidence_id": "p7-public-310066",
+    "deadline": "2026-08-30",
+    "expired_at_capture": true,
+    "real_public_procurement_notice": true,
+    "not_a_direct_customer_inquiry": true,
+    "status": "needs_review",
+    "strict_valid": true,
+    "assessment": "needs_review",
+    "score": null,
+    "reason_codes": [
+      "BUYER_ROLE_NOT_SUPPORTED",
+      "BUYER_UNRESOLVED",
+      "ENTITY_NOT_SELECTED",
+      "IDENTITY_NOT_SUPPORTED",
+      "INSUFFICIENT_EVIDENCE_COVERAGE"
+    ],
+    "checks": [
+      {
+        "schema_version": "1.0",
+        "check_id": "check-US-CPSC-TRACKING-LABEL",
+        "check_type": "country",
+        "jurisdiction": "US",
+        "platform": null,
+        "product_scope": "Potential children products; scope and practicability require review",
+        "rule_id": "US-CPSC-TRACKING-LABEL",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:19.130526Z",
+        "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+        "required_attributes": [
+          "tracking_label_present"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established. Missing applicability context: children_product",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer.",
+        "evidence_ids": [
+          "live-cpsc-tracking-guidance"
+        ],
+        "missing_items": [
+          "children_product"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-AMAZON-US-LISTING-SAFETY",
+        "check_type": "platform",
+        "jurisdiction": "PS",
+        "platform": "amazon_us",
+        "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+        "rule_id": "AMAZON-US-LISTING-SAFETY",
+        "rule_version": "research-snapshot-2026-10-27",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:19.130526Z",
+        "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+        "required_attributes": [
+          "listing_safety_reviewed"
+        ],
+        "observed_attributes": [],
+        "status": "needs_context",
+        "severity": "high",
+        "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible. Missing applicability context: platform",
+        "affected_content": "seller_context.product_attributes",
+        "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically.",
+        "evidence_ids": [
+          "live-amazon-listing-safety"
+        ],
+        "missing_items": [
+          "platform"
+        ],
+        "is_synthetic": false
+      },
+      {
+        "schema_version": "1.0",
+        "check_id": "check-missing-country",
+        "check_type": "country",
+        "jurisdiction": "PS",
+        "platform": null,
+        "product_scope": "Supply and delivery of Furniture for the Rehabiltation of Al Sheikh Ejleen for Gaza Emergency Response.",
+        "rule_id": "missing-country",
+        "rule_version": "compliance-v1",
+        "effective_date": null,
+        "checked_at": "2026-10-27T16:46:19.130526Z",
+        "source_url": null,
+        "required_attributes": [],
+        "observed_attributes": [],
+        "status": "needs_verification",
+        "severity": "high",
+        "rationale": "No rules cover the declared target_country.",
+        "affected_content": null,
+        "suggested_action": "Provide target_country and research the current official rules for the actual product scope.",
+        "evidence_ids": [],
+        "missing_items": [
+          "applicable_official_rule"
+        ],
+        "is_synthetic": false
+      }
+    ],
+    "source_capture_seconds": 3.074,
+    "elapsed_case_seconds": 0.093,
+    "model_tokens": null,
+    "model_cost_usd": null,
+    "case_build_model_calls": 0,
+    "case_build_model_cost_usd": 0,
+    "attachment_review": "not performed",
+    "seller_eligibility": "unknown",
+    "case_source_excerpt_not_full_notice": true
+  }
+]

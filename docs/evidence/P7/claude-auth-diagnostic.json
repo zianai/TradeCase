@@ -1,0 +1,53 @@
+[
+  {
+    "command": [
+      "claude",
+      "auth",
+      "status",
+      "--json"
+    ],
+    "exit_code": 0,
+    "redacted": {
+      "loggedIn": true,
+      "authMethod": "oauth_token",
+      "apiProvider": "firstParty",
+      "subscriptionType": null
+    },
+    "stderr_present": false
+  },
+  {
+    "command": [
+      "claude",
+      "--restricted",
+      "auth",
+      "status",
+      "--json"
+    ],
+    "exit_code": 1,
+    "redacted": {
+      "loggedIn": false,
+      "authMethod": "none",
+      "apiProvider": "firstParty",
+      "subscriptionType": null
+    },
+    "stderr_present": false
+  },
+  {
+    "command": [
+      "claude",
+      "--setting-sources",
+      "project",
+      "auth",
+      "status",
+      "--json"
+    ],
+    "exit_code": 1,
+    "redacted": {
+      "loggedIn": false,
+      "authMethod": "none",
+      "apiProvider": "firstParty",
+      "subscriptionType": null
+    },
+    "stderr_present": false
+  }
+]

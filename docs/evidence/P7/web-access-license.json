@@ -1,0 +1,7 @@
+{
+  "sha": "d173a75978ceb2c63fa0b27f7408cd2bf7fe4310",
+  "notices": [],
+  "readme_sha256": "84a639400b018213b1f12209d3f0f5774b0a9be0ac01e8f79deb66a0eff24645",
+  "skill_sha256": "ff5d20157c545c22869b3c7b715d02f0ec884b9c1e09ecd7a038751d2f52f31a",
+  "decision": "README and skill declare MIT but no full grant/copyright file found; separate execution performed for testing, redistribution remains unapproved pending clarification."
+}

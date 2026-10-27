@@ -125,6 +125,8 @@ def _rule_check(rule, inquiry, seller, evidence, checked_at):
         status, severity = "needs_verification", rule.severity
         missing = source_gaps
         explanation = "Official current rule basis is incomplete: " + ", ".join(missing)
+        if unmet:
+            explanation += "; potential conflict with declared attributes: " + ", ".join(sorted(unmet))
     elif unmet:
         status, severity = "fail", rule.severity
         explanation = "Observed values do not satisfy required values: " + ", ".join(sorted(unmet))
