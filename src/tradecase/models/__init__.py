@@ -374,6 +374,49 @@ class NextActions(Contract):
     is_synthetic: bool = False
 
 
+class DraftMessage(Contract):
+    """Plain text inbound reply; this record grants no sending authority."""
+
+    recipient_email: Email | None = None
+    subject: Nonempty
+    body_text: Nonempty
+    opt_out_line: Literal[""] = ""
+    language: Literal["en"] = "en"
+    draft_type: Literal["inbound_reply"] = "inbound_reply"
+
+
+class DraftReview(Contract):
+    case_id: Identifier
+    generator_version: Literal["inbound-reply-v1"] = "inbound-reply-v1"
+    review_type: Literal["deterministic_preflight"] = "deterministic_preflight"
+    draft_ref: Literal["reply_draft.md"] = "reply_draft.md"
+    input_ref: Literal["input.json"] = "input.json"
+    seller_context_ref: Literal["seller_context.json"] = "seller_context.json"
+    draft_sha256: SHA256
+    input_sha256: SHA256
+    seller_context_sha256: SHA256
+    evaluated_body_hash: SHA256
+    message: DraftMessage
+    claim_risk_score: float = Field(ge=0, le=1)
+    risk_review_reasons: list[str] = Field(default_factory=list)
+    block_reasons: list[str] = Field(default_factory=list)
+    required_actions: list[str] = Field(default_factory=list)
+    needs_human_review: Literal[True] = True
+    send_allowed: Literal[False] = False
+    is_synthetic: bool = False
+
+    @model_validator(mode="before")
+    @classmethod
+    def exact_review_flags(cls, values):
+        # Literal[bool] otherwise accepts numeric 0/1 because Python equates
+        # them with False/True. Permission flags require actual JSON booleans.
+        if isinstance(values, dict):
+            for key, expected in (("needs_human_review", True), ("send_allowed", False)):
+                if key in values and values[key] is not expected:
+                    raise ValueError(f"{key} must be the boolean {expected}")
+        return values
+
+
 class Manifest(Contract):
     case_id: Identifier
     state: Literal["created", "running", "needs_input", "needs_review", "completed", "failed", "cancelled"] = "created"

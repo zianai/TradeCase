@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -15,6 +15,7 @@ from tradecase.models import (
     Candidate,
     CaseInput,
     ComplianceResult,
+    DraftReview,
     Evidence,
     Manifest,
     NextActions,
@@ -31,6 +32,7 @@ JSON_MODELS = {
     "assessment.json": Assessment,
     "compliance.json": ComplianceResult,
     "rules_snapshot.json": RuleSet,
+    "draft_review.json": DraftReview,
     "next_actions.json": NextActions,
     "manifest.json": Manifest,
 }
@@ -283,7 +285,7 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 observed = check.jurisdiction if check.check_type == "country" else check.platform
                 if not applicable or applicable != observed:
                     errors.append(f"compliance.json {check.check_id}: pass does not match Case context")
-            if check.effective_date and check.effective_date > check.checked_at[:10]:
+            if check.effective_date and date.fromisoformat(check.effective_date) > datetime.fromisoformat(check.checked_at).date():
                 errors.append(f"compliance.json {check.check_id}: rule not yet effective at check time")
             for attribute in check.required_attributes:
                 if not seller or seller.product_attributes.get(attribute) in (None, ""):
@@ -316,6 +318,41 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
         for action in next_actions.actions:
             _references(action.evidence_ids, evidence, f"next_actions.json {action.action_id}", errors)
 
+    review: DraftReview | None = artifacts.get("draft_review.json")
+    if "reply_draft.md" in artifacts and review is None:
+        errors.append("reply_draft.md: draft_review.json is required")
+    if review:
+        # Exact source bytes prevent a previously valid review from silently
+        # following a changed seller record or a manually edited message.
+        for name, expected_hash in ((review.draft_ref, review.draft_sha256),
+                                    (review.input_ref, review.input_sha256),
+                                    (review.seller_context_ref, review.seller_context_sha256)):
+            try:
+                if hashlib.sha256(safe_case_file(root, name).read_bytes()).hexdigest() != expected_hash:
+                    errors.append(f"draft_review.json: stale {name} hash; regenerate draft")
+            except (ValueError, OSError) as exc:
+                errors.append(f"draft_review.json: stale source or draft: {exc}")
+        if inquiry and seller:
+            from tradecase.reporting import prepare_draft_review, prepare_next_actions, render_reply
+
+            expected = prepare_draft_review(
+                inquiry.model_dump(mode="json"), seller.model_dump(mode="json"),
+                hashlib.sha256((root / "input.json").read_bytes()).hexdigest(),
+                hashlib.sha256((root / "seller_context.json").read_bytes()).hexdigest(),
+            )
+            if review.model_dump(mode="json") != expected:
+                errors.append("draft_review.json: stale or noncanonical preflight; regenerate draft")
+            if artifacts.get("reply_draft.md") != render_reply(expected["message"], expected["is_synthetic"]):
+                errors.append("draft_review.json: stale rendered reply; regenerate draft")
+            expected_actions = prepare_next_actions(
+                inquiry.model_dump(mode="json"), seller.model_dump(mode="json"),
+                profile.model_dump(mode="json") if profile else None,
+                assessment.model_dump(mode="json") if assessment else None,
+                compliance.model_dump(mode="json") if compliance else None,
+            )
+            if not next_actions or next_actions.model_dump(mode="json") != expected_actions:
+                errors.append("next_actions.json: does not match current draft follow-up derivation")
+
     if inquiry:
         for name, artifact in artifacts.items():
             values = artifact if isinstance(artifact, list) else [artifact]
@@ -327,7 +364,7 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 if hasattr(value, "is_synthetic") and value.is_synthetic and not inquiry.is_synthetic:
                     errors.append(f"{name}: synthetic data cannot be used in a real Case")
             if inquiry.is_synthetic and name in {
-                "buyer_profile.json", "assessment.json", "compliance.json", "next_actions.json",
+                "buyer_profile.json", "assessment.json", "compliance.json", "next_actions.json", "draft_review.json",
             } and not artifact.is_synthetic:
                 errors.append(f"{name}: derived artifact must preserve synthetic Case flag")
         for reference in [inquiry.raw_source_ref, inquiry.seller_profile_ref]:

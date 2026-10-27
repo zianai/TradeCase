@@ -1,0 +1,60 @@
+{
+  "phase": "P5",
+  "scope": "Inbound draft, canonical preflight and safe report rendering",
+  "status": "tested_offline",
+  "network_requests": 0,
+  "sent_messages": 0,
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest tests/unit/test_drafts.py -q",
+      "exit_code": 1,
+      "result": "14 failed before implementation",
+      "log": "drafts-red.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/unit/test_drafts.py tests/unit/test_risk_reporting.py -q",
+      "exit_code": 1,
+      "result": "14 passed, 2 failed on HTML entity compatibility; subsequently fixed",
+      "log": "drafts-round1.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/unit/test_drafts.py tests/unit/test_risk_reporting.py tests/contract/test_review_findings.py tests/contract/test_models.py tests/contract/test_compliance_review.py tests/e2e/test_demo.py -q",
+      "exit_code": 0,
+      "result": "78 passed, including 7 actual offline CLI demo runs",
+      "log": "drafts-green.log"
+    },
+    {
+      "command": ".venv/bin/ruff check src/tradecase/reporting.py src/tradecase/models/__init__.py src/tradecase/validation.py tests/unit/test_drafts.py tests/contract/test_models.py tests/contract/test_review_findings.py",
+      "exit_code": 0,
+      "result": "All checks passed",
+      "log": "drafts-lint.log"
+    }
+  ],
+  "upstream_reuse": [
+    "tradecase.upstream.body_hash (identity re-export)",
+    "tradecase.upstream.claim_risk (identity re-export; lexical quality score, not approval/probability)"
+  ],
+  "properties": [
+    "English inbound reply; supplied product description is explicitly attributed to the inquiry.",
+    "Seller allowed_claims and product attributes are not copied into outward claims; terms remain subject to human confirmation.",
+    "Explicit needs_human_review=true and send_allowed=false, rejecting non-boolean 0/1 values.",
+    "Review binds exact reply/input/seller bytes; canonical message, upstream hashes/risk outputs and current next-actions derivation are recomputed.",
+    "HTML encoded, Markdown punctuation escaped, field newlines and control characters neutralized.",
+    "Report preserves P4 compliance annotation/severity/source/missing-item presentation and missing-artifact visibility.",
+    "High-priority commercial and missing-compliance information maps to human-owned local tasks with deadline suggestions."
+  ],
+  "limitations": [
+    "Fixed English template does not semantically extract every term from arbitrary inquiry prose; confirmation may repeat supplied details.",
+    "Product descriptions are untrusted attributed input, not a certification assertion; upstream lexical checks may flag quoted requirements.",
+    "No actual human review, live buyer response, email delivery, paid service or external write was performed.",
+    "Completion denotes research deliverable completeness; every reply still requires human review and sending remains disabled."
+  ],
+  "files_sha256": {
+    "src/tradecase/reporting.py": "95ca0d2807680e9b962e84455de92b6ed1e55534f636ac1b700d598e0a73b1c8",
+    "src/tradecase/models/__init__.py": "7fd653b8722694781da5f9556f4cccb29ebe8b45514b5acf35be080e6395b70d",
+    "src/tradecase/validation.py": "1f0e7bff9a2378becd7e97974f55b5776a329e7089591a2c6eba82c5dfd5b1be",
+    "tests/unit/test_drafts.py": "649c3853ad6a253392953b09aa9694d6a2f6f3324f4734a8165290319c89b68b",
+    "tests/contract/test_models.py": "00111125f8fd9c4786d45b0659f8e533ef527c1bb64228797755a0d4a5db4561",
+    "tests/contract/test_review_findings.py": "53adde9d28e619bfa3cb19d286469d12b48f14399434d6cfd14bb2613c2527fa"
+  }
+}

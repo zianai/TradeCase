@@ -253,6 +253,7 @@ def test_original_bytes_preserved_and_hash_checked():
 def complete_case(tmp_path):
     from tradecase.assessment import calculate_assessment
     from tradecase.compliance import evaluate_compliance
+    from tradecase.reporting import prepare_draft_review, prepare_next_actions, render_reply
 
     put = partial_case(tmp_path)
     (tmp_path / "candidates.jsonl").write_text("")
@@ -269,6 +270,18 @@ def complete_case(tmp_path):
     put("next_actions.json", dict(case_id="case-test", is_synthetic=True))
     for name in ("search_plan.md", "reply_draft.md", "report.md"):
         (tmp_path / name).write_text("Synthetic offline fixture, review required.\n")
+    source = json.loads((tmp_path / "input.json").read_text())
+    seller = json.loads((tmp_path / "seller_context.json").read_text())
+    review = prepare_draft_review(
+        source, seller, hashlib.sha256((tmp_path / "input.json").read_bytes()).hexdigest(),
+        hashlib.sha256((tmp_path / "seller_context.json").read_bytes()).hexdigest(),
+    )
+    put("draft_review.json", review)
+    (tmp_path / "reply_draft.md").write_text(render_reply(review["message"], True))
+    put("next_actions.json", prepare_next_actions(source, seller, *[
+        json.loads((tmp_path / name).read_text())
+        for name in ("buyer_profile.json", "assessment.json", "compliance.json")
+    ]))
     manifest = json.loads((tmp_path / "manifest.json").read_text())
     manifest["state"] = "needs_review"
     manifest["artifact_index"] = {

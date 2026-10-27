@@ -1,0 +1,191 @@
+[
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_inferred_email",
+      "--out",
+      "cases/demo-inferred_email"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.179,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-inferred_email\",\n  \"state\": \"needs_review\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-inferred_email/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.08,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 7,
+      "evidence_coverage": 0.9,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 1
+    }
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_missing_platform",
+      "--out",
+      "cases/demo-missing_platform"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.233,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-missing_platform\",\n  \"state\": \"needs_review\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-missing_platform/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.072,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 7,
+      "evidence_coverage": 1.0,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 1
+    }
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_name_collision",
+      "--out",
+      "cases/demo-name_collision"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.157,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-name_collision\",\n  \"state\": \"needs_review\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-name_collision/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.061,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 7,
+      "evidence_coverage": 0.0,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 6
+    }
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_prompt_injection",
+      "--out",
+      "cases/demo-prompt_injection"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.163,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-prompt_injection\",\n  \"state\": \"needs_review\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-prompt_injection/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.065,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 8,
+      "evidence_coverage": 1.0,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 1
+    }
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_regulation_unknown",
+      "--out",
+      "cases/demo-regulation_unknown"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.162,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-regulation_unknown\",\n  \"state\": \"needs_review\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-regulation_unknown/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.063,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 7,
+      "evidence_coverage": 1.0,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 2
+    }
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_resume_after_failure",
+      "--out",
+      "cases/demo-resume_after_failure"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.164,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-resume_after_failure\",\n  \"state\": \"completed\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-resume_after_failure/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.07,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 7,
+      "evidence_coverage": 1.0,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 0
+    }
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "demo",
+      "--fixture",
+      "fixtures/case_strong",
+      "--out",
+      "cases/demo-strong"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.151,
+    "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-strong\",\n  \"state\": \"completed\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/demo-strong/report.md\"\n}\n",
+    "stderr": "",
+    "metrics": {
+      "elapsed_seconds": 0.059,
+      "email_sends": 0,
+      "estimated_external_cost_usd": 0,
+      "evidence_count": 7,
+      "evidence_coverage": 1.0,
+      "human_review_error_count": null,
+      "human_review_error_count_note": "not measured; this is not an accuracy benchmark",
+      "mode": "synthetic_offline",
+      "model_calls": 0,
+      "network_calls": 0,
+      "unresolved_risks": 0
+    }
+  }
+]

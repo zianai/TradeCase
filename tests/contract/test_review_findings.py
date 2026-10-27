@@ -92,6 +92,7 @@ def ready_store(tmp_path):
 
     from tradecase.assessment import calculate_assessment
     from tradecase.compliance import check_case
+    from tradecase.reporting import draft_case
 
     root = Path(__file__).parents[2]
     fixture = json.loads((root / "fixtures/case_strong/fixture.json").read_text())
@@ -121,6 +122,7 @@ def ready_store(tmp_path):
         store.write(name, data)
     result = check_case(store, rules_path, checked_at="2026-10-27T12:00:00Z")
     assert all(check["status"] == "pass" for check in result["checks"])
+    draft_case(store)
     store.transition("running", "report")
     assert validate_case(store.path, strict=True) == []
     return store

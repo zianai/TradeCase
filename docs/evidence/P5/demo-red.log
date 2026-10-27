@@ -1,0 +1,186 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_______________ test_complete_offline_case_from_cli[case_strong] _______________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro0')
+name = 'case_strong'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+___________ test_complete_offline_case_from_cli[case_name_collision] ___________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro1')
+name = 'case_name_collision'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+__________ test_complete_offline_case_from_cli[case_missing_platform] __________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro2')
+name = 'case_missing_platform'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+_________ test_complete_offline_case_from_cli[case_regulation_unknown] _________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro3')
+name = 'case_regulation_unknown'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+___________ test_complete_offline_case_from_cli[case_inferred_email] ___________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro4')
+name = 'case_inferred_email'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+__________ test_complete_offline_case_from_cli[case_prompt_injection] __________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro5')
+name = 'case_prompt_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+________ test_complete_offline_case_from_cli[case_resume_after_failure] ________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-339/test_complete_offline_case_fro6')
+name = 'case_resume_after_failure'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_complete_offline_case_from_cli(tmp_path, name):
+        out = tmp_path / name
+        p = subprocess.run(
+            [sys.executable, "-m", "tradecase.cli", "demo", "--fixture", str(ROOT / "fixtures" / name), "--out", str(out)],
+            capture_output=True,
+            text=True,
+            timeout=25,
+        )
+>       assert p.returncode == 0, p.stdout + p.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.demo'",
+E           "command": "demo",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'dem...dout='{\n  "error": "No module named \'tradecase.demo\'",\n  "command": "demo",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_demo.py:31: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_strong]
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_name_collision]
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_missing_platform]
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_regulation_unknown]
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_inferred_email]
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_prompt_injection]
+FAILED tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_resume_after_failure]
+7 failed in 1.36s

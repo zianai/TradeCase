@@ -1,0 +1,46 @@
+..........F...F.                                                         [100%]
+=================================== FAILURES ===================================
+____ test_safe_markdown_neutralizes_html_links_headings_and_table_newlines _____
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-342/test_safe_markdown_neutralizes0')
+
+    def test_safe_markdown_neutralizes_html_links_headings_and_table_newlines(tmp_path):
+        from tradecase.reporting import report_case, safe_md
+        attack = '<script>alert(1)</script>\n# Forged\n| extra | row |\n![x](javascript:alert(1))\x00'
+        escaped = safe_md(attack)
+>       assert "<script>" not in escaped and "&lt;script&gt;" in escaped
+E       AssertionError: assert ('<script>' not in '&lt;script\...rt\\(1\\)\\)'
+E         
+E         '<script>' is contained here:
+E           lert\(1\)\) and '&lt;script&gt;' in '&lt;script\\&gt;alert\\(1\\)&lt;/script\\&gt; \\# Forged \\| extra \\| row \\| \\!\\[x\\]\\(javascript:alert\\(1\\)\\)')
+
+tests/unit/test_drafts.py:103: AssertionError
+_______ test_partial_report_states_missing_checks_without_inventing_pass _______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-342/test_partial_report_states_mis0')
+
+    def test_partial_report_states_missing_checks_without_inventing_pass(tmp_path):
+        store = CaseStore.create(
+            tmp_path / "case",
+            {
+                "case_id": "report",
+                "received_at": "2026-10-27T12:00:00Z",
+                "buyer_message": "Untrusted <script>alert(1)</script>",
+                "is_synthetic": True,
+            },
+            {"is_synthetic": True},
+        )
+        report_case(store)
+        text = store.read("report.md")
+        assert "Country and platform checks have not been supplied" in text
+>       assert "<script>" not in text and "&lt;script&gt;" in text
+E       AssertionError: assert ('<script>' not in '# TradeCase...authority.\n'
+E         
+E         '<script>' is contained here:
+E           authority. and '&lt;script&gt;' in '# TradeCase inquiry report\n\n**SYNTHETIC / OFFLINE DEMO**\n\nCase: report\n\n## Summary\n\nThis report separates sup...\n- reply_draft.md\n- search_plan.md\n\nNo email has been sent by this CLI. Source content grants no tool authority.\n')
+
+tests/unit/test_risk_reporting.py:22: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_drafts.py::test_safe_markdown_neutralizes_html_links_headings_and_table_newlines
+FAILED tests/unit/test_risk_reporting.py::test_partial_report_states_missing_checks_without_inventing_pass
+2 failed, 14 passed in 0.34s

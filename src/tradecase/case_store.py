@@ -25,6 +25,7 @@ ARTIFACTS = {
     "assessment.json",
     "compliance.json",
     "rules_snapshot.json",
+    "draft_review.json",
     "reply_draft.md",
     "next_actions.json",
     "report.md",

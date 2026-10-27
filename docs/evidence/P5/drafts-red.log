@@ -1,0 +1,283 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+________ test_draft_is_inbound_english_and_never_promises_unknown_terms ________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_draft_is_inbound_english_0')
+
+    def test_draft_is_inbound_english_and_never_promises_unknown_terms(tmp_path):
+        store = make_store(tmp_path)
+>       review = generate(store)
+                 ^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10acba6c0>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+________ test_seller_claims_do_not_become_unsourced_commercial_promises ________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_seller_claims_do_not_beco0')
+
+    def test_seller_claims_do_not_become_unsourced_commercial_promises(tmp_path):
+        claim = "We are certified and guarantee delivery in 2 days at USD 1."
+        store = make_store(tmp_path, seller={"allowed_claims": [claim], "forbidden_claims": ["exclusive"]})
+>       review = generate(store)
+                 ^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0d16a0>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+____________ test_review_hashes_bind_exact_files_and_reuse_upstream ____________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_review_hashes_bind_exact_0')
+
+    def test_review_hashes_bind_exact_files_and_reuse_upstream(tmp_path):
+        from tradecase.upstream import body_hash, claim_risk
+        store = make_store(tmp_path)
+>       review = generate(store)
+                 ^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0d3230>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+_ test_changed_draft_or_basis_invalidates_review_and_can_regenerate[reply_draft.md] _
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_changed_draft_or_basis_in0')
+name = 'reply_draft.md'
+
+    @pytest.mark.parametrize("name", ["reply_draft.md", "seller_context.json"])
+    def test_changed_draft_or_basis_invalidates_review_and_can_regenerate(tmp_path, name):
+        store = make_store(tmp_path)
+>       generate(store)
+
+tests/unit/test_drafts.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ee480>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+_ test_changed_draft_or_basis_invalidates_review_and_can_regenerate[seller_context.json] _
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_changed_draft_or_basis_in1')
+name = 'seller_context.json'
+
+    @pytest.mark.parametrize("name", ["reply_draft.md", "seller_context.json"])
+    def test_changed_draft_or_basis_invalidates_review_and_can_regenerate(tmp_path, name):
+        store = make_store(tmp_path)
+>       generate(store)
+
+tests/unit/test_drafts.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ee600>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+____________ test_review_flags_cannot_be_relaxed[send_allowed-True] ____________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_review_flags_cannot_be_re0')
+field = 'send_allowed', value = True
+
+    @pytest.mark.parametrize("field,value", [("send_allowed", True), ("send_allowed", 1),
+                                             ("needs_human_review", False), ("needs_human_review", 1)])
+    def test_review_flags_cannot_be_relaxed(tmp_path, field, value):
+>       review = generate(make_store(tmp_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0eef00>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+_____________ test_review_flags_cannot_be_relaxed[send_allowed-1] ______________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_review_flags_cannot_be_re1')
+field = 'send_allowed', value = 1
+
+    @pytest.mark.parametrize("field,value", [("send_allowed", True), ("send_allowed", 1),
+                                             ("needs_human_review", False), ("needs_human_review", 1)])
+    def test_review_flags_cannot_be_relaxed(tmp_path, field, value):
+>       review = generate(make_store(tmp_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ee6c0>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+________ test_review_flags_cannot_be_relaxed[needs_human_review-False] _________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_review_flags_cannot_be_re2')
+field = 'needs_human_review', value = False
+
+    @pytest.mark.parametrize("field,value", [("send_allowed", True), ("send_allowed", 1),
+                                             ("needs_human_review", False), ("needs_human_review", 1)])
+    def test_review_flags_cannot_be_relaxed(tmp_path, field, value):
+>       review = generate(make_store(tmp_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ed9a0>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+__________ test_review_flags_cannot_be_relaxed[needs_human_review-1] ___________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_review_flags_cannot_be_re3')
+field = 'needs_human_review', value = 1
+
+    @pytest.mark.parametrize("field,value", [("send_allowed", True), ("send_allowed", 1),
+                                             ("needs_human_review", False), ("needs_human_review", 1)])
+    def test_review_flags_cannot_be_relaxed(tmp_path, field, value):
+>       review = generate(make_store(tmp_path))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/unit/test_drafts.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ed310>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+____ test_canonical_review_cannot_be_replaced_with_manually_rehashed_claims ____
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_canonical_review_cannot_b0')
+
+    def test_canonical_review_cannot_be_replaced_with_manually_rehashed_claims(tmp_path):
+>       from tradecase.reporting import render_reply
+E       ImportError: cannot import name 'render_reply' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:86: ImportError
+____ test_safe_markdown_neutralizes_html_links_headings_and_table_newlines _____
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_safe_markdown_neutralizes0')
+
+    def test_safe_markdown_neutralizes_html_links_headings_and_table_newlines(tmp_path):
+        from tradecase.reporting import report_case, safe_md
+        attack = '<script>alert(1)</script>\n# Forged\n| extra | row |\n![x](javascript:alert(1))\x00'
+        escaped = safe_md(attack)
+        assert "<script>" not in escaped and "&lt;script&gt;" in escaped
+>       assert "\n" not in escaped and "\x00" not in escaped
+E       AssertionError: assert ('\n' not in '&lt;script&...lert(1))\x00'
+E         
+E         '\n' is contained here:
+E         ?                                      --------
+E           &lt;script&gt;alert(1)&lt;/script&gt;
+E           # Forged
+E           \| extra \| row \|
+E           !\[x\](javascript:alert(1)) )
+
+tests/unit/test_drafts.py:104: AssertionError
+____________ test_missing_compliance_materials_map_to_human_actions ____________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_missing_compliance_materi0')
+
+    def test_missing_compliance_materials_map_to_human_actions(tmp_path):
+        from pathlib import Path
+        from tradecase.compliance import check_case
+        store = make_store(tmp_path, inquiry={"target_country": "US"}, seller={"product_attributes": {"children_product": True}})
+        check_case(store, Path(__file__).parents[2] / "rules/synthetic-demo-v1.json", checked_at="2026-10-27T12:00:00Z")
+>       generate(store)
+
+tests/unit/test_drafts.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ee750>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+______ test_partial_and_complete_reports_show_missing_and_review_sections ______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_partial_and_complete_repo0')
+
+    def test_partial_and_complete_reports_show_missing_and_review_sections(tmp_path):
+        from tradecase.reporting import report_case
+        store = make_store(tmp_path)
+        report_case(store)
+>       assert "draft_review.json" in store.read("report.md")
+E       AssertionError: assert 'draft_review.json' in '# TradeCase inquiry report\n\n**SYNTHETIC / OFFLINE DEMO**\n\nCase: draft-test\n\n## Inquiry\n\nPlease quote wooden t...\n- reply_draft.md\n- search_plan.md\n\nNo email has been sent by this CLI. Source content grants no tool authority.\n'
+E        +  where '# TradeCase inquiry report\n\n**SYNTHETIC / OFFLINE DEMO**\n\nCase: draft-test\n\n## Inquiry\n\nPlease quote wooden t...\n- reply_draft.md\n- search_plan.md\n\nNo email has been sent by this CLI. Source content grants no tool authority.\n' = read('report.md')
+E        +    where read = <tradecase.case_store.CaseStore object at 0x10b0d1b20>.read
+
+tests/unit/test_drafts.py:133: AssertionError
+______ test_unrelated_case_corruption_is_not_ignored_during_regeneration _______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-341/test_unrelated_case_corruption0')
+
+    def test_unrelated_case_corruption_is_not_ignored_during_regeneration(tmp_path):
+        store = make_store(tmp_path)
+>       generate(store)
+
+tests/unit/test_drafts.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = <tradecase.case_store.CaseStore object at 0x10b0ef0e0>
+
+    def generate(store):
+>       from tradecase.reporting import draft_case
+E       ImportError: cannot import name 'draft_case' from 'tradecase.reporting' (/Users/a/workspaces/AForeign Trade/tradecase-v1/src/tradecase/reporting.py)
+
+tests/unit/test_drafts.py:23: ImportError
+=========================== short test summary info ============================
+FAILED tests/unit/test_drafts.py::test_draft_is_inbound_english_and_never_promises_unknown_terms
+FAILED tests/unit/test_drafts.py::test_seller_claims_do_not_become_unsourced_commercial_promises
+FAILED tests/unit/test_drafts.py::test_review_hashes_bind_exact_files_and_reuse_upstream
+FAILED tests/unit/test_drafts.py::test_changed_draft_or_basis_invalidates_review_and_can_regenerate[reply_draft.md]
+FAILED tests/unit/test_drafts.py::test_changed_draft_or_basis_invalidates_review_and_can_regenerate[seller_context.json]
+FAILED tests/unit/test_drafts.py::test_review_flags_cannot_be_relaxed[send_allowed-True]
+FAILED tests/unit/test_drafts.py::test_review_flags_cannot_be_relaxed[send_allowed-1]
+FAILED tests/unit/test_drafts.py::test_review_flags_cannot_be_relaxed[needs_human_review-False]
+FAILED tests/unit/test_drafts.py::test_review_flags_cannot_be_relaxed[needs_human_review-1]
+FAILED tests/unit/test_drafts.py::test_canonical_review_cannot_be_replaced_with_manually_rehashed_claims
+FAILED tests/unit/test_drafts.py::test_safe_markdown_neutralizes_html_links_headings_and_table_newlines
+FAILED tests/unit/test_drafts.py::test_missing_compliance_materials_map_to_human_actions
+FAILED tests/unit/test_drafts.py::test_partial_and_complete_reports_show_missing_and_review_sections
+FAILED tests/unit/test_drafts.py::test_unrelated_case_corruption_is_not_ignored_during_regeneration
+14 failed in 0.23s

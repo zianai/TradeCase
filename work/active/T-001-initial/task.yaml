@@ -11,7 +11,7 @@ risk_reasons: [cross-component, local-reversible]
 protected_paths: []
 context_refs: [docs/baseline/TradeCase_V1_Codex_Implementation_Spec.md]
 decision_refs: [docs/DECISIONS.md]
-evidence_refs: [docs/PHASE_REPORTS/P0.md, docs/PHASE_REPORTS/P1.md, docs/PHASE_REPORTS/P2.md, docs/PHASE_REPORTS/P3.md]
+evidence_refs: [docs/PHASE_REPORTS/P0.md, docs/PHASE_REPORTS/P1.md, docs/PHASE_REPORTS/P2.md, docs/PHASE_REPORTS/P3.md, docs/PHASE_REPORTS/P4.md, docs/PHASE_REPORTS/P5.md]
 updated: "2026-10-27"
 implementation_started: true
-x_current_phase: P4
+x_current_phase: P6

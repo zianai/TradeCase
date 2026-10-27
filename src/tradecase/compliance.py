@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import ipaddress
 import json
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 from urllib.parse import urlsplit
@@ -65,7 +65,7 @@ def _source_gaps(rule, evidence, checked_at):
         gaps.append("current_official_source_unconfirmed")
     if not rule.effective_date:
         gaps.append("effective_date")
-    elif rule.effective_date > checked_at[:10]:
+    elif date.fromisoformat(rule.effective_date) > _date(checked_at).date():
         gaps.append("rule_not_yet_effective")
     if not rule.reviewed_at:
         gaps.append("reviewed_at")

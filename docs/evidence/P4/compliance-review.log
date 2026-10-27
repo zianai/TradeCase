@@ -1,0 +1,22 @@
+.F....                                                                   [100%]
+=================================== FAILURES ===================================
+_______ test_future_effective_date_cannot_hide_behind_iso_week_timestamp _______
+
+    def test_future_effective_date_cannot_hide_behind_iso_week_timestamp():
+        args = review_inputs()
+        args[3]["rules"][0]["effective_date"] = "2026-11-01"
+        # ISO week 44 Tuesday is 2026-10-27. UTC ISO 8601 week dates are accepted by
+        # the public timestamp contract and must have the same date semantics.
+        checks = evaluate_compliance(*args, checked_at="2026-W44-2T12:00:00Z")["checks"]
+>       assert checks[0]["status"] == "needs_verification"
+E       AssertionError: assert 'pass' == 'needs_verification'
+E         
+E         - needs_verification
+E         + pass
+
+tests/contract/test_compliance_review.py:45: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contract/test_compliance_review.py::test_future_effective_date_cannot_hide_behind_iso_week_timestamp
+1 failed, 5 passed in 0.15s
+
+EXIT_CODE=1
