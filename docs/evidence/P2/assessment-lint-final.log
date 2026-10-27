@@ -1,0 +1,4 @@
+$ .venv/bin/ruff check src/tradecase/assessment.py src/tradecase/validation.py tests/unit/test_assessment.py tests/contract
+All checks passed!
+
+EXIT_CODE=0

@@ -2,8 +2,9 @@
 
 check:
 	python -m compileall -q src scripts
-	ruff check src tests
+	ruff check src tests tools
 	python -m pytest -q
+	python tools/check_licenses.py
 
 lint:
 	ruff check src tests

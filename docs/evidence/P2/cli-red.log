@@ -1,0 +1,25 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_research_and_assessment_preserve_unknowns ________________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-311/test_research_and_assessment_p0')
+
+    def test_research_and_assessment_preserve_unknowns(tmp_path):
+        case=tmp_path/'unverified'
+        assert run('init','--inquiry',ROOT/'fixtures/realistic_inquiry.eml',
+                   '--seller',ROOT/'fixtures/seller_profile.json','--synthetic','--out',case).returncode==0
+        prepared=run('research','--case',case)
+>       assert prepared.returncode==0,prepared.stdout+prepared.stderr
+E       AssertionError: {
+E           "error": "No module named 'tradecase.buyer_research'",
+E           "command": "research",
+E           "status": "failed"
+E         }
+E         
+E       assert 2 == 0
+E        +  where 2 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '-m', 'tradecase.cli', 'res...ror": "No module named \'tradecase.buyer_research\'",\n  "command": "research",\n  "status": "failed"\n}\n', stderr='').returncode
+
+tests/e2e/test_cli_foundation.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_cli_foundation.py::test_research_and_assessment_preserve_unknowns
+1 failed, 1 passed in 0.70s

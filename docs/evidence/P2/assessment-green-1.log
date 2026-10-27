@@ -1,0 +1,31 @@
+$ .venv/bin/ruff check src/tradecase/assessment.py src/tradecase/validation.py tests/unit/test_assessment.py tests/contract
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/tradecase/assessment.py:7:1
+   |
+ 5 |   It cannot independently prove the meaning or truth of natural-language claims.
+ 6 |   """
+ 7 | / from __future__ import annotations
+ 8 | |
+ 9 | | from typing import TYPE_CHECKING
+10 | |
+11 | | from tradecase.models import Assessment, BuyerProfile, Candidate, CaseInput, Evidence, Signal
+12 | | from tradecase_upstream.extract_contacts import FREE_MAIL_DOMAINS, normalized_domain
+   | |____________________________________________________________________________________^
+13 |
+14 |   if TYPE_CHECKING:
+   |
+help: Organize imports
+   |
+10 |
+   - from tradecase.models import Assessment, BuyerProfile, Candidate, CaseInput, Evidence, Signal
+11 | from tradecase_upstream.extract_contacts import FREE_MAIL_DOMAINS, normalized_domain
+12 |
+13 + from tradecase.models import Assessment, BuyerProfile, Candidate, CaseInput, Evidence, Signal
+14 +
+15 | if TYPE_CHECKING:
+   |
+
+Found 1 error.
+[*] 1 fixable with `--fix`.
+
+EXIT_CODE=1

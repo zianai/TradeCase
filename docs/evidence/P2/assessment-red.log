@@ -1,0 +1,18 @@
+
+==================================== ERRORS ====================================
+________________ ERROR collecting tests/unit/test_assessment.py ________________
+ImportError while importing test module '/Users/a/workspaces/AForeign Trade/tradecase-v1/tests/unit/test_assessment.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/unit/test_assessment.py:9: in <module>
+    from tradecase.assessment import assess_case, calculate_assessment
+E   ModuleNotFoundError: No module named 'tradecase.assessment'
+=========================== short test summary info ============================
+ERROR tests/unit/test_assessment.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.07s
+
+EXIT_CODE=2

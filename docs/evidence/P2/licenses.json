@@ -1,0 +1,63 @@
+{
+  "scope": "installed core/dev metadata and bundled MIT notices; optional crawler stack not audited",
+  "distributions": [
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "license": "MIT"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "license": "MIT"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "license": "Apache-2.0 OR BSD-2-Clause"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.7.0",
+      "license": "MIT"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.1",
+      "license": "MIT"
+    },
+    {
+      "name": "pydantic-core",
+      "version": "2.50.1",
+      "license": "MIT"
+    },
+    {
+      "name": "pygments",
+      "version": "2.21.0",
+      "license": "BSD-2-Clause"
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "license": "MIT"
+    },
+    {
+      "name": "ruff",
+      "version": "0.17.3",
+      "license": "MIT"
+    },
+    {
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "license": "PSF-2.0"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "license": "MIT"
+    }
+  ],
+  "failures": [
+    "unreviewed license metadata: packaging: Apache-2.0 OR BSD-2-Clause"
+  ]
+}

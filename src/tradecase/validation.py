@@ -234,6 +234,27 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 candidate = candidate_map.get(selected)
                 if not candidate or candidate.identity_status != "supported":
                     errors.append(f"assessment.json {name}: selected entity is not supported")
+        if inquiry:
+            # Local import keeps the scorer independent from the persistence
+            # validator and avoids the CaseStore -> validation -> scorer cycle.
+            from tradecase.assessment import calculate_assessment
+
+            try:
+                recomputed = calculate_assessment(
+                    inquiry.model_dump(mode="json"),
+                    profile.model_dump(mode="json") if profile else {
+                        "case_id": inquiry.case_id, "is_synthetic": inquiry.is_synthetic,
+                    },
+                    [candidate.model_dump(mode="json") for candidate in candidates],
+                    [row.model_dump(mode="json") for row in rows],
+                    {key: signal.model_dump(mode="json") for key, signal in assessment.signals.items()},
+                )
+                actual = assessment.model_dump(mode="json")
+                for key in ("rule_version", "score", "decision", "evidence_coverage", "reason_codes", "missing_information"):
+                    if actual[key] != recomputed[key]:
+                        errors.append(f"assessment.json: {key} does not match recomputed priority-v1 derivation")
+            except ValueError as exc:
+                errors.append(f"assessment.json: invalid signal derivation: {exc}")
 
     compliance: ComplianceResult | None = artifacts.get("compliance.json")
     seller: SellerContext | None = artifacts.get("seller_context.json")

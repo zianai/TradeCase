@@ -35,3 +35,12 @@ Each row's license observations derive from the locked root files; details and f
 | gpt-researcher `3582a6841fe7dc801e2a34e34ee408641aea9bce` | README research approach | evidence policy | inspired-only | Apache-2.0 | source inspection only; no framework embedded |
 | superleads `c45f451ff1846859f22282a444534c67b3034f88` | LICENSE/NOTICE only | exclusion ledger | not-used | PolyForm Noncommercial | no code/templates copied |
 | launchfit-ai `99d5a18cdee40bfeb9f117531577c5fdb55d3627` | LICENSE only | exclusion ledger | not-used | PolyForm Noncommercial | no code/templates copied |
+
+## P2 actual migrations and call sites
+
+- AI Hunter `backend/tools/url_filter.py` at `9b2fde8f719623c627516da2663707a893ee6805` → `src/tradecase/vendor/ai_hunter/url_filter.py`: **adapted**, original classifier lists/algorithm retained; HTTP(S), hostname/port and anchored LinkedIn host/path corrections added. Full MIT copyright/license copied next to it and included in package data. No AI Hunter runtime dependencies added. Real integration tests exercise original categories and malicious URL regressions.
+- B2B `extract_contacts.normalized_domain` and `FREE_MAIL_DOMAINS` → `assessment.py`: **as-is function reuse**, identity/inquiry domain conflict rules supplement the upstream normalization; no inferred mailbox verification.
+- B2B `customs_verify.py`, `evaluate_outreach_drafts.py` → same paths: **adapted import only** for package/CLI coexistence (draft review also removed an unused import). Algorithms retained.
+- B2B `send_smtp.py` → same path: **adapted**, network sending code removed from both function and CLI; remaining hashes/validators retained. Legacy implementation recoverable from upstream Git SHA, not an enabled feature.
+- `src/tradecase/upstream.py`: wrappers call real inherited extraction/normalization/merge/customs/hash/claim-review functions. P1 14 integration tests and P2 buyer/score tests executed; see phase logs.
+- P2 new code supplies Case candidate boundaries, scoring and cross-contract checks absent upstream. It does not duplicate crawler or Agent runtime code.

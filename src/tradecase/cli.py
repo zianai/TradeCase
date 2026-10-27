@@ -44,6 +44,9 @@ def build_parser():
     put.add_argument("--case", required=True, type=Path)
     put.add_argument("--artifact", required=True)
     put.add_argument("--file", required=True, type=Path)
+    research = commands.add_parser("research", help="Prepare unverified buyer candidates using local evidence")
+    research.add_argument("--case", required=True, type=Path)
+    research.add_argument("--pages", type=Path, help="Explicitly supplied public page observations JSON")
     state = commands.add_parser("transition")
     state.add_argument("--case", required=True, type=Path)
     state.add_argument("--state", required=True)
@@ -132,6 +135,17 @@ def dispatch(args):
         from tradecase.assessment import assess_case
 
         assess_case(store)
+    elif args.command == "research":
+        from tradecase.buyer_research import research_from_local
+
+        rows = store.read("evidence.jsonl") if (store.path / "evidence.jsonl").exists() else []
+        pages = json.loads(args.pages.read_text("utf-8")) if args.pages else None
+        result = research_from_local(store.read("input.json"), rows, pages)
+        store.write("candidates.jsonl", result["candidates"])
+        if not (store.path / "evidence.jsonl").exists():
+            store.write("evidence.jsonl", [])
+        store.write("buyer_profile.json", result["profile"])
+        store.record("research_prepared", {"candidates": len(result["candidates"]), "verification": "unverified"})
     elif args.command == "compliance":
         from tradecase.compliance import check_case
 

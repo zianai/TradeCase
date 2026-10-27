@@ -18,12 +18,15 @@ dev = ["pytest==9.1.1", "ruff==0.17.3"]
 tradecase = "tradecase.cli:main"
 
 [tool.setuptools]
-packages = ["tradecase", "tradecase.models", "tradecase.ingestion", "tradecase_upstream"]
+packages = ["tradecase", "tradecase.models", "tradecase.ingestion", "tradecase.vendor", "tradecase.vendor.ai_hunter", "tradecase_upstream"]
 include-package-data = true
 
 [tool.setuptools.package-dir]
 tradecase = "src/tradecase"
 tradecase_upstream = "scripts"
+
+[tool.setuptools.package-data]
+"tradecase.vendor.ai_hunter" = ["LICENSE"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

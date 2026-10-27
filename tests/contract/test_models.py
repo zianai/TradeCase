@@ -251,11 +251,15 @@ def test_original_bytes_preserved_and_hash_checked():
 
 
 def complete_case(tmp_path):
+    from tradecase.assessment import calculate_assessment
+
     put = partial_case(tmp_path)
     (tmp_path / "candidates.jsonl").write_text("")
     (tmp_path / "evidence.jsonl").write_text("")
     put("buyer_profile.json", dict(case_id="case-test", is_synthetic=True))
-    put("assessment.json", dict(case_id="case-test", is_synthetic=True))
+    put("assessment.json", calculate_assessment(
+        inquiry(is_synthetic=True), dict(case_id="case-test", is_synthetic=True), [], [], {},
+    ))
     checks = [
         check(check_id="check-country", status="needs_context", evidence_ids=[], source_url=None),
         check(check_id="check-platform", check_type="platform", platform=None, status="needs_context",

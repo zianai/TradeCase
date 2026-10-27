@@ -1,0 +1,203 @@
+{
+  "is_synthetic": true,
+  "description": "Offline fabricated inputs; not a real buyer or legal determination",
+  "inquiry": {
+    "buyer_message": "SYNTHETIC inquiry: We distribute wooden toys. Please quote 500 units for Amazon US.",
+    "buyer_email": "purchasing@harbor-toys.invalid",
+    "buyer_company_hint": "Harbor Toys (synthetic)",
+    "buyer_website_hint": "https://harbor-toys.invalid",
+    "target_country": "US",
+    "platform": "amazon_us",
+    "origin_country": "CN",
+    "product_summary": "Wooden toys for children; synthetic demonstration only",
+    "is_synthetic": true
+  },
+  "seller": {
+    "company_name": "Ningbo Demo Manufacturer (synthetic)",
+    "product_summary": "Wooden toys for children; synthetic demonstration only",
+    "product_attributes": {
+      "product_category": "children_toy",
+      "children_product": true,
+      "tracking_label_present": true,
+      "listing_safety_reviewed": true
+    },
+    "allowed_claims": [],
+    "source_refs": [
+      "SYNTHETIC seller declaration, not a certificate"
+    ],
+    "is_synthetic": true
+  },
+  "candidates": [
+    {
+      "candidate_id": "buyer-1",
+      "name": "Harbor Toys (synthetic)",
+      "website": "https://harbor-toys.invalid",
+      "domain": "harbor-toys.invalid",
+      "country": "US",
+      "identity_status": "supported",
+      "evidence_ids": [
+        "ev-identity"
+      ],
+      "is_synthetic": true
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-identity",
+      "claim": "Harbor Toys is a synthetic US company.",
+      "source_url": "https://harbor-toys.invalid/about",
+      "source_type": "official_site",
+      "source_title": "SYNTHETIC corporate page",
+      "captured_at": "2026-10-27T12:00:00Z",
+      "excerpt": "Harbor Toys is a synthetic US company.",
+      "retrieved_by": "synthetic fixture",
+      "entity_candidate_id": "buyer-1",
+      "assertion_status": "supported",
+      "confidence_label": "medium",
+      "is_synthetic": true,
+      "local_snapshot_ref": "snapshots/buyer.txt"
+    },
+    {
+      "evidence_id": "ev-role",
+      "claim": "Harbor Toys distributes wooden toys to retailers.",
+      "source_url": "https://harbor-toys.invalid/about",
+      "source_type": "official_site",
+      "source_title": "SYNTHETIC corporate page",
+      "captured_at": "2026-10-27T12:00:00Z",
+      "excerpt": "Harbor Toys distributes wooden toys to retailers.",
+      "retrieved_by": "synthetic fixture",
+      "entity_candidate_id": "buyer-1",
+      "assertion_status": "supported",
+      "confidence_label": "medium",
+      "is_synthetic": true,
+      "local_snapshot_ref": "snapshots/buyer.txt"
+    },
+    {
+      "evidence_id": "ev-fit",
+      "claim": "Our synthetic catalog includes wooden toys for children.",
+      "source_url": "https://harbor-toys.invalid/about",
+      "source_type": "official_site",
+      "source_title": "SYNTHETIC corporate page",
+      "captured_at": "2026-10-27T12:00:00Z",
+      "excerpt": "Our synthetic catalog includes wooden toys for children.",
+      "retrieved_by": "synthetic fixture",
+      "entity_candidate_id": "buyer-1",
+      "assertion_status": "supported",
+      "confidence_label": "medium",
+      "is_synthetic": true,
+      "local_snapshot_ref": "snapshots/buyer.txt"
+    },
+    {
+      "evidence_id": "ev-contact",
+      "claim": "Public business contact: purchasing@harbor-toys.invalid",
+      "source_url": "https://harbor-toys.invalid/about",
+      "source_type": "official_site",
+      "source_title": "SYNTHETIC corporate page",
+      "captured_at": "2026-10-27T12:00:00Z",
+      "excerpt": "Public business contact: purchasing@harbor-toys.invalid",
+      "retrieved_by": "synthetic fixture",
+      "entity_candidate_id": "buyer-1",
+      "assertion_status": "supported",
+      "confidence_label": "medium",
+      "is_synthetic": true,
+      "local_snapshot_ref": "snapshots/buyer.txt"
+    },
+    {
+      "evidence_id": "ev-inquiry",
+      "claim": "The synthetic inquiry specifies a quantity and channel.",
+      "source_type": "user_provided",
+      "captured_at": "2026-10-27T12:00:00Z",
+      "excerpt": "Please quote 500 units for Amazon US.",
+      "retrieved_by": "synthetic input",
+      "assertion_status": "supported",
+      "confidence_label": "medium",
+      "is_synthetic": true,
+      "local_snapshot_ref": "input.json"
+    }
+  ],
+  "profile": {
+    "candidate_ids": [
+      "buyer-1"
+    ],
+    "selected_candidate_id": "buyer-1",
+    "company_name": "Harbor Toys (synthetic)",
+    "website": "https://harbor-toys.invalid",
+    "domain": "harbor-toys.invalid",
+    "country": "US",
+    "buyer_role": "distributor",
+    "contacts": [
+      {
+        "email": "purchasing@harbor-toys.invalid",
+        "source_class": "public",
+        "source_url": "https://harbor-toys.invalid/about",
+        "evidence_ids": [
+          "ev-contact"
+        ],
+        "verified": false,
+        "send_allowed": false,
+        "domain_relation": "same_domain"
+      }
+    ],
+    "claim_evidence_map": {
+      "company_name": [
+        "ev-identity"
+      ],
+      "website": [
+        "ev-identity"
+      ],
+      "domain": [
+        "ev-identity"
+      ],
+      "country": [
+        "ev-identity"
+      ],
+      "buyer_role": [
+        "ev-role"
+      ]
+    },
+    "unresolved_items": [],
+    "is_synthetic": true
+  },
+  "signals": {
+    "verified_identity": {
+      "value": "supported",
+      "evidence_ids": [
+        "ev-identity"
+      ],
+      "rationale": "SYNTHETIC reviewed signal"
+    },
+    "buyer_role_evidence": {
+      "value": "supported",
+      "evidence_ids": [
+        "ev-role"
+      ],
+      "rationale": "SYNTHETIC reviewed signal"
+    },
+    "product_fit_evidence": {
+      "value": "supported",
+      "evidence_ids": [
+        "ev-fit"
+      ],
+      "rationale": "SYNTHETIC reviewed signal"
+    },
+    "inquiry_specificity": {
+      "value": "supported",
+      "evidence_ids": [
+        "ev-inquiry"
+      ],
+      "rationale": "SYNTHETIC reviewed signal"
+    },
+    "contactability": {
+      "value": "supported",
+      "evidence_ids": [
+        "ev-contact"
+      ],
+      "rationale": "SYNTHETIC reviewed signal"
+    }
+  },
+  "snapshots": {
+    "buyer.txt": "SYNTHETIC OFFLINE PAGE\nHarbor Toys is a synthetic US company.\nHarbor Toys distributes wooden toys to retailers.\nOur synthetic catalog includes wooden toys for children.\nPublic business contact: purchasing@harbor-toys.invalid"
+  },
+  "rule_scenario": "current_synthetic",
+  "simulate_failure": true
+}
