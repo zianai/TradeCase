@@ -1,0 +1,5 @@
+5 baseline functional assertions passed
+CONFIRMED: normalize iter_input rejects normal multi-row JSONL
+CONFIRMED: dedupe name-only keys collide across countries: company:acme|
+No network; synthetic input only
+EXIT_CODE=0

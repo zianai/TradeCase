@@ -1,0 +1,18 @@
+$ python scripts/run_hunt.py example/brief.json --out docs/evidence/P0/pilot --queries example/queries.csv --pilot
+Traceback (most recent call last):
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/scripts/run_hunt.py", line 352, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/scripts/run_hunt.py", line 339, in main
+    pilot(Path(args.brief), Path(args.queries), out_dir)
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/scripts/run_hunt.py", line 185, in pilot
+    data = run_json(cmd)
+           ^^^^^^^^^^^^^
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/scripts/run_hunt.py", line 278, in run_json
+    proc = subprocess.run(command, input=input_text, check=True, text=True, encoding="utf-8", errors="replace", capture_output=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '/Users/a/workspaces/AForeign Trade/tradecase-v1/scripts/serper_maps.py', '--query', 'electrical wholesaler Berlin', '--num', '10', '--lane', 'maps', '--gl', 'de', '--hl', 'de']' returned non-zero exit status 1.
+
+EXIT_CODE=1

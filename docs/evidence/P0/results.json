@@ -1,0 +1,58 @@
+{
+  "upstream_sha": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+  "captured_at": "2026-10-27T15:40:12.899269+00:00",
+  "mode": "upstream baseline; no credentials; no sends",
+  "results": [
+    {
+      "command": [
+        "make",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "docs/evidence/P0/00.log"
+    },
+    {
+      "command": [
+        "ruff",
+        "check",
+        "scripts/",
+        "--no-fix"
+      ],
+      "exit_code": 1,
+      "log": "docs/evidence/P0/01.log"
+    },
+    {
+      "command": [
+        "mypy",
+        "scripts/",
+        "--ignore-missing-imports"
+      ],
+      "exit_code": 1,
+      "log": "docs/evidence/P0/02.log"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/run_hunt.py",
+        "example/brief.json",
+        "--out",
+        "docs/evidence/P0/pilot",
+        "--queries",
+        "example/queries.csv",
+        "--pilot"
+      ],
+      "exit_code": 1,
+      "log": "docs/evidence/P0/03.log"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/validate_artifact.py",
+        "sender-profile",
+        "example/sender-profile.json"
+      ],
+      "exit_code": 0,
+      "log": "docs/evidence/P0/04.log"
+    }
+  ]
+}

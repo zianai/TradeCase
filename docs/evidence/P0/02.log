@@ -1,0 +1,20 @@
+$ mypy scripts/ --ignore-missing-imports
+scripts/run_hunt.py:246: error: Unexpected keyword argument "input_text" for "run_json"  [call-arg]
+scripts/run_hunt.py:277: error: Name "run_json" already defined on line 98  [no-redef]
+scripts/infer_email.py:98: error: Need type annotation for "formats_seen"  [var-annotated]
+scripts/prepare_outreach.py:100: error: Need type annotation for "out"  [var-annotated]
+scripts/customs_verify.py:179: error: Incompatible types in assignment (expression has type "float", target has type "list[str] | str | int | None")  [assignment]
+scripts/customs_verify.py:182: error: Argument "key" to "sort" of "list" has incompatible type "Callable[[dict[str, list[str] | str | int | None]], list[str] | str | int | None]"; expected "Callable[[dict[str, list[str] | str | int | None]], SupportsDunderLT[Any] | SupportsDunderGT[Any]]"  [arg-type]
+scripts/customs_verify.py:182: error: Incompatible return value type (got "list[str] | str | int | None", expected "SupportsDunderLT[Any] | SupportsDunderGT[Any]")  [return-value]
+scripts/customs_verify.py:183: error: Unsupported operand types for <= ("float" and "None")  [operator]
+scripts/customs_verify.py:183: note: Left operand is of type "list[str] | str | int | None"
+scripts/customs_verify.py:183: error: Unsupported operand types for >= ("list[str]" and "float")  [operator]
+scripts/customs_verify.py:183: error: Unsupported operand types for >= ("str" and "float")  [operator]
+scripts/customs_verify.py:184: error: Unsupported operand types for <= ("float" and "None")  [operator]
+scripts/customs_verify.py:184: note: Left operand is of type "list[str] | str | int | None"
+scripts/customs_verify.py:184: error: Unsupported operand types for >= ("list[str]" and "float")  [operator]
+scripts/customs_verify.py:184: error: Unsupported operand types for >= ("str" and "float")  [operator]
+scripts/send_smtp.py:97: error: Need type annotation for "out"  [var-annotated]
+Found 14 errors in 5 files (checked 18 source files)
+
+EXIT_CODE=1

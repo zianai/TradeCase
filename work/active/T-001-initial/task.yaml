@@ -1,0 +1,16 @@
+schema_version: 3
+protocol_version: "3.0"
+id: "T-001-initial"
+status: executing
+goal: "Implement the TradeCase V1 baseline in P0 through P6 with reproducible phase evidence"
+scope: ["Local Python CLI and Case contracts", "Audited upstream reuse", "Agent Skills and deterministic fixtures", "Read-only public research and phase reports"]
+non_goals: ["No Agent runtime or V2 services", "No email sending or external account writes", "No paid API calls or global configuration changes"]
+acceptance: ["P0 through P6 reports preserve commands and exit codes", "All offline validation passes", "Live and blocked capabilities are explicitly distinguished"]
+risk: medium
+risk_reasons: [cross-component, local-reversible]
+protected_paths: []
+context_refs: [docs/baseline/TradeCase_V1_Codex_Implementation_Spec.md]
+decision_refs: [docs/DECISIONS.md]
+evidence_refs: []
+updated: "2026-10-27"
+implementation_started: true

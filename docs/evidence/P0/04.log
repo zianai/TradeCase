@@ -1,0 +1,4 @@
+$ python scripts/validate_artifact.py sender-profile example/sender-profile.json
+{"kind": "sender-profile", "path": "example/sender-profile.json", "records": 1, "valid": true}
+
+EXIT_CODE=0

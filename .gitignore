@@ -42,3 +42,16 @@ Thumbs.db
 # --- Misc ---
 *.log
 *.tmp
+
+# TradeCase local business data and browser state
+cases/
+browser-profiles/
+cookies*
+.env.*
+!.env.example
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.agents/skills/
+.claude/skills/
+!docs/evidence/**/*.log

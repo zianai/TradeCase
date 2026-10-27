@@ -1,0 +1,8 @@
+$ make check
+python -m py_compile scripts/*.py
+python scripts/validate_artifact.py sender-profile templates/sender-profile.example.json
+{"kind": "sender-profile", "path": "templates/sender-profile.example.json", "records": 1, "valid": true}
+python scripts/validate_artifact.py smtp-config templates/smtp-config.example.json
+{"kind": "smtp-config", "path": "templates/smtp-config.example.json", "records": 1, "valid": true}
+
+EXIT_CODE=0

@@ -1,0 +1,956 @@
+$ ruff check scripts/ --no-fix
+E501 Line too long (122 > 120)
+  --> scripts/contracts.py:34:121
+   |
+34 | def _type(obj: dict[str, Any], key: str, expected: type | tuple[type, ...], path: str, *, required: bool = False) -> None:
+   |                                                                                                                         ^^
+35 |     if key not in obj:
+36 |         if required:
+   |
+
+E501 Line too long (176 > 120)
+   --> scripts/contracts.py:136:121
+    |
+134 | …
+135 | …
+136 | … "management", "product", "technical", "sales", "operations", "unknown"}, path, required=True)
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+137 | …"}, path)
+138 | …ired=True)
+    |
+
+E501 Line too long (149 > 120)
+   --> scripts/contracts.py:139:121
+    |
+137 | …ff", "unknown"}, path)
+138 | …}, path, required=True)
+139 | …linkedin", "xing", "search_snippet", "manual", "inferred"}, path, required=True)
+    |                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+140 | …profile_only", "phone_public", "name_only"}, path, required=True)
+141 | …
+    |
+
+E501 Line too long (134 > 120)
+   --> scripts/contracts.py:140:121
+    |
+138 | …, "none"}, path, required=True)
+139 | …tory", "linkedin", "xing", "search_snippet", "manual", "inferred"}, path, required=True)
+140 | …rred", "profile_only", "phone_public", "name_only"}, path, required=True)
+    |                                                             ^^^^^^^^^^^^^^
+141 | …
+142 | …
+    |
+
+E501 Line too long (129 > 120)
+   --> scripts/contracts.py:214:121
+    |
+212 |         if not row.get("source_urls"):
+213 |             _fail(path, "non-reject lead requires at least one source_url")
+214 |         if not row.get("evidence") and not any(str(row.get(k) or "").strip() for k in ("description", "fit_reason_zh", "notes")):
+    |                                                                                                                         ^^^^^^^^^
+215 |             _fail(path, "non-reject lead requires evidence or fit text")
+216 |     if row.get("priority") in {"low"} and row.get("review_required") is not True:
+    |
+
+E501 Line too long (122 > 120)
+   --> scripts/contracts.py:225:121
+    |
+223 |     for i, email in enumerate(row.get("emails") or []):
+224 |         email_path = f"{path}.emails[{i}]"
+225 |         _require_keys(email, {"email", "type", "source_url", "domain_relation", "verification", "confidence"}, email_path)
+    |                                                                                                                         ^^
+226 |         _type(email, "email", str, email_path, required=True)
+227 |         _enum(email, "type", {"generic", "person", "inferred"}, email_path, required=True)
+    |
+
+E501 Line too long (139 > 120)
+   --> scripts/contracts.py:228:121
+    |
+226 | …
+227 | …email_path, required=True)
+228 | …domain", "third_party", "free_mail", "unknown"}, email_path, required=True)
+    |                                                          ^^^^^^^^^^^^^^^^^^^
+229 | …, required=True)
+230 | …
+    |
+
+E501 Line too long (129 > 120)
+   --> scripts/contracts.py:503:121
+    |
+501 |     "error",
+502 | }
+503 | SENT_LOG_REQUIRED = {"event_id", "event_type", "draft_id", "lead_id", "recipient_email", "company_domain", "timestamp", "result"}
+    |                                                                                                                         ^^^^^^^^^
+
+E501 Line too long (182 > 120)
+   --> scripts/contracts.py:584:121
+    |
+582 | …e:
+583 | …
+584 | …om_email", "reply_to", "product_lines", "allowed_claims", "forbidden_claims", "signature"}, path)
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+585 | …", "reply_to", "signature"):
+586 | …
+    |
+
+E501 Line too long (125 > 120)
+   --> scripts/contracts.py:589:121
+    |
+587 |         if not str(row.get(key) or "").strip():
+588 |             _fail(path, f"{key} must not be empty")
+589 |     for key in ("product_lines", "target_applications", "strengths", "certifications", "allowed_claims", "forbidden_claims"):
+    |                                                                                                                         ^^^^^
+590 |         _string_list(row, key, path, required=key in {"product_lines", "allowed_claims", "forbidden_claims"})
+591 |     for key in ("localized_product_lines", "localized_target_applications"):
+    |
+
+E501 Line too long (124 > 120)
+   --> scripts/contracts.py:595:121
+    |
+593 |             _type(row, key, dict, path)
+594 |             for lang, values in row[key].items():
+595 |                 if not isinstance(lang, str) or not isinstance(values, list) or not all(isinstance(v, str) for v in values):
+    |                                                                                                                         ^^^^
+596 |                     _fail(path, f"{key} must map language strings to arrays of strings")
+597 |     if not row.get("product_lines"):
+    |
+
+E501 Line too long (122 > 120)
+   --> scripts/contracts.py:636:121
+    |
+634 |         _allow_only(item, CUSTOMS_EVIDENCE_FIELDS, item_path)
+635 |         _require_keys(item, CUSTOMS_EVIDENCE_FIELDS, item_path)
+636 |         _enum(item, "platform", {"panjiva", "importgenius", "importyeti", "uktradeinfo", "web"}, item_path, required=True)
+    |                                                                                                                         ^^
+637 |         for key in ("source_url", "title", "latest_shipment_date", "snippet"):
+638 |             _type(item, key, str, item_path, required=True)
+    |
+
+E501 Line too long (140 > 120)
+   --> scripts/contracts.py:675:121
+    |
+673 | …
+674 | …
+675 | …_name", "recipient_email", "language", "evaluated_body_hash", "created_at"):
+    |                                                          ^^^^^^^^^^^^^^^^^^^^
+676 | …
+677 | …
+    |
+
+E501 Line too long (128 > 120)
+   --> scripts/customs_verify.py:112:121
+    |
+110 |     if m:
+111 |         return m.group(1).replace("/", "-").replace(".", "-")
+112 |     m = re.search(r"\b((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+20\d{2})\b", text, flags=re.I)
+    |                                                                                                                         ^^^^^^^^
+113 |     return m.group(1) if m else ""
+    |
+
+E501 Line too long (123 > 120)
+   --> scripts/customs_verify.py:165:121
+    |
+163 |                 continue
+164 |         platform = platform_for(url)
+165 |         if platform == "web" and not any(term in low for term in ("shipment", "customs", "import", "supplier", "hs code")):
+    |                                                                                                                         ^^^
+166 |             continue
+167 |         asia_terms = sorted(term for term in ASIA_TERMS if term in low)
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/enrich_decision_makers.py:9:1
+   |
+ 7 |   """
+ 8 |
+ 9 | / from __future__ import annotations
+10 | |
+11 | | import argparse
+12 | | import hashlib
+13 | | import json
+14 | | import re
+15 | | import sys
+16 | | from datetime import datetime, timezone
+17 | | from pathlib import Path
+18 | | from urllib.parse import urlparse
+19 | |
+20 | | from contracts import ContractError, validate_decision_maker, validate_lead
+   | |___________________________________________________________________________^
+help: Organize imports
+   |
+21 |
+   -
+22 | ROLE_KEYWORDS = {
+   |
+
+E501 Line too long (142 > 120)
+  --> scripts/enrich_decision_makers.py:24:121
+   |
+23 | …
+24 | …iter", "Beschaffung", "Supply Chain", "Produktmanager", "Geschaeftsfuehrer"],
+   |                                                         ^^^^^^^^^^^^^^^^^^^^^^
+25 | …or", "procurement", "supply chain"],
+26 | …nnement", "directeur", "chef produit"],
+   |
+
+E501 Line too long (173 > 120)
+  --> scripts/enrich_decision_makers.py:29:121
+   |
+27 | … "jefe de producto"],
+28 | …", "product manager"],
+29 | …anager", "supply chain", "product manager", "general manager", "managing director", "owner"],
+   |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+30 | …
+31 | …
+   |
+
+E501 Line too long (164 > 120)
+  --> scripts/enrich_decision_makers.py:40:121
+   |
+38 | …
+39 | …
+40 | …lo", "admin", "export", "import", "service", "team", "marketing", "einkauf", "vertrieb"}
+   |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (160 > 120)
+   --> scripts/enrich_decision_makers.py:106:121
+    |
+104 | …
+105 | …
+106 | …häftsführer", "managing director", "general manager", "ceo", "director", "dyrektor"]):
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+107 | …
+108 | …
+    |
+
+E501 Line too long (136 > 120)
+   --> scripts/enrich_decision_makers.py:119:121
+    |
+117 | …
+118 | …
+119 | …ftsführer", "geschaeftsfuehrer", "managing director", "general manager"]):
+    |                                                            ^^^^^^^^^^^^^^^^
+120 | …
+121 | …ponsable", "dyrektor"]):
+    |
+
+E501 Line too long (189 > 120)
+   --> scripts/enrich_decision_makers.py:153:121
+    |
+151 | …
+152 | …
+153 | …e": "role_profile", "source_hint": "linkedin", "query": f'"{company}" "{kw}" site:linkedin.com/in'},
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+154 | …e": "role_profile", "source_hint": "xing", "query": f'"{company}" "{kw}" site:xing.com/profile'},
+155 | …e": "official_people", "source_hint": "official_site", "query": f'site:{domain} "{kw}" email OR contact OR Ansprechpartner'},
+    |
+
+E501 Line too long (186 > 120)
+   --> scripts/enrich_decision_makers.py:154:121
+    |
+152 | …
+153 | …age": "role_profile", "source_hint": "linkedin", "query": f'"{company}" "{kw}" site:linkedin.com/in'},
+154 | …age": "role_profile", "source_hint": "xing", "query": f'"{company}" "{kw}" site:xing.com/profile'},
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+155 | …age": "official_people", "source_hint": "official_site", "query": f'site:{domain} "{kw}" email OR contact OR Ansprechpartner'},
+156 | …
+    |
+
+E501 Line too long (214 > 120)
+   --> scripts/enrich_decision_makers.py:155:121
+    |
+153 | …ofile", "source_hint": "linkedin", "query": f'"{company}" "{kw}" site:linkedin.com/in'},
+154 | …ofile", "source_hint": "xing", "query": f'"{company}" "{kw}" site:xing.com/profile'},
+155 | …l_people", "source_hint": "official_site", "query": f'site:{domain} "{kw}" email OR contact OR Ansprechpartner'},
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+156 | …
+157 | …
+    |
+
+E501 Line too long (171 > 120)
+   --> scripts/enrich_decision_makers.py:160:121
+    |
+158 | …
+159 | …
+160 | …"stage": "email_pattern", "source_hint": "web", "query": f'"@{domain}" "{company}" email'},
+    |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+161 | …"stage": "pdf_contacts", "source_hint": "pdf", "query": f'site:{domain} filetype:pdf contact OR catalog OR brochure OR team'},
+162 | …"stage": "supplier_pages", "source_hint": "directory", "query": f'"{company}" purchasing OR procurement OR buyer OR contact'},
+    |
+
+E501 Line too long (206 > 120)
+   --> scripts/enrich_decision_makers.py:161:121
+    |
+159 | …
+160 | …attern", "source_hint": "web", "query": f'"@{domain}" "{company}" email'},
+161 | …tacts", "source_hint": "pdf", "query": f'site:{domain} filetype:pdf contact OR catalog OR brochure OR team'},
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+162 | …r_pages", "source_hint": "directory", "query": f'"{company}" purchasing OR procurement OR buyer OR contact'},
+163 | …
+    |
+
+E501 Line too long (206 > 120)
+   --> scripts/enrich_decision_makers.py:162:121
+    |
+160 | …attern", "source_hint": "web", "query": f'"@{domain}" "{company}" email'},
+161 | …tacts", "source_hint": "pdf", "query": f'site:{domain} filetype:pdf contact OR catalog OR brochure OR team'},
+162 | …r_pages", "source_hint": "directory", "query": f'"{company}" purchasing OR procurement OR buyer OR contact'},
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+163 | …
+164 | …
+    |
+
+E501 Line too long (139 > 120)
+   --> scripts/enrich_decision_makers.py:173:121
+    |
+171 | …
+172 | …e") or "")
+173 | …w.get("raw", {}).get("snippet") or row.get("raw", {}).get("content") or "")
+    |                                                          ^^^^^^^^^^^^^^^^^^^
+174 | …, {}).get("url") or row.get("raw", {}).get("link") or "")
+175 | …")
+    |
+
+E501 Line too long (121 > 120)
+   --> scripts/enrich_decision_makers.py:174:121
+    |
+172 |     title = str(row.get("title") or row.get("raw", {}).get("title") or "")
+173 |     snippet = str(row.get("snippet") or row.get("content") or row.get("raw", {}).get("snippet") or row.get("raw", {}).get("content") …
+174 |     url = str(row.get("link") or row.get("url") or row.get("raw", {}).get("url") or row.get("raw", {}).get("link") or "")
+    |                                                                                                                         ^
+175 |     query = str(row.get("query") or row.get("source_query") or "")
+176 |     text = " ".join([title, snippet])
+    |
+
+E501 Line too long (181 > 120)
+   --> scripts/enrich_decision_makers.py:257:121
+    |
+255 | …
+256 | …
+257 | …sh("|".join([lid, str(row.get("name") or ""), email or str(row.get("source_url") or "")]), 12)),
+    |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+258 | …
+259 | …r ""),
+    |
+
+E501 Line too long (136 > 120)
+   --> scripts/enrich_decision_makers.py:267:121
+    |
+265 | …
+266 | …
+267 | …e") or (0.9 if etype == "public" else 0.6 if etype == "inferred" else 0)),
+    |                                                            ^^^^^^^^^^^^^^^^
+268 | …
+269 | …
+    |
+
+E501 Line too long (131 > 120)
+   --> scripts/enrich_decision_makers.py:275:121
+    |
+273 |             "source_query": str(row.get("source_query") or ""),
+274 |             "evidence_text": str(row.get("evidence_text") or ""),
+275 |             "contactability": "email_public" if etype == "public" else "email_inferred" if etype == "inferred" else "profile_only",
+    |                                                                                                                         ^^^^^^^^^^^
+276 |             "send_allowed": etype == "public",
+277 |             "confidence": float(row.get("confidence") or 0.75),
+    |
+
+E501 Line too long (139 > 120)
+   --> scripts/enrich_decision_makers.py:295:121
+    |
+293 | …
+294 | …
+295 | …x.get("email") or "").lower()) for x in existing_dm if isinstance(x, dict)}
+    |                                                          ^^^^^^^^^^^^^^^^^^^
+296 | …
+297 | … emails if isinstance(x, dict)}
+    |
+
+E501 Line too long (136 > 120)
+   --> scripts/enrich_decision_makers.py:327:121
+    |
+325 | …
+326 | …
+327 | …ormalized search JSONL containing LinkedIn/Xing/person-contact snippets.")
+    |                                                            ^^^^^^^^^^^^^^^^
+328 | …ONL manually collected people to normalize and merge.")
+329 | …aker search query plan JSONL.")
+    |
+
+E501 Line too long (125 > 120)
+   --> scripts/enrich_decision_makers.py:361:121
+    |
+359 |     unique = {}
+360 |     for dm in decision_makers:
+361 |         unique[(dm["lead_id"], dm["name"].lower(), str(dm.get("email") or "").lower(), str(dm.get("source_url") or ""))] = dm
+    |                                                                                                                         ^^^^^
+362 |     decision_makers = list(unique.values())
+363 |     for i, dm in enumerate(decision_makers, start=1):
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/evaluate_outreach_drafts.py:9:1
+   |
+ 7 |   """
+ 8 |
+ 9 | / from __future__ import annotations
+10 | |
+11 | | import argparse
+12 | | import csv
+13 | | import hashlib
+14 | | import json
+15 | | import re
+16 | | import sys
+17 | | from datetime import datetime, timezone
+18 | | from pathlib import Path
+19 | |
+20 | | from contracts import ContractError, validate_outreach_draft, validate_outreach_evaluation
+   | |__________________________________________________________________________________________^
+help: Organize imports
+   |
+21 |
+   -
+22 | LOCAL_LANGUAGE_BY_COUNTRY = {
+   |
+
+F401 [*] `datetime.timezone` imported but unused
+  --> scripts/evaluate_outreach_drafts.py:17:32
+   |
+15 | import re
+16 | import sys
+17 | from datetime import datetime, timezone
+   |                                ^^^^^^^^
+18 | from pathlib import Path
+   |
+help: Remove unused import: `datetime.timezone`
+   |
+16 | import sys
+   - from datetime import datetime, timezone
+17 + from datetime import datetime
+18 | from pathlib import Path
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> scripts/export_leads.py:4:1
+  |
+2 |   """Export JSONL leads to strict or full CSV views."""
+3 |
+4 | / from __future__ import annotations
+5 | |
+6 | | import argparse
+7 | | import csv
+8 | | import json
+9 | | import sys
+  | |__________^
+help: Organize imports
+   |
+10 |
+   -
+11 | FIELDS = [
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/extract_contacts.py:4:1
+   |
+ 2 |   """Extract public B2B contact signals from text or markdown."""
+ 3 |
+ 4 | / from __future__ import annotations
+ 5 | |
+ 6 | | import argparse
+ 7 | | import json
+ 8 | | import re
+ 9 | | import sys
+10 | | from pathlib import Path
+11 | | from urllib.parse import urljoin, urlparse
+   | |__________________________________________^
+help: Organize imports
+   |
+12 |
+   -
+13 | EMAIL_RE = re.compile(r"\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}\b", re.IGNORECASE)
+   |
+
+E501 Line too long (131 > 120)
+   --> scripts/generate_outreach_drafts.py:159:121
+    |
+157 |     if country_lc in LOCAL_LANGUAGE_BY_COUNTRY:
+158 |         language = LOCAL_LANGUAGE_BY_COUNTRY[country_lc]
+159 |         return language, "medium", f"Selected local-language template for {country}. Manual language review recommended.", "medium"
+    |                                                                                                                         ^^^^^^^^^^^
+160 |     return "en", "medium", "Defaulted to English because deterministic script cannot verify local-language quality.", "medium"
+    |
+
+E501 Line too long (126 > 120)
+   --> scripts/generate_outreach_drafts.py:160:121
+    |
+158 |         language = LOCAL_LANGUAGE_BY_COUNTRY[country_lc]
+159 |         return language, "medium", f"Selected local-language template for {country}. Manual language review recommended.", "medium"
+160 |     return "en", "medium", "Defaulted to English because deterministic script cannot verify local-language quality.", "medium"
+    |                                                                                                                         ^^^^^^
+
+E501 Line too long (123 > 120)
+   --> scripts/generate_outreach_drafts.py:189:121
+    |
+187 |     evidence = lead.get("evidence") or []
+188 |     if evidence and isinstance(evidence[0], dict):
+189 |         claim = compact_text(str(evidence[0].get("claim") or "public company information indicates relevant business fit"))
+    |                                                                                                                         ^^^
+190 |         source_url = str(evidence[0].get("source_url") or source_url)
+191 |     else:
+    |
+
+E501 Line too long (133 > 120)
+   --> scripts/generate_outreach_drafts.py:193:121
+    |
+191 |     else:
+192 |         claim = compact_text(
+193 |             str(lead.get("fit_reason_zh") or lead.get("description") or "public company information indicates relevant business fit")
+    |                                                                                                                         ^^^^^^^^^^^^^
+194 |         )
+195 |     return {"claim": claim, "source_url": source_url}
+    |
+
+E501 Line too long (125 > 120)
+   --> scripts/generate_outreach_drafts.py:212:121
+    |
+210 |         return "Ihre oeffentlichen Unternehmensinformationen zeigen einen relevanten Bezug zu dieser Produktkategorie."
+211 |     if language == "fr":
+212 |         return "Les informations publiques de votre entreprise indiquent un lien pertinent avec cette categorie de produits."
+    |                                                                                                                         ^^^^^
+213 |     if language == "es":
+214 |         return "La informacion publica de su empresa indica una relacion relevante con esta categoria de productos."
+    |
+
+E501 Line too long (203 > 120)
+   --> scripts/generate_outreach_drafts.py:253:121
+    |
+251 | …
+252 | …
+253 | …ie relevant ist? Bei Interesse sende ich gern einen kurzen Katalog, technische Daten oder Angebotsdetails."
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+254 | …
+255 | …Je peux envoyer un court catalogue, des specifications ou des details de devis si utile."
+    |
+
+E501 Line too long (185 > 120)
+   --> scripts/generate_outreach_drafts.py:255:121
+    |
+253 | …ie fuer Sie relevant ist? Bei Interesse sende ich gern einen kurzen Katalog, technische Daten oder Angebotsdetails."
+254 | …
+255 | …inente ? Je peux envoyer un court catalogue, des specifications ou des details de devis si utile."
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+256 | …
+257 | …ante? Puedo enviar un catalogo breve, especificaciones o detalles de cotizacion si resulta util."
+    |
+
+E501 Line too long (184 > 120)
+   --> scripts/generate_outreach_drafts.py:257:121
+    |
+255 | …tinente ? Je peux envoyer un court catalogue, des specifications ou des details de devis si utile."
+256 | …
+257 | …vante? Puedo enviar un catalogo breve, especificaciones o detalles de cotizacion si resulta util."
+    |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+258 | …
+259 | … dla Panstwa istotna? W razie potrzeby moge przeslac krotki katalog, specyfikacje lub informacje ofertowe."
+    |
+
+E501 Line too long (193 > 120)
+   --> scripts/generate_outreach_drafts.py:259:121
+    |
+257 | …? Puedo enviar un catalogo breve, especificaciones o detalles de cotizacion si resulta util."
+258 | …
+259 | …Panstwa istotna? W razie potrzeby moge przeslac krotki katalog, specyfikacje lub informacje ofertowe."
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+260 | … send a short catalog, specs, or quotation details if useful."
+    |
+
+E501 Line too long (153 > 120)
+   --> scripts/generate_outreach_drafts.py:260:121
+    |
+258 | …
+259 | … kategoria jest dla Panstwa istotna? W razie potrzeby moge przeslac krotki katalog, specyfikacje lub informacje ofertowe."
+260 | …y is relevant? I can send a short catalog, specs, or quotation details if useful."
+    |                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (127 > 120)
+   --> scripts/generate_outreach_drafts.py:265:121
+    |
+263 | def localized_opt_out(language: str) -> str:
+264 |     if language == "de":
+265 |         return "Falls dies nicht relevant ist, antworten Sie bitte mit \"stop\"; ich werde Sie dann nicht erneut kontaktieren."
+    |                                                                                                                         ^^^^^^^
+266 |     if language == "fr":
+267 |         return "Si ce n'est pas pertinent, repondez \"stop\" et je ne vous contacterai plus."
+    |
+
+E501 Line too long (196 > 120)
+   --> scripts/generate_outreach_drafts.py:315:121
+    |
+313 | …
+314 | …}.",
+315 | …sed on your public company information, this may be relevant to your current product or customer work.",
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+316 | … send a short catalog, specs, or quotation details if useful.",
+317 | …
+    |
+
+E501 Line too long (155 > 120)
+   --> scripts/generate_outreach_drafts.py:316:121
+    |
+314 | …partners in {country}.",
+315 | …or {application}. Based on your public company information, this may be relevant to your current product or customer work.",
+316 | …y is relevant? I can send a short catalog, specs, or quotation details if useful.",
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+317 | …
+318 | …act you again.",
+    |
+
+E501 Line too long (127 > 120)
+   --> scripts/generate_outreach_drafts.py:356:121
+    |
+354 |     template = templates.get(key)
+355 |     if require_template and not template:
+356 |         raise ContractError(f"outreach-draft {candidate.get('candidate_id')}: missing outreach template for cluster_key={key}")
+    |                                                                                                                         ^^^^^^^
+357 |     draft_version = 1
+358 |     draft_id = "draft-" + short_hash(
+    |
+
+E501 Line too long (145 > 120)
+   --> scripts/generate_outreach_drafts.py:377:121
+    |
+376 | …nguage, "product_lines", "B2B products")
+377 | …tions", language, "target_applications", "B2B distribution or project supply")
+    |                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+378 | …
+379 | …
+    |
+
+E501 Line too long (125 > 120)
+   --> scripts/generate_outreach_drafts.py:405:121
+    |
+403 |         subject, body = render_template(template, variables)
+404 |         language = str(template["language"])
+405 |         language_reason = f"Rendered from outreach template {template['template_id']} for cluster {template['cluster_key']}."
+    |                                                                                                                         ^^^^^
+406 |     else:
+407 |         subject = f"{product} cooperation for {country or candidate.get('company_name')}"
+    |
+
+E501 Line too long (135 > 120)
+   --> scripts/generate_outreach_drafts.py:485:121
+    |
+483 | …
+484 | …ode such as en, de, fr, es, pl.")
+485 | …ch-template-clusters.jsonl generated by generate_outreach_templates.py.")
+    |                                                            ^^^^^^^^^^^^^^^
+486 | …ue", help="Fail if an email-capable candidate has no matching template.")
+487 | …
+    |
+
+E501 Line too long (135 > 120)
+   --> scripts/generate_outreach_drafts.py:486:121
+    |
+484 | …ode such as en, de, fr, es, pl.")
+485 | …ch-template-clusters.jsonl generated by generate_outreach_templates.py.")
+486 | …ue", help="Fail if an email-capable candidate has no matching template.")
+    |                                                            ^^^^^^^^^^^^^^^
+487 | …
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/generate_outreach_templates.py:4:1
+   |
+ 2 |   """Generate regional outreach template clusters from leads and candidates."""
+ 3 |
+ 4 | / from __future__ import annotations
+ 5 | |
+ 6 | | import argparse
+ 7 | | import hashlib
+ 8 | | import json
+ 9 | | import re
+10 | | import sys
+11 | | from datetime import datetime, timezone
+12 | | from pathlib import Path
+13 | | from urllib.parse import urlparse
+14 | |
+15 | | from contracts import ContractError, validate_outreach_candidate, validate_outreach_template, validate_sender_profile
+   | |_____________________________________________________________________________________________________________________^
+help: Organize imports
+   |
+16 |
+   -
+17 | ENGLISH_BUSINESS_COUNTRIES = {
+   |
+
+E501 Line too long (127 > 120)
+   --> scripts/generate_outreach_templates.py:179:121
+    |
+177 |             ]
+178 |         )
+179 |         notes = ["Formal German B2B tone.", "Keep claims factual and concise.", "Avoid exaggerated price or urgency language."]
+    |                                                                                                                         ^^^^^^^
+180 |         return subject, body, notes
+181 |     subject = "{product} cooperation for {country}"
+    |
+
+E501 Line too long (164 > 120)
+   --> scripts/generate_outreach_templates.py:193:121
+    |
+191 | …
+192 | …
+193 | … not a hard sales call.", "Avoid unsupported certifications, stock, or pricing claims."]
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+194 | …
+    |
+
+E501 Line too long (142 > 120)
+   --> scripts/generate_outreach_templates.py:240:121
+    |
+238 | …
+239 | …r all clusters, e.g. en, de, fr.")
+240 | …tional JSON/JSONL file or directory of human-maintained outreach templates.")
+    |                                                         ^^^^^^^^^^^^^^^^^^^^^^
+241 | …
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/infer_email.py:32:1
+   |
+30 |   """
+31 |
+32 | / from __future__ import annotations
+33 | |
+34 | | import argparse
+35 | | import json
+36 | | import re
+37 | | import sys
+38 | | from collections import Counter
+39 | | from pathlib import Path
+40 | | from typing import Optional
+   | |___________________________^
+help: Organize imports
+   |
+41 |
+   -
+42 | # Characters to strip/replace for clean email generation
+   |
+
+F841 Local variable `result` is assigned to but never used
+   --> scripts/infer_email.py:221:21
+    |
+219 |             if isinstance(data, list):
+220 |                 if data and isinstance(data[0], dict):
+221 |                     result = detect_batch(data)
+    |                     ^^^^^^
+222 |                 else:
+223 |                     emails.extend(str(x) for x in data)
+    |
+help: Remove assignment to unused variable `result`
+    |
+220 |                 if data and isinstance(data[0], dict):
+    -                     result = detect_batch(data)
+221 +                     detect_batch(data)
+222 |                 else:
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+E501 Line too long (125 > 120)
+   --> scripts/prepare_outreach.py:284:121
+    |
+283 |     if blocked:
+284 |         base["selected_channel"] = "review_only" if selected and priority in {"high", "medium"} else base["selected_channel"]
+    |                                                                                                                         ^^^^^
+285 |         base["blocked_reason"] = "; ".join(dict.fromkeys(blocked))
+286 |         base["selection_reason"] = base["selection_reason"] or "not eligible for outreach drafting"
+    |
+
+E501 Line too long (125 > 120)
+  --> scripts/read_jina.py:30:121
+   |
+28 |             if resp.status_code == 429:
+29 |                 wait = delay * (2 ** attempt)
+30 |                 print(f"Jina 429 rate-limited, retry {attempt+1}/{retries} in {wait:.0f}s...", file=__import__("sys").stderr)
+   |                                                                                                                         ^^^^^
+31 |                 time.sleep(wait)
+32 |                 continue
+   |
+
+E501 Line too long (135 > 120)
+  --> scripts/read_jina.py:61:121
+   |
+60 |     if args.json:
+61 |         output = json.dumps({"url": args.url, "content": content, "content_length": len(content)}, ensure_ascii=False, indent=2) + "\n"
+   |                                                                                                                         ^^^^^^^^^^^^^^^
+62 |     else:
+63 |         output = content
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/run_hunt.py:10:1
+   |
+ 8 |   """
+ 9 |
+10 | / from __future__ import annotations
+11 | |
+12 | | import argparse
+13 | | import csv
+14 | | import json
+15 | | import subprocess
+16 | | import sys
+17 | | import time
+18 | | from pathlib import Path
+19 | | from urllib.parse import urlparse
+   | |_________________________________^
+help: Organize imports
+   |
+20 |
+   -
+21 | SCRIPT_DIR = Path(__file__).resolve().parent
+   |
+
+F811 Redefinition of unused `run_json` from line 98
+   --> scripts/run_hunt.py:277:5
+    |
+277 | def run_json(command: list[str], input_text: str | None = None) -> dict:
+    |     ^^^^^^^^ `run_json` redefined here
+278 |     proc = subprocess.run(command, input=input_text, check=True, text=True, encoding="utf-8", errors="replace", capture_output=True)
+279 |     return json.loads(proc.stdout)
+    |
+   ::: scripts/run_hunt.py:98:5
+    |
+ 98 | def run_json(command: list[str]) -> dict:
+    |     -------- previous definition of `run_json` here
+ 99 |     proc = subprocess.run(command, check=True, text=True, capture_output=True)
+100 |     return json.loads(proc.stdout)
+    |
+help: Remove definition: `run_json`
+
+E501 Line too long (132 > 120)
+   --> scripts/run_hunt.py:278:121
+    |
+277 | def run_json(command: list[str], input_text: str | None = None) -> dict:
+278 |     proc = subprocess.run(command, input=input_text, check=True, text=True, encoding="utf-8", errors="replace", capture_output=True)
+    |                                                                                                                         ^^^^^^^^^^^^
+279 |     return json.loads(proc.stdout)
+    |
+
+E501 Line too long (130 > 120)
+   --> scripts/run_hunt.py:313:121
+    |
+311 |     all_path = out_dir / "leads_all.csv"
+312 |     subprocess.run(
+313 |         [sys.executable, str(SCRIPT_DIR / "export_leads.py"), str(source_path), "--view", "strict", "--output", str(strict_path)],
+    |                                                                                                                         ^^^^^^^^^^
+314 |         check=True,
+315 |     )
+    |
+
+E501 Line too long (124 > 120)
+   --> scripts/run_hunt.py:317:121
+    |
+315 |     )
+316 |     subprocess.run(
+317 |         [sys.executable, str(SCRIPT_DIR / "export_leads.py"), str(source_path), "--view", "all", "--output", str(all_path)],
+    |                                                                                                                         ^^^^
+318 |         check=True,
+319 |     )
+    |
+
+E501 Line too long (123 > 120)
+   --> scripts/run_hunt.py:328:121
+    |
+326 |     parser.add_argument("--queries", help="JSONL/CSV query list for --pilot")
+327 |     parser.add_argument("--pilot", action="store_true")
+328 |     parser.add_argument("--build-candidates", action="store_true", help="Build candidates from existing raw-search.jsonl.")
+    |                                                                                                                         ^^^
+329 |     parser.add_argument("--enrich", action="store_true")
+330 |     parser.add_argument("--export", action="store_true")
+    |
+
+E501 Line too long (128 > 120)
+   --> scripts/send_smtp.py:133:121
+    |
+133 | def make_log(draft: dict, event_type: str, result: str, error: str = "", message_id: str = "", smtp_response: str = "") -> dict:
+    |                                                                                                                         ^^^^^^^^
+134 |     ts = now_iso()
+135 |     return {
+    |
+
+E501 Line too long (129 > 120)
+  --> scripts/serper_maps.py:18:121
+   |
+18 | def fetch_maps(payload: dict[str, Any], api_key: str, timeout: int = 40, retries: int = 3, delay: float = 1.0) -> dict[str, Any]:
+   |                                                                                                                         ^^^^^^^^^
+19 |     headers = {
+20 |         "X-API-KEY": api_key,
+   |
+
+E501 Line too long (131 > 120)
+   --> scripts/serper_maps.py:110:121
+    |
+108 |             print(json.dumps(row, ensure_ascii=False))
+109 |     else:
+110 |         print(json.dumps({"query": args.query, "mode": "maps", "count": len(rows), "results": rows}, ensure_ascii=False, indent=2))
+    |                                                                                                                         ^^^^^^^^^^^
+111 |     return 0
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/validate_artifact.py:4:1
+   |
+ 2 |   """Validate B2B lead hunter JSON/JSONL artifacts against runtime contracts."""
+ 3 |
+ 4 | / from __future__ import annotations
+ 5 | |
+ 6 | | import argparse
+ 7 | | import json
+ 8 | | import sys
+ 9 | | from pathlib import Path
+10 | |
+11 | | from contracts import (
+12 | |     ContractError,
+13 | |     validate_approved_outreach,
+14 | |     validate_customs_verification,
+15 | |     validate_decision_maker,
+16 | |     validate_lead,
+17 | |     validate_outreach_evaluation,
+18 | |     validate_outreach_template,
+19 | |     validate_outreach_candidate,
+20 | |     validate_outreach_draft,
+21 | |     validate_sender_profile,
+22 | |     validate_sent_log_event,
+23 | |     validate_smtp_config,
+24 | | )
+   | |_^
+help: Organize imports
+   |
+16 |     validate_lead,
+   -     validate_outreach_evaluation,
+   -     validate_outreach_template,
+17 |     validate_outreach_candidate,
+18 |     validate_outreach_draft,
+19 +     validate_outreach_evaluation,
+20 +     validate_outreach_template,
+21 |     validate_sender_profile,
+22 |     validate_sent_log_event,
+23 |     validate_smtp_config,
+24 | )
+   -
+25 |
+   |
+
+E501 Line too long (123 > 120)
+  --> scripts/validate_artifact.py:80:121
+   |
+78 |         print(str(exc), file=sys.stderr)
+79 |         return 1
+80 |     print(json.dumps({"kind": args.kind, "path": str(args.path), "records": len(rows), "valid": True}, ensure_ascii=False))
+   |                                                                                                                         ^^^
+81 |     return 0
+   |
+
+Found 77 errors.
+[*] 9 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).
+
+EXIT_CODE=1

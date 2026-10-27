@@ -1,0 +1,7 @@
+schema_version: 3
+protocol_version: "3.0"
+project_id: "TRADECASE_V1"
+project_name: "TradeCase V1"
+status: active
+active_task: "T-001-initial"
+updated: "2026-10-27"

@@ -1,0 +1,60 @@
+{
+  "queries": [
+    {
+      "query": "elektroinstallationsbedarf Großhandel Deutschland",
+      "mode": "",
+      "lane": "organic",
+      "gl": "de",
+      "hl": "de"
+    },
+    {
+      "query": "Industrieschalter Distributor Deutschland",
+      "mode": "",
+      "lane": "organic",
+      "gl": "de",
+      "hl": "de"
+    },
+    {
+      "query": "fournisseur interrupteurs industriels France",
+      "mode": "",
+      "lane": "organic",
+      "gl": "fr",
+      "hl": "fr"
+    },
+    {
+      "query": "material elektryczny przemyslowy hurtownia Polska",
+      "mode": "",
+      "lane": "organic",
+      "gl": "pl",
+      "hl": "pl"
+    },
+    {
+      "query": "electrical wholesaler Berlin",
+      "mode": "maps",
+      "lane": "maps",
+      "gl": "de",
+      "hl": "de"
+    },
+    {
+      "query": "fournisseur electrique industriel Lyon",
+      "mode": "maps",
+      "lane": "maps",
+      "gl": "fr",
+      "hl": "fr"
+    },
+    {
+      "query": "electrical distributor Warsaw",
+      "mode": "maps",
+      "lane": "maps",
+      "gl": "pl",
+      "hl": "pl"
+    },
+    {
+      "query": "industrial automation components distributor Germany",
+      "mode": "",
+      "lane": "organic",
+      "gl": "de",
+      "hl": "de"
+    }
+  ]
+}
