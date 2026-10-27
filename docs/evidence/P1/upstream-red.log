@@ -1,0 +1,523 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+_______ test_public_contacts_are_observed_but_never_verified_or_sendable _______
+
+    def test_public_contacts_are_observed_but_never_verified_or_sendable():
+>       data = wrapper().extract_contacts(
+               ^^^^^^^^^
+            'Sales: sales@acme.invalid; Jane: jane@acme.invalid. Call +49 30 12345678.',
+            'https://acme.invalid/about',
+        )
+
+tests/integration/test_upstream.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________________ test_contact_pages_only_http_and_same_host __________________
+
+    def test_contact_pages_only_http_and_same_host():
+        text = ('<a href="ftp://acme.invalid/contact">x</a>'
+                '<a href="https://evil.invalid/contact">x</a>'
+                '<a href="/contact">Contact</a>')
+>       assert wrapper().extract_contacts(text, 'https://acme.invalid')['contact_pages'] == ['https://acme.invalid/contact']
+               ^^^^^^^^^
+
+tests/integration/test_upstream.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_________________ test_contacts_do_not_infer_email_from_names __________________
+
+    def test_contacts_do_not_infer_email_from_names():
+>       assert wrapper().extract_contacts('Please contact Jane Doe.', 'https://acme.invalid')['emails'] == []
+               ^^^^^^^^^
+
+tests/integration/test_upstream.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________________ test_search_normalization_calls_real_upstream _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ab8f20>
+
+    def test_search_normalization_calls_real_upstream(monkeypatch):
+        upstream = importlib.import_module('tradecase_upstream.normalize_search_results')
+        real = upstream.normalize
+        calls = []
+        def tracked(row, *args, **kwargs):
+            calls.append(row)
+            return real(row, *args, **kwargs)
+        monkeypatch.setattr(upstream, 'normalize', tracked)
+        source = {'url': 'https://acme.invalid', 'name': 'Acme', 'description': 'Supplier', 'query': 'acme'}
+>       result = wrapper().normalize_search([source])[0]
+                 ^^^^^^^^^
+
+tests/integration/test_upstream.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________ test_dedupe_never_merges_name_only_or_different_candidate_ids _________
+
+    def test_dedupe_never_merges_name_only_or_different_candidate_ids():
+        rows = [{'company_name': 'Acme', 'country': 'US'}, {'company_name': 'Acme', 'country': 'US'},
+                {'candidate_id': 'a', 'website': 'https://acme.invalid'},
+                {'candidate_id': 'b', 'website': 'https://acme.invalid'}]
+>       assert wrapper().dedupe_candidates(rows) == rows
+               ^^^^^^^^^
+
+tests/integration/test_upstream.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_dedupe_merges_same_candidate_without_mutation ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108aba4b0>
+
+    def test_dedupe_merges_same_candidate_without_mutation(monkeypatch):
+        upstream = importlib.import_module('tradecase_upstream.dedupe_leads')
+        real = upstream.merge
+        calls = []
+        def tracked(a, b):
+            calls.append((a, b))
+            return real(a, b)
+        monkeypatch.setattr(upstream, 'merge', tracked)
+        rows = [{'candidate_id': 'a', 'country': 'US', 'website': 'https://acme.invalid', 'evidence_ids': ['e1']},
+                {'candidate_id': 'a', 'country': 'us', 'website': 'https://www.acme.invalid/contact',
+                 'evidence_ids': ['e2']}]
+        before = copy.deepcopy(rows)
+>       out = wrapper().dedupe_candidates(rows)
+              ^^^^^^^^^
+
+tests/integration/test_upstream.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______ test_same_candidate_id_conflicts_are_not_silently_merged[other0] _______
+
+other = {'country': 'DE'}
+
+    @pytest.mark.parametrize('other', [{'country': 'DE'}, {'website': 'https://other.invalid'},
+                                       {'domain': 'other.invalid'}])
+    def test_same_candidate_id_conflicts_are_not_silently_merged(other):
+        base = {'candidate_id': 'a', 'country': 'US', 'website': 'https://acme.invalid'}
+        rows = [base, {'candidate_id': 'a', **other}]
+>       assert wrapper().dedupe_candidates(rows) == rows
+               ^^^^^^^^^
+
+tests/integration/test_upstream.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______ test_same_candidate_id_conflicts_are_not_silently_merged[other1] _______
+
+other = {'website': 'https://other.invalid'}
+
+    @pytest.mark.parametrize('other', [{'country': 'DE'}, {'website': 'https://other.invalid'},
+                                       {'domain': 'other.invalid'}])
+    def test_same_candidate_id_conflicts_are_not_silently_merged(other):
+        base = {'candidate_id': 'a', 'country': 'US', 'website': 'https://acme.invalid'}
+        rows = [base, {'candidate_id': 'a', **other}]
+>       assert wrapper().dedupe_candidates(rows) == rows
+               ^^^^^^^^^
+
+tests/integration/test_upstream.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______ test_same_candidate_id_conflicts_are_not_silently_merged[other2] _______
+
+other = {'domain': 'other.invalid'}
+
+    @pytest.mark.parametrize('other', [{'country': 'DE'}, {'website': 'https://other.invalid'},
+                                       {'domain': 'other.invalid'}])
+    def test_same_candidate_id_conflicts_are_not_silently_merged(other):
+        base = {'candidate_id': 'a', 'country': 'US', 'website': 'https://acme.invalid'}
+        rows = [base, {'candidate_id': 'a', **other}]
+>       assert wrapper().dedupe_candidates(rows) == rows
+               ^^^^^^^^^
+
+tests/integration/test_upstream.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/integration/test_upstream.py:14: in wrapper
+    return importlib.import_module('tradecase.upstream')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradecase.upstream', import_ = <function _gcd_import at 0x1024e40e0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradecase.upstream'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+____________ test_customs_remains_tentative_without_priority_points ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108abb560>
+
+    def test_customs_remains_tentative_without_priority_points(monkeypatch):
+>       upstream = importlib.import_module('tradecase_upstream.customs_verify')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/integration/test_upstream.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:999: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    #!/usr/bin/env python3
+    """Structure public customs/trade evidence from search result JSON/JSONL.
+    
+    This helper does not call paid customs databases. Feed it normalized search
+    results from Panjiva, ImportGenius, ImportYeti, UK trade sources, or web search
+    snippets; it extracts conservative import signals for lead scoring.
+    """
+    
+    from __future__ import annotations
+    
+    import argparse
+    import json
+    import re
+    import sys
+    from pathlib import Path
+    
+>   from contracts import ContractError, validate_customs_verification
+E   ModuleNotFoundError: No module named 'contracts'
+
+scripts/customs_verify.py:17: ModuleNotFoundError
+______________ test_hash_and_claim_risk_are_real_upstream_exports ______________
+
+    def test_hash_and_claim_risk_are_real_upstream_exports():
+>       upstream = importlib.import_module('tradecase_upstream.evaluate_outreach_drafts')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/integration/test_upstream.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:999: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    #!/usr/bin/env python3
+    """Evaluate outreach drafts before human approval.
+    
+    This is a deterministic quality gate. It does not approve, send, or rewrite
+    emails. It scores language fit, personalization, claim risk, spam risk, and
+    reply likelihood so weak drafts stay out of approved-outreach.jsonl.
+    """
+    
+    from __future__ import annotations
+    
+    import argparse
+    import csv
+    import hashlib
+    import json
+    import re
+    import sys
+    from datetime import datetime, timezone
+    from pathlib import Path
+    
+>   from contracts import ContractError, validate_outreach_draft, validate_outreach_evaluation
+E   ModuleNotFoundError: No module named 'contracts'
+
+scripts/evaluate_outreach_drafts.py:20: ModuleNotFoundError
+_______ test_send_function_is_disabled_before_any_credentials_or_network _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108b1faa0>
+
+    def test_send_function_is_disabled_before_any_credentials_or_network(monkeypatch):
+>       sender = importlib.import_module('tradecase_upstream.send_smtp')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/integration/test_upstream.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:999: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    #!/usr/bin/env python3
+    """Send approved outreach drafts through SMTP with dry-run and audit logging."""
+    
+    from __future__ import annotations
+    
+    import argparse
+    import csv
+    import hashlib
+    import json
+    import os
+    import smtplib
+    import sys
+    import time
+    from datetime import datetime, timezone
+    from email.message import EmailMessage
+    from pathlib import Path
+    from urllib.parse import urlparse
+    
+>   from contracts import (
+        ContractError,
+        validate_approved_outreach,
+        validate_outreach_draft,
+        validate_outreach_evaluation,
+        validate_sent_log_event,
+        validate_smtp_config,
+    )
+E   ModuleNotFoundError: No module named 'contracts'
+
+scripts/send_smtp.py:19: ModuleNotFoundError
+_______________ test_send_main_is_disabled_before_reading_files ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108ae09e0>
+capsys = <_pytest.capture.CaptureFixture object at 0x108ae1100>
+
+    def test_send_main_is_disabled_before_reading_files(monkeypatch, capsys):
+>       sender = importlib.import_module('tradecase_upstream.send_smtp')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/integration/test_upstream.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1387: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:935: in _load_unlocked
+    ???
+<frozen importlib._bootstrap_external>:999: in exec_module
+    ???
+<frozen importlib._bootstrap>:488: in _call_with_frames_removed
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    #!/usr/bin/env python3
+    """Send approved outreach drafts through SMTP with dry-run and audit logging."""
+    
+    from __future__ import annotations
+    
+    import argparse
+    import csv
+    import hashlib
+    import json
+    import os
+    import smtplib
+    import sys
+    import time
+    from datetime import datetime, timezone
+    from email.message import EmailMessage
+    from pathlib import Path
+    from urllib.parse import urlparse
+    
+>   from contracts import (
+        ContractError,
+        validate_approved_outreach,
+        validate_outreach_draft,
+        validate_outreach_evaluation,
+        validate_sent_log_event,
+        validate_smtp_config,
+    )
+E   ModuleNotFoundError: No module named 'contracts'
+
+scripts/send_smtp.py:19: ModuleNotFoundError
+_______________ test_send_script_is_disabled_even_with_send_flag _______________
+
+    def test_send_script_is_disabled_even_with_send_flag():
+        root = Path(__file__).resolve().parents[2]
+        proc = subprocess.run([sys.executable, str(root / 'scripts/send_smtp.py'),
+                               '--drafts', 'does-not-exist.jsonl', '--send-approved'],
+                              cwd=root, capture_output=True, text=True, timeout=5)
+>       assert proc.returncode != 0 and 'disabled in TradeCase V1' in proc.stderr
+E       AssertionError: assert (1 != 0 and 'disabled in TradeCase V1' in 'SMTP config not found: /Users/a/workspaces/AForeign Trade/tradecase-v1/_shared/smtp-config.json. Pass --smtp-config, set B2B_LEAD_HUNTER_SMTP_CONFIG, or create <skill>/_shared/smtp-config.json.\n')
+E        +  where 1 = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '/Users/a/workspaces/AForei.../smtp-config.json. Pass --smtp-config, set B2B_LEAD_HUNTER_SMTP_CONFIG, or create <skill>/_shared/smtp-config.json.\n').returncode
+E        +  and   'SMTP config not found: /Users/a/workspaces/AForeign Trade/tradecase-v1/_shared/smtp-config.json. Pass --smtp-config, set B2B_LEAD_HUNTER_SMTP_CONFIG, or create <skill>/_shared/smtp-config.json.\n' = CompletedProcess(args=['/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python', '/Users/a/workspaces/AForei.../smtp-config.json. Pass --smtp-config, set B2B_LEAD_HUNTER_SMTP_CONFIG, or create <skill>/_shared/smtp-config.json.\n').stderr
+
+tests/integration/test_upstream.py:150: AssertionError
+=========================== short test summary info ============================
+FAILED tests/integration/test_upstream.py::test_public_contacts_are_observed_but_never_verified_or_sendable
+FAILED tests/integration/test_upstream.py::test_contact_pages_only_http_and_same_host
+FAILED tests/integration/test_upstream.py::test_contacts_do_not_infer_email_from_names
+FAILED tests/integration/test_upstream.py::test_search_normalization_calls_real_upstream
+FAILED tests/integration/test_upstream.py::test_dedupe_never_merges_name_only_or_different_candidate_ids
+FAILED tests/integration/test_upstream.py::test_dedupe_merges_same_candidate_without_mutation
+FAILED tests/integration/test_upstream.py::test_same_candidate_id_conflicts_are_not_silently_merged[other0]
+FAILED tests/integration/test_upstream.py::test_same_candidate_id_conflicts_are_not_silently_merged[other1]
+FAILED tests/integration/test_upstream.py::test_same_candidate_id_conflicts_are_not_silently_merged[other2]
+FAILED tests/integration/test_upstream.py::test_customs_remains_tentative_without_priority_points
+FAILED tests/integration/test_upstream.py::test_hash_and_claim_risk_are_real_upstream_exports
+FAILED tests/integration/test_upstream.py::test_send_function_is_disabled_before_any_credentials_or_network
+FAILED tests/integration/test_upstream.py::test_send_main_is_disabled_before_reading_files
+FAILED tests/integration/test_upstream.py::test_send_script_is_disabled_even_with_send_flag
+14 failed in 0.13s

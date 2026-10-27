@@ -1,0 +1,53 @@
+.FF...................................F                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_store_initial_valid_and_no_overwrite ___________________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-304/test_store_initial_valid_and_n0')
+
+    def test_store_initial_valid_and_no_overwrite(tmp_path):
+        p=tmp_path/'i.txt';p.write_text('Synthetic RFQ')
+        store=CaseStore.create(tmp_path/'case',parse_inquiry(p,'case'), {'is_synthetic':False})
+>       assert validate_case(store.path)==[]
+E       AssertionError: assert ['input.json:... file: i.txt'] == []
+E         
+E         Left contains one more item: 'input.json: missing regular file: i.txt'
+E         Use -v to get more diff
+
+tests/unit/test_store_ingestion.py:23: AssertionError
+___________________ test_atomic_revisions_and_failure_resume ___________________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-304/test_atomic_revisions_and_fail0')
+
+    def test_atomic_revisions_and_failure_resume(tmp_path):
+        p=tmp_path/'i.txt';p.write_text('Synthetic RFQ')
+        store=CaseStore.create(tmp_path/'case',parse_inquiry(p,'case'),{})
+        store.transition('running','research')
+        store.transition('failed','research',error='offline interruption')
+        store.transition('running','research')
+>       assert validate_case(store.path)==[]
+E       AssertionError: assert ['input.json:... file: i.txt'] == []
+E         
+E         Left contains one more item: 'input.json: missing regular file: i.txt'
+E         Use -v to get more diff
+
+tests/unit/test_store_ingestion.py:35: AssertionError
+___________ test_unverified_fact_is_not_promoted_by_reference_alone ____________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-304/test_unverified_fact_is_not_pr0')
+
+    def test_unverified_fact_is_not_promoted_by_reference_alone(tmp_path):
+        put = partial_case(tmp_path)
+        row = evidence(entity_candidate_id=None, source_type="search_snippet", assertion_status="unverified")
+        (tmp_path / "evidence.jsonl").write_text(json.dumps(row) + "\n")
+        put("buyer_profile.json", dict(case_id="case-test", company_name="Acme", is_synthetic=True,
+                                       claim_evidence_map={"company_name": ["ev-1"]}))
+>       assert any("unverified" in error and "company_name" in error for error in validate_case(tmp_path))
+E       assert False
+E        +  where False = any(<generator object test_unverified_fact_is_not_promoted_by_reference_alone.<locals>.<genexpr> at 0x108fe4110>)
+
+tests/contract/test_models.py:236: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_store_ingestion.py::test_store_initial_valid_and_no_overwrite
+FAILED tests/unit/test_store_ingestion.py::test_atomic_revisions_and_failure_resume
+FAILED tests/contract/test_models.py::test_unverified_fact_is_not_promoted_by_reference_alone
+3 failed, 36 passed in 0.46s

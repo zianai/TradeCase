@@ -1,0 +1,18 @@
+{
+  "sha": "9b2fde8f719623c627516da2663707a893ee6805",
+  "executed_at": "2026-10-27T15:41:42.520205+00:00",
+  "command": [
+    "/Users/a/workspaces/AForeign Trade/upstream-audit/.audit-venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_tools/test_url_filter.py",
+    "tests/test_tools/test_contact_extractor.py",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "exit_code": 0,
+  "mode": "tested_offline",
+  "test_data": "upstream synthetic unit tests",
+  "network_during_tests": false
+}

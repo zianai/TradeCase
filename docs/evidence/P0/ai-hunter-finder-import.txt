@@ -1,0 +1,9 @@
+Command: /Users/a/workspaces/AForeign Trade/upstream-audit/.audit-venv/bin/python -c from tools.company_website_finder import CompanyWebsiteFinder
+Exit code: 1
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/Users/a/workspaces/AForeign Trade/upstream-audit/AI_Find_Customer/backend/tools/company_website_finder.py", line 18, in <module>
+    from tools.google_search import GoogleSearchTool
+  File "/Users/a/workspaces/AForeign Trade/upstream-audit/AI_Find_Customer/backend/tools/google_search.py", line 8, in <module>
+    import httpx
+ModuleNotFoundError: No module named 'httpx'

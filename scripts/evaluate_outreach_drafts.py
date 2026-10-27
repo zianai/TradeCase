@@ -14,10 +14,13 @@ import hashlib
 import json
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
-from contracts import ContractError, validate_outreach_draft, validate_outreach_evaluation
+try:  # Package use in TradeCase; preserve direct script execution.
+    from .contracts import ContractError, validate_outreach_draft, validate_outreach_evaluation
+except ImportError:
+    from contracts import ContractError, validate_outreach_draft, validate_outreach_evaluation
 
 
 LOCAL_LANGUAGE_BY_COUNTRY = {

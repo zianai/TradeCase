@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "company_name": "Ningbo Demo Manufacturer (synthetic)",
+  "product_summary": "Desk lamps; technical attributes and commercial terms require confirmation",
+  "product_attributes": {},
+  "allowed_claims": [],
+  "source_refs": ["synthetic seller input"],
+  "is_synthetic": true
+}

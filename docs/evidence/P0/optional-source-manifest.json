@@ -1,0 +1,331 @@
+{
+  "schema_version": "1.0",
+  "captured_at": "2026-10-27T15:42:27.414239+00:00",
+  "source": "GitHub public API and commit-addressed raw URLs",
+  "is_synthetic": false,
+  "records": [
+    {
+      "repository": "unclecode/crawl4ai",
+      "sha": "888299fb5f0b82181897dc0e61bfb4b036f0aea5",
+      "commit_time": "2026-10-26T08:41:46Z",
+      "commit_url": "https://github.com/unclecode/crawl4ai/commit/888299fb5f0b82181897dc0e61bfb4b036f0aea5",
+      "tree_truncated": false,
+      "root_notice_files": [
+        "LICENSE"
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/LICENSE",
+          "sha256": "193fe32704bee15cd74f5153e569cdf830e26445e19798a55daee32da40758aa",
+          "git_blob_sha": "ade44a7824869fe57a3dfa98ad4b7ffb764c3cb0"
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/README.md",
+          "sha256": "abbc0acf9ae76c81d19622603636bfa25c681fa9daececc9573a907d75f85582",
+          "git_blob_sha": "925e377652dfb2686b9ce450d0f968a7fe2cc590"
+        },
+        {
+          "path": "crawl4ai/__version__.py",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/crawl4ai/__version__.py",
+          "sha256": "878cbe592b8868788ad6fe374da94e1ca83bc8d9f7e34050ebd8c7377f10139b",
+          "git_blob_sha": "4431a01a768a95022cbd8012c8410c8808438c64"
+        },
+        {
+          "path": "crawl4ai/async_crawler_strategy.py",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/crawl4ai/async_crawler_strategy.py",
+          "sha256": "20e1b1d1303ce948397797c23f7c9e5c8daab399edf759686863c60b9c722e9e",
+          "git_blob_sha": "0b623de0c4c625f9cfe399d07a58e399809698bd"
+        },
+        {
+          "path": "crawl4ai/async_webcrawler.py",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/crawl4ai/async_webcrawler.py",
+          "sha256": "9a4692b7d85426dbc33231971f39736e68a73548b73f6e10ec25cdab02e49e9d",
+          "git_blob_sha": "110773ca133f501bc3e0d96eff6f7c9d6123a3a7"
+        },
+        {
+          "path": "crawl4ai/install.py",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/crawl4ai/install.py",
+          "sha256": "504fb49bb37698eaceaffb070c90ca47eb59e1cca436924e9df773bbaa6a276f",
+          "git_blob_sha": "3d203264dd1dccd4903dd7233be755e9eb7b01fc"
+        },
+        {
+          "path": "pyproject.toml",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/pyproject.toml",
+          "sha256": "eb91415ecd274425525ad815fec168c18ecd4524e23e00b45925ff0aa2489663",
+          "git_blob_sha": "f93d1068015e75d9ae5ba30e51f96b16dfdf237a"
+        },
+        {
+          "path": "requirements.txt",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/requirements.txt",
+          "sha256": "4ab4b14616f2babf4a04ab6316bcb7323d33b652ab98ddf5eb9b5592ccf06820",
+          "git_blob_sha": "524a3d08b81cab3d9ddd8870478012304d1d26bb"
+        },
+        {
+          "path": "sbom/README.md",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/sbom/README.md",
+          "sha256": "fcf1923d06e1cc2c4ac243a0b4d36b4de66b61e650aebe85c9054a2ad27c767e",
+          "git_blob_sha": "9ee38736c9fbebce8bff30dbbd540d865e5be414"
+        },
+        {
+          "path": "sbom/sbom.cdx.json",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/sbom/sbom.cdx.json",
+          "sha256": "7c3302f7a1013eb4a56cc634d23b608eea8879d52923db18d479dcfa66a14ce6",
+          "git_blob_sha": "1e703fd5c801b7c380ac2e1c864def1c7c17fee4"
+        },
+        {
+          "path": "setup.py",
+          "url": "https://raw.githubusercontent.com/unclecode/crawl4ai/888299fb5f0b82181897dc0e61bfb4b036f0aea5/setup.py",
+          "sha256": "262caafed4a595347320de55872d5834954272d9c9d2a807f5ba755c85e6d8cf",
+          "git_blob_sha": "4d6e0575a8a1bb17b7d50bf89b13c4228c6f7e9e"
+        }
+      ]
+    },
+    {
+      "repository": "eze-is/web-access",
+      "sha": "d173a75978ceb2c63fa0b27f7408cd2bf7fe4310",
+      "commit_time": "2026-10-14T11:23:28Z",
+      "commit_url": "https://github.com/eze-is/web-access/commit/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310",
+      "tree_truncated": false,
+      "root_notice_files": [],
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/README.md",
+          "sha256": "84a639400b018213b1f12209d3f0f5774b0a9be0ac01e8f79deb66a0eff24645",
+          "git_blob_sha": "9b33bf7e52e65876cc5f1fba135a44a80e7c1116"
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/SKILL.md",
+          "sha256": "ff5d20157c545c22869b3c7b715d02f0ec884b9c1e09ecd7a038751d2f52f31a",
+          "git_blob_sha": "937bc175a4dad4f203be781e378295b3633cd342"
+        },
+        {
+          "path": "scripts/browser-discovery.mjs",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/scripts/browser-discovery.mjs",
+          "sha256": "fdc1e6cc55407f3ce3326b3dcc6c8c24be7be5f7a193f9a6786da020be2a75e9",
+          "git_blob_sha": "5958852fce3aebe6bd04bdc568e12b86deb9d98f"
+        },
+        {
+          "path": "scripts/cdp-connection.mjs",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/scripts/cdp-connection.mjs",
+          "sha256": "523f502173cf8e5e9f423628d303b541cb84f5af9bc949e954e8906fb6522b51",
+          "git_blob_sha": "9a0695b514aca024286f5b911b562054e40cccdf"
+        },
+        {
+          "path": "scripts/cdp-proxy.mjs",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/scripts/cdp-proxy.mjs",
+          "sha256": "a49d2d3997a8aff885cbe6b56f2ef89ff99e8c7d18329eb7bdf70483323a83a5",
+          "git_blob_sha": "574b517fa6d73ca2c58dba569ade94b68650d389"
+        },
+        {
+          "path": "scripts/check-deps.mjs",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/scripts/check-deps.mjs",
+          "sha256": "a584ee4a4c66d308413885e50adadab3b5cca420dfde9da8bc93af6fa9210d4e",
+          "git_blob_sha": "471770636bea92d5bf38d3180b68c06552aa4859"
+        },
+        {
+          "path": "scripts/find-url.mjs",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/scripts/find-url.mjs",
+          "sha256": "b5738e490dc6da95f2ecb38d201749bfec4baf8c4184d4d439d152d7fa8346c6",
+          "git_blob_sha": "47cf74054d768598f66f8defd22bb67082a45875"
+        },
+        {
+          "path": "scripts/user-data.mjs",
+          "url": "https://raw.githubusercontent.com/eze-is/web-access/d173a75978ceb2c63fa0b27f7408cd2bf7fe4310/scripts/user-data.mjs",
+          "sha256": "ba76e1b587501a36fa8c7621ca4daf5cd24c7e0d5d5028af4be194555fa36190",
+          "git_blob_sha": "5c52edf26676dc42303b6d82f9db267ea5ea844c"
+        }
+      ]
+    },
+    {
+      "repository": "zpoint/vibe-seller",
+      "sha": "c9be95f890108ce6f48cccf66f614c472fbf8ef6",
+      "commit_time": "2026-10-24T13:19:19Z",
+      "commit_url": "https://github.com/zpoint/vibe-seller/commit/c9be95f890108ce6f48cccf66f614c472fbf8ef6",
+      "tree_truncated": false,
+      "root_notice_files": [
+        "LICENSE"
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/zpoint/vibe-seller/c9be95f890108ce6f48cccf66f614c472fbf8ef6/LICENSE",
+          "sha256": "b787d82c2a133ef617f0286d79d263f9e3a824f52ac0454421af693bdc89ba3f",
+          "git_blob_sha": "d39174a28d1ad4bfe35a5779f96c87d098fde0b2"
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/zpoint/vibe-seller/c9be95f890108ce6f48cccf66f614c472fbf8ef6/README.md",
+          "sha256": "5a624cdbceebec9017c50215dc6ea9ef85a2d1df49858edbe83b6716ebf3bf7d",
+          "git_blob_sha": "d98e74b6b348f2a773fc8fd11b2d57d6b4478da9"
+        },
+        {
+          "path": "README_en.md",
+          "url": "https://raw.githubusercontent.com/zpoint/vibe-seller/c9be95f890108ce6f48cccf66f614c472fbf8ef6/README_en.md",
+          "sha256": "72499fa166b20f9edaa4cf8e5f9ad6b55f24eecfe37acdeaa042b266f4211405",
+          "git_blob_sha": "c1e2524fbc9850aebcc9f0b6bcc42eeca50229ea"
+        },
+        {
+          "path": "pyproject.toml",
+          "url": "https://raw.githubusercontent.com/zpoint/vibe-seller/c9be95f890108ce6f48cccf66f614c472fbf8ef6/pyproject.toml",
+          "sha256": "f3b79dc733d4b442cd7f28c28094d59db6c5a00a90c2f149975568082507aaeb",
+          "git_blob_sha": "458cd6a571fb0c769563f036fd5f1355e38ad759"
+        }
+      ]
+    },
+    {
+      "repository": "assafelovic/gpt-researcher",
+      "sha": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "commit_time": "2026-10-10T22:03:51Z",
+      "commit_url": "https://github.com/assafelovic/gpt-researcher/commit/3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "tree_truncated": false,
+      "root_notice_files": [
+        "LICENSE"
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "git_blob_sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+        },
+        {
+          "path": "README-ja_JP.md",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/README-ja_JP.md",
+          "sha256": "419fa5ea7b4b9036cd629b18e0a3e59d8c4ffdcbdb66def3d893c814b642e554",
+          "git_blob_sha": "8f67a83b53c161f5d10280ed8a39fefa99712d6d"
+        },
+        {
+          "path": "README-ko_KR.md",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/README-ko_KR.md",
+          "sha256": "f117a974925415d1581b45656ec2bb814a889c6565e10b760b68edbbab0f9f1d",
+          "git_blob_sha": "e8222956f9c6c49b803d5f64cc113b5074b99fab"
+        },
+        {
+          "path": "README-ru_RU.md",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/README-ru_RU.md",
+          "sha256": "7237253f1bb04de8d8b7a2ec1559189e2c2dfe69a71e606124d5e2619ccd0b32",
+          "git_blob_sha": "403f36ee26d9dcaf95c175802c94e5863d171ead"
+        },
+        {
+          "path": "README-zh_CN.md",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/README-zh_CN.md",
+          "sha256": "674c5c4e0b6fde4b16f990fd238d13916b82eb6aa382ed5c5414f3fd81724021",
+          "git_blob_sha": "ec91582de6511af72169b909b8cdfe2acee2409b"
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/README.md",
+          "sha256": "a43c071ae3d19ae35631ae325742b973a8a925ecc3669563c67ed759398ec0e2",
+          "git_blob_sha": "97b88b50419d8eec6933aff2985dcb618c509fa3"
+        },
+        {
+          "path": "pyproject.toml",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/pyproject.toml",
+          "sha256": "53b8d59bb05e5e1ec854703b6e487ababaeab53d49f0a25a3e549947312dfcd6",
+          "git_blob_sha": "037171e623b822b3e2282dbf9545b033e7887614"
+        },
+        {
+          "path": "requirements.txt",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/requirements.txt",
+          "sha256": "6d11deb240ef10a18f2d2ad1f51c0e3c273d65d8f988d3e51e7c85da2cb3259d",
+          "git_blob_sha": "f50d76f16c8e1f674e4be4145772f2867b4352af"
+        },
+        {
+          "path": "setup.py",
+          "url": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/setup.py",
+          "sha256": "e3ee121d2a3b580a3706519fd57b0aa825316765f2c9fe7b5237f82f75e52e2e",
+          "git_blob_sha": "04c5b39cdc49ab398ef84b139ebc30986f8cc3d6"
+        }
+      ]
+    },
+    {
+      "repository": "fleixweb/superleads",
+      "sha": "c45f451ff1846859f22282a444534c67b3034f88",
+      "commit_time": "2026-08-24T18:13:26Z",
+      "commit_url": "https://github.com/fleixweb/superleads/commit/c45f451ff1846859f22282a444534c67b3034f88",
+      "tree_truncated": false,
+      "root_notice_files": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/fleixweb/superleads/c45f451ff1846859f22282a444534c67b3034f88/LICENSE",
+          "sha256": "80e0bc202dd9bf0b7eae837a2b6f921688c236d3bf6a672a5fd913761e28b87f",
+          "git_blob_sha": "ea41b3e8bd8ec0d282dc01ce6fb8c4e3f2401d15"
+        },
+        {
+          "path": "NOTICE",
+          "url": "https://raw.githubusercontent.com/fleixweb/superleads/c45f451ff1846859f22282a444534c67b3034f88/NOTICE",
+          "sha256": "3dde4d2fbe6495cef9be3b54f4b83c629cf850c403900c0a77259b07dcd7eb25",
+          "git_blob_sha": "404a6cd09dd1048b4c5a6e69075779a3578723ba"
+        },
+        {
+          "path": "README.en.md",
+          "url": "https://raw.githubusercontent.com/fleixweb/superleads/c45f451ff1846859f22282a444534c67b3034f88/README.en.md",
+          "sha256": "ad878e764947dc7a46f5a311917afe49f25c5570398a8a0fa52d1543b3100d76",
+          "git_blob_sha": "9f8670ede18b477ea8e77a4d30edb78203ff6795"
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/fleixweb/superleads/c45f451ff1846859f22282a444534c67b3034f88/README.md",
+          "sha256": "534449efd030c775f6e348438c61c509ddd7266669c56627e39f47322299dd50",
+          "git_blob_sha": "b5b43056634e2688208d208723dde2e8a7714a34"
+        },
+        {
+          "path": "README.zh-CN.md",
+          "url": "https://raw.githubusercontent.com/fleixweb/superleads/c45f451ff1846859f22282a444534c67b3034f88/README.zh-CN.md",
+          "sha256": "d0cc6c07de0debac2d86956d7383201bf57e28cd351676e7f5a0d21435ac5563",
+          "git_blob_sha": "2f08e2b47005e3fee83d8b690bd58111df0313ec"
+        },
+        {
+          "path": "requirements.txt",
+          "url": "https://raw.githubusercontent.com/fleixweb/superleads/c45f451ff1846859f22282a444534c67b3034f88/requirements.txt",
+          "sha256": "09a50e3b3cd7f6548f2084a91158a2ef38d3d1749c5bd45e052f64edc36495b5",
+          "git_blob_sha": "fd666a13a10ebe5a54a1264f33954a601a353744"
+        }
+      ]
+    },
+    {
+      "repository": "JuneYaooo/launchfit-ai",
+      "sha": "99d5a18cdee40bfeb9f117531577c5fdb55d3627",
+      "commit_time": "2026-06-18T09:11:25Z",
+      "commit_url": "https://github.com/JuneYaooo/launchfit-ai/commit/99d5a18cdee40bfeb9f117531577c5fdb55d3627",
+      "tree_truncated": false,
+      "root_notice_files": [
+        "LICENSE"
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/JuneYaooo/launchfit-ai/99d5a18cdee40bfeb9f117531577c5fdb55d3627/LICENSE",
+          "sha256": "d23a87f6b9020017275bdb8129abeb8c009ad572d223eca1749298a7c0a11dae",
+          "git_blob_sha": "b2b4b547d64e1d53b32399588b3ec20ff2746ce9"
+        },
+        {
+          "path": "README.en.md",
+          "url": "https://raw.githubusercontent.com/JuneYaooo/launchfit-ai/99d5a18cdee40bfeb9f117531577c5fdb55d3627/README.en.md",
+          "sha256": "5ac8774c5b25360fe997b6cf305099cead642ff92b640f1a206541e70a3d9914",
+          "git_blob_sha": "c0b5749d2808d6692c1d321d0ac7b05355c0c71f"
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/JuneYaooo/launchfit-ai/99d5a18cdee40bfeb9f117531577c5fdb55d3627/README.md",
+          "sha256": "b69dc2954cada43e9af6a2636150f18a09456beb9a8690ce45030ae059b8ace8",
+          "git_blob_sha": "c55d9baba56f7cd9b1a9adfd2791550170d1ef02"
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://raw.githubusercontent.com/JuneYaooo/launchfit-ai/99d5a18cdee40bfeb9f117531577c5fdb55d3627/SKILL.md",
+          "sha256": "32625b98655b15f2240295f648aea808880a1d0bb80e4251ace4d0c32162810b",
+          "git_blob_sha": "82ade841af417eb629a6325727560a2fb80d54ef"
+        }
+      ]
+    }
+  ]
+}

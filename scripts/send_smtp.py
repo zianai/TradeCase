@@ -1,29 +1,38 @@
 #!/usr/bin/env python3
-"""Send approved outreach drafts through SMTP with dry-run and audit logging."""
+"""Retained upstream draft/hash helpers; all SMTP sending is disabled in V1.
+
+The original sending implementation is preserved in Git history. There is no
+configuration flag that re-enables sending in TradeCase V1.
+"""
 
 from __future__ import annotations
 
-import argparse
 import csv
 import hashlib
 import json
 import os
-import smtplib
 import sys
-import time
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from pathlib import Path
 from urllib.parse import urlparse
 
-from contracts import (
-    ContractError,
-    validate_approved_outreach,
-    validate_outreach_draft,
-    validate_outreach_evaluation,
-    validate_sent_log_event,
-    validate_smtp_config,
-)
+try:  # Package use in TradeCase; preserve direct script execution.
+    from .contracts import (
+        ContractError,
+        validate_approved_outreach,
+        validate_outreach_evaluation,
+        validate_sent_log_event,
+    )
+except ImportError:
+    from contracts import (
+        ContractError,
+        validate_approved_outreach,
+        validate_outreach_evaluation,
+        validate_sent_log_event,
+    )
+
+SEND_DISABLED_MESSAGE = "Email sending is disabled in TradeCase V1; create a draft for human review."
 
 SKILL_DIR = Path(__file__).resolve().parents[1]
 DEFAULT_SMTP_CONFIG = SKILL_DIR / "_shared" / "smtp-config.json"
@@ -217,27 +226,8 @@ def build_message(draft: dict, cfg: dict) -> EmailMessage:
 
 
 def send_message(msg: EmailMessage, cfg: dict) -> tuple[str, str]:
-    password_env = str(cfg.get("password_env") or "").strip()
-    password = os.environ.get(password_env, "") if password_env else ""
-    if not password:
-        raise RuntimeError("missing SMTP password; set password_env in smtp config and export that variable")
-    host = str(cfg["smtp_host"])
-    port = int(cfg.get("smtp_port") or 465)
-    username = str(cfg.get("username") or cfg.get("from_email") or "")
-    use_ssl = cfg.get("use_ssl", False)
-    if use_ssl:
-        with smtplib.SMTP_SSL(host, port, timeout=30) as smtp:
-            smtp.login(username, password)
-            response = smtp.send_message(msg)
-    else:
-        with smtplib.SMTP(host, port, timeout=30) as smtp:
-            smtp.ehlo()
-            if cfg.get("use_starttls", True):
-                smtp.starttls()
-                smtp.ehlo()
-            smtp.login(username, password)
-            response = smtp.send_message(msg)
-    return str(msg.get("Message-ID") or ""), json.dumps(response, ensure_ascii=False)
+    """Fail before inspecting the configuration, credentials or message."""
+    raise RuntimeError(SEND_DISABLED_MESSAGE)
 
 
 def resolve_smtp_config(path: Path | None) -> Path:
@@ -250,96 +240,9 @@ def resolve_smtp_config(path: Path | None) -> Path:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--drafts", required=True, type=Path, help="approved-outreach.jsonl")
-    parser.add_argument(
-        "--smtp-config",
-        type=Path,
-        help="SMTP config path. Defaults to $B2B_LEAD_HUNTER_SMTP_CONFIG, then <skill>/_shared/smtp-config.json.",
-    )
-    parser.add_argument("--sent-log", type=Path)
-    parser.add_argument("--evaluations", type=Path, help="Required outreach-evaluations.jsonl gate for dry-run/send.")
-    parser.add_argument("--suppression-list", type=Path)
-    parser.add_argument("--dry-run", action="store_true", help="Validate and log dry_run without sending.")
-    parser.add_argument("--send-approved", action="store_true", help="Actually send approved drafts.")
-    parser.add_argument(
-        "--print-approval-hashes",
-        action="store_true",
-        help="Print draft_id, recipient_email, and computed approved_body_hash as JSONL; does not send or log.",
-    )
-    parser.add_argument("--limit", type=int, default=0, help="Optional per-run send limit.")
-    args = parser.parse_args()
-
-    drafts = read_jsonl(args.drafts)
-    if args.print_approval_hashes:
-        for i, draft in enumerate(drafts, start=1):
-            validate_outreach_draft(draft, f"drafts[{i}]")
-            print(
-                json.dumps(
-                    {
-                        "draft_id": str(draft.get("draft_id") or ""),
-                        "recipient_email": str(draft.get("recipient_email") or "").strip().lower(),
-                        "approved_body_hash": body_hash(draft),
-                    },
-                    ensure_ascii=False,
-                )
-            )
-        return 0
-
-    if args.dry_run == args.send_approved:
-        raise SystemExit("Choose exactly one: --dry-run or --send-approved")
-    smtp_config = resolve_smtp_config(args.smtp_config)
-    if not smtp_config.exists():
-        raise SystemExit(
-            f"SMTP config not found: {smtp_config}. Pass --smtp-config, set {SMTP_CONFIG_ENV}, "
-            "or create <skill>/_shared/smtp-config.json."
-        )
-    if not args.sent_log or not args.evaluations:
-        raise SystemExit("--sent-log and --evaluations are required for --dry-run or --send-approved")
-
-    cfg = read_json(smtp_config)
-    validate_smtp_config(cfg)
-    passed_evaluations = load_passed_evaluations(args.evaluations)
-    prior_log = read_jsonl(args.sent_log)
-    suppressions = load_suppressions(args.suppression_list)
-    already_sent = sent_domains(prior_log)
-    daily_limit = int(cfg.get("daily_limit") or 20)
-    per_run_limit = args.limit or daily_limit
-    delay = int(cfg.get("delay_seconds") or 0)
-    sent_count = 0
-    events: list[dict] = []
-
-    for i, draft in enumerate(drafts, start=1):
-        event_type, reason = validate_draft(draft, suppressions, already_sent, passed_evaluations, f"drafts[{i}]")
-        if event_type:
-            events.append(make_log(draft, event_type, "skipped", reason))
-            continue
-
-        if args.dry_run:
-            events.append(make_log(draft, "dry_run", "ok"))
-            continue
-
-        if sent_count >= min(daily_limit, per_run_limit):
-            events.append(make_log(draft, "queued", "skipped", "send limit reached"))
-            continue
-
-        events.append(make_log(draft, "send_attempt", "ok"))
-        try:
-            msg = build_message(draft, cfg)
-            message_id, smtp_response = send_message(msg, cfg)
-            events.append(make_log(draft, "send_success", "ok", message_id=message_id, smtp_response=smtp_response))
-            domain = normalized_domain(str(draft.get("company_domain") or draft.get("website") or ""))
-            if domain:
-                already_sent.add(domain)
-            sent_count += 1
-            if delay and sent_count < min(daily_limit, per_run_limit):
-                time.sleep(delay)
-        except Exception as exc:
-            events.append(make_log(draft, "send_failure", "failed", str(exc)))
-
-    append_jsonl(args.sent_log, events)
-    print(json.dumps({"drafts": len(drafts), "events": len(events), "sent": sent_count}, ensure_ascii=False))
-    return 0
+    """Disable the legacy CLI, including --send-approved and --dry-run."""
+    print(SEND_DISABLED_MESSAGE, file=sys.stderr)
+    return 2
 
 
 if __name__ == "__main__":

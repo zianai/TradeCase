@@ -1,0 +1,51 @@
+{
+  "mode": "tested_offline",
+  "network_calls": 0,
+  "emails_sent": 0,
+  "executed_at": "2026-10-27T15:46:41.271432+00:00",
+  "results": [
+    {
+      "command": ".venv/bin/python -m pytest tests/integration/test_upstream.py -q",
+      "stage": "red-before-implementation",
+      "exit_code": 1,
+      "summary": "14 failed",
+      "log": "upstream-red.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/integration/test_upstream.py -q",
+      "stage": "green-after-implementation",
+      "exit_code": 0,
+      "summary": "14 passed",
+      "log": "upstream-green.log"
+    },
+    {
+      "command": ".venv/bin/ruff check src/tradecase/upstream.py scripts/send_smtp.py scripts/customs_verify.py scripts/evaluate_outreach_drafts.py tests/integration/test_upstream.py",
+      "stage": "lint",
+      "exit_code": 0,
+      "summary": "All checks passed",
+      "log": "upstream-lint.log"
+    },
+    {
+      "command": ".venv/bin/python scripts/customs_verify.py --help",
+      "stage": "direct-script-import-compatibility",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/evaluate_outreach_drafts.py --help",
+      "stage": "direct-script-import-compatibility",
+      "exit_code": 0
+    }
+  ],
+  "file_sha256": {
+    "src/tradecase/upstream.py": "e7e392acfc1da774932969231c019f58a9d66b94b0ac94952695f1c69ece9acb",
+    "scripts/send_smtp.py": "270a5cb064eb184d01c6b90a99b6a2bb7d653f8119a096a249d6db700087b4ae",
+    "scripts/customs_verify.py": "4eeac1d55bee705b61daaef63fce5859882c7e8b36d7b3babcc6e4fe1d9ae6bf",
+    "scripts/evaluate_outreach_drafts.py": "e22ffc2246386e12a235ab74e58b690bb5b6c3917be55d350021cd158e302584",
+    "tests/integration/test_upstream.py": "4dccfc6e71c9e5c1b44f81f53c8824b9a5dc575984c9904fef865378b21ae4ea"
+  },
+  "limits": [
+    "No real mailbox verification, customs research or identity verification occurred.",
+    "claim_risk is the original upstream four-argument function and returns a quality score, not a calibrated probability.",
+    "Contact-page URL filtering is syntactic; public DNS/IP and redirect enforcement belongs to P3 ContentReader."
+  ]
+}

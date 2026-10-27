@@ -19,3 +19,19 @@ All B2B rows refer to https://github.com/xiongQvQ/-b2b-lead-hunter-skill at `ac2
 | root host instructions / README / pyproject / Makefile / CI | same paths | adapted (planned) | verified root MIT | remove auto-outreach preference; new CLI and blocking offline checks |
 
 New Case models/storage/ingestion/rules/reporting are new code because the upstream lead/outreach artifacts have no persistent inquiry Case schema, rule applicability engine, or inbound-reply contract. Avoiding a new Agent runtime is mandatory.
+
+## Additional audited sources
+
+Each row's license observations derive from the locked root files; details and file hashes are in the P0 supplements.
+
+| Repository / locked SHA | Original | Target | Nature | License / deps | Real test / reason / alternative |
+|---|---|---|---|---|---|
+| AI_Find_Customer `9b2fde8f719623c627516da2663707a893ee6805` | `backend/tools/url_filter.py` | P2 candidate adapter | not-used until P2 | MIT / stdlib | original tools 80 tests pass; useful classifier, needs hostile-URL fixes |
+| AI_Find_Customer same SHA | `contact_extractor.py` | none | not-used | MIT / stdlib | original tests pass; B2B extractor already covers required scope |
+| AI_Find_Customer same SHA | PDF parsers / react_runner / agents | none | not-used | root MIT; PDF AGPL/commercial dependencies | excluded; no model loop or extra parsing required |
+| crawl4ai `888299fb5f0b82181897dc0e61bfb4b036f0aea5` | HTTP strategy / engine | optional dependency boundary | not-used source | Apache-2.0 plus attribution; 34 dependencies not installed | 4 AST parses pass; runtime blocked until dependency/license audit, static reader alternative |
+| web-access `d173a75978ceb2c63fa0b27f7408cd2bf7fe4310` | Skill / CDP Proxy | external optional reference | inspired-only | MIT declaration only, missing full LICENSE; Node 22+ | 6 syntax checks pass; runtime/license blocked; no Proxy copy |
+| vibe-seller `c9be95f890108ce6f48cccf66f614c472fbf8ef6` | README isolation approach | browser policy | inspired-only | Apache-2.0 | source inspection only; no GUI/server/mux |
+| gpt-researcher `3582a6841fe7dc801e2a34e34ee408641aea9bce` | README research approach | evidence policy | inspired-only | Apache-2.0 | source inspection only; no framework embedded |
+| superleads `c45f451ff1846859f22282a444534c67b3034f88` | LICENSE/NOTICE only | exclusion ledger | not-used | PolyForm Noncommercial | no code/templates copied |
+| launchfit-ai `99d5a18cdee40bfeb9f117531577c5fdb55d3627` | LICENSE only | exclusion ledger | not-used | PolyForm Noncommercial | no code/templates copied |

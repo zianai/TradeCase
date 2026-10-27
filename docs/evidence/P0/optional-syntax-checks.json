@@ -1,0 +1,82 @@
+{
+  "checked_at": "2026-10-27T15:40:37.272089+00:00",
+  "kind": "syntax_only_no_runtime_import",
+  "results": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "upstream-audit/optional/eze-is__web-access/scripts/browser-discovery.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "upstream-audit/optional/eze-is__web-access/scripts/cdp-connection.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "upstream-audit/optional/eze-is__web-access/scripts/cdp-proxy.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "upstream-audit/optional/eze-is__web-access/scripts/check-deps.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "upstream-audit/optional/eze-is__web-access/scripts/find-url.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "upstream-audit/optional/eze-is__web-access/scripts/user-data.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "ast.parse upstream-audit/optional/unclecode__crawl4ai/crawl4ai/__version__.py",
+      "exit_code": 0
+    },
+    {
+      "command": "ast.parse upstream-audit/optional/unclecode__crawl4ai/crawl4ai/async_crawler_strategy.py",
+      "exit_code": 0
+    },
+    {
+      "command": "ast.parse upstream-audit/optional/unclecode__crawl4ai/crawl4ai/async_webcrawler.py",
+      "exit_code": 0
+    },
+    {
+      "command": "ast.parse upstream-audit/optional/unclecode__crawl4ai/crawl4ai/install.py",
+      "exit_code": 0
+    }
+  ]
+}

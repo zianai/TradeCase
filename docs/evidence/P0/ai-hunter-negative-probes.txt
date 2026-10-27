@@ -1,0 +1,19 @@
+Command: /Users/a/workspaces/AForeign Trade/upstream-audit/.audit-venv/bin/python /Users/a/workspaces/AForeign Trade/upstream-audit/ai_hunter_negative_probe.py
+Exit code: 0
+{
+  "mode": "offline synthetic negative probes",
+  "security_verdict": "unsafe without wrapper validation",
+  "observed": {
+    "spoofed_linkedin_in_path": "linkedin_company",
+    "spoofed_linkedin_slug": "acme",
+    "private_ip_as_company_site": "company_site",
+    "ftp_as_company_site": "company_site",
+    "port_bypasses_search_domain_bucket": "company_site",
+    "contact_discovery_ftp": [
+      "ftp://acme.invalid/contact"
+    ],
+    "observed_email_extraction_only": [
+      "sales@acme.invalid"
+    ]
+  }
+}

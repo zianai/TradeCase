@@ -1,0 +1,6 @@
+python -m compileall -q src scripts
+ruff check src tests
+All checks passed!
+python -m pytest -q
+.............................................................            [100%]
+61 passed in 0.77s

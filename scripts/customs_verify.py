@@ -14,7 +14,10 @@ import re
 import sys
 from pathlib import Path
 
-from contracts import ContractError, validate_customs_verification
+try:  # Package use in TradeCase; preserve direct script execution.
+    from .contracts import ContractError, validate_customs_verification
+except ImportError:
+    from contracts import ContractError, validate_customs_verification
 
 PLATFORMS = {
     "panjiva.com": "panjiva",

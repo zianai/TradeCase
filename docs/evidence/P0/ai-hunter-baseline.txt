@@ -1,0 +1,13 @@
+Command: /Users/a/workspaces/AForeign Trade/upstream-audit/.audit-venv/bin/python -m pytest tests/test_tools/test_url_filter.py tests/test_tools/test_contact_extractor.py -q -p no:cacheprovider
+Working directory: /Users/a/workspaces/AForeign Trade/upstream-audit/AI_Find_Customer/backend
+Exit code: 0
+........................................................................ [ 90%]
+........                                                                 [100%]
+=============================== warnings summary ===============================
+../../.audit-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1474
+  /Users/a/workspaces/AForeign Trade/upstream-audit/.audit-venv/lib/python3.11/site-packages/_pytest/config/__init__.py:1474: PytestConfigWarning: Unknown config option: asyncio_mode
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+80 passed, 1 warning in 0.04s
