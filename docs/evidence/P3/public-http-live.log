@@ -1,0 +1,20 @@
+{
+  "requested_url": "https://quotes.toscrape.com/js/",
+  "final_url": null,
+  "captured_at": "2026-10-27T15:57:56.395791Z",
+  "status": "blocked",
+  "http_status": null,
+  "sha256": null,
+  "byte_count": 0,
+  "blockers": [
+    "non_public_address"
+  ],
+  "warnings": [],
+  "robots": [],
+  "budget": {
+    "pages_used": 1,
+    "requests_used": 0,
+    "origin_last_requested_at": {},
+    "origin_min_interval": {}
+  }
+}

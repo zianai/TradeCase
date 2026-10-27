@@ -1,0 +1,39 @@
+[
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "init",
+      "--inquiry",
+      "docs/evidence/P3/public-read-input.txt",
+      "--out",
+      "cases/live-public-smoke"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"artifact_index\": {\n    \"input.json\": \"87148ef998e9443b74d6a40eee29c9f134f101ff246422177d739a9c93868936\",\n    \"seller_context.json\": \"71864f4a55d185505754562bdea3db6d7c3c991c6fc0ecfac9dab1cf548f846b\"\n  },\n  \"blockers\": [],\n  \"case_id\": \"live-public-smoke\",\n  \"created_at\": \"2026-10-27T15:59:20.803740Z\",\n  \"current_stage\": \"init\",\n  \"error\": null,\n  \"input_hash\": \"87148ef998e9443b74d6a40eee29c9f134f101ff246422177d739a9c93868936\",\n  \"revision\": 1,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"created\",\n  \"updated_at\": \"2026-10-27T15:59:20.804223Z\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "capture",
+      "--case",
+      "cases/live-public-smoke",
+      "--url",
+      "https://www.ikea.com/global/en/our-business/how-we-work/"
+    ],
+    "exit_code": 1,
+    "stdout": "{\n  \"status\": \"blocked\",\n  \"budget\": {\n    \"pages_used\": 1,\n    \"requests_used\": 0,\n    \"origin_last_requested_at\": {},\n    \"origin_min_interval\": {}\n  },\n  \"blockers\": [\n    \"non_public_address\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/live-public-smoke"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": false,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "url": "https://quotes.toscrape.com/js/",
+  "captured_at": "2026-10-27T15:57:04.600Z",
+  "tool": "host CUA / ChatGPT IAB",
+  "status": "tested_live",
+  "observed_title": "Quotes to Scrape",
+  "rendered_quote_blocks": 10,
+  "author_labels": 10,
+  "observation_basis": "Full accessibility tree contained quote text followed by 10 author labels; static preflight contained zero quote DOM blocks",
+  "login_used": false,
+  "web_access_used": false,
+  "external_write": false,
+  "temporary_tab_closed": true,
+  "limitations": "Demonstrates host browser rendering only; not a Web Access/Crawl4AI integration test"
+}

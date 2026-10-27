@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/unit/test_providers.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "mode": "offline tests",
+  "captured_at": "2026-10-27T15:57:40.488989+00:00"
+}

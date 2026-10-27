@@ -5,6 +5,7 @@ from __future__ import annotations
 import fcntl
 import json
 import os
+import re
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
@@ -29,6 +30,12 @@ ARTIFACTS = {
     "events.jsonl",
     "manifest.json",
 }
+
+
+def is_snapshot(name):
+    return bool(re.fullmatch(r"snapshots/[A-Za-z0-9_-]+\.(?:json|txt)", name))
+
+
 TRANSITIONS = {
     "created": {"running", "needs_input", "failed", "cancelled"},
     "running": {"running", "needs_input", "needs_review", "completed", "failed", "cancelled"},
@@ -108,7 +115,7 @@ class CaseStore:
                 fcntl.flock(stream, fcntl.LOCK_UN)
 
     def _target(self, name):
-        if name not in ARTIFACTS:
+        if name not in ARTIFACTS and not is_snapshot(name):
             raise ValueError(f"unknown artifact: {name}")
         path = self.path / name
         no_symlinks(path)
@@ -162,18 +169,70 @@ class CaseStore:
         self._apply_journal(journal)
 
     def _apply_journal(self, journal):
+        if not isinstance(journal, dict) or set(journal) != {"revision", "files"}:
+            raise ValueError("invalid transaction envelope")
+        files = journal["files"]
+        revision = journal["revision"]
+        if not isinstance(files, dict) or not {"manifest.json", "events.jsonl"} <= files.keys():
+            raise ValueError("transaction requires manifest and events after-images")
+        if not isinstance(revision, int) or isinstance(revision, bool) or revision < 1:
+            raise ValueError("invalid transaction revision")
         for name, content in journal["files"].items():
             self._target(name)
+            if not isinstance(content, str):
+                raise ValueError("transaction after-images must be text")
+            if name.endswith(".jsonl") and content and not content.endswith("\n"):
+                raise ValueError("transaction JSONL must have a complete terminal newline")
             data = (
                 content
-                if name.endswith(".md")
+                if name.endswith((".md", ".txt"))
                 else (
                     [json.loads(line) for line in content.splitlines() if line.strip()]
                     if name.endswith(".jsonl")
                     else json.loads(content)
                 )
             )
-            validate_artifact(name, data)
+            if not is_snapshot(name):
+                validate_artifact(name, data)
+        after = json.loads(files["manifest.json"])
+        events = [json.loads(line) for line in files["events.jsonl"].splitlines() if line.strip()]
+        if after["revision"] != revision or not events or events[-1]["revision"] != revision:
+            raise ValueError("transaction revision differs from manifest/events")
+        if [event["revision"] for event in events] != list(range(1, revision + 1)):
+            raise ValueError("transaction event revisions are incomplete or stale")
+        if len({event["event_id"] for event in events}) != len(events):
+            raise ValueError("transaction contains duplicate event IDs")
+        if any(event["case_id"] != after["case_id"] for event in events):
+            raise ValueError("transaction event Case mismatch")
+        if any(a["timestamp"] > b["timestamp"] for a, b in zip(events, events[1:])):
+            raise ValueError("transaction event time moves backwards")
+        current_path = self.path / "manifest.json"
+        if current_path.exists():
+            current = self.read("manifest.json")
+            if current["revision"] not in {revision - 1, revision} or current["case_id"] != after["case_id"]:
+                raise ValueError("stale transaction revision; rollback refused")
+            if current["revision"] == revision and current != after:
+                raise ValueError("committed revision differs from transaction")
+            if revision > 1 and "input.json" in files:
+                raise ValueError("original inquiry cannot be overwritten by a later transaction")
+            current_events = self.read("events.jsonl")
+            if current_events not in [events, events[:-1]]:
+                raise ValueError("transaction event history differs from current history")
+        elif revision != 1:
+            raise ValueError("initial transaction must have revision 1")
+        # Check all after-image bytes and input identity before touching any file.
+        for name, expected in after["artifact_index"].items():
+            target = self._target(name)
+            raw = files[name].encode("utf-8") if name in files else target.read_bytes()
+            if digest(raw) != expected:
+                raise ValueError(f"transaction artifact hash mismatch: {name}")
+        for name in files.keys() - {"manifest.json", "events.jsonl"}:
+            if name not in after["artifact_index"]:
+                raise ValueError("transaction after-image absent from artifact index")
+        input_raw = files.get("input.json")
+        input_raw = input_raw.encode("utf-8") if input_raw is not None else self._target("input.json").read_bytes()
+        if digest(input_raw) != after["input_hash"] or json.loads(input_raw)["case_id"] != after["case_id"]:
+            raise ValueError("transaction original input identity/hash mismatch")
         # Manifest is the commit marker and is always written last.
         for name in sorted(journal["files"], key=lambda x: x == "manifest.json"):
             atomic_write(self._target(name), journal["files"][name].encode("utf-8"))
@@ -202,6 +261,20 @@ class CaseStore:
                 raise ValueError("final Case requires explicit reopen before edits")
             self._commit(manifest, {name: serialize(name, normalized)}, "artifact_updated", {"artifact": name})
 
+    def save_snapshot(self, name, content):
+        if not is_snapshot(name) or not isinstance(content, str):
+            raise ValueError("snapshot must be bounded text at snapshots/<safe-name>.txt or .json")
+        raw = content.encode("utf-8")
+        if len(raw) > 5 * 1024 * 1024:
+            raise ValueError("snapshot exceeds 5 MiB")
+        if name.endswith(".json"):
+            json.loads(content)
+        with self._lock():
+            manifest = self.read("manifest.json")
+            if manifest["state"] in {"completed", "cancelled"}:
+                raise ValueError("final Case requires explicit reopen before edits")
+            self._commit(manifest, {name: raw}, "snapshot_saved", {"artifact": name, "sha256": digest(raw)})
+
     def transition(self, state, stage, *, error=None, blockers=None, detail=None):
         with self._lock():
             self._check_pending()
@@ -209,11 +282,16 @@ class CaseStore:
             if state not in TRANSITIONS[manifest["state"]]:
                 raise ValueError(f"invalid transition: {manifest['state']} -> {state}")
             if state == "completed":
+                if error or blockers:
+                    raise ValueError("completed cannot retain error or blockers")
                 errors = validate_case(self.path, strict=True)
                 if errors:
                     raise ValueError("cannot complete invalid Case: " + "; ".join(errors))
                 assessment = self.read("assessment.json")
                 checks = self.read("compliance.json")["checks"]
+                profile = self.read("buyer_profile.json")
+                if profile["unresolved_items"] or not profile["selected_candidate_id"]:
+                    raise ValueError("unresolved buyer profile requires needs_review")
                 if assessment["decision"] == "needs_review" or any(
                     c["status"] not in {"pass", "not_applicable"} for c in checks
                 ):
@@ -221,6 +299,9 @@ class CaseStore:
             manifest.update(state=state, current_stage=stage, error=error, blockers=blockers or [])
             self._commit(manifest, {}, state, detail or {})
 
-    def record(self, event_type, detail):
+    def record(self, event_type, detail, runtime_metadata=None):
         with self._lock():
-            self._commit(self.read("manifest.json"), {}, event_type, detail)
+            manifest = self.read("manifest.json")
+            if runtime_metadata is not None:
+                manifest["runtime_metadata"] = {**manifest.get("runtime_metadata", {}), **runtime_metadata}
+            self._commit(manifest, {}, event_type, detail)

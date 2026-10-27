@@ -1,0 +1,67 @@
+{
+  "mode": "tested_offline",
+  "is_synthetic": true,
+  "results": [
+    {
+      "command": [
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+        "-m",
+        "tradecase.cli",
+        "init",
+        "--inquiry",
+        "fixtures/realistic_inquiry.eml",
+        "--seller",
+        "fixtures/seller_profile.json",
+        "--target-country",
+        "US",
+        "--platform",
+        "amazon_us",
+        "--synthetic",
+        "--out",
+        "/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p2-cli-xwzwsb4a/synthetic-p2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"artifact_index\": {\n    \"input.json\": \"0f0f2b16883edfe27cb420294bb5d5487e89157103d890ca0ead0a39e1d81432\",\n    \"seller_context.json\": \"3500ff5c69141146bc5f4000b3e4cf3f9f51a98b8909229336b863f6041a51b3\"\n  },\n  \"blockers\": [],\n  \"case_id\": \"synthetic-p2\",\n  \"created_at\": \"2026-10-27T15:53:30.579310Z\",\n  \"current_stage\": \"init\",\n  \"error\": null,\n  \"input_hash\": \"0f0f2b16883edfe27cb420294bb5d5487e89157103d890ca0ead0a39e1d81432\",\n  \"revision\": 1,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"created\",\n  \"updated_at\": \"2026-10-27T15:53:30.579574Z\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+        "-m",
+        "tradecase.cli",
+        "research",
+        "--case",
+        "/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p2-cli-xwzwsb4a/synthetic-p2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"artifact_index\": {\n    \"buyer_profile.json\": \"9b3812b4ee78b8635fd80eeab38dc0f1e94568e096cf06ae565e84dd332ec1bc\",\n    \"candidates.jsonl\": \"9773b25cfb19f8b4719c9808056beba6e85d76664f1ae933065fda77d1c7b40f\",\n    \"evidence.jsonl\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"input.json\": \"0f0f2b16883edfe27cb420294bb5d5487e89157103d890ca0ead0a39e1d81432\",\n    \"seller_context.json\": \"3500ff5c69141146bc5f4000b3e4cf3f9f51a98b8909229336b863f6041a51b3\"\n  },\n  \"blockers\": [],\n  \"case_id\": \"synthetic-p2\",\n  \"created_at\": \"2026-10-27T15:53:30.579310Z\",\n  \"current_stage\": \"init\",\n  \"error\": null,\n  \"input_hash\": \"0f0f2b16883edfe27cb420294bb5d5487e89157103d890ca0ead0a39e1d81432\",\n  \"revision\": 5,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"created\",\n  \"updated_at\": \"2026-10-27T15:53:30.691994Z\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+        "-m",
+        "tradecase.cli",
+        "assess",
+        "--case",
+        "/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p2-cli-xwzwsb4a/synthetic-p2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"artifact_index\": {\n    \"assessment.json\": \"3def1eb1232a0f24fe57b503abf4f2e872d4480d162ad845ad65a2c05560d1ca\",\n    \"buyer_profile.json\": \"9b3812b4ee78b8635fd80eeab38dc0f1e94568e096cf06ae565e84dd332ec1bc\",\n    \"candidates.jsonl\": \"9773b25cfb19f8b4719c9808056beba6e85d76664f1ae933065fda77d1c7b40f\",\n    \"evidence.jsonl\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"input.json\": \"0f0f2b16883edfe27cb420294bb5d5487e89157103d890ca0ead0a39e1d81432\",\n    \"seller_context.json\": \"3500ff5c69141146bc5f4000b3e4cf3f9f51a98b8909229336b863f6041a51b3\"\n  },\n  \"blockers\": [\n    \"BUYER_ROLE_NOT_SUPPORTED\",\n    \"BUYER_UNRESOLVED\",\n    \"ENTITY_NOT_SELECTED\",\n    \"IDENTITY_NOT_SUPPORTED\",\n    \"INSUFFICIENT_EVIDENCE_COVERAGE\"\n  ],\n  \"case_id\": \"synthetic-p2\",\n  \"created_at\": \"2026-10-27T15:53:30.579310Z\",\n  \"current_stage\": \"assessment\",\n  \"error\": null,\n  \"input_hash\": \"0f0f2b16883edfe27cb420294bb5d5487e89157103d890ca0ead0a39e1d81432\",\n  \"revision\": 8,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"needs_review\",\n  \"updated_at\": \"2026-10-27T15:53:30.800060Z\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+        "-m",
+        "tradecase.cli",
+        "validate",
+        "--case",
+        "/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p2-cli-xwzwsb4a/synthetic-p2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"strict\": false,\n  \"errors\": []\n}\n",
+      "stderr": ""
+    }
+  ]
+}

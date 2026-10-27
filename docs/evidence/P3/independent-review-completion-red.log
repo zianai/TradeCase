@@ -1,0 +1,132 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+________________ test_recovery_cannot_roll_back_newer_revision _________________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-323/test_recovery_cannot_roll_back0')
+
+    def test_recovery_cannot_roll_back_newer_revision(tmp_path):
+        store = initial_store(tmp_path)
+        names = ["input.json", "seller_context.json", "events.jsonl", "manifest.json"]
+        old_journal = {
+            "revision": store.read("manifest.json")["revision"],
+            "files": {name: (store.path / name).read_text() for name in names},
+        }
+        store.transition("running", "research")
+        store.write("search_plan.md", "Preserve this more recent investigation and audit history.")
+        current_manifest = (store.path / "manifest.json").read_bytes()
+        current_events = (store.path / "events.jsonl").read_bytes()
+        (store.path / ".transaction.json").write_text(json.dumps(old_journal))
+>       with pytest.raises(ValueError, match="revision|stale|rollback"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/contract/test_review_findings.py:30: Failed
+_______ test_invalid_recovery_bundle_does_not_overwrite_original_inquiry _______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-323/test_invalid_recovery_bundle_d0')
+
+    def test_invalid_recovery_bundle_does_not_overwrite_original_inquiry(tmp_path):
+        store = initial_store(tmp_path)
+        original = (store.path / "input.json").read_bytes()
+        changed = store.read("input.json")
+        changed["buyer_message"] = "Corrupted but locally schema-valid after-image"
+        bad_journal = {
+            "revision": store.read("manifest.json")["revision"] + 1,
+            "files": {"input.json": json.dumps(changed)},
+        }
+        marker = store.path / ".transaction.json"
+        marker.write_text(json.dumps(bad_journal))
+        with pytest.raises(ValueError):
+            store.recover()
+>       assert (store.path / "input.json").read_bytes() == original
+E       assert b'{"buyer_com...traints": []}' == b'{\n  "buyer...nts": []\n}\n'
+E         
+E         At index 1 diff: b'"' != b'\n'
+E         Use -v to get more diff
+
+tests/contract/test_review_findings.py:49: AssertionError
+___ test_recovery_rejects_complete_row_without_final_newline_before_writing ____
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-323/test_recovery_rejects_complete0')
+
+    def test_recovery_rejects_complete_row_without_final_newline_before_writing(tmp_path):
+        store = initial_store(tmp_path)
+        original_events = (store.path / "events.jsonl").read_bytes()
+        manifest = store.read("manifest.json")
+        manifest["revision"] += 1
+        old_event = store.read("events.jsonl")[-1]
+        event = {**old_event, "event_id": "event-next", "revision": manifest["revision"]}
+        journal = {
+            "revision": manifest["revision"],
+            "files": {
+                "events.jsonl": original_events.decode() + json.dumps(event),
+                "manifest.json": json.dumps(manifest),
+            },
+        }
+        marker = store.path / ".transaction.json"
+        marker.write_text(json.dumps(journal))
+        with pytest.raises(ValueError):
+            store.recover()
+>       assert (store.path / "events.jsonl").read_bytes() == original_events
+E       assert b'{"case_id":...:44.870410Z"}' == b'{"case_id":...4.870410Z"}\n'
+E         
+E         Use -v to get more diff
+
+tests/contract/test_review_findings.py:71: AssertionError
+________________ test_snapshot_content_is_not_silently_unbound _________________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-323/test_snapshot_content_is_not_s0')
+
+    def test_snapshot_content_is_not_silently_unbound(tmp_path):
+        store = initial_store(tmp_path)
+        snapshot = store.path / "snapshot.txt"
+        snapshot.write_text("Original quoted source")
+        store.write("evidence.jsonl", [{
+            "evidence_id": "ev-local", "claim": "Original quoted source", "excerpt": "Original quoted source",
+            "source_type": "user_provided", "captured_at": "2026-10-27T16:00:00Z", "retrieved_by": "offline_fixture",
+            "assertion_status": "supported", "is_synthetic": True, "local_snapshot_ref": "snapshot.txt",
+        }])
+        # Either require a snapshot digest in the artifact index or reject a quote
+        # whose declared local snapshot no longer preserves the supporting source.
+        snapshot.write_text("Replaced source that no longer contains the original quote")
+>       assert any("snapshot" in error for error in validate_case(store.path))
+E       assert False
+E        +  where False = any(<generator object test_snapshot_content_is_not_silently_unbound.<locals>.<genexpr> at 0x10b1fa9b0>)
+
+tests/contract/test_review_findings.py:87: AssertionError
+_____ test_completion_cannot_inject_blockers_after_prevalidation[kwargs0] ______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-323/test_completion_cannot_inject_0')
+kwargs = {'error': 'still failed'}
+
+    @pytest.mark.parametrize("kwargs", [{"error": "still failed"}, {"blockers": ["still blocked"]}])
+    def test_completion_cannot_inject_blockers_after_prevalidation(tmp_path, kwargs):
+        store = ready_store(tmp_path)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/contract/test_review_findings.py:135: Failed
+_____ test_completion_cannot_inject_blockers_after_prevalidation[kwargs1] ______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-323/test_completion_cannot_inject_1')
+kwargs = {'blockers': ['still blocked']}
+
+    @pytest.mark.parametrize("kwargs", [{"error": "still failed"}, {"blockers": ["still blocked"]}])
+    def test_completion_cannot_inject_blockers_after_prevalidation(tmp_path, kwargs):
+        store = ready_store(tmp_path)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/contract/test_review_findings.py:135: Failed
+=========================== short test summary info ============================
+FAILED tests/contract/test_review_findings.py::test_recovery_cannot_roll_back_newer_revision
+FAILED tests/contract/test_review_findings.py::test_invalid_recovery_bundle_does_not_overwrite_original_inquiry
+FAILED tests/contract/test_review_findings.py::test_recovery_rejects_complete_row_without_final_newline_before_writing
+FAILED tests/contract/test_review_findings.py::test_snapshot_content_is_not_silently_unbound
+FAILED tests/contract/test_review_findings.py::test_completion_cannot_inject_blockers_after_prevalidation[kwargs0]
+FAILED tests/contract/test_review_findings.py::test_completion_cannot_inject_blockers_after_prevalidation[kwargs1]
+6 failed in 0.20s
+
+EXIT_CODE=1

@@ -1,0 +1,28 @@
+{
+  "mode": "tested_offline",
+  "is_synthetic": true,
+  "results": [
+    {
+      "command": [
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+        "-m",
+        "tradecase.cli",
+        "init",
+        "--inquiry",
+        "fixtures/realistic_inquiry.eml",
+        "--seller",
+        "fixtures/seller_profile.json",
+        "--target-country",
+        "US",
+        "--platform",
+        "amazon_us",
+        "--synthetic",
+        "--out",
+        "/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/tradecase-p2-cli-kh30q6l9/synthetic-p2"
+      ],
+      "exit_code": 2,
+      "stdout": "{\n  \"error\": \"symlink path is not allowed: var\",\n  \"command\": \"init\",\n  \"status\": \"failed\"\n}\n",
+      "stderr": ""
+    }
+  ]
+}

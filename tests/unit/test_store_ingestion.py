@@ -99,3 +99,14 @@ def test_bad_encoding_and_attachment_remain_data(tmp_path):
     assert base64.b64decode(row.raw_bytes_base64) == p.read_bytes()
     assert row.files[0].filename == "../payload.sh"
     assert not (tmp_path / "payload.sh").exists()
+
+
+def test_snapshot_is_journaled_and_hashed(tmp_path):
+    p = tmp_path / "i.txt"
+    p.write_text("Synthetic RFQ")
+    store = CaseStore.create(tmp_path / "case", parse_inquiry(p, "case"), {})
+    store.save_snapshot("snapshots/public-page.txt", "untrusted text")
+    assert store.read("manifest.json")["artifact_index"]["snapshots/public-page.txt"]
+    assert validate_case(store.path) == []
+    (store.path / "snapshots/public-page.txt").write_text("tampered")
+    assert any("hash mismatch" in error for error in validate_case(store.path))

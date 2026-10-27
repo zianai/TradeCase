@@ -1,0 +1,18 @@
+{
+  "hostname": "quotes.toscrape.com",
+  "addresses": [
+    {
+      "ip": "198.18.1.70",
+      "is_global": false,
+      "is_reserved": false,
+      "is_private": true
+    },
+    {
+      "ip": "::ffff:0:c612:146",
+      "is_global": true,
+      "is_reserved": true,
+      "is_private": false
+    }
+  ],
+  "interpretation": "Observed local DNS response; no automatic resolver override or proxy bypass."
+}

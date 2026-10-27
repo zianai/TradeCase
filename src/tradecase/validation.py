@@ -182,6 +182,8 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
         if row.local_snapshot_ref:
             try:
                 safe_case_file(root, row.local_snapshot_ref)
+                if not manifest or row.local_snapshot_ref not in manifest.artifact_index:
+                    errors.append(f"evidence.jsonl {row.evidence_id}: snapshot must be indexed with a content hash")
             except ValueError as exc:
                 errors.append(f"evidence.jsonl {row.evidence_id}: {exc}")
     for candidate in candidates:

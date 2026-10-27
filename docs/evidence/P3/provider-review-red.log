@@ -1,0 +1,29 @@
+.F.F.                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_review_rejects_site_local_and_deeply_encoded_sensitive_path[https://example.com/%252525252eenv] _
+
+url = 'https://example.com/%252525252eenv'
+
+    @pytest.mark.parametrize('url', ['https://[fec0::1]/', 'https://example.com/%252525252eenv'])
+    def test_review_rejects_site_local_and_deeply_encoded_sensitive_path(url):
+>       with pytest.raises(provider.ReaderPolicyError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ReaderPolicyError
+
+tests/unit/test_provider_review.py:18: Failed
+____________ test_review_truncated_content_length_cannot_be_fetched ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ac31a30>
+
+    def test_review_truncated_content_length_cannot_be_fetched(monkeypatch):
+        sock = RawSocket(b'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 100\r\n\r\nabc')
+        monkeypatch.setattr(provider, '_connect_pinned', lambda *args: sock)
+>       with pytest.raises((provider.ReaderPolicyError, http.client.IncompleteRead, OSError)):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (ReaderPolicyError, IncompleteRead, OSError)
+
+tests/unit/test_provider_review.py:76: Failed
+=========================== short test summary info ============================
+FAILED tests/unit/test_provider_review.py::test_review_rejects_site_local_and_deeply_encoded_sensitive_path[https://example.com/%252525252eenv]
+FAILED tests/unit/test_provider_review.py::test_review_truncated_content_length_cannot_be_fetched
+2 failed, 3 passed in 0.13s

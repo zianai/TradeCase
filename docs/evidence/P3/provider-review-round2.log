@@ -1,0 +1,52 @@
+.....FFF....                                                             [100%]
+=================================== FAILURES ===================================
+_ test_review_rejects_remaining_url_policy_bypasses[https://[2606:4700:4700::1111%25en0]/] _
+
+url = 'https://[2606:4700:4700::1111%25en0]/'
+
+    @pytest.mark.parametrize('url', [
+        'https://[2606:4700:4700::1111%25en0]/',
+        'https://example.com/foo;session=abc',
+        'https://example.com:0/',
+    ])
+    def test_review_rejects_remaining_url_policy_bypasses(url):
+>       with pytest.raises(provider.ReaderPolicyError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ReaderPolicyError
+
+tests/unit/test_provider_review.py:128: Failed
+_ test_review_rejects_remaining_url_policy_bypasses[https://example.com/foo;session=abc] _
+
+url = 'https://example.com/foo;session=abc'
+
+    @pytest.mark.parametrize('url', [
+        'https://[2606:4700:4700::1111%25en0]/',
+        'https://example.com/foo;session=abc',
+        'https://example.com:0/',
+    ])
+    def test_review_rejects_remaining_url_policy_bypasses(url):
+>       with pytest.raises(provider.ReaderPolicyError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ReaderPolicyError
+
+tests/unit/test_provider_review.py:128: Failed
+__ test_review_rejects_remaining_url_policy_bypasses[https://example.com:0/] ___
+
+url = 'https://example.com:0/'
+
+    @pytest.mark.parametrize('url', [
+        'https://[2606:4700:4700::1111%25en0]/',
+        'https://example.com/foo;session=abc',
+        'https://example.com:0/',
+    ])
+    def test_review_rejects_remaining_url_policy_bypasses(url):
+>       with pytest.raises(provider.ReaderPolicyError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ReaderPolicyError
+
+tests/unit/test_provider_review.py:128: Failed
+=========================== short test summary info ============================
+FAILED tests/unit/test_provider_review.py::test_review_rejects_remaining_url_policy_bypasses[https://[2606:4700:4700::1111%25en0]/]
+FAILED tests/unit/test_provider_review.py::test_review_rejects_remaining_url_policy_bypasses[https://example.com/foo;session=abc]
+FAILED tests/unit/test_provider_review.py::test_review_rejects_remaining_url_policy_bypasses[https://example.com:0/]
+3 failed, 9 passed in 0.07s

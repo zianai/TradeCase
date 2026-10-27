@@ -1,0 +1,72 @@
+{
+  "mode": "tested_offline",
+  "network_calls_by_buyer_code": 0,
+  "emails_sent": 0,
+  "executed_at": "2026-10-27T15:53:49.038595+00:00",
+  "upstream": {
+    "repository": "https://github.com/xiongQvQ/AI_Find_Customer",
+    "commit": "9b2fde8f719623c627516da2663707a893ee6805",
+    "source": "backend/tools/url_filter.py",
+    "target": "src/tradecase/vendor/ai_hunter/url_filter.py",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 AI Hunter",
+    "changes": "HTTP(S)/credential/port/literal-local-host checks; canonical hostname; LinkedIn path scoped to its host"
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python -m pytest tests/integration/test_buyer_research.py -q",
+      "stage": "red-before-implementation",
+      "exit_code": 1,
+      "summary": "33 failed",
+      "log": "buyer-red.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/integration/test_buyer_research.py tests/integration/test_upstream.py -q",
+      "stage": "green-after-implementation",
+      "exit_code": 0,
+      "summary": "48 passed (34 buyer research + 14 upstream)",
+      "log": "buyer-green.log"
+    },
+    {
+      "command": ".venv/bin/ruff check src/tradecase/buyer_research.py src/tradecase/vendor/ai_hunter tests/integration/test_buyer_research.py",
+      "exit_code": 0,
+      "log": "buyer-lint.log"
+    },
+    {
+      "command": "tradecase init \u2192 research \u2192 assess \u2192 validate (same synthetic Case, canonical temporary directory)",
+      "exit_code": 0,
+      "log": "buyer-cli.json"
+    },
+    {
+      "command": "tradecase init (first attempt via macOS /var symlink)",
+      "exit_code": 2,
+      "summary": "Expected path policy rejected alias; rerun used resolved canonical temp directory",
+      "log": "buyer-cli-symlink-rejected.json"
+    },
+    {
+      "command": ".venv/bin/python tools/check_licenses.py",
+      "exit_code": 0,
+      "log": "buyer-license.json"
+    },
+    {
+      "command": "../upstream-audit/.audit-venv/bin/python /Users/a/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/buyer-research",
+      "exit_code": 0,
+      "log": "buyer-skill.log"
+    }
+  ],
+  "notes": [
+    "Initial quick_validate with system Python 3.11 lacked PyYAML; installed PyYAML 6.0.3 only in the external audit venv and reran successfully. No application dependency was added.",
+    "No live company, mailbox or purchasing-role verification was performed. URL classifier is not a DNS/redirect security boundary.",
+    "Input/evidence/page arguments are not modified; profile selection and purchasing role remain unknown until host research supplies evidence."
+  ],
+  "file_sha256": {
+    "src/tradecase/buyer_research.py": "d63f5d4f78a868bf445b44ead66501b961f721bdd215bc19432307a4d1755380",
+    "src/tradecase/vendor/__init__.py": "31472a1f7d49620b8ecc9f9167275906bf746d817fba007396f1d7a2501b3449",
+    "src/tradecase/vendor/ai_hunter/__init__.py": "f8ad33df47d309337a94ad297d1d038c49cb41839bfc26287f867e2842128bfb",
+    "src/tradecase/vendor/ai_hunter/url_filter.py": "95faeac1deca38cfc9a9f270a134fc9a9e0e515ff8648b39d9835141d3835884",
+    "src/tradecase/vendor/ai_hunter/LICENSE": "cdcb53c582249b363e222269c002639e8028877f23cdea06a9ee222c47593092",
+    "tests/integration/test_buyer_research.py": "38bce1ee124954c412206cfa30fe60ffd9be382684327743890869dc7c87b214",
+    "skills/buyer-research/SKILL.md": "2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e",
+    "references/tradecase-buyer-research.md": "cff6fd429aef82f72504f82b231da7789d2ea2f897c25a3bae9f12802042e4b3"
+  }
+}

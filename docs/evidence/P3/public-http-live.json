@@ -1,0 +1,33 @@
+{
+  "requested_url": "https://quotes.toscrape.com/js/",
+  "captured_at": "2026-10-27T15:57:56.395791Z",
+  "status": "blocked",
+  "final_url": null,
+  "http_status": null,
+  "source_title": null,
+  "content_type": null,
+  "text": "",
+  "sha256": null,
+  "text_sha256": null,
+  "byte_count": 0,
+  "retrieved_by": "tradecase.public-http",
+  "untrusted": true,
+  "assertion_status": "unverified",
+  "is_synthetic": false,
+  "redirects": [],
+  "blockers": [
+    "non_public_address"
+  ],
+  "budget": {
+    "pages_used": 1,
+    "requests_used": 0,
+    "origin_last_requested_at": {},
+    "origin_min_interval": {}
+  },
+  "warnings": [],
+  "robots": [],
+  "hash_basis": "raw HTTP response bytes",
+  "raw_bytes_base64": "",
+  "test_mode": "tested_live: actual bounded public HTTP attempt; status must be inspected",
+  "command": ".venv/bin/python docs/evidence/P3/run_live_smoke.py"
+}

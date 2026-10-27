@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import base64
+import fcntl
 import importlib.util
 import json
 import platform
@@ -14,6 +16,7 @@ from pydantic import ValidationError
 from tradecase import __version__
 from tradecase.case_store import CaseStore
 from tradecase.ingestion import parse_inquiry, parse_seller
+from tradecase.util import digest, no_symlinks
 from tradecase.validation import validate_case
 
 
@@ -47,6 +50,16 @@ def build_parser():
     research = commands.add_parser("research", help="Prepare unverified buyer candidates using local evidence")
     research.add_argument("--case", required=True, type=Path)
     research.add_argument("--pages", type=Path, help="Explicitly supplied public page observations JSON")
+    capture = commands.add_parser("capture", help="Read one public URL as untrusted evidence; no browser")
+    capture.add_argument("--case", required=True, type=Path)
+    capture.add_argument("--url", required=True)
+    search = commands.add_parser(
+        "import-search", help="Normalize existing host search output without performing search"
+    )
+    search.add_argument("--case", required=True, type=Path)
+    search.add_argument("--file", required=True, type=Path)
+    search.add_argument("--query", required=True)
+    search.add_argument("--captured-at", required=True)
     state = commands.add_parser("transition")
     state.add_argument("--case", required=True, type=Path)
     state.add_argument("--state", required=True)
@@ -146,6 +159,21 @@ def dispatch(args):
             store.write("evidence.jsonl", [])
         store.write("buyer_profile.json", result["profile"])
         store.record("research_prepared", {"candidates": len(result["candidates"]), "verification": "unverified"})
+    elif args.command == "capture":
+        return capture_url(store, args.url)
+    elif args.command == "import-search":
+        from tradecase.providers import normalize_host_search
+
+        text = args.file.read_text("utf-8")
+        try:
+            value = json.loads(text)
+            rows = value if isinstance(value, list) else value.get("results", [value])
+        except json.JSONDecodeError:
+            rows = [json.loads(line) for line in text.splitlines() if line.strip()]
+        result = normalize_host_search(rows, query=args.query, captured_at=args.captured_at)
+        name = "snapshots/search-" + digest(text.encode())[:16] + ".json"
+        store.save_snapshot(name, json.dumps(result, ensure_ascii=False, indent=2))
+        store.record("search_imported", {"rows": len(result), "snapshot": name, "queries": 1})
     elif args.command == "compliance":
         from tradecase.compliance import check_case
 
@@ -160,6 +188,78 @@ def dispatch(args):
         report_case(store)
     emit(store.read("manifest.json"))
     return 0
+
+
+def capture_url(store, url):
+    from tradecase.models import Evidence
+    from tradecase.providers import ContentReader, ReadPolicy, ResearchBudget
+
+    lock_path = store.path / ".network.lock"
+    no_symlinks(lock_path)
+    with lock_path.open("a+b") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        manifest = store.read("manifest.json")
+        if manifest["state"] in {"completed", "cancelled"}:
+            raise ValueError("final Case requires explicit reopen before network research")
+        budget = ResearchBudget.from_dict(manifest.get("runtime_metadata", {}).get("network_budget", {}))
+        if budget.pages_used >= 15 or budget.requests_used >= 40:
+            emit({"status": "blocked", "blockers": ["Case network budget exhausted"], "budget": budget.to_dict()})
+            return 1
+        request_cap = min(40, budget.requests_used + 8)
+        reservation = {**budget.to_dict(), "pages_used": budget.pages_used + 1, "requests_used": request_cap}
+        # Reserve the maximum this invocation can consume before any network I/O.
+        # A killed process leaves its reservation consumed, never resets budget.
+        store.record("public_read_reserved", {"request_limit": request_cap}, {"network_budget": reservation})
+        result = ContentReader(policy=ReadPolicy(max_requests=request_cap), budget=budget).read(url)
+        # Persist consumed attempts even on errors. No credential-bearing URL is logged.
+        metadata = {"network_budget": budget.to_dict()}
+        store.record(
+            "public_read",
+            {
+                "status": result.status,
+                "budget": budget.to_dict(),
+                "blockers": result.blockers,
+                "source": result.requested_url,
+            },
+            metadata,
+        )
+        payload = result.to_dict()
+        if result.status == "fetched":
+            identifier = "capture-" + digest((result.final_url + result.captured_at).encode())[:20]
+            payload["raw_bytes_base64"] = base64.b64encode(result.raw_bytes).decode("ascii")
+            store.save_snapshot(f"snapshots/{identifier}.json", json.dumps(payload, ensure_ascii=False, indent=2))
+            store.save_snapshot(f"snapshots/{identifier}.txt", result.text)
+            evidence = store.read("evidence.jsonl") if (store.path / "evidence.jsonl").exists() else []
+            evidence.append(
+                Evidence(
+                    evidence_id=identifier,
+                    claim="Retrieved public page; facts await host review.",
+                    source_url=result.final_url,
+                    source_type="other",
+                    source_title=result.source_title,
+                    captured_at=result.captured_at,
+                    excerpt=result.text[:500],
+                    retrieved_by=result.retrieved_by,
+                    assertion_status="unverified",
+                    confidence_label="low",
+                    is_synthetic=result.is_synthetic,
+                    local_snapshot_ref=f"snapshots/{identifier}.txt",
+                ).model_dump(mode="json")
+            )
+            store.write("evidence.jsonl", evidence)
+            emit(
+                {
+                    "status": result.status,
+                    "evidence_id": identifier,
+                    "snapshot": f"snapshots/{identifier}.json",
+                    "budget": budget.to_dict(),
+                    "assertion_status": "unverified",
+                }
+            )
+            return 0
+        # Do not echo unvalidated input URLs or remote data on a blocked read.
+        emit({"status": result.status, "budget": budget.to_dict(), "blockers": result.blockers})
+        return 1
 
 
 def main():

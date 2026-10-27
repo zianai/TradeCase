@@ -1,0 +1,11 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "src/tradecase/providers.py",
+    "tests/unit/test_providers.py"
+  ],
+  "exit_code": 0,
+  "mode": "lint",
+  "captured_at": "2026-10-27T15:57:40.499951+00:00"
+}
