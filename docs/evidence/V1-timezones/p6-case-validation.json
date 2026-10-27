@@ -1,0 +1,74 @@
+[
+  {
+    "case": "cases/demo-inferred_email",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/demo-missing_platform",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/demo-name_collision",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/demo-prompt_injection",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/demo-regulation_unknown",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/demo-resume_after_failure",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/demo-strong",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case": "cases/live-official-research",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  }
+]

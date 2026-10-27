@@ -1,0 +1,52 @@
+[
+  {
+    "case_id": "unicef-318181",
+    "case_path": "cases/deadline-final-v2/unicef-318181",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case_id": "unicef-301686",
+    "case_path": "cases/deadline-final-v2/unicef-301686",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case_id": "unicef-299179",
+    "case_path": "cases/deadline-final-v2/unicef-299179",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case_id": "unicef-290489",
+    "case_path": "cases/deadline-final-v2/unicef-290489",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  },
+  {
+    "case_id": "unicef-310066",
+    "case_path": "cases/deadline-final-v2/unicef-310066",
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "strict": true,
+      "errors": []
+    }
+  }
+]

@@ -24,11 +24,11 @@ from tradecase.validation import validate_case
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "docs/evidence/P7"
-OUTPUT = ROOT / "docs/evidence/V1-deadline"
 COUNTRIES = {"318181": "UA", "301686": "JO", "299179": "MY", "290489": "EC", "310066": "PS"}
 
 
-def main(out_root: Path):
+def main(out_root: Path, evidence_out: Path):
+    evidence_out.mkdir(parents=True, exist_ok=True)
     sources = json.loads((EVIDENCE / "public-procurement-sources.json").read_text())
     host = json.loads((EVIDENCE / "host-web-sources.json").read_text())
     amazon = json.loads((EVIDENCE / "amazon-safety-source.json").read_text())
@@ -154,7 +154,7 @@ def main(out_root: Path):
             },
         )
         assert not validate_case(store.path, strict=True)
-        (OUTPUT / (case_id + "-report.md")).write_text((store.path / "report.md").read_text())
+        (evidence_out / (case_id + "-report.md")).write_text((store.path / "report.md").read_text())
         results.append(
             {
                 "case_id": case_id,
@@ -162,6 +162,7 @@ def main(out_root: Path):
                 "source_url": source["source_url"],
                 "source_evidence_id": source_id,
                 "deadline_utc": deadline["deadline_utc"],
+                "deadline_latest_possible_utc": deadline.get("latest_possible_utc"),
                 "deadline_status": deadline["status"],
                 "deadline_reasons": deadline["reasons"],
                 "deadline_basis_sha256": deadline["basis_sha256"],
@@ -184,7 +185,9 @@ def main(out_root: Path):
                 "case_source_excerpt_not_full_notice": True,
             }
         )
-    (OUTPUT / "public-procurement-results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n")
+    (evidence_out / "public-procurement-results.json").write_text(
+        json.dumps(results, ensure_ascii=False, indent=2) + "\n"
+    )
     print(
         json.dumps(
             {
@@ -202,5 +205,12 @@ def main(out_root: Path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--out-root", type=Path, default=ROOT / "cases/p7-public")
+    parser.add_argument("--evidence-out", type=Path)
     args = parser.parse_args()
-    main(args.out_root.absolute())
+    out_root = args.out_root.absolute()
+    evidence_out = (
+        args.evidence_out.absolute() if args.evidence_out else out_root.parent / (out_root.name + "-evidence")
+    )
+    if not args.evidence_out and evidence_out.exists():
+        parser.error("default evidence directory already exists; choose a new output or --evidence-out")
+    main(out_root, evidence_out)

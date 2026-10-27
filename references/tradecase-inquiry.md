@@ -29,10 +29,12 @@ are required or loaded. The CLI has no send operation.
 
 For procurement notices, set `case_type=procurement` during init (or in the
 input JSON) and supply the deadline evidence ID. Deadline evidence must cite
-the exact `Deadline on: ... (GMT ...)` line in a supported official-source
+the complete relevant deadline declaration line in a supported official-source
 record and an indexed JSON snapshot with matching `source_url` and
-`selected_lines`. The present parser understands explicit numeric GMT offsets;
-other formats and multiple/conflicting deadline statements require human review.
+`selected_lines`. The parser supports numeric GMT/UTC offsets, IANA zones and documented explicit
+city/US time aliases. Ambiguous abbreviations, DST folds/gaps and conflicting
+statements require human review. Date-only notices never imply a precise time:
+only after a conservative end-of-date bound is reached may they be marked expired.
 Source snapshots can be stale or lack later amendments; a locally open deadline
 is not permission to submit. Expired and unverified notices cannot transition
 to completed. Drafts and reports must be regenerated if their source changes or

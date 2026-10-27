@@ -49,6 +49,6 @@ uv run tradecase transition --case cases/inquiry-001 --state running --stage rev
 
 采购公告必须显式设置 `case_type=procurement`；`init` 支持 `--case-type procurement` 和 `--deadline-evidence-id ID`，JSON输入也可设置。普通询盘保持默认`inquiry`；系统不会可靠地从任意正文自动分类采购公告；提供截止证据ID时，即使误用inquiry类型仍会套用采购门禁。原P7五例含特定 `Public procurement notice excerpt;` 解析警告，会被保守识别为旧公告并默认待核验；其不可变input不能补写证据ID，需在新Case目录重新生成。
 
-ID须对应已支持的官方来源Evidence：`source_url`有效、`excerpt`逐字包含截止时间、`local_snapshot_ref`指向Case已索引JSON快照，该快照必须包含相同`source_url`和`selected_lines`。解析器当前只接受 `Deadline on: DD-Mon-YYYY HH:MM (GMT ±H.MM)` 的明确数字偏移，使用当前UTC重算；未提供、未确认、未知时区、多个或冲突截止时间一律needs_review。过期和未确认不能将Case转为completed，且草稿变为无收件人的内部核查说明。
+ID须对应已支持的官方来源Evidence：`source_url`有效、`excerpt`逐字包含截止时间、`local_snapshot_ref`指向Case已索引JSON快照，该快照必须包含相同`source_url`和`selected_lines`。解析器支持明确的数字GMT/UTC偏移、IANA命名时区，以及Jerusalem、London、US Eastern/Central/Pacific、Beijing、Tokyo、Singapore Time；使用当前UTC重算。未知缩写（如CST）、缺失时区的具体时刻、夏令时重复/不存在的本地时刻、多个或冲突截止时间一律needs_review。仅有日期时不虚构具体截止时刻：有明确时区则以次日当地零点作为最晚可能界限，无时区则使用该日期后第二日UTC零点这一保守上界；到达界限前needs_review，到达后expired。过期和未确认不能将Case转为completed，且草稿变为无收件人的内部核查说明。
 
 草稿审核的`procurement_basis_sha256`绑定证据记录及快照的精确字节；变更或截止时间到达后必须重新生成draft和report。已索引快照与引用验证保证来源链完整，不证明真实网站身份、公告当前性或不存在后续延期；即使截止时间仍开放，也需要人核对补遗、时区、资格、附件和商业条款。没有任何提交或发送入口。

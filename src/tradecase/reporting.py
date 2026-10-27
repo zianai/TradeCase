@@ -259,6 +259,9 @@ def render_report(store) -> str:
                   "Evidence ID: " + safe_md(deadline["evidence_id"] or "not supplied"),
                   "Reasons: " + safe_md(", ".join(deadline["reasons"]) or "none"),
                   "Do not submit or send; human verification of amendments and eligibility is required."]
+        if deadline.get("latest_possible_utc"):
+            lines.append("Latest possible end of stated local date (not an exact deadline): "
+                         + safe_md(deadline["latest_possible_utc"]))
     lines += ["", "## Buyer risk", ""]
     if profile:
         lines += [

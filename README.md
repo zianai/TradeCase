@@ -34,7 +34,7 @@ uv run tradecase research --case cases/inquiry-001
 
 支持 `.eml`、`.txt`、JSON。原始 bytes/Base64/SHA256 和附件元信息保留；附件不执行。卖家资料格式见 [数据契约](docs/CASE_CONTRACT.md)。新 Case 缺少证据时不会自动完成；由宿主按 [trade-inquiry Skill](skills/trade-inquiry/SKILL.md) 收集资料，使用 `put`、`assess`、`compliance`、`draft`、`report`，最后严格校验。`research` 只准备未核实候选，不会自动搜索或确认身份。
 
-采购公告请显式使用 `--case-type procurement` 并绑定截止时间证据；过期、冲突或无法确认会阻止Case完成。证据格式、时区范围及人工核验边界见 [数据契约](docs/CASE_CONTRACT.md)。
+采购公告请显式使用 `--case-type procurement` 并绑定截止时间证据；过期、冲突或无法确认会阻止Case完成。支持明确命名时区及日期型公告的保守上界。证据格式、时区范围及人工核验边界见 [数据契约](docs/CASE_CONTRACT.md)。
 
 三个 Skill 的唯一源码在 `skills/`；安装器同步到项目内 `.agents/skills/` 和 `.claude/skills/`，校验相同内容哈希。参考文件路径以项目根为准。安装器保护已有同名和用户修改内容，不改 `~/.codex`、`~/.claude` 或个人授权设置。双宿主实际执行状态与相同业务提示见 [宿主验证](docs/HOST_VALIDATION.md)。
 

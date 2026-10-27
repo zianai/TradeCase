@@ -1,0 +1,29 @@
+.............F.F..                                                       [100%]
+=================================== FAILURES ===================================
+_________________ test_named_iana_and_jerusalem_time_with_dst __________________
+
+    def test_named_iana_and_jerusalem_time_with_dst():
+        winter = result('Deadline on: 15-Jan-2027 12:00 (America/New_York)')
+        summer = result('Deadline on: 15-Jul-2027 12:00 (America/New_York)')
+        jerusalem = result('Bid submission deadline: 30 August 2026, at 15:00 Jerusalem Time')
+>       assert winter['deadline_utc'] == '2027-01-15T17:00:00Z'
+E       AssertionError: assert None == '2027-01-15T17:00:00Z'
+
+tests/unit/test_procurement_deadline.py:249: AssertionError
+_______ test_date_only_uses_latest_possible_bound_not_invented_deadline ________
+
+    def test_date_only_uses_latest_possible_bound_not_invented_deadline():
+        text = 'Deadline on: 28-Oct-2026 (America/New_York)'
+        during = result(text, datetime(2026, 10, 28, 16, 0, tzinfo=timezone.utc))
+        after = result(text, datetime(2026, 10, 29, 4, 0, tzinfo=timezone.utc))
+        assert during['status'] == 'needs_review'
+        assert during['deadline_utc'] is None
+>       assert during['latest_possible_utc'] == '2026-10-29T04:00:00Z'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'latest_possible_utc'
+
+tests/unit/test_procurement_deadline.py:265: KeyError
+=========================== short test summary info ============================
+FAILED tests/unit/test_procurement_deadline.py::test_named_iana_and_jerusalem_time_with_dst
+FAILED tests/unit/test_procurement_deadline.py::test_date_only_uses_latest_possible_bound_not_invented_deadline
+2 failed, 16 passed in 0.34s

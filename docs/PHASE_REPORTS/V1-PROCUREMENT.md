@@ -38,3 +38,7 @@ uv run tradecase validate --case cases/deadline-repeat/unicef-318181 --strict
 ```
 
 真实业务上线仍需更多不同买家、当前公告、附件与补遗、有权处理的卖家资料和人工审核；本次不改变P7对V2的No-Go结论。
+
+## 后续增量
+
+本报告保留实施时的数字偏移限制。后续命名时区和仅有日期的保守处理已实现并重新测试，见 `docs/PHASE_REPORTS/V1-TIMEZONES.md`。

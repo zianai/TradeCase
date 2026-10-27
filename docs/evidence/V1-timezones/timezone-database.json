@@ -1,0 +1,10 @@
+{
+  "zoneinfo_tzpath": [
+    "/usr/share/zoneinfo",
+    "/usr/lib/zoneinfo",
+    "/usr/share/lib/zoneinfo",
+    "/etc/zoneinfo"
+  ],
+  "system_tzdb_version": "# version 2026b-rearguard",
+  "python_tzdata_package": null
+}
