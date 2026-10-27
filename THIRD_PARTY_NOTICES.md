@@ -6,7 +6,7 @@ Copyright (c) 2026 xiongbojian. MIT license text is retained in root `LICENSE`. 
 
 The V1 runtime uses Pydantic (MIT, including pydantic-core) and Python standard library. `requests` (Apache-2.0) belongs to inherited optional readers; transitive installed dependency metadata is recorded by the license check. Development tools pytest (MIT), Ruff (MIT), and setuptools (MIT) are development/build dependencies. No keys or paid databases are bundled.
 
-AI Hunter and optional upstream notices will be appended following P0 inspection and any actual file selection. No code from Superleads or LaunchFit is permitted in the commercial execution path. Browser/crawler audit material is not equivalent to an installed or tested integration.
+AI Hunter and optional upstream audit decisions are recorded below after actual source inspection. No code from Superleads or LaunchFit is permitted in the commercial execution path. Browser/crawler audit material is not equivalent to an installed or tested integration.
 
 Optional projects currently not bundled: Crawl4AI `888299fb...` has Apache-2.0 plus an appended attribution requirement; Web Access `d173a759...` has only an MIT declaration and no complete LICENSE. Neither is installed or redistributed. See `docs/OPTIONAL_UPSTREAM_AUDIT.md` for exact SHAs and exclusions. Vibe Seller/GPT Researcher are conceptual references only. Superleads/LaunchFit PolyForm Noncommercial code and templates are excluded.
 

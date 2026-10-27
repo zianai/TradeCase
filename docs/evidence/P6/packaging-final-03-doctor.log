@@ -1,0 +1,18 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/tradecase doctor
+{
+  "tradecase": "0.1.0",
+  "python": "3.12.13",
+  "core": "implemented",
+  "network_required": false,
+  "sending": "disabled",
+  "agent_runtime": "host-owned",
+  "crawl4ai_installed": false,
+  "web_access": "blocked: root license unavailable; no automatic installation",
+  "skills": {
+    ".agents": false,
+    ".claude": false
+  }
+}
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

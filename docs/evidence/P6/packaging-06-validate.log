@@ -1,0 +1,9 @@
+$ /private/tmp/tradecase-package-122hffs4/venv/bin/tradecase validate --case /private/tmp/tradecase-package-122hffs4/packaged-case --strict
+{
+  "valid": true,
+  "strict": true,
+  "errors": []
+}
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

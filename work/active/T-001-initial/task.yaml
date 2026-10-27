@@ -1,17 +1,21 @@
 schema_version: 3
 protocol_version: "3.0"
 id: "T-001-initial"
-status: executing
+status: ready_for_review
 goal: "Implement the TradeCase V1 baseline in P0 through P6 with reproducible phase evidence"
 scope: ["Local Python CLI and Case contracts", "Audited upstream reuse", "Agent Skills and deterministic fixtures", "Read-only public research and phase reports"]
-non_goals: ["No Agent runtime or V2 services", "No email sending or external account writes", "No paid API calls or global configuration changes"]
+non_goals: ["No Agent runtime or V2 services", "No email sending or external account writes", "No global configuration changes; only the explicitly authorized single Claude smoke with USD 1 budget may call a model"]
 acceptance: ["P0 through P6 reports preserve commands and exit codes", "All offline validation passes", "Live and blocked capabilities are explicitly distinguished"]
-risk: medium
-risk_reasons: [cross-component, local-reversible]
+risk: high
+risk_reasons: [cross-component, local-reversible, payment-or-message]
 protected_paths: []
 context_refs: [docs/baseline/TradeCase_V1_Codex_Implementation_Spec.md]
 decision_refs: [docs/DECISIONS.md]
-evidence_refs: [docs/PHASE_REPORTS/P0.md, docs/PHASE_REPORTS/P1.md, docs/PHASE_REPORTS/P2.md, docs/PHASE_REPORTS/P3.md, docs/PHASE_REPORTS/P4.md, docs/PHASE_REPORTS/P5.md]
+evidence_refs: [docs/PHASE_REPORTS/P0.md, docs/PHASE_REPORTS/P1.md, docs/PHASE_REPORTS/P2.md, docs/PHASE_REPORTS/P3.md, docs/PHASE_REPORTS/P4.md, docs/PHASE_REPORTS/P5.md, docs/PHASE_REPORTS/P6.md]
 updated: "2026-10-27"
 implementation_started: true
 x_current_phase: P6
+action_refs: [work/active/T-001-initial/actions/A-001-claude-smoke.md]
+external_effects: "One human-authorized Claude model invocation with USD 1 budget; no email/account writes"
+review_ref: "work/active/T-001-initial/review.md"
+review_current: true

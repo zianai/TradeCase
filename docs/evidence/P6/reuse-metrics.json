@@ -1,0 +1,87 @@
+{
+  "method": "Python file counts only. Retained legacy files are included in denominator and are NOT represented as executed reuse. Excludes tests, docs, configuration and non-Python files. Fractions do not measure business value or executed code coverage. P0-P5 frozen commits, P6 count taken after final source freeze; packaging evidence records exact source hashes.",
+  "phase_history": [
+    {
+      "phase": "P0",
+      "git_revision": "788910c20c97588569b7511abfdc160e68be5dde",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 18,
+      "adapted_b2b_files": 0,
+      "adapted_ai_files": 0,
+      "new_case_python_files": 0,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 1.0,
+      "new_fraction": 0.0
+    },
+    {
+      "phase": "P1",
+      "git_revision": "69c2f7f94a6bd623bf16de2855899fb3969a929e",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 15,
+      "adapted_b2b_files": 3,
+      "adapted_ai_files": 0,
+      "new_case_python_files": 9,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 0.6667,
+      "new_fraction": 0.3333
+    },
+    {
+      "phase": "P2",
+      "git_revision": "6bbc269c02f443d80af4d50c809ac85a1576f8b2",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 15,
+      "adapted_b2b_files": 3,
+      "adapted_ai_files": 1,
+      "new_case_python_files": 13,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 0.5938,
+      "new_fraction": 0.4062
+    },
+    {
+      "phase": "P3",
+      "git_revision": "5a00781ccd5def62a940ae2862e4533aeecfde8e",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 15,
+      "adapted_b2b_files": 3,
+      "adapted_ai_files": 1,
+      "new_case_python_files": 14,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 0.5758,
+      "new_fraction": 0.4242
+    },
+    {
+      "phase": "P4",
+      "git_revision": "55fd6feb309ed0b38fcf6bb35cc335d4577a1f3c",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 14,
+      "adapted_b2b_files": 4,
+      "adapted_ai_files": 1,
+      "new_case_python_files": 15,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 0.5588,
+      "new_fraction": 0.4412
+    },
+    {
+      "phase": "P5",
+      "git_revision": "da22b947f9ec8a42f4780ef1d630e618ae3f66a9",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 14,
+      "adapted_b2b_files": 4,
+      "adapted_ai_files": 1,
+      "new_case_python_files": 16,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 0.5429,
+      "new_fraction": 0.4571
+    },
+    {
+      "phase": "P6",
+      "subject": "final source file set; exact file hashes bound in review and packaging evidence",
+      "inherited_b2b_files": 18,
+      "unchanged_b2b_files": 14,
+      "adapted_b2b_files": 4,
+      "adapted_ai_files": 1,
+      "new_case_python_files": 17,
+      "inherited_or_adapted_fraction_of_retained_python_file_set": 0.5278,
+      "new_fraction": 0.4722
+    }
+  ],
+  "current_mapped_execution_counts": {
+    "wrapped": 7,
+    "legacy-not-used": 11,
+    "disabled": 1
+  }
+}

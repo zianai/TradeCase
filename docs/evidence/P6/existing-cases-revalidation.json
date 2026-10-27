@@ -1,0 +1,98 @@
+[
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-inferred_email",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-missing_platform",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-name_collision",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-prompt_injection",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-regulation_unknown",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-resume_after_failure",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/demo-strong",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/live-official-research",
+      "--strict"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  }
+]

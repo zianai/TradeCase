@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/ruff",
+    "check",
+    "src/tradecase/skill_install.py",
+    "tests/unit/test_skill_install.py"
+  ],
+  "exit_code": 0,
+  "captured_at": "2026-10-27T16:21:23.335370+00:00",
+  "mode": "lint",
+  "subject_sha256": {
+    "src/tradecase/skill_install.py": "3183072a2ddfece61b144a69be68c3b07ea7e7dccb98e0554a73bdb99cf3ce60",
+    "tests/unit/test_skill_install.py": "9ffe068185798e7d6275ec05c06da907a340e7698e7cd5525b704cf284a5694e"
+  }
+}

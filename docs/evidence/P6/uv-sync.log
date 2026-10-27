@@ -1,0 +1,16 @@
+   Building tradecase @ file:///Users/a/workspaces/AForeign%20Trade/tradecase-v1
+      Built tradecase @ file:///Users/a/workspaces/AForeign%20Trade/tradecase-v1
+Prepared 1 package in 1.00s
+Uninstalled 11 packages in 177ms
+Installed 1 package in 1ms
+ - ast-serialize==0.13.1
+ - certifi==2026.10.23
+ - charset-normalizer==3.5.2
+ - idna==3.20
+ - librt==0.16.0
+ - mypy==2.4.0
+ - mypy-extensions==1.1.0
+ - pathspec==1.1.1
+ - requests==2.34.2
+ ~ tradecase==0.1.0 (from file:///Users/a/workspaces/AForeign%20Trade/tradecase-v1)
+ - urllib3==2.8.0

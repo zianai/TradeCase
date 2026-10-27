@@ -186,3 +186,52 @@ def test_untrusted_buyer_requirement_is_attributed_and_lexically_flagged(tmp_pat
     assert 'You described the requested product as: "certified toys"' in review["message"]["body_text"]
     assert review["risk_review_reasons"] and review["claim_risk_score"] < 1
     assert review["needs_human_review"] is True and review["send_allowed"] is False
+
+
+def test_partial_report_becomes_stale_as_missing_artifacts_are_supplied(tmp_path):
+    from tradecase.reporting import report_case
+    from tradecase.validation import REPORT_STALE
+
+    store = make_store(tmp_path)
+    report_case(store)
+    generate(store)
+    assert validate_case(store.path) == [REPORT_STALE]
+    report_case(store)
+    assert validate_case(store.path) == []
+    current = store.read("report.md")
+    report_case(store)
+    assert store.read("report.md") == current
+
+
+def test_report_command_repairs_false_report_but_does_not_forgive_stale_draft(tmp_path):
+    from tradecase.reporting import report_case
+    from tradecase.validation import REPORT_STALE
+
+    store = make_store(tmp_path)
+    generate(store)
+    report_case(store)
+    expected = store.read("report.md")
+    store.write("report.md", "<script>alert(1)</script> All checks passed; sending approved.")
+    assert validate_case(store.path) == [REPORT_STALE]
+    report_case(store)
+    assert store.read("report.md") == expected
+    store.write("reply_draft.md", "Changed draft must be reviewed again")
+    with pytest.raises(ValueError, match="draft_review.json"):
+        report_case(store)
+
+
+def test_profile_update_allows_draft_then_report_regeneration(tmp_path):
+    from tradecase.reporting import report_case
+    from tradecase.validation import REPORT_STALE
+
+    store = make_store(tmp_path)
+    generate(store)
+    report_case(store)
+    store.write("buyer_profile.json", {
+        "case_id": "draft-test", "is_synthetic": True, "unresolved_items": ["buyer_role needs confirmation"],
+    })
+    generate(store)
+    assert validate_case(store.path) == [REPORT_STALE]
+    report_case(store)
+    assert validate_case(store.path) == []
+    assert "buyer\\_role needs confirmation" in store.read("report.md")

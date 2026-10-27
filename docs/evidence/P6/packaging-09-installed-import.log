@@ -1,0 +1,6 @@
+$ /private/tmp/tradecase-package-122hffs4/venv/bin/python -c import tradecase, tradecase_upstream; print(tradecase.__file__); print(tradecase_upstream.__file__); assert 'site-packages' in tradecase.__file__; assert 'site-packages' in tradecase_upstream.__file__
+/private/tmp/tradecase-package-122hffs4/venv/lib/python3.12/site-packages/tradecase/__init__.py
+/private/tmp/tradecase-package-122hffs4/venv/lib/python3.12/site-packages/tradecase_upstream/__init__.py
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

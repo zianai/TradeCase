@@ -1,0 +1,5 @@
+$ /private/tmp/tradecase-package-122hffs4/venv/bin/python -m tradecase_upstream.send_smtp --send-approved
+Email sending is disabled in TradeCase V1; create a draft for human review.
+
+EXIT_CODE=2
+EXPECTED_EXIT_CODE=2

@@ -12,11 +12,11 @@ All B2B rows refer to https://github.com/xiongQvQ/-b2b-lead-hunter-skill at `ac2
 | `scripts/evaluate_outreach_drafts.py:body_hash,claim_risk` | same file; draft review wrapper | as-is | verified MIT / contracts, stdlib | deterministic hash smoke passes; no sending |
 | `scripts/generate_outreach_drafts.py` | retained legacy source | not-used | verified MIT / contracts, stdlib | inspected; first-touch template not appropriate for reply-specific unknown commercial terms |
 | `scripts/validate_artifact.py` | retained legacy source | as-is | verified MIT / contracts | baseline runs; new Case contract validator is separate |
-| `scripts/send_smtp.py` | same file, disabled | adapted (planned P1) | verified MIT / stdlib | no sending attempted; all sending disabled before V1 demo |
+| `scripts/send_smtp.py` | same file, disabled | adapted (P1 implemented) | verified MIT / stdlib | no sending attempted; all sending disabled before V1 demo |
 | `scripts/run_hunt.py` | retained legacy source | not-used | verified MIT / subprocess, requests via scripts | demo fails missing Serper key; no new orchestration loop |
 | `scripts/read_jina.py` | retained legacy source | not-used | verified MIT / requests Apache-2.0 | inspected; safe provider boundary replaces unsafe arbitrary-URL entry |
 | other `scripts/`, references, templates, example, assets | same paths | as-is, legacy | verified root MIT | preserved history; no broad functional claims |
-| root host instructions / README / pyproject / Makefile / CI | same paths | adapted (planned) | verified root MIT | remove auto-outreach preference; new CLI and blocking offline checks |
+| root host instructions / README / pyproject / Makefile / CI | same paths | adapted (implemented) | verified root MIT | remove auto-outreach preference; new CLI and blocking offline checks |
 
 New Case models/storage/ingestion/rules/reporting are new code because the upstream lead/outreach artifacts have no persistent inquiry Case schema, rule applicability engine, or inbound-reply contract. Avoiding a new Agent runtime is mandatory.
 
@@ -26,7 +26,7 @@ Each row's license observations derive from the locked root files; details and f
 
 | Repository / locked SHA | Original | Target | Nature | License / deps | Real test / reason / alternative |
 |---|---|---|---|---|---|
-| AI_Find_Customer `9b2fde8f719623c627516da2663707a893ee6805` | `backend/tools/url_filter.py` | P2 candidate adapter | not-used until P2 | MIT / stdlib | original tools 80 tests pass; useful classifier, needs hostile-URL fixes |
+| AI_Find_Customer `9b2fde8f719623c627516da2663707a893ee6805` | `backend/tools/url_filter.py` | `src/tradecase/vendor/ai_hunter/url_filter.py` | adapted in P2 | MIT / stdlib | original tools 80 tests pass; useful classifier, needs hostile-URL fixes |
 | AI_Find_Customer same SHA | `contact_extractor.py` | none | not-used | MIT / stdlib | original tests pass; B2B extractor already covers required scope |
 | AI_Find_Customer same SHA | PDF parsers / react_runner / agents | none | not-used | root MIT; PDF AGPL/commercial dependencies | excluded; no model loop or extra parsing required |
 | crawl4ai `888299fb5f0b82181897dc0e61bfb4b036f0aea5` | HTTP strategy / engine | optional dependency boundary | not-used source | Apache-2.0 plus attribution; 34 dependencies not installed | 4 AST parses pass; runtime blocked until dependency/license audit, static reader alternative |
@@ -46,3 +46,7 @@ Each row's license observations derive from the locked root files; details and f
 - P2 new code supplies Case candidate boundaries, scoring and cross-contract checks absent upstream. It does not duplicate crawler or Agent runtime code.
 
 P4 lint-only adaptation: `scripts/extract_contacts.py` removes one redundant blank line in imports; all extraction algorithms remain inherited. Exact current/original hashes are in SOURCE_MANIFEST.json. Active inherited/adapted helper files now have blocking Ruff checks in Makefile.
+
+## 最终执行口径
+
+18个B2B脚本保留，其中14个字节不变、4个适配（导入、SMTP禁用或lint）；实际V1包装6个B2B文件，加1个AI Hunter分类文件。其他11个B2B文件为legacy-not-used，SMTP为disabled。新Case代码的文件数量不能等同于运行时贡献；各阶段冻结版本计数与明确分母见 `docs/evidence/P6/reuse-metrics.json`。新增包负责原项目没有的持久Case、严格引用、合规适用性、入站草稿与双宿主安装，未引入模型循环。

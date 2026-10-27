@@ -1,0 +1,222 @@
+{
+  "workspace": "/private/tmp/tradecase-package-122hffs4",
+  "repo": "/Users/a/workspaces/AForeign Trade/tradecase-v1",
+  "started_at": "2026-10-27T16:18:55.218140+00:00",
+  "results": [
+    {
+      "command": [
+        "uv",
+        "build",
+        "--offline",
+        "--wheel",
+        "--out-dir",
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/docs/evidence/P6/packaging-dist"
+      ],
+      "cwd": "/Users/a/workspaces/AForeign Trade/tradecase-v1",
+      "exit_code": 0,
+      "log": "docs/evidence/P6/packaging-00-build-offline.log"
+    },
+    {
+      "command": [
+        "uv",
+        "venv",
+        "--python",
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+        "/private/tmp/tradecase-package-122hffs4/venv"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-02-venv.log"
+    },
+    {
+      "command": [
+        "uv",
+        "pip",
+        "install",
+        "--offline",
+        "--python",
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/python",
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/docs/evidence/P6/packaging-dist/tradecase-0.1.0-py3-none-any.whl"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-03-install-offline.log"
+    },
+    {
+      "command": [
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/tradecase",
+        "doctor"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-04-doctor.log"
+    },
+    {
+      "command": [
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/tradecase",
+        "demo",
+        "--fixture",
+        "/Users/a/workspaces/AForeign Trade/tradecase-v1/fixtures/case_strong",
+        "--out",
+        "/private/tmp/tradecase-package-122hffs4/packaged-case"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-05-demo.log"
+    },
+    {
+      "command": [
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/tradecase",
+        "validate",
+        "--case",
+        "/private/tmp/tradecase-package-122hffs4/packaged-case",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-06-validate.log"
+    },
+    {
+      "command": [
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/python",
+        "-m",
+        "tradecase_upstream.send_smtp",
+        "--send-approved"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "log": "docs/evidence/P6/packaging-07-send-disabled.log"
+    },
+    {
+      "command": [
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/python",
+        "-c",
+        "from tradecase_upstream.send_smtp import send_message, SEND_DISABLED_MESSAGE\ntry:\n send_message(None, {})\nexcept RuntimeError as exc:\n assert str(exc) == SEND_DISABLED_MESSAGE\n print('send_message refused before configuration or network access')\nelse:\n raise AssertionError('sender was not disabled')"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-08-send-function-disabled.log"
+    },
+    {
+      "command": [
+        "/private/tmp/tradecase-package-122hffs4/venv/bin/python",
+        "-c",
+        "import tradecase, tradecase_upstream; print(tradecase.__file__); print(tradecase_upstream.__file__); assert 'site-packages' in tradecase.__file__; assert 'site-packages' in tradecase_upstream.__file__"
+      ],
+      "cwd": "/private/tmp/tradecase-package-122hffs4",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "docs/evidence/P6/packaging-09-installed-import.log"
+    }
+  ],
+  "build_exit_code": 0,
+  "source_snapshot": {
+    "pyproject.toml": "00bb788d4fd306f02619569d31fbc000de2ecb7d6a1c50a54b499b271cf375d6",
+    "README.md": "0d91322bb62ee9e973c9054eaac2ed2a4cdebd51dc730b72c6083cd47430d690",
+    "src/tradecase/__init__.py": "38b8931466c686228156ea3320d47495096f9a2931f72feb99170d9a64a9b8de",
+    "src/tradecase/assessment.py": "a2cd47e8673fdfe603d6110d9a26e978f3cd75b75dc59a2e2d1ea88147a3f6ff",
+    "src/tradecase/buyer_research.py": "d63f5d4f78a868bf445b44ead66501b961f721bdd215bc19432307a4d1755380",
+    "src/tradecase/case_store.py": "af24cfdf6decc27a58b8fa4cb7bd6a02df19e27ee9fddcf6d8e271404252355d",
+    "src/tradecase/cli.py": "bc2c578f4d7ade13ab1ede3c35ee05ae20ee5450d28ec21c7f097989aaf46056",
+    "src/tradecase/compliance.py": "b584bf79dbeecac73a54623ce24670564208b1df890874f2b0f012d05322b231",
+    "src/tradecase/demo.py": "8029724aa349c88b4f2f9d3842227f79e68d1db6db9181c436b1e9351ddbd7d5",
+    "src/tradecase/ingestion/__init__.py": "2e381ece8189ede619579840ce1b74175eab23c3187a7a43955580e1736e30b5",
+    "src/tradecase/models/__init__.py": "7fd653b8722694781da5f9556f4cccb29ebe8b45514b5acf35be080e6395b70d",
+    "src/tradecase/providers.py": "d71e8d7c12d46c8bda94d293cff78131c6242bee32b211dd07edce49a1bc93e7",
+    "src/tradecase/reporting.py": "95ca0d2807680e9b962e84455de92b6ed1e55534f636ac1b700d598e0a73b1c8",
+    "src/tradecase/upstream.py": "e7e392acfc1da774932969231c019f58a9d66b94b0ac94952695f1c69ece9acb",
+    "src/tradecase/util.py": "b87f0ce3c919785da54c228b4e795fdfde979cbff4dcf6ab63d5ebca79d7b885",
+    "src/tradecase/validation.py": "1f0e7bff9a2378becd7e97974f55b5776a329e7089591a2c6eba82c5dfd5b1be",
+    "src/tradecase/vendor/__init__.py": "31472a1f7d49620b8ecc9f9167275906bf746d817fba007396f1d7a2501b3449",
+    "src/tradecase/vendor/ai_hunter/__init__.py": "f8ad33df47d309337a94ad297d1d038c49cb41839bfc26287f867e2842128bfb",
+    "src/tradecase/vendor/ai_hunter/url_filter.py": "95faeac1deca38cfc9a9f270a134fc9a9e0e515ff8648b39d9835141d3835884",
+    "scripts/__init__.py": "45af8b9596ff1a343d94a14a77a8b2c21dc445915208892465f0ce8c7efbb387",
+    "scripts/contracts.py": "0cf7f7ac075dc2eaf5c1229f6bb3ea0eb387503806896fdf8750408e0f6b5283",
+    "scripts/customs_verify.py": "4eeac1d55bee705b61daaef63fce5859882c7e8b36d7b3babcc6e4fe1d9ae6bf",
+    "scripts/dedupe_leads.py": "48ec3c97e416e1eb905558095c03f8dbe7f1a150e6896d3f0b3525ff68f20ea3",
+    "scripts/enrich_decision_makers.py": "1056711f64b3bec451aab2cd71661c10ebe8e7108f78501f1679e981f9b692cf",
+    "scripts/evaluate_outreach_drafts.py": "e22ffc2246386e12a235ab74e58b690bb5b6c3917be55d350021cd158e302584",
+    "scripts/export_leads.py": "2b4270c863fe4513749a166c19f7d964943af763c39a5701474c7083681271e8",
+    "scripts/extract_contacts.py": "ab077fa9ca01d5926c65e3d5c17dc47adb7079b45c095814fa4b77c36b0ceab2",
+    "scripts/generate_outreach_drafts.py": "f3e1ffd06585125b45a97bd9221799bdbc965de5efaf93be87d35409bd278344",
+    "scripts/generate_outreach_templates.py": "770c41b5ac8a3c281100d0b797b5820a66c8ab73a42874dbb36ae280c28e452d",
+    "scripts/infer_email.py": "35aba4af8e178e35d1357d7371edf7716adbc0e17f170d903fb38b254753eb96",
+    "scripts/linkedin_dm_search.py": "92e4edfe9933d62ac350b0554b46982575c003f7294e9ff3cf1211403ee0c67c",
+    "scripts/normalize_search_results.py": "8f404fb218d6cba7ef73c42bbe238cf2847b9be8174647ad9da4544a103af2e0",
+    "scripts/prepare_outreach.py": "963786210ed4585213b8296935e6ddb935a57cd8d1a7fe05b9754a134d0197b1",
+    "scripts/read_jina.py": "2d243687f945cb361e02d91ada0714636d1b2ee33c2c8e5851f917be62795dda",
+    "scripts/run_hunt.py": "4520bebf741db4397d5d06a124eb6a4e0d10cb6aae90db1789c12d392517fc4d",
+    "scripts/send_smtp.py": "270a5cb064eb184d01c6b90a99b6a2bb7d653f8119a096a249d6db700087b4ae",
+    "scripts/serper_maps.py": "9431421e1eb1b13c7d2bcbf21b335b80c99cd0cd9b18ab664fb71f1de1495df8",
+    "scripts/validate_artifact.py": "b5bb2ae1353fc80ffa78374fa8e66352ae77e8c5925b03e349976d9e7a162552"
+  },
+  "wheel": {
+    "wheel": "/Users/a/workspaces/AForeign Trade/tradecase-v1/dist/packaging-initial/tradecase-0.1.0-py3-none-any.whl",
+    "sha256": "aa2e08dfc4bb9f8dc377919468c2ce92a13bae7528502fe0e89ea3c1ee623c5f",
+    "files": [
+      "tradecase/__init__.py",
+      "tradecase/assessment.py",
+      "tradecase/buyer_research.py",
+      "tradecase/case_store.py",
+      "tradecase/cli.py",
+      "tradecase/compliance.py",
+      "tradecase/demo.py",
+      "tradecase/providers.py",
+      "tradecase/reporting.py",
+      "tradecase/upstream.py",
+      "tradecase/util.py",
+      "tradecase/validation.py",
+      "tradecase/ingestion/__init__.py",
+      "tradecase/models/__init__.py",
+      "tradecase/vendor/__init__.py",
+      "tradecase/vendor/ai_hunter/LICENSE",
+      "tradecase/vendor/ai_hunter/__init__.py",
+      "tradecase/vendor/ai_hunter/url_filter.py",
+      "tradecase-0.1.0.dist-info/licenses/LICENSE",
+      "tradecase_upstream/__init__.py",
+      "tradecase_upstream/contracts.py",
+      "tradecase_upstream/customs_verify.py",
+      "tradecase_upstream/dedupe_leads.py",
+      "tradecase_upstream/enrich_decision_makers.py",
+      "tradecase_upstream/evaluate_outreach_drafts.py",
+      "tradecase_upstream/export_leads.py",
+      "tradecase_upstream/extract_contacts.py",
+      "tradecase_upstream/generate_outreach_drafts.py",
+      "tradecase_upstream/generate_outreach_templates.py",
+      "tradecase_upstream/infer_email.py",
+      "tradecase_upstream/linkedin_dm_search.py",
+      "tradecase_upstream/normalize_search_results.py",
+      "tradecase_upstream/prepare_outreach.py",
+      "tradecase_upstream/read_jina.py",
+      "tradecase_upstream/run_hunt.py",
+      "tradecase_upstream/send_smtp.py",
+      "tradecase_upstream/serper_maps.py",
+      "tradecase_upstream/validate_artifact.py",
+      "tradecase-0.1.0.dist-info/METADATA",
+      "tradecase-0.1.0.dist-info/WHEEL",
+      "tradecase-0.1.0.dist-info/entry_points.txt",
+      "tradecase-0.1.0.dist-info/top_level.txt",
+      "tradecase-0.1.0.dist-info/RECORD"
+    ],
+    "required_files_present": true,
+    "license_paths": [
+      "tradecase/vendor/ai_hunter/LICENSE",
+      "tradecase-0.1.0.dist-info/licenses/LICENSE"
+    ],
+    "ai_hunter_license_byte_identical": true,
+    "disabled_sender_byte_identical": true,
+    "original_build_path": "/Users/a/workspaces/AForeign Trade/tradecase-v1/docs/evidence/P6/packaging-dist/tradecase-0.1.0-py3-none-any.whl"
+  },
+  "artifact_relocation": {
+    "from": "/Users/a/workspaces/AForeign Trade/tradecase-v1/docs/evidence/P6/packaging-dist/tradecase-0.1.0-py3-none-any.whl",
+    "to": "/Users/a/workspaces/AForeign Trade/tradecase-v1/dist/packaging-initial/tradecase-0.1.0-py3-none-any.whl",
+    "reason": "Build artifacts remain outside tracked evidence; commands/logs retain historical invocation paths."
+  }
+}

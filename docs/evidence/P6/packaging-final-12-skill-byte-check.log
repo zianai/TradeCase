@@ -1,0 +1,12 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/python -c 'import pathlib,hashlib,sys
+p=pathlib.Path(sys.argv[1]);
+for name in ['"'"'trade-inquiry'"'"','"'"'buyer-research'"'"','"'"'trade-compliance'"'"']:
+ source=(p/'"'"'skills'"'"'/name/'"'"'SKILL.md'"'"').read_bytes()
+ assert all((p/host/'"'"'skills'"'"'/name/'"'"'SKILL.md'"'"').read_bytes()==source for host in ['"'"'.agents'"'"','"'"'.claude'"'"'])
+ print(name,hashlib.sha256(source).hexdigest())' /private/tmp/tradecase-final-package-yor_6yyr/skill-project
+trade-inquiry 6d63a62eaab7035a7698f8a697645f391473a9e5cce78ad56d8493942cccebd4
+buyer-research 2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e
+trade-compliance 334eced02a2387e26bca04934607a32fce2e8e572c11f1b345c3a876729e192e
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

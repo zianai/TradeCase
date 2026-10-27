@@ -1,0 +1,136 @@
+{
+  "captured_at": "2026-10-27T16:24:10.084224+00:00",
+  "prompt_ref": "docs/host-validation-prompt.txt",
+  "prompt_sha256": "8180b62246097556be227c3bdefabb12b55f8500159a3c4054486fc950c51eb0",
+  "fixture_sha256": "980f4e698c7a72ca9a1252140b8cd547b58323c93e088c38672fbb3573daec7b",
+  "skill_sha256": "6d63a62eaab7035a7698f8a697645f391473a9e5cce78ad56d8493942cccebd4",
+  "codex_status": "tested_live host tool execution over tested_offline business data",
+  "codex_scope": "Current Codex chat explicitly read installed Skill/SOP and the saved natural-language prompt, then invoked the CLI; not a fresh auto-discovery session or autonomous online investigation.",
+  "claude_agent_status": "blocked: authorized single restricted invocation exit 1, Not logged in, zero reported model usage/cost",
+  "runs": [
+    {
+      "executor": "codex-current-session",
+      "case": "cases/host-codex/strong",
+      "commands": [
+        {
+          "command": [
+            ".venv/bin/tradecase",
+            "demo",
+            "--fixture",
+            "fixtures/case_strong",
+            "--out",
+            "cases/host-codex/strong"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/host-codex/strong\",\n  \"state\": \"completed\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/host-codex/strong/report.md\"\n}\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            ".venv/bin/tradecase",
+            "validate",
+            "--case",
+            "cases/host-codex/strong",
+            "--strict"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+          "stderr": ""
+        }
+      ],
+      "elapsed_seconds": 0.92,
+      "host_model_call_for_replay": false
+    },
+    {
+      "executor": "plain-cli-replay-not-claude-agent",
+      "case": "cases/cli-replay/strong",
+      "commands": [
+        {
+          "command": [
+            ".venv/bin/tradecase",
+            "demo",
+            "--fixture",
+            "fixtures/case_strong",
+            "--out",
+            "cases/cli-replay/strong"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"case\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/cli-replay/strong\",\n  \"state\": \"completed\",\n  \"valid\": true,\n  \"mode\": \"synthetic_offline\",\n  \"network_calls\": 0,\n  \"email_sends\": 0,\n  \"report\": \"/Users/a/workspaces/AForeign Trade/tradecase-v1/cases/cli-replay/strong/report.md\"\n}\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            ".venv/bin/tradecase",
+            "validate",
+            "--case",
+            "cases/cli-replay/strong",
+            "--strict"
+          ],
+          "exit_code": 0,
+          "stdout": "{\n  \"valid\": true,\n  \"strict\": true,\n  \"errors\": []\n}\n",
+          "stderr": ""
+        }
+      ],
+      "elapsed_seconds": 0.321,
+      "host_model_call_for_replay": false
+    }
+  ],
+  "matching_artifact_sha256": {
+    "input.json": [
+      "35caa0bc38809c78dbd640d851effc4ce8860069c429a0d6c5dc5c674c084511",
+      "35caa0bc38809c78dbd640d851effc4ce8860069c429a0d6c5dc5c674c084511"
+    ],
+    "seller_context.json": [
+      "58d8f70d433b1a9bd67f7da97143589f482106f53b72075609bddf1d1e0bfa59",
+      "58d8f70d433b1a9bd67f7da97143589f482106f53b72075609bddf1d1e0bfa59"
+    ],
+    "candidates.jsonl": [
+      "894dee8010a3530a904b2dbdd383412944a6b8e9359eacb7d1bfc4002d20c821",
+      "894dee8010a3530a904b2dbdd383412944a6b8e9359eacb7d1bfc4002d20c821"
+    ],
+    "buyer_profile.json": [
+      "a3ef4840fba9ebde68b00d955a40034aecc138843dc0af3563b3603b95a1f9f8",
+      "a3ef4840fba9ebde68b00d955a40034aecc138843dc0af3563b3603b95a1f9f8"
+    ],
+    "evidence.jsonl": [
+      "6568716175cb8ffb42c832ef75020f39bb4b191c3a1805d489387bb25364a84f",
+      "6568716175cb8ffb42c832ef75020f39bb4b191c3a1805d489387bb25364a84f"
+    ],
+    "assessment.json": [
+      "03309b4d3d0f49880fd1319585ee11fc29ca1f5b17e952ad0e803bb59f649028",
+      "03309b4d3d0f49880fd1319585ee11fc29ca1f5b17e952ad0e803bb59f649028"
+    ],
+    "rules_snapshot.json": [
+      "bdc63ad3758312c97c5362091b5044ac74bacdc271af5904d28389e0c610d696",
+      "bdc63ad3758312c97c5362091b5044ac74bacdc271af5904d28389e0c610d696"
+    ],
+    "compliance.json": [
+      "cfca58ae8fe6226b1e43c2b5f618e7656de0bb2751b214d1e7ea9a5f056cffc6",
+      "cfca58ae8fe6226b1e43c2b5f618e7656de0bb2751b214d1e7ea9a5f056cffc6"
+    ],
+    "reply_draft.md": [
+      "5125e3b11a74b670192d894161575540e6960e7bcf1458ca7b7f2d795bcfb0c0",
+      "5125e3b11a74b670192d894161575540e6960e7bcf1458ca7b7f2d795bcfb0c0"
+    ],
+    "draft_review.json": [
+      "5a884626fd4eef393d8948c5ccebdd87f3628af5185ef2074b1fb0fbaf0ea5d2",
+      "5a884626fd4eef393d8948c5ccebdd87f3628af5185ef2074b1fb0fbaf0ea5d2"
+    ],
+    "next_actions.json": [
+      "26d414bb3cd6296efcca64a94e8b077e47c4dd2a208a7129bac01cd3b1eb37fd",
+      "26d414bb3cd6296efcca64a94e8b077e47c4dd2a208a7129bac01cd3b1eb37fd"
+    ],
+    "report.md": [
+      "74a6fe19d8a75fddc844a362a4a2660dcdf9dc5b39c74fe8c969a6676f3b7b58",
+      "74a6fe19d8a75fddc844a362a4a2660dcdf9dc5b39c74fe8c969a6676f3b7b58"
+    ]
+  },
+  "excluded_from_byte_comparison": [
+    "manifest/events/history timestamps",
+    "offline demo elapsed metric"
+  ],
+  "email_sends": 0,
+  "new_business_network_calls": 0,
+  "additional_model_calls": 0,
+  "claude_invocation_ref": "docs/evidence/P6/claude-invocation.json"
+}

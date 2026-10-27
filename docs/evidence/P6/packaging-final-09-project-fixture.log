@@ -1,0 +1,9 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/python -c 'import pathlib,shutil,sys
+repo=pathlib.Path(sys.argv[1]);target=pathlib.Path(sys.argv[2]);target.mkdir()
+shutil.copyfile(repo/'"'"'pyproject.toml'"'"',target/'"'"'pyproject.toml'"'"')
+for name in ['"'"'skills'"'"','"'"'references'"'"','"'"'rules'"'"']: shutil.copytree(repo/name,target/name)
+print('"'"'Copied project-only Skill sources and references into '"'"'+str(target))' '/Users/a/workspaces/AForeign Trade/tradecase-v1' /private/tmp/tradecase-final-package-yor_6yyr/skill-project
+Copied project-only Skill sources and references into /private/tmp/tradecase-final-package-yor_6yyr/skill-project
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

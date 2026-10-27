@@ -1,0 +1,5 @@
+$ .venv/bin/python -m pytest tests/unit/test_recovery_conflicts.py tests/contract/test_final_review.py::test_recovery_does_not_silently_discard_intervening_file_edits tests/unit/test_store_ingestion.py tests/contract/test_review_findings.py -q
+...................                                                      [100%]
+19 passed in 0.59s
+
+EXIT_CODE=0

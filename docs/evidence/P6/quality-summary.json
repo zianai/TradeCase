@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "scope": "P6 local wheel packaging, installed CLI and project Skill synchronization verification",
+  "status": "tested_offline",
+  "final_source_freeze": true,
+  "captured_at": "2026-10-27T16:25:34.443525+00:00",
+  "build": {
+    "mode": "offline",
+    "exit_code": 0,
+    "wheel": "/Users/a/workspaces/AForeign Trade/tradecase-v1/dist/packaging-final/tradecase-0.1.0-py3-none-any.whl",
+    "sha256": "d2ed806a6c97900b564c292aea09e6dc15f7eec8b3928236cf4053f4d11467cb"
+  },
+  "isolated_environment": {
+    "directory": "/private/tmp/tradecase-final-package-yor_6yyr",
+    "installation_mode": "wheel; dependency cache only; no editable source path",
+    "working_directory_outside_repository": true,
+    "imports_confirmed_in_site_packages": true
+  },
+  "checks": [
+    {
+      "name": "wheel_required_modules_and_licenses",
+      "status": "tested_offline",
+      "result": "passed",
+      "all_python_modules_match_source_bytes": true,
+      "skill_installer_included": true
+    },
+    {
+      "name": "doctor",
+      "status": "tested_offline",
+      "exit_code": 0
+    },
+    {
+      "name": "synthetic_demo",
+      "status": "tested_offline",
+      "exit_code": 0,
+      "state": "completed"
+    },
+    {
+      "name": "strict_validation_of_installed_cli_output",
+      "status": "tested_offline",
+      "exit_code": 0
+    },
+    {
+      "name": "legacy_sender_cli_disabled",
+      "status": "tested_offline",
+      "exit_code": 2,
+      "expected_exit_code": 2
+    },
+    {
+      "name": "sender_function_disabled_before_config_or_network",
+      "status": "tested_offline",
+      "exit_code": 0
+    },
+    {
+      "name": "installed_wheel_project_skill_install",
+      "status": "tested_offline",
+      "exit_code": 0,
+      "scope": "temporary project only"
+    },
+    {
+      "name": "skill_install_idempotence_and_both_host_byte_identity",
+      "status": "tested_offline",
+      "exit_code": 0
+    },
+    {
+      "name": "FINAL-02_recovery_conflict_regression",
+      "status": "tested_offline",
+      "tests_passed": 19,
+      "exit_code": 0,
+      "log": "docs/evidence/P6/final02-recovery-green-0.log"
+    }
+  ],
+  "commands_matched_expected_exit_codes": 13,
+  "changes_since_final_build": [],
+  "network_calls_in_demo": 0,
+  "email_sends": 0,
+  "paid_calls": 0,
+  "remote_ci": {
+    "status": "not_started",
+    "note": "No remote CI run is claimed; all commands in this record ran locally."
+  },
+  "out_of_scope": [
+    "Live Codex/Claude Agent orchestration",
+    "Optional browser providers",
+    "Legal accuracy or real buyer verification"
+  ],
+  "logs": [
+    "docs/evidence/P6/packaging-final-00-build-offline.log",
+    "docs/evidence/P6/packaging-final-01-venv.log",
+    "docs/evidence/P6/packaging-final-02-install-offline.log",
+    "docs/evidence/P6/packaging-final-03-doctor.log",
+    "docs/evidence/P6/packaging-final-04-demo.log",
+    "docs/evidence/P6/packaging-final-05-validate.log",
+    "docs/evidence/P6/packaging-final-06-send-disabled.log",
+    "docs/evidence/P6/packaging-final-07-send-function-disabled.log",
+    "docs/evidence/P6/packaging-final-08-installed-import.log",
+    "docs/evidence/P6/packaging-final-09-project-fixture.log",
+    "docs/evidence/P6/packaging-final-10-install-skills.log",
+    "docs/evidence/P6/packaging-final-11-install-skills-idempotent.log",
+    "docs/evidence/P6/packaging-final-12-skill-byte-check.log"
+  ],
+  "inventory": "docs/evidence/P6/packaging-final-wheel-inspection.json",
+  "command_archive": "docs/evidence/P6/packaging-final-state.json",
+  "initial_build_archive": "docs/evidence/P6/packaging-state.json",
+  "binary_artifacts_policy": "Wheel binaries are retained only in gitignored dist/packaging-initial and dist/packaging-final; evidence retains hashes, inventory, commands and logs."
+}

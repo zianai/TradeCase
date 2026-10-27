@@ -1,0 +1,7 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/python -c 'import tradecase, tradecase_upstream, tradecase.skill_install; print(tradecase.__file__); print(tradecase_upstream.__file__); print(tradecase.skill_install.__file__); assert all('"'"'site-packages'"'"' in m.__file__ for m in (tradecase,tradecase_upstream,tradecase.skill_install))'
+/private/tmp/tradecase-final-package-yor_6yyr/venv/lib/python3.12/site-packages/tradecase/__init__.py
+/private/tmp/tradecase-final-package-yor_6yyr/venv/lib/python3.12/site-packages/tradecase_upstream/__init__.py
+/private/tmp/tradecase-final-package-yor_6yyr/venv/lib/python3.12/site-packages/tradecase/skill_install.py
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

@@ -1,0 +1,113 @@
+$ .venv/bin/python -m pytest tests/unit/test_recovery_conflicts.py tests/contract/test_final_review.py::test_recovery_does_not_silently_discard_intervening_file_edits -q
+FF.FF                                                                    [100%]
+=================================== FAILURES ===================================
+___________ test_conflict_refusal_preserves_every_target_and_journal ___________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-358/test_conflict_refusal_preserve0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10acd65d0>
+
+    def test_conflict_refusal_preserves_every_target_and_journal(tmp_path, monkeypatch):
+        store = create_store(tmp_path)
+        store.write("search_plan.md", "Original plan")
+        interrupt_plan(store, monkeypatch)
+        (store.path / "search_plan.md").write_text("Human intervening investigation")
+        names = ["search_plan.md", "manifest.json", "events.jsonl", ".transaction.json"]
+        before = {name: (store.path / name).read_bytes() for name in names}
+>       with pytest.raises(ValueError, match="conflict|changed"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/unit/test_recovery_conflicts.py:41: Failed
+_______ test_initial_revision_preflights_all_targets_before_applying_any _______
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-358/test_initial_revision_prefligh0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b14fa40>
+
+    def test_initial_revision_preflights_all_targets_before_applying_any(tmp_path, monkeypatch):
+        path = tmp_path / "case"
+        original = module.atomic_write
+    
+        def interrupt(target, raw):
+            if target == path / "input.json":
+                raise OSError("synthetic interruption in first revision")
+            return original(target, raw)
+    
+        with monkeypatch.context() as patch:
+            patch.setattr(module, "atomic_write", interrupt)
+            with pytest.raises(OSError):
+                create_store(tmp_path)
+        store = CaseStore(path)
+        assert not (path / "input.json").exists()
+        manual = b'{"company_name":"Human recovery note","is_synthetic":true}\n'
+        (path / "seller_context.json").write_bytes(manual)
+        before_events = (path / "events.jsonl").read_bytes() if (path / "events.jsonl").exists() else None
+>       with pytest.raises(ValueError, match="conflict|changed"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/unit/test_recovery_conflicts.py:64: Failed
+___________ test_intervening_manifest_edit_is_not_silently_replaced ____________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-358/test_intervening_manifest_edit0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b14e570>
+
+    def test_intervening_manifest_edit_is_not_silently_replaced(tmp_path, monkeypatch):
+        store = create_store(tmp_path)
+        store.write("search_plan.md", "Original plan")
+        interrupt_plan(store, monkeypatch)
+        manifest = store.read("manifest.json")
+        manifest["current_stage"] = "human-investigation"
+        (store.path / "manifest.json").write_text(json.dumps(manifest))
+        before = (store.path / "manifest.json").read_bytes()
+>       with pytest.raises(ValueError, match="conflict|changed"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/unit/test_recovery_conflicts.py:101: Failed
+________ test_recovery_does_not_silently_discard_intervening_file_edits ________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-358/test_recovery_does_not_silentl0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b1075f0>
+
+    def test_recovery_does_not_silently_discard_intervening_file_edits(tmp_path, monkeypatch):
+        import tradecase.case_store as module
+    
+        store = CaseStore.create(tmp_path / "recovery-case", {
+            "case_id": "recovery-case", "received_at": "2026-10-27T12:00:00Z",
+            "buyer_message": "SYNTHETIC recovery test", "is_synthetic": True,
+        }, {"is_synthetic": True})
+        store.write("search_plan.md", "Original saved plan")
+        original_write = module.atomic_write
+    
+        def interrupted(path, raw):
+            if path == store.path / "search_plan.md":
+                raise OSError("SYNTHETIC interrupted file replacement")
+            return original_write(path, raw)
+    
+        with monkeypatch.context() as patch:
+            patch.setattr(module, "atomic_write", interrupted)
+            with pytest.raises(OSError):
+                store.write("search_plan.md", "Queued pre-interruption plan")
+        assert (store.path / ".transaction.json").exists()
+        manual_text = "Human edit after the interruption; preserve this investigation"
+        (store.path / "search_plan.md").write_text(manual_text)
+        try:
+            store.recover()
+        except ValueError:
+            pass  # Refusing a conflict is an acceptable safe recovery outcome.
+        preserved = (store.path / "search_plan.md").read_text() == manual_text or any(
+            path.read_text() == manual_text for path in (store.path / ".history").rglob("search_plan.md")
+        )
+>       assert preserved, "Recovery overwrote an intervening edit without preserving it in history"
+E       AssertionError: Recovery overwrote an intervening edit without preserving it in history
+E       assert False
+
+tests/contract/test_final_review.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED tests/unit/test_recovery_conflicts.py::test_conflict_refusal_preserves_every_target_and_journal
+FAILED tests/unit/test_recovery_conflicts.py::test_initial_revision_preflights_all_targets_before_applying_any
+FAILED tests/unit/test_recovery_conflicts.py::test_intervening_manifest_edit_is_not_silently_replaced
+FAILED tests/contract/test_final_review.py::test_recovery_does_not_silently_discard_intervening_file_edits
+4 failed, 1 passed in 0.26s
+
+EXIT_CODE=1

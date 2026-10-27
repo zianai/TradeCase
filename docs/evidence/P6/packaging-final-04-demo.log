@@ -1,0 +1,13 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/tradecase demo --fixture '/Users/a/workspaces/AForeign Trade/tradecase-v1/fixtures/case_strong' --out /private/tmp/tradecase-final-package-yor_6yyr/packaged-case
+{
+  "case": "/private/tmp/tradecase-final-package-yor_6yyr/packaged-case",
+  "state": "completed",
+  "valid": true,
+  "mode": "synthetic_offline",
+  "network_calls": 0,
+  "email_sends": 0,
+  "report": "/private/tmp/tradecase-final-package-yor_6yyr/packaged-case/report.md"
+}
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

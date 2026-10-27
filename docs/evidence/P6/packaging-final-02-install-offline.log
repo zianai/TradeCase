@@ -1,0 +1,14 @@
+$ uv pip install --offline --python /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/python '/Users/a/workspaces/AForeign Trade/tradecase-v1/dist/packaging-final/tradecase-0.1.0-py3-none-any.whl'
+Using Python 3.12.13 environment at: venv
+Resolved 6 packages in 58ms
+Prepared 1 package in 15ms
+Installed 6 packages in 14ms
+ + annotated-types==0.8.0
+ + pydantic==2.14.1
+ + pydantic-core==2.50.1
+ + tradecase==0.1.0 (from file:///Users/a/workspaces/AForeign%20Trade/tradecase-v1/dist/packaging-final/tradecase-0.1.0-py3-none-any.whl)
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

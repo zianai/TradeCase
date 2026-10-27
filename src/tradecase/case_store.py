@@ -235,10 +235,56 @@ class CaseStore:
         input_raw = input_raw.encode("utf-8") if input_raw is not None else self._target("input.json").read_bytes()
         if digest(input_raw) != after["input_hash"] or json.loads(input_raw)["case_id"] != after["case_id"]:
             raise ValueError("transaction original input identity/hash mismatch")
+        self._check_target_conflicts(files, after, events, revision)
         # Manifest is the commit marker and is always written last.
         for name in sorted(journal["files"], key=lambda x: x == "manifest.json"):
             atomic_write(self._target(name), journal["files"][name].encode("utf-8"))
         (self.path / ".transaction.json").unlink()
+
+    def _check_target_conflicts(self, files, after, events, revision):
+        """Preflight every destination before replay; never erase intervening edits.
+
+        A destination may still contain its committed before-image or already
+        contain the journal after-image. Anything else requires reconciliation.
+        History supplies the before-image for the unindexed manifest/events;
+        business artifact hashes come from the pre-transaction manifest.
+        """
+        history = self.path / ".history" / str(revision - 1)
+        before_path = history / "manifest.json"
+        no_symlinks(before_path)
+        before = None
+        if before_path.exists():
+            before = Manifest.model_validate(json.loads(before_path.read_bytes())).model_dump(mode="json")
+            if before["revision"] != revision - 1 or before["case_id"] != after["case_id"]:
+                raise ValueError("transaction conflict: invalid before-manifest history")
+        for name, content in files.items():
+            target = self._target(name)
+            before_hash = None
+            if name in {"manifest.json", "events.jsonl"}:
+                original = history / name
+                no_symlinks(original)
+                if original.exists():
+                    raw = original.read_bytes()
+                    if name == "events.jsonl":
+                        if raw and not raw.endswith(b"\n"):
+                            raise ValueError("transaction conflict: incomplete before-event history")
+                        prior_events = [json.loads(line) for line in raw.splitlines() if line.strip()]
+                        if prior_events != events[:-1]:
+                            raise ValueError("transaction conflict: before-event history does not match journal")
+                    before_hash = digest(raw)
+                existed_before = revision > 1
+            else:
+                before_hash = before["artifact_index"].get(name) if before else None
+                existed_before = before_hash is not None or (before is None and revision > 1)
+            if not target.exists():
+                if existed_before:
+                    raise ValueError(f"transaction conflict: original target disappeared: {name}")
+                continue
+            if not target.is_file():
+                raise ValueError(f"transaction conflict: target is not a regular file: {name}")
+            current_hash = digest(target.read_bytes())
+            if current_hash not in {before_hash, digest(content.encode("utf-8"))}:
+                raise ValueError(f"transaction conflict: target changed since queued: {name}")
 
     def recover(self):
         with self._lock():

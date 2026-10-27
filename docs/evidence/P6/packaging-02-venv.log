@@ -1,0 +1,7 @@
+$ uv venv --python /Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python /private/tmp/tradecase-package-122hffs4/venv
+Using CPython 3.12.13 interpreter at: /Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python
+Creating virtual environment at: venv
+Activate with: source venv/bin/activate
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

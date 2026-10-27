@@ -55,3 +55,4 @@ cookies*
 .agents/skills/
 .claude/skills/
 !docs/evidence/**/*.log
+.tradecase/

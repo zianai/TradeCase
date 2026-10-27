@@ -1,0 +1,193 @@
+$ uv build --offline --wheel --out-dir /Users/a/workspaces/AForeign Trade/tradecase-v1/docs/evidence/P6/packaging-dist
+Building wheel...
+/Users/a/.cache/uv/builds-v0/.tmpGEIdqP/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+running egg_info
+writing tradecase.egg-info/PKG-INFO
+writing dependency_links to tradecase.egg-info/dependency_links.txt
+writing entry points to tradecase.egg-info/entry_points.txt
+writing requirements to tradecase.egg-info/requires.txt
+writing top-level names to tradecase.egg-info/top_level.txt
+reading manifest file 'tradecase.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'tradecase.egg-info/SOURCES.txt'
+/Users/a/.cache/uv/builds-v0/.tmpGEIdqP/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+running bdist_wheel
+running build
+running build_py
+creating build/lib/tradecase
+copying src/tradecase/assessment.py -> build/lib/tradecase
+copying src/tradecase/compliance.py -> build/lib/tradecase
+copying src/tradecase/util.py -> build/lib/tradecase
+copying src/tradecase/case_store.py -> build/lib/tradecase
+copying src/tradecase/buyer_research.py -> build/lib/tradecase
+copying src/tradecase/__init__.py -> build/lib/tradecase
+copying src/tradecase/providers.py -> build/lib/tradecase
+copying src/tradecase/cli.py -> build/lib/tradecase
+copying src/tradecase/upstream.py -> build/lib/tradecase
+copying src/tradecase/demo.py -> build/lib/tradecase
+copying src/tradecase/reporting.py -> build/lib/tradecase
+copying src/tradecase/validation.py -> build/lib/tradecase
+creating build/lib/tradecase/models
+copying src/tradecase/models/__init__.py -> build/lib/tradecase/models
+creating build/lib/tradecase/ingestion
+copying src/tradecase/ingestion/__init__.py -> build/lib/tradecase/ingestion
+creating build/lib/tradecase/vendor
+copying src/tradecase/vendor/__init__.py -> build/lib/tradecase/vendor
+creating build/lib/tradecase/vendor/ai_hunter
+copying src/tradecase/vendor/ai_hunter/url_filter.py -> build/lib/tradecase/vendor/ai_hunter
+copying src/tradecase/vendor/ai_hunter/__init__.py -> build/lib/tradecase/vendor/ai_hunter
+creating build/lib/tradecase_upstream
+copying scripts/prepare_outreach.py -> build/lib/tradecase_upstream
+copying scripts/extract_contacts.py -> build/lib/tradecase_upstream
+copying scripts/export_leads.py -> build/lib/tradecase_upstream
+copying scripts/enrich_decision_makers.py -> build/lib/tradecase_upstream
+copying scripts/infer_email.py -> build/lib/tradecase_upstream
+copying scripts/read_jina.py -> build/lib/tradecase_upstream
+copying scripts/dedupe_leads.py -> build/lib/tradecase_upstream
+copying scripts/generate_outreach_templates.py -> build/lib/tradecase_upstream
+copying scripts/customs_verify.py -> build/lib/tradecase_upstream
+copying scripts/__init__.py -> build/lib/tradecase_upstream
+copying scripts/normalize_search_results.py -> build/lib/tradecase_upstream
+copying scripts/send_smtp.py -> build/lib/tradecase_upstream
+copying scripts/validate_artifact.py -> build/lib/tradecase_upstream
+copying scripts/serper_maps.py -> build/lib/tradecase_upstream
+copying scripts/contracts.py -> build/lib/tradecase_upstream
+copying scripts/run_hunt.py -> build/lib/tradecase_upstream
+copying scripts/evaluate_outreach_drafts.py -> build/lib/tradecase_upstream
+copying scripts/generate_outreach_drafts.py -> build/lib/tradecase_upstream
+copying scripts/linkedin_dm_search.py -> build/lib/tradecase_upstream
+running egg_info
+writing tradecase.egg-info/PKG-INFO
+writing dependency_links to tradecase.egg-info/dependency_links.txt
+writing entry points to tradecase.egg-info/entry_points.txt
+writing requirements to tradecase.egg-info/requires.txt
+writing top-level names to tradecase.egg-info/top_level.txt
+reading manifest file 'tradecase.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'tradecase.egg-info/SOURCES.txt'
+copying src/tradecase/vendor/ai_hunter/LICENSE -> build/lib/tradecase/vendor/ai_hunter
+installing to build/bdist.macosx-11.0-arm64/wheel
+running install
+running install_lib
+creating build/bdist.macosx-11.0-arm64/wheel
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase
+copying build/lib/tradecase/assessment.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase/ingestion
+copying build/lib/tradecase/ingestion/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase/ingestion
+copying build/lib/tradecase/compliance.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/util.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/case_store.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/buyer_research.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase/models
+copying build/lib/tradecase/models/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase/models
+copying build/lib/tradecase/providers.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/cli.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/upstream.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/demo.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase/vendor
+copying build/lib/tradecase/vendor/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase/vendor
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase/vendor/ai_hunter
+copying build/lib/tradecase/vendor/ai_hunter/LICENSE -> build/bdist.macosx-11.0-arm64/wheel/./tradecase/vendor/ai_hunter
+copying build/lib/tradecase/vendor/ai_hunter/url_filter.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase/vendor/ai_hunter
+copying build/lib/tradecase/vendor/ai_hunter/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase/vendor/ai_hunter
+copying build/lib/tradecase/reporting.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+copying build/lib/tradecase/validation.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase_upstream
+copying build/lib/tradecase_upstream/prepare_outreach.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/extract_contacts.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/export_leads.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/enrich_decision_makers.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/infer_email.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/read_jina.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/dedupe_leads.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/generate_outreach_templates.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/customs_verify.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/normalize_search_results.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/send_smtp.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/validate_artifact.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/serper_maps.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/contracts.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/run_hunt.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/evaluate_outreach_drafts.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/generate_outreach_drafts.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+copying build/lib/tradecase_upstream/linkedin_dm_search.py -> build/bdist.macosx-11.0-arm64/wheel/./tradecase_upstream
+running install_egg_info
+Copying tradecase.egg-info to build/bdist.macosx-11.0-arm64/wheel/./tradecase-0.1.0-py3.12.egg-info
+running install_scripts
+creating build/bdist.macosx-11.0-arm64/wheel/tradecase-0.1.0.dist-info/WHEEL
+creating '/Users/a/workspaces/AForeign Trade/tradecase-v1/docs/evidence/P6/packaging-dist/.tmp-9w_dv7nr/tradecase-0.1.0-py3-none-any.whl' and adding 'build/bdist.macosx-11.0-arm64/wheel' to it
+adding 'tradecase/__init__.py'
+adding 'tradecase/assessment.py'
+adding 'tradecase/buyer_research.py'
+adding 'tradecase/case_store.py'
+adding 'tradecase/cli.py'
+adding 'tradecase/compliance.py'
+adding 'tradecase/demo.py'
+adding 'tradecase/providers.py'
+adding 'tradecase/reporting.py'
+adding 'tradecase/upstream.py'
+adding 'tradecase/util.py'
+adding 'tradecase/validation.py'
+adding 'tradecase/ingestion/__init__.py'
+adding 'tradecase/models/__init__.py'
+adding 'tradecase/vendor/__init__.py'
+adding 'tradecase/vendor/ai_hunter/LICENSE'
+adding 'tradecase/vendor/ai_hunter/__init__.py'
+adding 'tradecase/vendor/ai_hunter/url_filter.py'
+adding 'tradecase-0.1.0.dist-info/licenses/LICENSE'
+adding 'tradecase_upstream/__init__.py'
+adding 'tradecase_upstream/contracts.py'
+adding 'tradecase_upstream/customs_verify.py'
+adding 'tradecase_upstream/dedupe_leads.py'
+adding 'tradecase_upstream/enrich_decision_makers.py'
+adding 'tradecase_upstream/evaluate_outreach_drafts.py'
+adding 'tradecase_upstream/export_leads.py'
+adding 'tradecase_upstream/extract_contacts.py'
+adding 'tradecase_upstream/generate_outreach_drafts.py'
+adding 'tradecase_upstream/generate_outreach_templates.py'
+adding 'tradecase_upstream/infer_email.py'
+adding 'tradecase_upstream/linkedin_dm_search.py'
+adding 'tradecase_upstream/normalize_search_results.py'
+adding 'tradecase_upstream/prepare_outreach.py'
+adding 'tradecase_upstream/read_jina.py'
+adding 'tradecase_upstream/run_hunt.py'
+adding 'tradecase_upstream/send_smtp.py'
+adding 'tradecase_upstream/serper_maps.py'
+adding 'tradecase_upstream/validate_artifact.py'
+adding 'tradecase-0.1.0.dist-info/METADATA'
+adding 'tradecase-0.1.0.dist-info/WHEEL'
+adding 'tradecase-0.1.0.dist-info/entry_points.txt'
+adding 'tradecase-0.1.0.dist-info/top_level.txt'
+adding 'tradecase-0.1.0.dist-info/RECORD'
+removing build/bdist.macosx-11.0-arm64/wheel
+Successfully built docs/evidence/P6/packaging-dist/tradecase-0.1.0-py3-none-any.whl
+
+EXIT_CODE=0

@@ -1,279 +1,61 @@
-[![English](https://img.shields.io/badge/lang-English-blue)](README.md) [![中文](https://img.shields.io/badge/lang-中文-red)](README.zh.md)
+# TradeCase V1
 
-# B2B Lead Hunter
+基于 B2B Lead Hunter 二次开发的外贸 Agent-native Skills 能力包。Codex / Claude Code 负责调查和判断；Python CLI 负责 Case、证据、确定性评分、规则检查和交付物。**不包含自研 Agent Loop、前端或后台调度服务，不发送邮件。**
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](#)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Platform: Claude Code](https://img.shields.io/badge/Claude%20Code-ready-black)](#)
-[![Platform: Cursor](https://img.shields.io/badge/Cursor-ready-blueviolet)](#)
-[![Platform: Cline](https://img.shields.io/badge/Cline-ready-orange)](#)
-[![中文文档](https://img.shields.io/badge/中文-README-red)](README.zh.md)
+已实现询盘解析、买家候选与消歧、来源记录、两类合规检查、英文回复草稿、人工行动项、可恢复 Case。七组演示均为显式 **SYNTHETIC / OFFLINE**；真实公开来源抽查和受阻能力另列，不能把测试通过当作真实买家或商品认证。
 
-**An AI Agent Skill — not a standalone app.** It runs inside Claude Code, Cursor, Cline, or Hermes to automate foreign-trade B2B lead research, decision-maker discovery, customs/import signal checks, outreach draft generation, and controlled SMTP sending.
+## 本地运行
 
-From the team behind [b2binsights.io](https://b2binsights.io) — B2B export intelligence for Chinese manufacturers.
-
-Designed for export sales teams, founders, and B2B sellers who need traceable, verifiable leads — not spam lists. Every company, contact, score, decision maker, and outreach draft is tied to source URLs and structured artifacts. Quality gates override target count.
-
-📺 [Watch demo on Bilibili](https://b23.tv/9Nx47Xx) (Chinese walkthrough)
-
-## Features
-
-| # | Feature | What It Means |
-|---|---------|---------------|
-| 1 | **AI + Code Separation** | AI owns strategy, judgment, language choice. Python scripts own deterministic work (reading, extracting, validating, sending). Neither can fully operate without the other — no black-box prompts, no blind automation. |
-| 2 | **Multi-Platform** | One skill runs on **Claude Code**, **Cursor**, **Cline**, and **Hermes**. Platform-specific files adapt the same pipeline to each agent's capabilities. |
-| 3 | **Evidence-Driven** | Every company, contact, score, and outreach draft is tied to source URLs. No unverifiable claims. Full audit trail from search to send. |
-| 4 | **Compliance-First** | Hash-locked sending gates, suppression lists, opt-out enforcement, no auto-send to inferred emails. Built for legal B2B outreach, not spam. |
-| 5 | **Deterministic Pipeline** | 18 Python scripts (4,872 lines) handle all data transformation. Schema validation at every stage via `contracts.py`. Results are reproducible, not probabilistic. |
-| 6 | **Quality Gates** | Hard acceptance gates override target counts. A lead cannot enter strict output unless company reality, buyer-role evidence, contactability, and source URLs all exist. Never relax to hit a number. |
-| 7 | **Full Coverage** | From product brief → multi-lane search → website reading → contact extraction → scoring → decision-maker discovery → customs signals → outreach templates → personalized drafts → evaluation → approval → SMTP sending — one unified workflow. |
-
----
-
-## Quick Start
+Python 3.11+，macOS / Linux（使用 POSIX 文件锁）。在此仓库根目录执行：
 
 ```bash
-# 1. Clone and install
-git clone https://github.com/your-username/b2b-lead-hunter.git
-cd b2b-lead-hunter
-pip install -r requirements.txt
-
-# 2. Verify setup
-python -m py_compile scripts/*.py
-python scripts/validate_artifact.py smtp-config templates/smtp-config.example.json
-
-# 3. Run a demo pilot
-python scripts/run_hunt.py example/brief.json \
-  --out lead-runs/demo/ \
-  --queries example/queries.csv \
-  --pilot
-
-# 4. See what you got
-cat lead-runs/demo/pilot-stats.json
+uv sync --frozen --extra dev
+uv run tradecase doctor
+uv run tradecase install-skills --target both --scope project
+uv run tradecase demo --fixture fixtures/case_strong --out cases/my-first-demo
+uv run tradecase validate --case cases/my-first-demo --strict
+uv run tradecase status --case cases/my-first-demo
 ```
 
----
-
-## Installation by Platform
-
-This is an **AI agent skill** — it runs inside an agent, not as a standalone app. Here's how to install it on each platform.
-
-### Claude Code
+打开 `cases/my-first-demo/report.md`。输出目录必须不存在；重复演示换一个目录名，已有 Case 不会被覆盖。没有 uv 时：`python3 -m venv .venv`，再运行 `.venv/bin/python -m pip install -e '.[dev]'` 并用 `.venv/bin/tradecase`。`pip install -r requirements.txt` 等价于可编辑开发安装，不安装旧 Serper/SMTP 服务栈。
 
 ```bash
-# Option A: Open project directly (CLAUDE.md loads automatically)
-cd b2b-lead-hunter
-claude
-
-# Option B: Install as a Claude Code project (accessible from anywhere)
-claude project add b2b-lead-hunter --path /path/to/b2b-lead-hunter
-claude project use b2b-lead-hunter
-
-# Option C: From another directory, reference this repo
-claude --project /path/to/b2b-lead-hunter
+PATH="$PWD/.venv/bin:$PATH" make check
 ```
 
-Once loaded, Claude Code reads [`CLAUDE.md`](CLAUDE.md) for context. It uses `WebSearch` tool for queries, terminal for running Python scripts, and file ops for reading/writing artifacts.
+检查真实执行 compileall、Ruff、pytest、依赖许可证与源码映射。当前本机结果与每阶段的红/绿日志见 [P0–P6 验收报告](docs/PHASE_REPORTS/)；远程 GitHub Actions 配置存在，但本任务没有推送或声称远程 CI 已运行。
 
-### Cursor
+## 使用自己的询盘
 
 ```bash
-# Open the project folder in Cursor
-cursor /path/to/b2b-lead-hunter
+uv run tradecase init --inquiry /path/to/inquiry.eml --seller /path/to/seller.json --target-country US --platform amazon_us --out cases/inquiry-001
+uv run tradecase research --case cases/inquiry-001
 ```
 
-The rules in `.cursor/rules/b2b-lead-hunter.mdc` are loaded automatically when Cursor Agent operates on files matching the `globs` pattern. Use `@web()` for search queries.
+支持 `.eml`、`.txt`、JSON。原始 bytes/Base64/SHA256 和附件元信息保留；附件不执行。卖家资料格式见 [数据契约](docs/CASE_CONTRACT.md)。新 Case 缺少证据时不会自动完成；由宿主按 [trade-inquiry Skill](skills/trade-inquiry/SKILL.md) 收集资料，使用 `put`、`assess`、`compliance`、`draft`、`report`，最后严格校验。`research` 只准备未核实候选，不会自动搜索或确认身份。
 
-### Cline (VS Code)
+三个 Skill 的唯一源码在 `skills/`；安装器同步到项目内 `.agents/skills/` 和 `.claude/skills/`，校验相同内容哈希。参考文件路径以项目根为准。安装器保护已有同名和用户修改内容，不改 `~/.codex`、`~/.claude` 或个人授权设置。双宿主实际执行状态与相同业务提示见 [宿主验证](docs/HOST_VALIDATION.md)。
 
-```bash
-# Open the project folder in VS Code with Cline installed
-code /path/to/b2b-lead-hunter
-```
+## 交付物和业务边界
 
-Cline auto-loads [`.clinerules`](.clinerules) at the project root on startup. No additional config needed. Use `@web` for search queries and the terminal for Python scripts.
+每个完整 Case 有 `input.json`、`seller_context.json`、`candidates.jsonl`、`buyer_profile.json`、`evidence.jsonl`、`assessment.json`、`rules_snapshot.json`、`compliance.json`、`reply_draft.md`、`draft_review.json`、`next_actions.json`、`report.md`、`manifest.json` 与 `events.jsonl`。来源快照在 `snapshots/`，历史在 `.history/`。业务数据目录 `cases/` 不进入 Git。
 
-### Hermes
+- `validate --strict` 通过代表结构、引用和确定性推导一致，允许诚实的 `needs_review`；不证明自然语言内容真实。
+- 评分使用固定规则和证据门槛，不代表信用评级。搜索摘要、推断邮箱或海关启发式不能冒充核实证据。
+- country / platform 两类检查独立输出状态、severity、文本批注和整改动作。缺上下文或当前官方依据不能 pass。合成规则只测试引擎，真实研究规则保留未知字段。
+- 英文草稿使用保守模板，未知价格、付款、MOQ、交期和资质待确认。审核哈希随依据变化失效；审核始终要求人确认，发送始终禁止。
+- 直接公开读取有 DNS/IP、重定向、robots、大小、超时和持久请求预算。当前环境代理 DNS 返回保留地址，Reader 在线成功验证受阻；没有关闭门禁。
 
-```bash
-# Clone the skill into your Hermes skills directory
-git clone https://github.com/your-username/b2b-lead-hunter.git hermes-skills/business/b2b-lead-hunter/
-```
+## 证据、限制与演示
 
-Hermes reads [`SKILL.md`](SKILL.md) as the skill entrypoint. No other setup required. The `name` field in `SKILL.md` metadata registers it as `b2b-lead-hunter`.
+[演示手册](docs/DEMO_RUNBOOK.md) · [能力状态](docs/CAPABILITY_STATUS.md) · [架构](docs/ARCHITECTURE.md) · [真实来源研究](docs/LIVE_SOURCE_RESEARCH.md) · [合规范围](docs/COMPLIANCE_SCOPE.md)
 
----
+实测的两条企业来源是 IKEA 与 UL Solutions 的公开官网材料，只支持官网自述，未证明真实采购意图。动态网页验证使用宿主浏览器，不是 Web Access。Crawl4AI 未安装；Web Access 缺完整许可证；Jina 只支持显式导入已读取响应。真实客户端到端质量、Windows、远程 CI 和可选第三方运行栈没有被伪报为通过。
 
-> All platforms share the same `scripts/`, `references/`, and `templates/` directories. Platform-specific files (`CLAUDE.md`, `.clinerules`, `.cursor/rules/`, `SKILL.md`) each contain the same pipeline logic adapted to that agent's capabilities.
+## 源码与许可证
 
----
+主上游：[B2B Lead Hunter](https://github.com/xiongQvQ/-b2b-lead-hunter-skill)，锁定 `ac27d0ec6627366337423bfcb1ba86c5be5a95a5`，保留完整 Git 历史与 MIT。实际包装联系人、搜索规范化、去重辅助、海关信号、草稿哈希和风险检查。AI Hunter 仅移植一个 MIT URL 分类文件并做安全适配；不引入其 Agent/backend/frontend。
 
-## Architecture
+[上游审计](docs/UPSTREAM_AUDIT.md) · [源码复用矩阵](docs/SOURCE_REUSE_MATRIX.md) · [精确源码哈希](docs/SOURCE_MANIFEST.json) · [第三方声明](THIRD_PARTY_NOTICES.md) · [实施基线](docs/baseline/TradeCase_V1_Codex_Implementation_Spec.md)
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         AI / Agent Layer                         │
-│  (search strategy, fit scoring, language choice, approval)       │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-    ┌────────────┬────────────┼────────────┬────────────┐
-    ▼            ▼            ▼            ▼            ▼
-┌─────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌─────────┐
-│ Search  │ │ Website │ │ Contact │ │ DM       │ │ Score & │
-│ Plan    │ │ Read    │ │ Extract │ │ Discover │ │ Decide  │
-│ (AI)    │ │(jina.py)│ │(extract)│ │(enrich)  │ │ (AI)    │
-└─────────┘ └─────────┘ └─────────┘ └──────────┘ └─────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     Deterministic Python Layer                    │
-│  (normalize, validate, dedupe, template, export, SMTP)            │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### Pipeline Stages
-
-```
-brief.json
-  → search-plan.md (AI: research strategy)
-  → raw-search.jsonl (normalize search results)
-  → candidates.jsonl (dedupe + structure)
-  → enriched.jsonl (read websites + extract contacts)
-  → leads.jsonl (AI: score + classify)
-  → [decision-maker discovery]
-  → [customs/import verification]
-  → outreach-candidates.jsonl
-  → outreach-templates.jsonl
-  → outreach-drafts.jsonl
-  → outreach-evaluations.jsonl (deterministic quality gate)
-  → approved-outreach.jsonl (human approval)
-  → sent-log.jsonl (SMTP with hash-locked gates)
-```
-
-### Key Design Decisions
-
-- **AI + Code separation**: AI owns strategy and judgment. Python scripts own deterministic work (reading, extracting, validating, sending). Neither can fully operate without the other.
-- **JSONL everywhere**: Every artifact is JSON Lines with a strict schema enforced by `scripts/contracts.py`.
-- **Runtime validation**: Every stage validates its output before handoff. No trust between stages.
-- **Hash-locked sending**: Every sent email requires matching hashes from evaluation and approval stages. If the body changes after approval, sending is blocked.
-- **Compliance-first**: Suppression lists, opt-out enforcement, no auto-send to inferred emails, truthful sender identity.
-
----
-
-## Directory Structure
-
-```
-b2b-lead-hunter/
-├── CLAUDE.md              # Claude Code agent instructions
-├── .clinerules            # Cline / Codex agent instructions
-├── .cursor/rules/         # Cursor agent rules
-├── SKILL.md               # Original Hermes skill definition
-├── scripts/               # 18 deterministic Python helpers
-│   ├── contracts.py       # Runtime contract validators (central dependency)
-│   ├── run_hunt.py        # Lightweight orchestrator
-│   ├── read_jina.py       # Website reader via Jina API
-│   ├── extract_contacts.py
-│   ├── normalize_search_results.py
-│   ├── dedupe_leads.py
-│   ├── export_leads.py
-│   ├── enrich_decision_makers.py
-│   ├── linkedin_dm_search.py
-│   ├── infer_email.py
-│   ├── customs_verify.py
-│   ├── prepare_outreach.py
-│   ├── generate_outreach_templates.py
-│   ├── generate_outreach_drafts.py
-│   ├── evaluate_outreach_drafts.py
-│   ├── send_smtp.py
-│   ├── serper_maps.py
-│   └── validate_artifact.py
-├── references/            # 28 detailed stage guidance files
-├── templates/             # JSON schemas and example artifacts
-├── example/               # Demo input files
-├── _shared/               # Shared SMTP config
-├── pyproject.toml
-├── requirements.txt
-├── Makefile
-└── LICENSE
-```
-
----
-
-## Demo
-
-Run the built-in demo to see real output:
-
-```bash
-# Install, then:
-python scripts/run_hunt.py example/brief.json \
-  --out lead-runs/demo/ \
-  --queries example/queries.csv \
-  --pilot
-
-# View results
-cat lead-runs/demo/pilot-stats.json
-# → {"query_count": 3, "raw_result_count": ..., "candidate_count": ...}
-```
-
-Check [`example/`](example/) for sample input files you can adapt to your own product and target markets.
-
----
-
-## Requirements
-
-- Python 3.10+
-- `requests` library (`pip install -r requirements.txt`)
-
-### Optional API Keys
-
-| Key | Used By | Get One |
-|-----|---------|---------|
-| `JINA_API_KEY` | Website reading | [jina.ai](https://jina.ai) (free tier available) |
-| `SERPER_API_KEY` | Maps/local search | [serper.dev](https://serper.dev) |
-| `TAVILY_API_KEY` | Decision-maker search | [tavily.com](https://tavily.com) |
-| SMTP password | Email sending | your email provider |
-
----
-
-## Compliance
-
-This tool is designed for **legal, ethical B2B outreach only**:
-
-- Collects only publicly available business contact information
-- Never bypasses authentication, paywalls, or access controls
-- Never generates deceptive identities, fake claims, or unsupported statements
-- Respects opt-out requests and regional privacy laws
-- Every outreach must include truthful sender identity, source-backed personalization, a low-pressure CTA, and a clear opt-out line
-- Auto-sending requires: [user approval → hash-locked evaluation → dry-run → approval hash → suppression check → duplicate check] — all gates must pass
-
----
-
-## Contributing
-
-Contributions are welcome. Please open an issue or PR.
-
-- Keep the compliance-first design intact
-- Preserve the AI/code separation pattern
-- Add or update schema validators in `contracts.py` when adding new fields
-- Run `make check` before submitting
-
----
-
-## Support
-
-If this project helps your export business, consider supporting it:
-
-- ☕ [Buy me a coffee](https://buymeacoffee.com/bowen007)
-- 💬 WeChat (tips & feedback)
-
-<p align="left">
-  <img src="assets/images/WechatIMG1255.jpeg" width="200" alt="WeChat QR" />
-  <img src="assets/images/WechatIMG1256.jpeg" width="200" alt="Support QR" />
-</p>
-
----
-
-## License
-
-MIT © [xiongbojian](LICENSE)
+旧 `scripts/`、`templates/`、`references/` 中非 V1 入口保留以便追溯，不能直接当作当前使用手册。`send_smtp.py` 的函数与 CLI 均已硬禁用；没有“打开自动发送”的参数。可恢复历史源码不等于启用的产品能力。

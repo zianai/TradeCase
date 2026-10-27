@@ -1,0 +1,1 @@
+请使用本项目的 trade-inquiry Skill，离线分析 fixtures/case_strong 中的合成询盘和卖家资料，目标市场为美国，平台为 Amazon US。保留买家主体、采购角色与证据来源，完成 country 和 platform 两类检查，输出文本风险批注、英文邮件回复草稿及人工后续行动。所有数据必须标明 SYNTHETIC，不得联网、发送邮件、购买服务或更改外部账号。使用项目 .venv/bin/tradecase demo，在环境变量 TRADECASE_DEMO_OUT 指定的新目录生成完整 Case；运行 validate --strict，说明输出目录、最终状态及尚需人工确认事项。不要修改项目代码或全局配置。

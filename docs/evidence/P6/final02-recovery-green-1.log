@@ -1,0 +1,4 @@
+$ .venv/bin/ruff check src/tradecase/case_store.py tests/unit/test_recovery_conflicts.py
+All checks passed!
+
+EXIT_CODE=0

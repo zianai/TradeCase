@@ -1,0 +1,37 @@
+{
+  "codex": {
+    "command": [
+      "codex",
+      "--version"
+    ],
+    "exit_code": 0,
+    "version_output": "codex-cli 0.164.0-alpha.11.1",
+    "stderr": ""
+  },
+  "claude": {
+    "command": [
+      "claude",
+      "--version"
+    ],
+    "exit_code": 0,
+    "version_output": "2.1.291 (Claude Code)",
+    "stderr": ""
+  },
+  "claude_auth": {
+    "command": [
+      "claude",
+      "auth",
+      "status",
+      "--json"
+    ],
+    "exit_code": 0,
+    "redacted_status": {
+      "loggedIn": true,
+      "authMethod": "oauth_token",
+      "apiProvider": "firstParty",
+      "subscriptionType": null
+    },
+    "private_fields_omitted": true
+  },
+  "captured_at": "2026-10-27T16:21:10.927944+00:00"
+}

@@ -1,0 +1,115 @@
+{
+  "phase": "P6",
+  "reviewed_base_commit": "da22b94",
+  "scope": [
+    "models",
+    "validation",
+    "reporting",
+    "demo",
+    "case_store"
+  ],
+  "mode": "bounded offline independent review",
+  "status": "resolved_tested_offline",
+  "product_files_modified_by_reviewer": [
+    "src/tradecase/reporting.py",
+    "src/tradecase/validation.py"
+  ],
+  "test_file": "tests/contract/test_final_review.py",
+  "findings": [
+    {
+      "id": "FINAL-01",
+      "priority": "high",
+      "title": "Old pass report remains valid after compliance changes to fail",
+      "reproduction": "Run case_strong demo; reopen; set seller tracking_label_present=false; recompute compliance and draft; retain old report; strict validation returns no errors.",
+      "expected": "Existing report is invalidated until regenerated from current artifacts.",
+      "observed": "Current compliance has fail while report still displays prior pass and strict validation succeeds.",
+      "suggested_fix": "Extract a pure report renderer and compare the current report against its derived output; permit report command to repair only its own stale-output error.",
+      "resolution": "Fixed: read-only render_report is reused for exact report validation; only the fixed stale-report diagnostic is ignored by explicit draft/report rebuilds. Placeholder report fixtures were replaced by real rendering. Original FINAL-01 assertion unchanged.",
+      "status": "resolved",
+      "retest": {
+        "log": "final-review-green.log",
+        "exit_code": 0,
+        "original_assertions_unchanged": true
+      }
+    },
+    {
+      "id": "FINAL-02",
+      "priority": "high",
+      "title": "Recovery overwrites intervening manual file edits without preserving them",
+      "reproduction": "Inject OSError at real atomic replacement of search_plan.md; edit that file while transaction marker exists; call recover.",
+      "expected": "Refuse a preimage conflict before any replacement, or preserve changed bytes in recoverable history.",
+      "observed": "Queued after-image replaces manual edits and no .history copy contains the overwritten content.",
+      "suggested_fix": "Before applying any after-image, require every existing target to match the prior saved content hash or intended after-image; retain marker on conflict.",
+      "status": "resolved",
+      "retest": {
+        "log": "final-review-green.log",
+        "exit_code": 0,
+        "original_assertions_unchanged": true
+      },
+      "resolution": "Fixed by CaseStore owner: interrupted recovery checks existing content against acceptable transaction preimages and after-images before replacement; intervening manual edits are preserved rather than silently overwritten. Original regression passes unchanged."
+    }
+  ],
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest tests/contract/test_final_review.py -q",
+      "exit_code": 1,
+      "result": "2 failed; concrete regressions reproduced",
+      "log": "final-review-red.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/unit/test_drafts.py tests/unit/test_store_ingestion.py -q",
+      "exit_code": 0,
+      "result": "26 passed; existing canonical draft binding and normal recovery remain covered",
+      "log": "final-review-existing.log"
+    },
+    {
+      "command": ".venv/bin/ruff check tests/contract/test_final_review.py",
+      "exit_code": 0,
+      "result": "All checks passed",
+      "log": "final-review-lint.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/contract/test_final_review.py::test_updated_compliance_cannot_leave_old_pass_report_valid tests/unit/test_drafts.py tests/unit/test_risk_reporting.py tests/contract/test_models.py tests/contract/test_review_findings.py tests/e2e/test_demo.py -q",
+      "exit_code": 0,
+      "result": "75 passed after initial report fix",
+      "log": "final-review-report-round1.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q",
+      "exit_code": 1,
+      "result": "310 passed; only FINAL-02 remains failing while separate owner fix is pending",
+      "log": "final-review-report-full.log"
+    },
+    {
+      "command": ".venv/bin/ruff check src/tradecase/reporting.py src/tradecase/validation.py tests/unit/test_drafts.py tests/contract/test_models.py tests/contract/test_review_findings.py",
+      "exit_code": 0,
+      "result": "All checks passed",
+      "log": "final-review-report-lint.log"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/contract/test_final_review.py -q",
+      "exit_code": 0,
+      "result": "2 passed; original assertions and entire test file unchanged",
+      "log": "final-review-green.log"
+    }
+  ],
+  "test_sha256": "29e3c1074885f104d5ef1c54966a7f465532d354b4a89ed05f1ae8a05719764d",
+  "limits": [
+    "No network requests, external writes, message sends or paid services.",
+    "This bounded pass is not an exhaustive security or semantic truth audit.",
+    "Installer files were excluded as requested."
+  ],
+  "fixed_report_files_sha256": {
+    "src/tradecase/reporting.py": "f5607149aeea919e7a9a4c30f5dd13a2866bff7742d960f9869a587aa7286c05",
+    "src/tradecase/validation.py": "3ab6580c0555589f800e9571ac54faae21bca1205649e47cf02c60fc3e5698f3"
+  },
+  "final_review_files_sha256": {
+    "src/tradecase/models/__init__.py": "7fd653b8722694781da5f9556f4cccb29ebe8b45514b5acf35be080e6395b70d",
+    "src/tradecase/validation.py": "3ab6580c0555589f800e9571ac54faae21bca1205649e47cf02c60fc3e5698f3",
+    "src/tradecase/reporting.py": "f5607149aeea919e7a9a4c30f5dd13a2866bff7742d960f9869a587aa7286c05",
+    "src/tradecase/demo.py": "8029724aa349c88b4f2f9d3842227f79e68d1db6db9181c436b1e9351ddbd7d5",
+    "src/tradecase/case_store.py": "f72df85a9e4038700969ee5df105ffc491a4e19e35809bb75b5d590aca302532",
+    "tests/contract/test_final_review.py": "29e3c1074885f104d5ef1c54966a7f465532d354b4a89ed05f1ae8a05719764d"
+  },
+  "review_closed": true
+}

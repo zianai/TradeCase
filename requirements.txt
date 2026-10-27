@@ -1,6 +1,2 @@
-# Dependencies
-requests>=2.31.0
-
-# Dev
-ruff>=0.1.0
-mypy>=1.0.0
+# Current V1 local development entry point. Use uv.lock for exact transitive pins.
+-e .[dev]

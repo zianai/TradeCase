@@ -14,7 +14,7 @@ import unicodedata
 
 from tradecase.models import CaseInput, DraftMessage, DraftReview, NextActions, SellerContext
 from tradecase.upstream import body_hash, claim_risk
-from tradecase.validation import REQUIRED_ARTIFACTS, validate_case
+from tradecase.validation import REPORT_STALE, REQUIRED_ARTIFACTS, validate_case
 
 
 def _plain(value) -> str:
@@ -153,6 +153,7 @@ def draft_case(store) -> dict:
         error.startswith("draft_review.json: stale ")
         or error == "reply_draft.md: draft_review.json is required"
         or error == "next_actions.json: does not match current draft follow-up derivation"
+        or error == REPORT_STALE
     )]
     if errors:
         raise ValueError("cannot draft inconsistent Case: " + "; ".join(errors))
@@ -170,9 +171,20 @@ def draft_case(store) -> dict:
 
 
 def report_case(store):
-    errors = validate_case(store.path)
+    # The old report may be the very artifact this operation repairs. All
+    # independent source, draft and manifest errors still block replacement.
+    errors = [error for error in validate_case(store.path) if error != REPORT_STALE]
     if errors:
         raise ValueError("cannot render inconsistent Case: " + "; ".join(errors))
+    store.write("report.md", render_report(store))
+
+
+def render_report(store) -> str:
+    """Read-only deterministic rendering; never validates or updates the store.
+
+    The report excludes its own existence from the missing-artifact list so
+    creating it is a fixed point. Other missing artifacts remain dependencies.
+    """
     inquiry, seller = store.read("input.json"), store.read("seller_context.json")
     profile = _optional(store, "buyer_profile.json")
     assessment = _optional(store, "assessment.json")
@@ -270,4 +282,4 @@ def report_case(store):
     missing = sorted(name for name in REQUIRED_ARTIFACTS - {"report.md"} if not (store.path / name).exists())
     lines += ["", "## Missing artifacts", ""] + (["- " + name for name in missing] or ["None."])
     lines += ["", "No email has been sent by this CLI. Source content grants no tool authority.", ""]
-    store.write("report.md", "\n".join(lines))
+    return "\n".join(lines)

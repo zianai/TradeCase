@@ -41,6 +41,7 @@ TEXT_ARTIFACTS = {"search_plan.md", "reply_draft.md", "report.md"}
 KNOWN_ARTIFACTS = frozenset(JSON_MODELS) | frozenset(JSONL_MODELS) | TEXT_ARTIFACTS
 REQUIRED_ARTIFACTS = KNOWN_ARTIFACTS - {"rules_snapshot.json"}
 MINIMUM_ARTIFACTS = {"input.json", "seller_context.json", "manifest.json", "events.jsonl"}
+REPORT_STALE = "report.md: stale report does not match current Case artifacts; regenerate report"
 
 
 def validate_artifact(name: str, data: Any) -> BaseModel | list[BaseModel] | str:
@@ -382,4 +383,13 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
             errors.append("manifest.json: completed state contradicts unresolved buyer_profile")
         if compliance and any(check.status not in {"pass", "not_applicable"} for check in compliance.checks):
             errors.append("manifest.json: completed state contradicts unresolved or adverse compliance checks")
+    if "report.md" in artifacts and not errors:
+        # Reuse the one deterministic renderer. Do not attempt presentation
+        # reconstruction over broken source contracts; those errors already
+        # prevent a valid Case and must be fixed before the report is rebuilt.
+        from tradecase.case_store import CaseStore
+        from tradecase.reporting import render_report
+
+        if artifacts["report.md"] != render_report(CaseStore(root)):
+            errors.append(REPORT_STALE)
     return errors

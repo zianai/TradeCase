@@ -56,3 +56,9 @@
 - `prepare_evidence.py`、`evidence_validation.json`：实际执行 `python3 upstream-audit/live-source-evidence/prepare_evidence.py`，退出码 0；核对 3 个原始快照哈希、1 个 web 返回哈希、4 个短摘录确实存在，并确认动态站点 10 条惰性 JSON / 0 个静态 quote DOM。
 
 失败保留：CPSC raw GET 403、US Code 指向链接 404、Seller Central 正文不可读。成功的公开来源不会被拿来掩盖这些缺口。未来若搬运证据进 Case，需要按产品 Schema 映射（审计记录额外含 `snapshot_sha256/hash_basis/limitations`，不能不加映射地假定契约已通过）。
+
+## 后续实测更新（P3–P5）
+
+上文第4节的not_started是静态预检时状态。随后在2026-10-27T15:57:04.600Z，宿主CUA临时IAB标签页实际完成动态页面读取，可访问树含10条内容与10个作者标记，已关闭标签页；详见 `docs/evidence/P3/browser-live.json`。这是宿主浏览器tested_live，并非Web Access。
+
+P4核对来源哈希后把4条真实材料映射到 `cases/live-official-research`；P5实际运行draft/report/validate --strict，全部exit0。该样本是工程研究记录，未关联真实客户询盘，未核实采购意图和商品合规。原始HTTP读取成功与新直接Reader（因保留地址DNS被阻止）的结果分别记录，不能相互替代。

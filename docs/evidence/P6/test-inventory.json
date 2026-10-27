@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "--collect-only",
+    "-q"
+  ],
+  "exit_code": 0,
+  "collected_by_directory": {
+    "contract": 53,
+    "e2e": 13,
+    "integration": 48,
+    "unit": 201
+  },
+  "execution_result_ref": "docs/evidence/P6/full-check.log",
+  "all_315_executed_and_passed": true
+}

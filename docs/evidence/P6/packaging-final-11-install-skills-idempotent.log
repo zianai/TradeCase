@@ -1,0 +1,20 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/tradecase install-skills --target both --scope project --project /private/tmp/tradecase-final-package-yor_6yyr/skill-project
+{
+  "status": "unchanged",
+  "scope": "project",
+  "target": "both",
+  "source_hashes": {
+    "buyer-research/SKILL.md": "2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e",
+    "trade-compliance/SKILL.md": "334eced02a2387e26bca04934607a32fce2e8e572c11f1b345c3a876729e192e",
+    "trade-inquiry/SKILL.md": "6d63a62eaab7035a7698f8a697645f391473a9e5cce78ad56d8493942cccebd4"
+  },
+  "destinations": {
+    "codex": ".agents/skills",
+    "claude": ".claude/skills"
+  },
+  "changed": [],
+  "manifest_ref": ".tradecase/skill-installation.json"
+}
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0

@@ -1,0 +1,70 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________ test_updated_compliance_cannot_leave_old_pass_report_valid __________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-351/test_updated_compliance_cannot0')
+
+    def test_updated_compliance_cannot_leave_old_pass_report_valid(tmp_path):
+        out = tmp_path / "review-report"
+        run_demo(ROOT / "fixtures/case_strong", out)
+        store = CaseStore(out)
+        original_report = store.read("report.md")
+        assert all(check["status"] == "pass" for check in store.read("compliance.json")["checks"])
+        store.transition("running", "review-update")
+        seller = store.read("seller_context.json")
+        seller["product_attributes"]["tracking_label_present"] = False
+        store.write("seller_context.json", seller)
+        changed = check_case(store, ROOT / "rules/synthetic-demo-v1.json", checked_at="2026-10-27T12:00:00Z")
+        assert any(check["status"] == "fail" for check in changed["checks"])
+        draft_case(store)
+        assert store.read("report.md") == original_report
+        errors = validate_case(store.path, strict=True)
+>       assert any("report.md" in error and ("stale" in error or "match" in error) for error in errors), errors
+E       AssertionError: []
+E       assert False
+E        +  where False = any(<generator object test_updated_compliance_cannot_leave_old_pass_report_valid.<locals>.<genexpr> at 0x10939b920>)
+
+tests/contract/test_final_review.py:31: AssertionError
+________ test_recovery_does_not_silently_discard_intervening_file_edits ________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-351/test_recovery_does_not_silentl0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10985ac90>
+
+    def test_recovery_does_not_silently_discard_intervening_file_edits(tmp_path, monkeypatch):
+        import tradecase.case_store as module
+    
+        store = CaseStore.create(tmp_path / "recovery-case", {
+            "case_id": "recovery-case", "received_at": "2026-10-27T12:00:00Z",
+            "buyer_message": "SYNTHETIC recovery test", "is_synthetic": True,
+        }, {"is_synthetic": True})
+        store.write("search_plan.md", "Original saved plan")
+        original_write = module.atomic_write
+    
+        def interrupted(path, raw):
+            if path == store.path / "search_plan.md":
+                raise OSError("SYNTHETIC interrupted file replacement")
+            return original_write(path, raw)
+    
+        with monkeypatch.context() as patch:
+            patch.setattr(module, "atomic_write", interrupted)
+            with pytest.raises(OSError):
+                store.write("search_plan.md", "Queued pre-interruption plan")
+        assert (store.path / ".transaction.json").exists()
+        manual_text = "Human edit after the interruption; preserve this investigation"
+        (store.path / "search_plan.md").write_text(manual_text)
+        try:
+            store.recover()
+        except ValueError:
+            pass  # Refusing a conflict is an acceptable safe recovery outcome.
+        preserved = (store.path / "search_plan.md").read_text() == manual_text or any(
+            path.read_text() == manual_text for path in (store.path / ".history").rglob("search_plan.md")
+        )
+>       assert preserved, "Recovery overwrote an intervening edit without preserving it in history"
+E       AssertionError: Recovery overwrote an intervening edit without preserving it in history
+E       assert False
+
+tests/contract/test_final_review.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contract/test_final_review.py::test_updated_compliance_cannot_leave_old_pass_report_valid
+FAILED tests/contract/test_final_review.py::test_recovery_does_not_silently_discard_intervening_file_edits
+2 failed in 0.28s

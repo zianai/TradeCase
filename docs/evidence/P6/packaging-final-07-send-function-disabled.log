@@ -1,0 +1,12 @@
+$ /private/tmp/tradecase-final-package-yor_6yyr/venv/bin/python -c 'from tradecase_upstream.send_smtp import send_message, SEND_DISABLED_MESSAGE
+try:
+ send_message(None, {})
+except RuntimeError as exc:
+ assert str(exc) == SEND_DISABLED_MESSAGE
+ print('"'"'send_message refused before configuration or network access'"'"')
+else:
+ raise AssertionError('"'"'sender was not disabled'"'"')'
+send_message refused before configuration or network access
+
+EXIT_CODE=0
+EXPECTED_EXIT_CODE=0
