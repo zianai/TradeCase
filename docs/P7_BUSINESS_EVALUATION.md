@@ -51,3 +51,7 @@ uv run tradecase validate --case cases/p7-repeat/children-label-conflict --stric
 uv run python tools/run_p7_public_procurements.py --out-root cases/p7-public-repeat
 uv run tradecase validate --case cases/p7-public-repeat/unicef-318181 --strict
 ```
+
+## 后续V1改进
+
+P7报告保留当时事实。后续已为显式标记的采购公告增加证据绑定、数字GMT偏移解析、过期/冲突门禁和招标草稿；五条公告的最新回归另见 `docs/PHASE_REPORTS/V1-PROCUREMENT.md`。`tools/run_p7_public_procurements.py` 现在生成新版结果到 `docs/evidence/V1-deadline/`，不会覆盖本P7历史证据。

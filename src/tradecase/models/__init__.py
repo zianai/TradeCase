@@ -104,6 +104,8 @@ class CaseInput(Contract):
     case_id: Identifier
     received_at: UTC
     buyer_message: Nonempty
+    case_type: Literal["inquiry", "procurement"] = "inquiry"
+    deadline_evidence_id: Identifier | None = None
     buyer_email: Email | None = None
     buyer_company_hint: str | None = None
     buyer_website_hint: URL | None = None
@@ -396,6 +398,7 @@ class DraftReview(Contract):
     input_sha256: SHA256
     seller_context_sha256: SHA256
     evaluated_body_hash: SHA256
+    procurement_basis_sha256: SHA256 | None = None
     message: DraftMessage
     claim_risk_score: float = Field(ge=0, le=1)
     risk_review_reasons: list[str] = Field(default_factory=list)

@@ -313,6 +313,13 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
             except ValueError as exc:
                 errors.append(f"compliance.json: invalid rule derivation: {exc}")
 
+    procurement = None
+    from tradecase.procurement import case_deadline, is_procurement
+    if inquiry and is_procurement(inquiry.model_dump(mode="json")):
+        if inquiry.deadline_evidence_id and inquiry.deadline_evidence_id not in evidence:
+            errors.append("input.json: unknown deadline_evidence_id")
+        procurement = case_deadline(root, inquiry.model_dump(mode="json"), [row.model_dump(mode="json") for row in rows])
+
     next_actions: NextActions | None = artifacts.get("next_actions.json")
     if next_actions:
         _duplicate_ids(next_actions.actions, "action_id", "next_actions.json", errors)
@@ -340,6 +347,7 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 inquiry.model_dump(mode="json"), seller.model_dump(mode="json"),
                 hashlib.sha256((root / "input.json").read_bytes()).hexdigest(),
                 hashlib.sha256((root / "seller_context.json").read_bytes()).hexdigest(),
+                procurement,
             )
             if review.model_dump(mode="json") != expected:
                 errors.append("draft_review.json: stale or noncanonical preflight; regenerate draft")
@@ -350,6 +358,7 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 profile.model_dump(mode="json") if profile else None,
                 assessment.model_dump(mode="json") if assessment else None,
                 compliance.model_dump(mode="json") if compliance else None,
+                procurement,
             )
             if not next_actions or next_actions.model_dump(mode="json") != expected_actions:
                 errors.append("next_actions.json: does not match current draft follow-up derivation")
@@ -375,6 +384,8 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 except ValueError as exc:
                     errors.append(f"input.json: {exc}")
     if manifest and manifest.state == "completed":
+        if procurement and procurement["status"] != "open":
+            errors.append("manifest.json: procurement deadline expired or unverified; needs_review")
         if manifest.blockers or manifest.error:
             errors.append("manifest.json: completed state cannot retain blockers or error")
         if assessment and assessment.decision == "needs_review":

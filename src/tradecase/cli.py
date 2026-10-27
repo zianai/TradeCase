@@ -34,6 +34,8 @@ def build_parser():
     init.add_argument("--seller", type=Path)
     init.add_argument("--target-country")
     init.add_argument("--platform")
+    init.add_argument("--case-type", choices=["inquiry", "procurement"])
+    init.add_argument("--deadline-evidence-id")
     init.add_argument("--synthetic", action="store_true", default=None)
     init.add_argument("--out", required=True, type=Path)
     for name in ["validate", "status", "recover", "assess", "report", "draft", "compliance"]:
@@ -103,6 +105,8 @@ def dispatch(args):
             args.out.name,
             target_country=args.target_country,
             platform=args.platform,
+            case_type=args.case_type,
+            deadline_evidence_id=args.deadline_evidence_id,
             is_synthetic=args.synthetic,
             product_summary=seller.product_summary,
         )

@@ -18,19 +18,14 @@ from tradecase.buyer_research import research_from_local
 from tradecase.case_store import CaseStore
 from tradecase.compliance import check_case
 from tradecase.models import Evidence
+from tradecase.procurement import case_deadline
 from tradecase.reporting import draft_case, report_case
 from tradecase.validation import validate_case
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "docs/evidence/P7"
+OUTPUT = ROOT / "docs/evidence/V1-deadline"
 COUNTRIES = {"318181": "UA", "301686": "JO", "299179": "MY", "290489": "EC", "310066": "PS"}
-DEADLINES = {
-    "318181": "2026-10-20",
-    "301686": "2026-06-11",
-    "299179": "2026-05-21",
-    "290489": "2026-02-12",
-    "310066": "2026-08-30",
-}
 
 
 def main(out_root: Path):
@@ -80,11 +75,18 @@ def main(out_root: Path):
         case_id = "unicef-" + notice_id
         title = source["selected_lines"].splitlines()[0].removeprefix("L19: # ").strip()
         raw = source["selected_lines"].encode()
+        source_id = "p7-public-" + notice_id
+        deadline_lines = [line for line in source["selected_lines"].splitlines() if "Deadline on:" in line]
+        if len(deadline_lines) != 1:
+            raise ValueError("expected one cited deadline line")
+        deadline_excerpt = deadline_lines[0].split(": ", 1)[1]
         inquiry = {
             "case_id": case_id,
             "received_at": source["captured_at"],
             "buyer_message": raw.decode(),
             "buyer_company_hint": "UNICEF",
+            "case_type": "procurement",
+            "deadline_evidence_id": source_id,
             "target_country": COUNTRIES[notice_id],
             "product_summary": title,
             "is_synthetic": False,
@@ -95,18 +97,12 @@ def main(out_root: Path):
                 "Public procurement notice excerpt; not a direct inquiry to the seller; "
                 "contact sections and attachments not captured."
             ],
-            "user_constraints": [
-                "Public notice deadline "
-                + DEADLINES[notice_id]
-                + " has passed as of capture; do not submit or contact."
-            ],
         }
         store = CaseStore.create(out_root / case_id, inquiry, {"is_synthetic": False})
         store.transition("running", "public_source_import")
         store.save_snapshot("snapshots/procurement.json", json.dumps(source, ensure_ascii=False, indent=2))
         for name, content in [("host-web.json", host), ("amazon-web.json", amazon)]:
             store.save_snapshot("snapshots/" + name, json.dumps(content, ensure_ascii=False, indent=2))
-        source_id = "p7-public-" + notice_id
         evidence = Evidence(
             evidence_id=source_id,
             claim="UNGM publishes a UNICEF procurement notice.",
@@ -114,7 +110,7 @@ def main(out_root: Path):
             source_type="official_site",
             source_title=title,
             captured_at=source["captured_at"],
-            excerpt=title,
+            excerpt=deadline_excerpt,
             retrieved_by=source["retrieved_by"],
             assertion_status="supported",
             confidence_label="medium",
@@ -135,6 +131,9 @@ def main(out_root: Path):
         store.write("assessment.json", {"case_id": case_id, "signals": {}, "is_synthetic": False})
         assessment = assess_case(store)
         checks = check_case(store, ROOT / "rules/live-research-2026-10-27.json")["checks"]
+        deadline = case_deadline(store.path, store.read("input.json"), rows)
+        assert deadline["status"] in {"expired", "needs_review"}
+        assert deadline["basis_sha256"]
         draft_case(store)
         report_case(store)
         errors = validate_case(store.path, strict=True)
@@ -146,8 +145,8 @@ def main(out_root: Path):
             "p7_public_procurement",
             {
                 "source_url": source["source_url"],
-                "deadline": DEADLINES[notice_id],
-                "expired_at_capture": True,
+                "deadline_utc": deadline["deadline_utc"],
+                "deadline_status": deadline["status"],
                 "direct_customer_inquiry": False,
                 "network_calls_for_case_build": 0,
                 "model_calls_for_case_build": 0,
@@ -155,15 +154,17 @@ def main(out_root: Path):
             },
         )
         assert not validate_case(store.path, strict=True)
-        (EVIDENCE / (case_id + "-report.md")).write_text((store.path / "report.md").read_text())
+        (OUTPUT / (case_id + "-report.md")).write_text((store.path / "report.md").read_text())
         results.append(
             {
                 "case_id": case_id,
                 "case_path": str(store.path.relative_to(ROOT)),
                 "source_url": source["source_url"],
                 "source_evidence_id": source_id,
-                "deadline": DEADLINES[notice_id],
-                "expired_at_capture": True,
+                "deadline_utc": deadline["deadline_utc"],
+                "deadline_status": deadline["status"],
+                "deadline_reasons": deadline["reasons"],
+                "deadline_basis_sha256": deadline["basis_sha256"],
                 "real_public_procurement_notice": True,
                 "not_a_direct_customer_inquiry": True,
                 "status": store.read("manifest.json")["state"],
@@ -183,14 +184,15 @@ def main(out_root: Path):
                 "case_source_excerpt_not_full_notice": True,
             }
         )
-    (EVIDENCE / "public-procurement-results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n")
+    (OUTPUT / "public-procurement-results.json").write_text(json.dumps(results, ensure_ascii=False, indent=2) + "\n")
     print(
         json.dumps(
             {
                 "real_public_notices": len(results),
                 "strict_valid": True,
-                "all_expired_and_need_review": all(
-                    r["expired_at_capture"] and r["status"] == "needs_review" for r in results
+                "all_deadlines_blocked_and_need_review": all(
+                    r["deadline_status"] in {"expired", "needs_review"} and r["status"] == "needs_review"
+                    for r in results
                 ),
             }
         )

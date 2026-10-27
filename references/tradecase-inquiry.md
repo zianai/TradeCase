@@ -26,3 +26,14 @@ stock and qualification terms require human confirmation. Draft review hashes bi
 body and input/seller basis; changing them invalidates the previous review. A
 technically complete Case may still require human follow-up. No SMTP credentials
 are required or loaded. The CLI has no send operation.
+
+For procurement notices, set `case_type=procurement` during init (or in the
+input JSON) and supply the deadline evidence ID. Deadline evidence must cite
+the exact `Deadline on: ... (GMT ...)` line in a supported official-source
+record and an indexed JSON snapshot with matching `source_url` and
+`selected_lines`. The present parser understands explicit numeric GMT offsets;
+other formats and multiple/conflicting deadline statements require human review.
+Source snapshots can be stale or lack later amendments; a locally open deadline
+is not permission to submit. Expired and unverified notices cannot transition
+to completed. Drafts and reports must be regenerated if their source changes or
+the deadline passes. The CLI never sends messages or bids.

@@ -44,3 +44,11 @@ uv run tradecase transition --case cases/inquiry-001 --state running --stage rev
 只在确认恢复原因后运行reopen；`recover`只处理本地事务，不会自动重试付费或外部操作。CaseStore使用POSIX单写锁、每文件atomic replace、journal和manifest最后提交；系统中断可能留下journal，恢复前不能写新版本。旧/坏journal拒绝，不静默回滚。`.history/<revision>/`留存修改前内容。此机制不是对抗拥有shell写权限的攻击者的隔离边界。
 
 用 `put --artifact <known-name> --file <local-file>` 导入由宿主审阅的JSON/JSONL；只接受列举的产物名。外部输入不授予shell权限。快照经 `CaseStore.save_snapshot` 写入受限 `snapshots/<name>.txt|json` 并登记哈希，不能手写未索引快照冒充通过。
+
+## 采购公告截止时间（V1增量）
+
+采购公告必须显式设置 `case_type=procurement`；`init` 支持 `--case-type procurement` 和 `--deadline-evidence-id ID`，JSON输入也可设置。普通询盘保持默认`inquiry`；系统不会可靠地从任意正文自动分类采购公告；提供截止证据ID时，即使误用inquiry类型仍会套用采购门禁。原P7五例含特定 `Public procurement notice excerpt;` 解析警告，会被保守识别为旧公告并默认待核验；其不可变input不能补写证据ID，需在新Case目录重新生成。
+
+ID须对应已支持的官方来源Evidence：`source_url`有效、`excerpt`逐字包含截止时间、`local_snapshot_ref`指向Case已索引JSON快照，该快照必须包含相同`source_url`和`selected_lines`。解析器当前只接受 `Deadline on: DD-Mon-YYYY HH:MM (GMT ±H.MM)` 的明确数字偏移，使用当前UTC重算；未提供、未确认、未知时区、多个或冲突截止时间一律needs_review。过期和未确认不能将Case转为completed，且草稿变为无收件人的内部核查说明。
+
+草稿审核的`procurement_basis_sha256`绑定证据记录及快照的精确字节；变更或截止时间到达后必须重新生成draft和report。已索引快照与引用验证保证来源链完整，不证明真实网站身份、公告当前性或不存在后续延期；即使截止时间仍开放，也需要人核对补遗、时区、资格、附件和商业条款。没有任何提交或发送入口。

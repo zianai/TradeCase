@@ -30,7 +30,7 @@ def safe_md(value) -> str:
     return html.escape(text, quote=True)
 
 
-def compose_reply(inquiry: dict, seller: dict) -> dict:
+def compose_reply(inquiry: dict, seller: dict, procurement=None) -> dict:
     """Only quote an inquiry product description; never infer terms from prose.
 
     Seller claims and product attributes are retained in the Case for human
@@ -38,6 +38,19 @@ def compose_reply(inquiry: dict, seller: dict) -> dict:
     """
     inquiry = CaseInput.model_validate(inquiry).model_dump(mode="json")
     seller = SellerContext.model_validate(seller).model_dump(mode="json")
+    if procurement is not None or inquiry.get("case_type") == "procurement":
+        status = (procurement or {}).get("status", "needs_review")
+        if status != "open":
+            reason = "has expired" if status == "expired" else "has an unverified or conflicting deadline"
+            return DraftMessage(recipient_email=None, subject="Internal review: procurement notice",
+                body_text="This public procurement notice " + reason + ". Do not submit a bid or send this draft. "
+                "A human should verify the official deadline, applicable amendments, eligibility, complete tender "
+                "documents and whether a new opportunity exists. No price, delivery or qualification is promised.").model_dump(mode="json")
+        return DraftMessage(recipient_email=None, subject="Draft clarification: public procurement notice",
+            body_text="Hello,\n\nWe are reviewing the public procurement notice. Please confirm the current "
+            "submission deadline, applicable amendments, eligibility, delivery requirements and the full tender documents. "
+            "Our ability to meet the specifications, price, lead time and required qualifications remains subject to "
+            "internal confirmation.\n\nKind regards,\nSales team").model_dump(mode="json")
     paragraphs = ["Hello,", "Thank you for your inquiry."]
     product = _plain(inquiry.get("product_summary") or "")
     forbidden = [_plain(value).casefold() for value in seller["forbidden_claims"] if _plain(value)]
@@ -72,9 +85,9 @@ def render_reply(message: dict, is_synthetic: bool) -> str:
     return "\n".join([*lines, ""])
 
 
-def prepare_draft_review(inquiry: dict, seller: dict, input_sha256: str, seller_context_sha256: str) -> dict:
+def prepare_draft_review(inquiry: dict, seller: dict, input_sha256: str, seller_context_sha256: str, procurement=None) -> dict:
     """Pure canonical derivation, also used by validation to detect edited claims."""
-    message = compose_reply(inquiry, seller)
+    message = compose_reply(inquiry, seller, procurement)
     reasons, blocks, actions = [], [], []
     score = claim_risk(message, reasons, blocks, actions)
     actions += [
@@ -87,13 +100,14 @@ def prepare_draft_review(inquiry: dict, seller: dict, input_sha256: str, seller_
     return DraftReview(
         case_id=inquiry["case_id"], input_sha256=input_sha256, seller_context_sha256=seller_context_sha256,
         draft_sha256=hashlib.sha256(rendered.encode("utf-8")).hexdigest(),
-        evaluated_body_hash=body_hash(message), message=message, claim_risk_score=score,
+        evaluated_body_hash=body_hash(message), procurement_basis_sha256=(procurement or {}).get("basis_sha256"),
+        message=message, claim_risk_score=score,
         risk_review_reasons=reasons, block_reasons=blocks, required_actions=actions,
         is_synthetic=bool(inquiry.get("is_synthetic")),
     ).model_dump(mode="json")
 
 
-def prepare_next_actions(inquiry: dict, seller: dict, profile=None, assessment=None, compliance=None) -> dict:
+def prepare_next_actions(inquiry: dict, seller: dict, profile=None, assessment=None, compliance=None, procurement=None) -> dict:
     """Create local suggestions only; missing compliance material belongs to a human."""
     actions = []
 
@@ -105,6 +119,11 @@ def prepare_next_actions(inquiry: dict, seller: dict, profile=None, assessment=N
             "deadline_suggestion": deadline, "evidence_ids": list(evidence_ids or []),
         })
 
+    if procurement is not None or inquiry.get("case_type") == "procurement":
+        state = (procurement or {}).get("status", "needs_review")
+        add("procurement-deadline", "Do not submit or contact until a human verifies the official deadline, "
+            "amendments, eligibility and complete tender documents. Deadline status: " + state,
+            priority="high", evidence_ids=[procurement["evidence_id"]] if procurement and procurement.get("evidence_id") else [])
     add("review-reply", "Review the inbound reply, confirm the recipient and retain send_allowed=false.", priority="high")
     add("seller-terms", "Confirm seller authority, price, payment terms, minimum order quantity (MOQ), lead time and "
         "the scope and source of any product certification. Supplied seller claims are not official verification.", priority="high")
@@ -160,13 +179,30 @@ def draft_case(store) -> dict:
     input_bytes = (store.path / "input.json").read_bytes()
     seller_bytes = (store.path / "seller_context.json").read_bytes()
     inquiry, seller = json.loads(input_bytes), json.loads(seller_bytes)
+    from tradecase.procurement import case_deadline
+    procurement = case_deadline(store.path, inquiry, _optional(store, "evidence.jsonl") or [])
     review = prepare_draft_review(inquiry, seller, hashlib.sha256(input_bytes).hexdigest(),
-                                  hashlib.sha256(seller_bytes).hexdigest())
+                                  hashlib.sha256(seller_bytes).hexdigest(), procurement)
     actions = prepare_next_actions(inquiry, seller, _optional(store, "buyer_profile.json"),
-                                   _optional(store, "assessment.json"), _optional(store, "compliance.json"))
+                                   _optional(store, "assessment.json"), _optional(store, "compliance.json"), procurement)
     store.write("reply_draft.md", render_reply(review["message"], review["is_synthetic"]))
     store.write("draft_review.json", review)
     store.write("next_actions.json", actions)
+    if procurement and procurement["status"] != "open":
+        manifest = store.read("manifest.json")
+        if manifest["state"] in {"created", "failed", "needs_input"}:
+            store.transition("running", "procurement_review")
+            manifest = store.read("manifest.json")
+        blockers = list(manifest["blockers"])
+        marker = "procurement_deadline:" + procurement["status"]
+        if marker not in blockers:
+            blockers.append(marker)
+        store.transition("needs_review", "procurement_review", blockers=blockers)
+    elif procurement:
+        manifest = store.read("manifest.json")
+        blockers = [item for item in manifest["blockers"] if not item.startswith("procurement_deadline:")]
+        if blockers != manifest["blockers"]:
+            store.transition("needs_review" if blockers else "running", "procurement_deadline_updated", blockers=blockers)
     return review
 
 
@@ -214,6 +250,15 @@ def render_report(store) -> str:
         ]) + " |")
     if not evidence:
         lines += ["", "Evidence has not been supplied."]
+    from tradecase.procurement import is_procurement
+    if is_procurement(inquiry):
+        from tradecase.procurement import case_deadline
+        deadline = case_deadline(store.path, inquiry, evidence)
+        lines += ["", "## Procurement deadline", "", "Status: " + safe_md(deadline["status"]),
+                  "Deadline UTC: " + safe_md(deadline["deadline_utc"] or "unverified"),
+                  "Evidence ID: " + safe_md(deadline["evidence_id"] or "not supplied"),
+                  "Reasons: " + safe_md(", ".join(deadline["reasons"]) or "none"),
+                  "Do not submit or send; human verification of amendments and eligibility is required."]
     lines += ["", "## Buyer risk", ""]
     if profile:
         lines += [

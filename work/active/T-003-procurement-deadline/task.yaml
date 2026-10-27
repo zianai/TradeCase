@@ -1,0 +1,16 @@
+schema_version: 3
+protocol_version: "3.0"
+id: "T-003-procurement-deadline"
+status: ready_for_review
+goal: "Bind procurement deadlines to evidence, enforce expiration gates, and generate tender-aware draft deliverables"
+scope: ["Local Case contracts and deterministic deadline checks", "Tender drafts and reports", "Five public notice regressions"]
+non_goals: ["No email, bid submission or external writes", "No V2 GUI or runtime", "No unapproved paid calls"]
+acceptance: ["Expired or ambiguous deadlines block completion", "Draft review binds evidence and source changes", "Five public notices pass strict validation and gate tests", "Full offline regression passes"]
+risk: medium
+risk_reasons: [cross-component, local-reversible]
+protected_paths: []
+context_refs: [docs/PHASE_REPORTS/P7.md, docs/P7_BUSINESS_EVALUATION.md]
+decision_refs: [docs/DECISIONS.md]
+evidence_refs: [docs/PHASE_REPORTS/V1-PROCUREMENT.md, docs/evidence/V1-deadline/final-regression.log, docs/evidence/V1-deadline/cli-gates.json]
+updated: "2026-10-27"
+implementation_started: true

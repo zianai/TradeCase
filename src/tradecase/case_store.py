@@ -335,6 +335,12 @@ class CaseStore:
                 errors = validate_case(self.path, strict=True)
                 if errors:
                     raise ValueError("cannot complete invalid Case: " + "; ".join(errors))
+                inquiry = self.read("input.json")
+                from tradecase.procurement import case_deadline, is_procurement
+                if is_procurement(inquiry):
+                    deadline = case_deadline(self.path, inquiry, self.read("evidence.jsonl"))
+                    if deadline["status"] != "open":
+                        raise ValueError("procurement deadline expired or unverified; needs_review")
                 assessment = self.read("assessment.json")
                 checks = self.read("compliance.json")["checks"]
                 profile = self.read("buyer_profile.json")

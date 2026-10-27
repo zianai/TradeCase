@@ -41,3 +41,7 @@
 Web Access锁定上游在隔离临时Chrome与本机代理的公开动态站测试为`tested_live`（10 quote/author，进程清理成功）；它**仍未集成/分发**，完整LICENSE与代理安全审计未解决。Claude受限认证原因已用只读状态命令定位，本次用户选择不做额外模型调用，真实Agent运行仍blocked。Reader在当前DNS映射下仍blocked；5组真实来源+合成业务问题Case的结果见 `docs/P7_BUSINESS_EVALUATION.md`，不等于真实客户询盘验收。
 
 P7又实际处理5条UNGM真实公开采购公告，均已过期且来自UNICEF；Case均needs_review，未发送或投标。过期识别目前依赖人工约束，非自动门禁，是真实业务应用的重要缺口。详见业务评测。
+
+## V1采购截止时间增量
+
+已对显式`case_type=procurement`实现官方来源证据/快照绑定、数字GMT偏移解析、当前时间校验、过期/冲突/未知门禁和招标草稿。源快照后续补遗、任意时间格式、自动识别公告及资格验证仍未实现。五条真实历史公告回归与边界见 `docs/PHASE_REPORTS/V1-PROCUREMENT.md`。

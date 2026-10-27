@@ -1,0 +1,20 @@
+{
+  "status": "installed",
+  "scope": "project",
+  "target": "both",
+  "source_hashes": {
+    "buyer-research/SKILL.md": "2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e",
+    "trade-compliance/SKILL.md": "334eced02a2387e26bca04934607a32fce2e8e572c11f1b345c3a876729e192e",
+    "trade-inquiry/SKILL.md": "0a5c4db212f01ff8ceb82f4047a38fc3907ea8e1436d9e6055ae2e3bd08047ed"
+  },
+  "destinations": {
+    "codex": ".agents/skills",
+    "claude": ".claude/skills"
+  },
+  "changed": [
+    ".agents/skills/trade-inquiry/SKILL.md",
+    ".claude/skills/trade-inquiry/SKILL.md",
+    ".tradecase/skill-installation.json"
+  ],
+  "manifest_ref": ".tradecase/skill-installation.json"
+}

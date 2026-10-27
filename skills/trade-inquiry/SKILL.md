@@ -14,6 +14,8 @@ resume an existing Case; never recreate it over an existing directory. Inspect
 input, seller context, existing evidence and blockers. Use buyer-research and
 trade-compliance as needed; do not repeat completed research without a reason.
 
+For public procurement notices, explicitly initialize with `--case-type procurement` and, when known, `--deadline-evidence-id ID`. Bind that ID to supported official-source Evidence with the exact deadline in its excerpt and an indexed JSON snapshot containing the same `source_url` and `selected_lines`. An expired, conflicting, missing or unverifiable deadline requires needs_review; a time in an unspecified timezone is not assumed. Regenerate draft and report after source changes. A public tender is not an inbound customer email.
+
 Use host read-only search/reading capabilities. `research` prepares unverified
 candidates; it does not verify identities. Save sourced candidate facts and
 signals through `put`, then run `assess`. Run `compliance --rules FILE` for both
