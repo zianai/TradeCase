@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0",
+  "sources": [
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/contracts.py",
+      "target_path": "scripts/contracts.py",
+      "original_sha256": "0cf7f7ac075dc2eaf5c1229f6bb3ea0eb387503806896fdf8750408e0f6b5283",
+      "current_sha256": "0cf7f7ac075dc2eaf5c1229f6bb3ea0eb387503806896fdf8750408e0f6b5283",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "wrapped"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/customs_verify.py",
+      "target_path": "scripts/customs_verify.py",
+      "original_sha256": "e0835f79e067fd49ba7c5267dcd33c4b6fd08388eb1c73ec25aa9a3001cdf1ef",
+      "current_sha256": "4eeac1d55bee705b61daaef63fce5859882c7e8b36d7b3babcc6e4fe1d9ae6bf",
+      "license": "MIT; root LICENSE retained",
+      "modification": "adapted",
+      "v1_execution": "wrapped"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/dedupe_leads.py",
+      "target_path": "scripts/dedupe_leads.py",
+      "original_sha256": "48ec3c97e416e1eb905558095c03f8dbe7f1a150e6896d3f0b3525ff68f20ea3",
+      "current_sha256": "48ec3c97e416e1eb905558095c03f8dbe7f1a150e6896d3f0b3525ff68f20ea3",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "wrapped"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/enrich_decision_makers.py",
+      "target_path": "scripts/enrich_decision_makers.py",
+      "original_sha256": "1056711f64b3bec451aab2cd71661c10ebe8e7108f78501f1679e981f9b692cf",
+      "current_sha256": "1056711f64b3bec451aab2cd71661c10ebe8e7108f78501f1679e981f9b692cf",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/evaluate_outreach_drafts.py",
+      "target_path": "scripts/evaluate_outreach_drafts.py",
+      "original_sha256": "4ffe5f3685d426e85d3e339f2f8823f75e69e92e6d50dbfe1d35888ac5623254",
+      "current_sha256": "e22ffc2246386e12a235ab74e58b690bb5b6c3917be55d350021cd158e302584",
+      "license": "MIT; root LICENSE retained",
+      "modification": "adapted",
+      "v1_execution": "wrapped"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/export_leads.py",
+      "target_path": "scripts/export_leads.py",
+      "original_sha256": "2b4270c863fe4513749a166c19f7d964943af763c39a5701474c7083681271e8",
+      "current_sha256": "2b4270c863fe4513749a166c19f7d964943af763c39a5701474c7083681271e8",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/extract_contacts.py",
+      "target_path": "scripts/extract_contacts.py",
+      "original_sha256": "309087c1b971c151a9cfbba295f27f0d2f961bad80a17ec38d91c469c237817a",
+      "current_sha256": "309087c1b971c151a9cfbba295f27f0d2f961bad80a17ec38d91c469c237817a",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "wrapped"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/generate_outreach_drafts.py",
+      "target_path": "scripts/generate_outreach_drafts.py",
+      "original_sha256": "f3e1ffd06585125b45a97bd9221799bdbc965de5efaf93be87d35409bd278344",
+      "current_sha256": "f3e1ffd06585125b45a97bd9221799bdbc965de5efaf93be87d35409bd278344",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/generate_outreach_templates.py",
+      "target_path": "scripts/generate_outreach_templates.py",
+      "original_sha256": "770c41b5ac8a3c281100d0b797b5820a66c8ab73a42874dbb36ae280c28e452d",
+      "current_sha256": "770c41b5ac8a3c281100d0b797b5820a66c8ab73a42874dbb36ae280c28e452d",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/infer_email.py",
+      "target_path": "scripts/infer_email.py",
+      "original_sha256": "35aba4af8e178e35d1357d7371edf7716adbc0e17f170d903fb38b254753eb96",
+      "current_sha256": "35aba4af8e178e35d1357d7371edf7716adbc0e17f170d903fb38b254753eb96",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/linkedin_dm_search.py",
+      "target_path": "scripts/linkedin_dm_search.py",
+      "original_sha256": "92e4edfe9933d62ac350b0554b46982575c003f7294e9ff3cf1211403ee0c67c",
+      "current_sha256": "92e4edfe9933d62ac350b0554b46982575c003f7294e9ff3cf1211403ee0c67c",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/normalize_search_results.py",
+      "target_path": "scripts/normalize_search_results.py",
+      "original_sha256": "8f404fb218d6cba7ef73c42bbe238cf2847b9be8174647ad9da4544a103af2e0",
+      "current_sha256": "8f404fb218d6cba7ef73c42bbe238cf2847b9be8174647ad9da4544a103af2e0",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "wrapped"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/prepare_outreach.py",
+      "target_path": "scripts/prepare_outreach.py",
+      "original_sha256": "963786210ed4585213b8296935e6ddb935a57cd8d1a7fe05b9754a134d0197b1",
+      "current_sha256": "963786210ed4585213b8296935e6ddb935a57cd8d1a7fe05b9754a134d0197b1",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/read_jina.py",
+      "target_path": "scripts/read_jina.py",
+      "original_sha256": "2d243687f945cb361e02d91ada0714636d1b2ee33c2c8e5851f917be62795dda",
+      "current_sha256": "2d243687f945cb361e02d91ada0714636d1b2ee33c2c8e5851f917be62795dda",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/run_hunt.py",
+      "target_path": "scripts/run_hunt.py",
+      "original_sha256": "4520bebf741db4397d5d06a124eb6a4e0d10cb6aae90db1789c12d392517fc4d",
+      "current_sha256": "4520bebf741db4397d5d06a124eb6a4e0d10cb6aae90db1789c12d392517fc4d",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/send_smtp.py",
+      "target_path": "scripts/send_smtp.py",
+      "original_sha256": "8de9ef23bc4e597266013d7aad7da48842532fa142dc48f6885665956c81dcac",
+      "current_sha256": "270a5cb064eb184d01c6b90a99b6a2bb7d653f8119a096a249d6db700087b4ae",
+      "license": "MIT; root LICENSE retained",
+      "modification": "adapted",
+      "v1_execution": "disabled"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/serper_maps.py",
+      "target_path": "scripts/serper_maps.py",
+      "original_sha256": "9431421e1eb1b13c7d2bcbf21b335b80c99cd0cd9b18ab664fb71f1de1495df8",
+      "current_sha256": "9431421e1eb1b13c7d2bcbf21b335b80c99cd0cd9b18ab664fb71f1de1495df8",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/-b2b-lead-hunter-skill",
+      "commit": "ac27d0ec6627366337423bfcb1ba86c5be5a95a5",
+      "original_path": "scripts/validate_artifact.py",
+      "target_path": "scripts/validate_artifact.py",
+      "original_sha256": "b5bb2ae1353fc80ffa78374fa8e66352ae77e8c5925b03e349976d9e7a162552",
+      "current_sha256": "b5bb2ae1353fc80ffa78374fa8e66352ae77e8c5925b03e349976d9e7a162552",
+      "license": "MIT; root LICENSE retained",
+      "modification": "as-is",
+      "v1_execution": "legacy-not-used"
+    },
+    {
+      "repository": "https://github.com/xiongQvQ/AI_Find_Customer",
+      "commit": "9b2fde8f719623c627516da2663707a893ee6805",
+      "original_path": "backend/tools/url_filter.py",
+      "target_path": "src/tradecase/vendor/ai_hunter/url_filter.py",
+      "original_sha256": "5ea34d67ff15bea059c2b27b98f91db680195a35f402a55c2118ef3c5f96e3c4",
+      "current_sha256": "95faeac1deca38cfc9a9f270a134fc9a9e0e515ff8648b39d9835141d3835884",
+      "license": "MIT; adjacent LICENSE retained",
+      "modification": "adapted",
+      "v1_execution": "wrapped"
+    }
+  ]
+}

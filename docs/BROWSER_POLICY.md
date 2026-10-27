@@ -48,3 +48,9 @@ If browser research is needed later, require a named permitted site, use a new A
 The new direct reader's actual public smoke against `https://quotes.toscrape.com/js/` was **blocked before connection**. System DNS returned `198.18.1.70` and reserved IPv6 `::ffff:0:c612:146`; these fail the public-address rule. The request budget remained zero, page budget became one. See `public-http-live.json`, its execution log/exit 2, and `live-dns-observation.json`. No resolver override or weakening was performed. Earlier source snapshots fetched by other tools do not establish this reader succeeded online.
 
 The dynamic site's saved public HTML contains ten inert JSON records and zero quote DOM nodes before JS executes. Any root-coordinated host CUA rendering check must be recorded separately as that host tool's live result, never as Web Access or Crawl4AI runtime validation.
+
+The stdlib robots parser does not implement wildcard/end-anchor Disallow rules.
+When such a rule is present this reader returns `unsupported_robots_pattern`
+before fetching content. This is conservative blocking, not complete RFC robots
+pattern support. Scoped IPv6, explicit port zero and semicolon session parameters
+are rejected before DNS/network operations.

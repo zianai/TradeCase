@@ -301,3 +301,17 @@ def test_search_uses_upstream_normalization_but_never_upgrades_snippets():
 def test_optional_runtime_is_not_claimed_installed_or_live():
     status = optional_provider_status()
     assert status["crawl4ai"]["status"] == "blocked" and status["web_access"]["status"] == "blocked"
+
+
+@pytest.mark.parametrize("pattern", ["/catalog*", "/*.pdf$", "/*?*"])
+def test_unsupported_robots_disallow_fails_closed(pattern):
+    reader, calls, _ = fake_reader(
+        {
+            "https://example.com/robots.txt": response(
+                body=f"User-agent: *\nDisallow: {pattern}\n".encode(), **{"content-type": "text/plain"}
+            )
+        }
+    )
+    result = reader.read("https://example.com/catalog")
+    assert result.status == "blocked" and "unsupported_robots_pattern" in result.blockers
+    assert len(calls) == 1

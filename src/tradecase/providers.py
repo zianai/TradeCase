@@ -89,10 +89,10 @@ class PublicURL:
 
 
 _SENSITIVE = re.compile(
-    r"(^|[/.?&=:_-])(\.env|\.git|\.ssh|\.aws|\.config|credentials?|cookies?|"
+    r"(^|[/.?&=:;_-])(\.env|\.git|\.ssh|\.aws|\.config|credentials?|cookies?|"
     r"auth(?:orization)?|tokens?|api[_-]?keys?|access[_-]?keys?|passwords?|passwd|"
     r"secrets?|sessions?|signatures?|login|logout|signout|sign[-_]?in|reset[-_]?password|"
-    r"password[-_]?reset|checkout|uploads?|delete|remove|unsubscribe)(?=$|[/.?&=:_-])",
+    r"password[-_]?reset|checkout|uploads?|delete|remove|unsubscribe)(?=$|[/.?&=:;_-])",
     re.I,
 )
 _QUERY_DENY = re.compile(
@@ -125,8 +125,10 @@ def validate_public_url(value: str) -> PublicURL:
         if parsed.username is not None or parsed.password is not None or "@" in parsed.netloc:
             raise ReaderPolicyError("url_credentials_rejected")
         host = parsed.hostname.rstrip(".").encode("idna").decode("ascii").lower()
+        if "%" in host:
+            raise ReaderPolicyError("scoped_address_rejected")
         scheme = parsed.scheme.lower()
-        port = parsed.port or (443 if scheme == "https" else 80)
+        port = parsed.port if parsed.port is not None else (443 if scheme == "https" else 80)
         if port != (443 if scheme == "https" else 80):
             raise ReaderPolicyError("port_rejected")
     except (ValueError, UnicodeError) as exc:
@@ -504,6 +506,11 @@ class ContentReader:
                 robots_text = _decode(response.body, response.headers.get("content-type", "text/plain"))
                 if "<html" in robots_text.lower() or ("user-agent:" not in robots_text.lower() and robots_text.strip()):
                     raise ReaderPolicyError("robots_invalid")
+                if any(
+                    re.search(r"[*$]", value)
+                    for value in re.findall(r"^\s*disallow\s*:\s*([^#\r\n]*)", robots_text, re.I | re.M)
+                ):
+                    raise ReaderPolicyError("unsupported_robots_pattern")
                 parser = RobotFileParser()
                 parser.parse(robots_text.splitlines())
                 # Honor decimal crawl delays too (stdlib only recognizes integers).

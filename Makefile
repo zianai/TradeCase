@@ -5,6 +5,7 @@ check:
 	ruff check src tests tools
 	python -m pytest -q
 	python tools/check_licenses.py
+	python tools/source_manifest.py --check
 
 lint:
 	ruff check src tests
