@@ -43,6 +43,9 @@ def build_parser():
             item.add_argument("--strict", action="store_true")
         if name == "compliance":
             item.add_argument("--rules", required=True, type=Path)
+            item.add_argument(
+                "--checked-at", help="Explicit historical clock for fully synthetic offline fixtures only"
+            )
     put = commands.add_parser("put", help="Import an Agent-authored artifact through schema validation")
     put.add_argument("--case", required=True, type=Path)
     put.add_argument("--artifact", required=True)
@@ -177,7 +180,7 @@ def dispatch(args):
     elif args.command == "compliance":
         from tradecase.compliance import check_case
 
-        check_case(store, args.rules)
+        check_case(store, args.rules, checked_at=args.checked_at)
     elif args.command == "draft":
         from tradecase.reporting import draft_case
 

@@ -44,3 +44,5 @@ Each row's license observations derive from the locked root files; details and f
 - B2B `send_smtp.py` → same path: **adapted**, network sending code removed from both function and CLI; remaining hashes/validators retained. Legacy implementation recoverable from upstream Git SHA, not an enabled feature.
 - `src/tradecase/upstream.py`: wrappers call real inherited extraction/normalization/merge/customs/hash/claim-review functions. P1 14 integration tests and P2 buyer/score tests executed; see phase logs.
 - P2 new code supplies Case candidate boundaries, scoring and cross-contract checks absent upstream. It does not duplicate crawler or Agent runtime code.
+
+P4 lint-only adaptation: `scripts/extract_contacts.py` removes one redundant blank line in imports; all extraction algorithms remain inherited. Exact current/original hashes are in SOURCE_MANIFEST.json. Active inherited/adapted helper files now have blocking Ruff checks in Makefile.

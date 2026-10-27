@@ -91,39 +91,36 @@ def ready_store(tmp_path):
     from pathlib import Path
 
     from tradecase.assessment import calculate_assessment
+    from tradecase.compliance import check_case
 
-    fixture = json.loads((Path(__file__).parents[2] / "fixtures/case_strong/fixture.json").read_text())
+    root = Path(__file__).parents[2]
+    fixture = json.loads((root / "fixtures/case_strong/fixture.json").read_text())
+    rules_path = root / "rules/synthetic-demo-v1.json"
+    rules = json.loads(rules_path.read_text())
     inquiry = {**fixture["inquiry"], "case_id": "review-complete", "received_at": "2026-10-27T16:00:00Z"}
     profile = {**fixture["profile"], "case_id": inquiry["case_id"]}
     evidence = fixture["evidence"]
     for row in evidence:
         if row.get("source_url"):
             row["local_snapshot_ref"] = None
-    checks = []
-    for kind, source_type in [("country", "government"), ("platform", "platform_official")]:
-        url = f"https://policy.example/{kind}"
+    for rule in rules["rules"]:
         evidence.append({
-            "evidence_id": "rule-" + kind, "claim": "Synthetic rule", "excerpt": "Synthetic rule",
-            "source_type": source_type, "source_url": url, "captured_at": "2026-10-27T16:00:00Z",
+            "evidence_id": rule["source_evidence_ids"][0], "claim": "Synthetic rule", "excerpt": "Synthetic rule",
+            "source_type": "government" if rule["check_type"] == "country" else "platform_official",
+            "source_url": rule["source_url"], "captured_at": "2026-10-27T12:00:00Z",
             "retrieved_by": "offline_fixture", "assertion_status": "supported", "is_synthetic": True,
-        })
-        checks.append({
-            "check_id": "check-" + kind, "check_type": kind, "jurisdiction": "US", "platform": "amazon_us",
-            "product_scope": "Synthetic fixture", "rule_id": "rule-" + kind, "rule_version": "fixture-v1",
-            "checked_at": "2026-10-27T16:00:00Z", "source_url": url, "status": "pass", "severity": "info",
-            "rationale": "Synthetic offline fixture only", "suggested_action": "Review official current policy",
-            "evidence_ids": ["rule-" + kind], "is_synthetic": True,
         })
     store = CaseStore.create(tmp_path / "complete", inquiry, fixture["seller"])
     for name, data in [
         ("candidates.jsonl", fixture["candidates"]), ("evidence.jsonl", evidence), ("buyer_profile.json", profile),
         ("assessment.json", calculate_assessment(inquiry, profile, fixture["candidates"], evidence, fixture["signals"])),
-        ("compliance.json", {"case_id": inquiry["case_id"], "checks": checks, "is_synthetic": True}),
         ("next_actions.json", {"case_id": inquiry["case_id"], "is_synthetic": True}),
         ("search_plan.md", "Synthetic source research plan"), ("reply_draft.md", "Synthetic draft, do not send"),
         ("report.md", "Synthetic offline report"),
     ]:
         store.write(name, data)
+    result = check_case(store, rules_path, checked_at="2026-10-27T12:00:00Z")
+    assert all(check["status"] == "pass" for check in result["checks"])
     store.transition("running", "report")
     assert validate_case(store.path, strict=True) == []
     return store

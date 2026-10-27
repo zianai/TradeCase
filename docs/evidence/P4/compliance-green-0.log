@@ -1,0 +1,6 @@
+$ .venv/bin/python -m pytest tests/unit/test_compliance.py tests/contract -q
+........................................................................ [ 86%]
+...........                                                              [100%]
+83 passed in 0.41s
+
+EXIT_CODE=0

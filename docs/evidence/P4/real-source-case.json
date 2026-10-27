@@ -1,0 +1,59 @@
+[
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "research",
+      "--case",
+      "cases/live-official-research"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"artifact_index\": {\n    \"buyer_profile.json\": \"1128c70846a417307fdc02024da32a49846745009be3c1698c9a454973b500b3\",\n    \"candidates.jsonl\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"evidence.jsonl\": \"b4e39dbe97e75f3123e3ce4f7dbc691dee4d25b36b2d39e7527a7b2f13509763\",\n    \"input.json\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n    \"search_plan.md\": \"297b5bf04d72ee1482a0b06a57dfa87c9d0c818710885d010360452696e9159f\",\n    \"seller_context.json\": \"0594b8370618ea9bfd28f5f01679ab935f818a28acec3501e83b806a4b40a0ff\",\n    \"snapshots/live-amazon-listing-safety.json\": \"de0d764d8033106f5661360cf1fccfb3e5eaf0cb582a3fa3b57a21348b5c40df\",\n    \"snapshots/live-cpsc-tracking-guidance.json\": \"1afd47b041dadaaf7dad5395f698fc6acdb26d80d0a8b5c7667cf4b33d29a1b0\",\n    \"snapshots/live-ikea-structure.json\": \"bb5c1528643f84f6e1f15da0f4d45eb2a4b86ab4c8d652498e4b5a57f95b829b\",\n    \"snapshots/live-ul-services.json\": \"97bb79c2e848326eef4391efc39692f9fb0a46bcfbe62af640bd52bf6b4af71a\"\n  },\n  \"blockers\": [],\n  \"case_id\": \"live-official-research\",\n  \"created_at\": \"2026-10-27T16:05:21.662874Z\",\n  \"current_stage\": \"init\",\n  \"error\": null,\n  \"input_hash\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n  \"revision\": 11,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"created\",\n  \"updated_at\": \"2026-10-27T16:08:11.120166Z\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "assess",
+      "--case",
+      "cases/live-official-research"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"artifact_index\": {\n    \"assessment.json\": \"4066912274f03bdfdf6849f5235eff0098b5dce9a003a4ae5eaa6ec0744bc652\",\n    \"buyer_profile.json\": \"1128c70846a417307fdc02024da32a49846745009be3c1698c9a454973b500b3\",\n    \"candidates.jsonl\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"evidence.jsonl\": \"b4e39dbe97e75f3123e3ce4f7dbc691dee4d25b36b2d39e7527a7b2f13509763\",\n    \"input.json\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n    \"search_plan.md\": \"297b5bf04d72ee1482a0b06a57dfa87c9d0c818710885d010360452696e9159f\",\n    \"seller_context.json\": \"0594b8370618ea9bfd28f5f01679ab935f818a28acec3501e83b806a4b40a0ff\",\n    \"snapshots/live-amazon-listing-safety.json\": \"de0d764d8033106f5661360cf1fccfb3e5eaf0cb582a3fa3b57a21348b5c40df\",\n    \"snapshots/live-cpsc-tracking-guidance.json\": \"1afd47b041dadaaf7dad5395f698fc6acdb26d80d0a8b5c7667cf4b33d29a1b0\",\n    \"snapshots/live-ikea-structure.json\": \"bb5c1528643f84f6e1f15da0f4d45eb2a4b86ab4c8d652498e4b5a57f95b829b\",\n    \"snapshots/live-ul-services.json\": \"97bb79c2e848326eef4391efc39692f9fb0a46bcfbe62af640bd52bf6b4af71a\"\n  },\n  \"blockers\": [\n    \"BUYER_ROLE_NOT_SUPPORTED\",\n    \"BUYER_UNRESOLVED\",\n    \"ENTITY_NOT_SELECTED\",\n    \"IDENTITY_NOT_SUPPORTED\",\n    \"INSUFFICIENT_EVIDENCE_COVERAGE\"\n  ],\n  \"case_id\": \"live-official-research\",\n  \"created_at\": \"2026-10-27T16:05:21.662874Z\",\n  \"current_stage\": \"assessment\",\n  \"error\": null,\n  \"input_hash\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n  \"revision\": 14,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"needs_review\",\n  \"updated_at\": \"2026-10-27T16:08:11.285853Z\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "compliance",
+      "--case",
+      "cases/live-official-research",
+      "--rules",
+      "rules/live-research-2026-10-27.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"artifact_index\": {\n    \"assessment.json\": \"4066912274f03bdfdf6849f5235eff0098b5dce9a003a4ae5eaa6ec0744bc652\",\n    \"buyer_profile.json\": \"1128c70846a417307fdc02024da32a49846745009be3c1698c9a454973b500b3\",\n    \"candidates.jsonl\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"compliance.json\": \"b0085a3e4c280b47cc5b57210e71ca4c1a052a43b1a6b8b8e19c61c203cbc61e\",\n    \"evidence.jsonl\": \"b4e39dbe97e75f3123e3ce4f7dbc691dee4d25b36b2d39e7527a7b2f13509763\",\n    \"input.json\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n    \"rules_snapshot.json\": \"3b5e026807258bac0b1562a31e0f69439ec58889f552c0ec534fb4a4a8f05472\",\n    \"search_plan.md\": \"297b5bf04d72ee1482a0b06a57dfa87c9d0c818710885d010360452696e9159f\",\n    \"seller_context.json\": \"0594b8370618ea9bfd28f5f01679ab935f818a28acec3501e83b806a4b40a0ff\",\n    \"snapshots/live-amazon-listing-safety.json\": \"de0d764d8033106f5661360cf1fccfb3e5eaf0cb582a3fa3b57a21348b5c40df\",\n    \"snapshots/live-cpsc-tracking-guidance.json\": \"1afd47b041dadaaf7dad5395f698fc6acdb26d80d0a8b5c7667cf4b33d29a1b0\",\n    \"snapshots/live-ikea-structure.json\": \"bb5c1528643f84f6e1f15da0f4d45eb2a4b86ab4c8d652498e4b5a57f95b829b\",\n    \"snapshots/live-ul-services.json\": \"97bb79c2e848326eef4391efc39692f9fb0a46bcfbe62af640bd52bf6b4af71a\"\n  },\n  \"blockers\": [\n    \"check-US-CPSC-TRACKING-LABEL:needs_context\",\n    \"check-AMAZON-US-LISTING-SAFETY:needs_context\"\n  ],\n  \"case_id\": \"live-official-research\",\n  \"created_at\": \"2026-10-27T16:05:21.662874Z\",\n  \"current_stage\": \"compliance\",\n  \"error\": null,\n  \"input_hash\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n  \"revision\": 19,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"needs_review\",\n  \"updated_at\": \"2026-10-27T16:08:11.531716Z\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "report",
+      "--case",
+      "cases/live-official-research"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"artifact_index\": {\n    \"assessment.json\": \"4066912274f03bdfdf6849f5235eff0098b5dce9a003a4ae5eaa6ec0744bc652\",\n    \"buyer_profile.json\": \"1128c70846a417307fdc02024da32a49846745009be3c1698c9a454973b500b3\",\n    \"candidates.jsonl\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n    \"compliance.json\": \"b0085a3e4c280b47cc5b57210e71ca4c1a052a43b1a6b8b8e19c61c203cbc61e\",\n    \"evidence.jsonl\": \"b4e39dbe97e75f3123e3ce4f7dbc691dee4d25b36b2d39e7527a7b2f13509763\",\n    \"input.json\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n    \"report.md\": \"0c53925311d0706b2b16d708a768309f16f5b6cbe97989c9a55294c90e166a00\",\n    \"rules_snapshot.json\": \"3b5e026807258bac0b1562a31e0f69439ec58889f552c0ec534fb4a4a8f05472\",\n    \"search_plan.md\": \"297b5bf04d72ee1482a0b06a57dfa87c9d0c818710885d010360452696e9159f\",\n    \"seller_context.json\": \"0594b8370618ea9bfd28f5f01679ab935f818a28acec3501e83b806a4b40a0ff\",\n    \"snapshots/live-amazon-listing-safety.json\": \"de0d764d8033106f5661360cf1fccfb3e5eaf0cb582a3fa3b57a21348b5c40df\",\n    \"snapshots/live-cpsc-tracking-guidance.json\": \"1afd47b041dadaaf7dad5395f698fc6acdb26d80d0a8b5c7667cf4b33d29a1b0\",\n    \"snapshots/live-ikea-structure.json\": \"bb5c1528643f84f6e1f15da0f4d45eb2a4b86ab4c8d652498e4b5a57f95b829b\",\n    \"snapshots/live-ul-services.json\": \"97bb79c2e848326eef4391efc39692f9fb0a46bcfbe62af640bd52bf6b4af71a\"\n  },\n  \"blockers\": [\n    \"check-US-CPSC-TRACKING-LABEL:needs_context\",\n    \"check-AMAZON-US-LISTING-SAFETY:needs_context\"\n  ],\n  \"case_id\": \"live-official-research\",\n  \"created_at\": \"2026-10-27T16:05:21.662874Z\",\n  \"current_stage\": \"compliance\",\n  \"error\": null,\n  \"input_hash\": \"f36576f8d5f9a5f1016ce97b45ae2a653c5b7963fce2faaf5b902b406ff92c5c\",\n  \"revision\": 20,\n  \"runtime_metadata\": {},\n  \"schema_version\": \"1.0\",\n  \"state\": \"needs_review\",\n  \"updated_at\": \"2026-10-27T16:08:11.753242Z\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/tradecase",
+      "validate",
+      "--case",
+      "cases/live-official-research"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"strict\": false,\n  \"errors\": []\n}\n",
+    "stderr": ""
+  }
+]

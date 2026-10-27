@@ -39,7 +39,7 @@ def check(**overrides):
 def partial_case(tmp_path):
     def put(name, obj):
         path = tmp_path / name
-        path.write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n")
+        path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
         return hashlib.sha256(path.read_bytes()).hexdigest()
     input_hash = put("input.json", inquiry(is_synthetic=True))
     seller_hash = put("seller_context.json", {"is_synthetic": True})
@@ -252,6 +252,7 @@ def test_original_bytes_preserved_and_hash_checked():
 
 def complete_case(tmp_path):
     from tradecase.assessment import calculate_assessment
+    from tradecase.compliance import evaluate_compliance
 
     put = partial_case(tmp_path)
     (tmp_path / "candidates.jsonl").write_text("")
@@ -260,12 +261,11 @@ def complete_case(tmp_path):
     put("assessment.json", calculate_assessment(
         inquiry(is_synthetic=True), dict(case_id="case-test", is_synthetic=True), [], [], {},
     ))
-    checks = [
-        check(check_id="check-country", status="needs_context", evidence_ids=[], source_url=None),
-        check(check_id="check-platform", check_type="platform", platform=None, status="needs_context",
-              evidence_ids=[], source_url=None),
-    ]
-    put("compliance.json", dict(case_id="case-test", is_synthetic=True, checks=checks))
+    rules = {"schema_version": "1.0", "rules": []}
+    put("rules_snapshot.json", rules)
+    put("compliance.json", evaluate_compliance(
+        inquiry(is_synthetic=True), {"is_synthetic": True}, [], rules, checked_at=STAMP,
+    ))
     put("next_actions.json", dict(case_id="case-test", is_synthetic=True))
     for name in ("search_plan.md", "reply_draft.md", "report.md"):
         (tmp_path / name).write_text("Synthetic offline fixture, review required.\n")

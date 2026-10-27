@@ -73,9 +73,9 @@
       "original_path": "scripts/extract_contacts.py",
       "target_path": "scripts/extract_contacts.py",
       "original_sha256": "309087c1b971c151a9cfbba295f27f0d2f961bad80a17ec38d91c469c237817a",
-      "current_sha256": "309087c1b971c151a9cfbba295f27f0d2f961bad80a17ec38d91c469c237817a",
+      "current_sha256": "ab077fa9ca01d5926c65e3d5c17dc47adb7079b45c095814fa4b77c36b0ceab2",
       "license": "MIT; root LICENSE retained",
-      "modification": "as-is",
+      "modification": "adapted",
       "v1_execution": "wrapped"
     },
     {

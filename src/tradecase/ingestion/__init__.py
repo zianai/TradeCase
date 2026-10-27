@@ -70,6 +70,8 @@ def parse_inquiry(path: Path, case_id: str, **overrides) -> CaseInput:
         warnings.extend(type(d).__name__ for d in msg.defects)
     else:
         raise ValueError("supported inquiry formats: .eml, .txt, .json")
+    if not data.get("received_at"):
+        warnings.append("received_at uses local ingestion time; original mail headers remain in raw_content")
     data.update(
         {
             "case_id": case_id,

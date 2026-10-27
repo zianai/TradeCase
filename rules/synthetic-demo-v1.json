@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "schema_version": "1.0",
+      "rule_id": "synthetic-us-tracking-label",
+      "check_type": "country",
+      "version": "synthetic-1",
+      "product_scope": "Synthetic children's consumer product demonstration only",
+      "applicability": {
+        "target_country": "US",
+        "children_product": true
+      },
+      "attributes_required": [
+        "tracking_label_present"
+      ],
+      "required_values": {
+        "tracking_label_present": true
+      },
+      "source_url": "https://regulator.invalid/synthetic-tracking-label",
+      "source_evidence_ids": [
+        "ev-rule-country"
+      ],
+      "effective_date": "2026-01-01",
+      "reviewed_at": "2026-10-26T12:00:00Z",
+      "valid_until": "2027-10-27T12:00:00Z",
+      "source_current": true,
+      "is_synthetic": true,
+      "severity": "high",
+      "rationale": "Synthetic deterministic rule: tracking label attribute must be present; not real legal advice.",
+      "suggested_action": "Confirm tracking-label requirements with an official current source and qualified reviewer."
+    },
+    {
+      "schema_version": "1.0",
+      "rule_id": "synthetic-amazon-listing-review",
+      "check_type": "platform",
+      "version": "synthetic-1",
+      "product_scope": "Synthetic Amazon US listing demonstration only",
+      "applicability": {
+        "platform": "amazon_us"
+      },
+      "attributes_required": [
+        "listing_safety_reviewed"
+      ],
+      "required_values": {
+        "listing_safety_reviewed": true
+      },
+      "source_url": "https://platform.invalid/synthetic-listing-review",
+      "source_evidence_ids": [
+        "ev-rule-platform"
+      ],
+      "effective_date": "2026-01-01",
+      "reviewed_at": "2026-10-26T12:00:00Z",
+      "valid_until": "2027-10-27T12:00:00Z",
+      "source_current": true,
+      "is_synthetic": true,
+      "severity": "high",
+      "rationale": "Synthetic deterministic rule: listing safety review attribute must be true; not a real platform approval.",
+      "suggested_action": "Review current official platform policy and required product evidence before listing."
+    }
+  ]
+}

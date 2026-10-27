@@ -1,0 +1,100 @@
+{
+  "review_mode": "independent_actor",
+  "actor": "audit_ai_hunter subagent",
+  "actor_modified_implementation": false,
+  "verdict": "passed_scoped_offline_review",
+  "executed_at": "2026-10-27T16:04:34.552684+00:00",
+  "subject_sha256": {
+    "src/tradecase/providers.py": "d71e8d7c12d46c8bda94d293cff78131c6242bee32b211dd07edce49a1bc93e7",
+    "src/tradecase/cli.py": "8ba46292234421db98bcac0083118f34dcb2e3721abbaf8bf0674724aa1be038",
+    "tests/unit/test_provider_review.py": "7996d78c2e2a6b595f32e9a479a89610b16d6663a9e02aa3f1b53ee6d050cab2"
+  },
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest tests/unit/test_provider_review.py -q",
+      "exit_code": 0,
+      "summary": "12 passed in 0.17s",
+      "log": "provider-review-green.log",
+      "mode": "tested_offline"
+    },
+    {
+      "command": ".venv/bin/ruff check tests/unit/test_provider_review.py",
+      "exit_code": 0,
+      "summary": "All checks passed"
+    }
+  ],
+  "red_evidence": [
+    {
+      "log": "provider-review-red.log",
+      "exit_code": 1,
+      "summary": "2 failed / 3 passed; nested URL encoding and truncated Content-Length"
+    },
+    {
+      "log": "provider-review-round2.log",
+      "exit_code": 1,
+      "summary": "3 failed / 9 passed; IPv6 scope, semicolon session path, port zero"
+    },
+    {
+      "log": "provider-review-pending.log",
+      "exit_code": 1,
+      "summary": "Same three pending issues; retained rather than relabelled as green"
+    }
+  ],
+  "resolved_findings": [
+    {
+      "finding": "Site-local IPv6 fec0::1 passed ipaddress.is_global; unsafe relying on that property alone",
+      "verification": "Independent regression now rejects the URL"
+    },
+    {
+      "finding": "Fifth-layer percent encoding bypassed sensitive .env path check",
+      "verification": "Independent regression now rejects remaining nested encoding"
+    },
+    {
+      "finding": "Content-Length could be incomplete at EOF and still marked fetched",
+      "verification": "Independent raw HTTP socket double now raises instead of returning fetched content"
+    },
+    {
+      "finding": "TCP connect time was not deducted before TLS handshake timeout",
+      "verification": "Independent simulated-clock test verifies remaining timeout or active overall watchdog at handshake"
+    },
+    {
+      "finding": "Known robots crawl delay was lost across new ContentReader instances",
+      "verification": "Independent shared-budget test verifies delay before the next robots request"
+    },
+    {
+      "finding": "IPv6 scope identifiers were not rejected",
+      "verification": "Independent regression now rejects a scoped public IPv6 URL"
+    },
+    {
+      "finding": "Semicolon path parameter could carry a session value",
+      "verification": "Independent regression now rejects the path"
+    },
+    {
+      "finding": "Explicit port zero was treated as an absent port",
+      "verification": "Independent regression now rejects port zero"
+    },
+    {
+      "finding": "Ambiguous or unsupported transfer framing could bypass expected body semantics",
+      "verification": "Independent duplicate length / length+chunked / unsupported transfer-encoding tests pass"
+    }
+  ],
+  "reviewed_provenance": [
+    "Jina mismatched embedded target is rejected.",
+    "Successful Jina import keeps retrieved_by=host-import:jina, assertion_status=unverified, untrusted=True and remote target-chain/independent-retrieval warnings.",
+    "Jina hash explicitly concerns imported UTF-8 text, not original server HTML bytes.",
+    "Root capture now preserves result.is_synthetic and records safe failure reason codes; reviewed code, root owns integration tests."
+  ],
+  "additional_robots_finding": {
+    "observation": "Local Python 3.12 RobotFileParser RuleLine.applies_to uses literal startswith and ignores internal wildcard / end-anchor semantics; read-only probe returned can_fetch=True for Disallow /catalog* against /catalogue.",
+    "resolution": "Root added fail-closed unsupported_robots_pattern handling and three own tests; implementation was read after change.",
+    "verification_boundary": "The independent review file was frozen at 12 tests per coordinator instruction. Root owns the new robots-pattern tests and full-suite result."
+  },
+  "limits": [
+    "All independent tests use offline socket/HTTP/clock doubles. No real network request was performed by this review.",
+    "This is a scoped regression review, not a proof against every possible malicious server or arbitrary Coding Agent shell bypass.",
+    "Jina importer does not independently verify origin DNS, remote redirect chain, original HTML or factual truth.",
+    "Complex robots wildcard/end-anchor rules now block this direct reader rather than claiming complete REP interpretation.",
+    "Optional Crawl4AI/Web Access runtime validity and online smoke remain separately reported by their owner."
+  ],
+  "frozen_test_file": "tests/unit/test_provider_review.py"
+}

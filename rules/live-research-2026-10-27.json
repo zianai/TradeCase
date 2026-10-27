@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "schema_version": "1.0",
+      "rule_id": "US-CPSC-TRACKING-LABEL",
+      "check_type": "country",
+      "version": "research-snapshot-2026-10-27",
+      "product_scope": "Potential children products; scope and practicability require review",
+      "applicability": {
+        "target_country": "US",
+        "children_product": true
+      },
+      "attributes_required": [
+        "tracking_label_present"
+      ],
+      "required_values": {
+        "tracking_label_present": true
+      },
+      "source_url": "https://www.cpsc.gov/FAQ/Tracking-Label",
+      "source_evidence_ids": [
+        "live-cpsc-tracking-guidance"
+      ],
+      "effective_date": null,
+      "reviewed_at": "2026-10-26T12:00:00Z",
+      "valid_until": null,
+      "source_current": false,
+      "is_synthetic": false,
+      "severity": "high",
+      "rationale": "CPSC official guidance reviewed via host web tool. Exact effective/version date and product-specific compliance not established.",
+      "suggested_action": "Confirm children-product scope, product/packaging traceability markings, and applicable exceptions with a qualified reviewer."
+    },
+    {
+      "schema_version": "1.0",
+      "rule_id": "AMAZON-US-LISTING-SAFETY",
+      "check_type": "platform",
+      "version": "research-snapshot-2026-10-27",
+      "product_scope": "Amazon US listing safety/compliance fields; not complete category approval",
+      "applicability": {
+        "platform": "amazon_us"
+      },
+      "attributes_required": [
+        "listing_safety_reviewed"
+      ],
+      "required_values": {
+        "listing_safety_reviewed": true
+      },
+      "source_url": "https://sell.amazon.com/blog/amazon-product-listings",
+      "source_evidence_ids": [
+        "live-amazon-listing-safety"
+      ],
+      "effective_date": null,
+      "reviewed_at": "2026-10-26T12:00:00Z",
+      "valid_until": null,
+      "source_current": false,
+      "is_synthetic": false,
+      "severity": "high",
+      "rationale": "Official public listing guide reviewed. Current product-specific Seller Central policy body was not accessible.",
+      "suggested_action": "Provide applicable current Seller Central policy and category documentation for human review; do not submit or list automatically."
+    }
+  ]
+}

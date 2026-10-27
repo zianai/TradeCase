@@ -1,0 +1,14 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+_________________________ test_two_risk_feedback_forms _________________________
+
+tmp_path = PosixPath('/private/var/folders/3c/8s26_dx95_ncnyq26yv52vwr0000gn/T/pytest-of-a/pytest-331/test_two_risk_feedback_forms0')
+
+    def test_two_risk_feedback_forms(tmp_path):
+>       from tradecase.compliance import check_case
+E       ModuleNotFoundError: No module named 'tradecase.compliance'
+
+tests/unit/test_risk_reporting.py:26: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/unit/test_risk_reporting.py::test_two_risk_feedback_forms - Modu...
+1 failed, 1 passed in 0.14s

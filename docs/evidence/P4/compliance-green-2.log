@@ -1,0 +1,3 @@
+$ .venv/bin/python -m compileall -q src/tradecase/compliance.py src/tradecase/models src/tradecase/validation.py
+
+EXIT_CODE=0

@@ -10,7 +10,6 @@ import sys
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
-
 EMAIL_RE = re.compile(r"\b[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 PHONE_RE = re.compile(
     r"""(?<!\d)(?<!\.)

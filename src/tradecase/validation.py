@@ -18,6 +18,7 @@ from tradecase.models import (
     Evidence,
     Manifest,
     NextActions,
+    RuleSet,
     SellerContext,
     TaskEvent,
     relative_reference,
@@ -29,12 +30,14 @@ JSON_MODELS = {
     "buyer_profile.json": BuyerProfile,
     "assessment.json": Assessment,
     "compliance.json": ComplianceResult,
+    "rules_snapshot.json": RuleSet,
     "next_actions.json": NextActions,
     "manifest.json": Manifest,
 }
 JSONL_MODELS = {"candidates.jsonl": Candidate, "evidence.jsonl": Evidence, "events.jsonl": TaskEvent}
 TEXT_ARTIFACTS = {"search_plan.md", "reply_draft.md", "report.md"}
-REQUIRED_ARTIFACTS = frozenset(JSON_MODELS) | frozenset(JSONL_MODELS) | TEXT_ARTIFACTS
+KNOWN_ARTIFACTS = frozenset(JSON_MODELS) | frozenset(JSONL_MODELS) | TEXT_ARTIFACTS
+REQUIRED_ARTIFACTS = KNOWN_ARTIFACTS - {"rules_snapshot.json"}
 MINIMUM_ARTIFACTS = {"input.json", "seller_context.json", "manifest.json", "events.jsonl"}
 
 
@@ -117,7 +120,7 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
     if (root / ".transaction.json").exists() or (root / ".transaction.json").is_symlink():
         errors.append("case: pending .transaction.json; recover before validating completed state")
     artifacts: dict[str, Any] = {}
-    for name in sorted(REQUIRED_ARTIFACTS):
+    for name in sorted(KNOWN_ARTIFACTS):
         if not (root / name).exists() and not (root / name).is_symlink():
             continue
         try:
@@ -259,6 +262,7 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
                 errors.append(f"assessment.json: invalid signal derivation: {exc}")
 
     compliance: ComplianceResult | None = artifacts.get("compliance.json")
+    rules_snapshot: RuleSet | None = artifacts.get("rules_snapshot.json")
     seller: SellerContext | None = artifacts.get("seller_context.json")
     if compliance:
         _duplicate_ids(compliance.checks, "check_id", "compliance.json", errors)
@@ -284,6 +288,27 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
             for attribute in check.required_attributes:
                 if not seller or seller.product_attributes.get(attribute) in (None, ""):
                     errors.append(f"compliance.json {check.check_id}: required seller attribute {attribute} missing")
+        if rules_snapshot is None:
+            errors.append("compliance.json: rules_snapshot.json is required to verify the deterministic checks")
+        if not compliance.checked_at or not compliance.rules_snapshot_sha256 or not compliance.rules_snapshot_ref:
+            errors.append("compliance.json: checked_at and rules snapshot hash binding are required")
+        if rules_snapshot and compliance.rules_snapshot_sha256:
+            snapshot_hash = hashlib.sha256((root / "rules_snapshot.json").read_bytes()).hexdigest()
+            if compliance.rules_snapshot_sha256 != snapshot_hash:
+                errors.append("compliance.json: rules snapshot hash mismatch")
+        if inquiry and seller and rules_snapshot and compliance.checked_at:
+            from tradecase.compliance import evaluate_compliance
+
+            try:
+                expected = evaluate_compliance(
+                    inquiry.model_dump(mode="json"), seller.model_dump(mode="json"),
+                    [row.model_dump(mode="json") for row in rows], rules_snapshot.model_dump(mode="json"),
+                    checked_at=compliance.checked_at,
+                )
+                if compliance.model_dump(mode="json") != expected:
+                    errors.append("compliance.json: checks do not match recomputed compliance-v1 result")
+            except ValueError as exc:
+                errors.append(f"compliance.json: invalid rule derivation: {exc}")
 
     next_actions: NextActions | None = artifacts.get("next_actions.json")
     if next_actions:
@@ -296,6 +321,8 @@ def validate_case(path: str | Path, strict: bool = False) -> list[str]:
             values = artifact if isinstance(artifact, list) else [artifact]
             if isinstance(artifact, ComplianceResult):
                 values = [artifact, *artifact.checks]
+            if isinstance(artifact, RuleSet):
+                values = artifact.rules
             for value in values:
                 if hasattr(value, "is_synthetic") and value.is_synthetic and not inquiry.is_synthetic:
                     errors.append(f"{name}: synthetic data cannot be used in a real Case")

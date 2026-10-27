@@ -42,6 +42,14 @@ def source_url(value: str) -> str:
     return value
 
 
+def is_reserved_source(value: str) -> bool:
+    host = (urlsplit(value).hostname or "").rstrip(".").lower()
+    domains = {"localhost", "example.com", "example.org", "example.net"}
+    return host in domains or any(host.endswith("." + domain) for domain in domains) or any(
+        host.endswith(suffix) for suffix in (".invalid", ".test", ".example", ".localhost")
+    )
+
+
 def relative_reference(value: str) -> str:
     path = PurePosixPath(value)
     if not value or path.is_absolute() or ".." in path.parts or "\\" in value or ":" in value:
@@ -175,6 +183,8 @@ class Evidence(Contract):
                 raise ValueError("supported or contradicted evidence requires excerpt or locator")
             if not self.source_url and not self.local_snapshot_ref:
                 raise ValueError("supported or contradicted evidence requires URL or local snapshot")
+            if not self.is_synthetic and self.source_url and is_reserved_source(self.source_url):
+                raise ValueError("reserved example domain cannot support a real evidence assertion")
         return self
 
 
@@ -297,6 +307,56 @@ class ComplianceResult(Contract):
     case_id: Identifier
     checks: list[ComplianceCheck] = Field(default_factory=list)
     is_synthetic: bool = False
+    checked_at: UTC | None = None
+    rule_engine_version: Literal["compliance-v1"] = "compliance-v1"
+    rules_snapshot_ref: Literal["rules_snapshot.json"] | None = None
+    rules_snapshot_sha256: SHA256 | None = None
+
+
+class Rule(Contract):
+    rule_id: Identifier
+    check_type: Literal["country", "platform"]
+    version: Nonempty
+    product_scope: Nonempty
+    applicability: dict[str, str | bool] = Field(min_length=1)
+    attributes_required: list[Nonempty] = Field(min_length=1)
+    required_values: dict[str, str | bool] = Field(min_length=1)
+    source_url: URL | None = None
+    source_evidence_ids: list[Identifier] = Field(default_factory=list)
+    effective_date: Date | None = None
+    reviewed_at: UTC | None = None
+    valid_until: UTC | None = None
+    source_current: bool | None = False
+    is_synthetic: bool
+    severity: Literal["critical", "high", "medium", "low", "info"] = "high"
+    rationale: Nonempty
+    suggested_action: Nonempty
+
+    @model_validator(mode="after")
+    def explicit_scope_and_values(self):
+        scope_key = "target_country" if self.check_type == "country" else "platform"
+        scope_value = self.applicability.get(scope_key)
+        if not isinstance(scope_value, str) or not scope_value.strip():
+            raise ValueError(f"{self.check_type} rule requires explicit {scope_key} applicability")
+        if not set(self.required_values).issubset(self.attributes_required):
+            raise ValueError("required_values keys must be declared in attributes_required")
+        if any(not key.strip() for key in [*self.applicability, *self.attributes_required, *self.required_values]):
+            raise ValueError("rule attribute names cannot be blank")
+        if len(set(self.attributes_required)) != len(self.attributes_required):
+            raise ValueError("duplicate required attributes")
+        if len(set(self.source_evidence_ids)) != len(self.source_evidence_ids):
+            raise ValueError("duplicate source evidence IDs")
+        return self
+
+
+class RuleSet(Contract):
+    rules: list[Rule] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def unique_rule_ids(self):
+        if len({rule.rule_id for rule in self.rules}) != len(self.rules):
+            raise ValueError("duplicate rule_id in rule snapshot")
+        return self
 
 
 class NextAction(Contract):
