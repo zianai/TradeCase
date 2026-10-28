@@ -1,14 +1,10 @@
-# TradeCase V1 中文入口
+# TradeCase 中文说明
 
-> 完整 Case 工作台已在保留业务内核的基础上增量实现：FastAPI、PostgreSQL、LangGraph、SDK 适配器、任务租约、Next.js GUI、版本审批与默认关闭的 Outbox。
-> [使用说明](docs/WORKBENCH_USAGE.md) · [部署与恢复](docs/WORKBENCH_DEPLOYMENT.md) · [实际验收与限制](docs/FULL_DELIVERY_REPORT.md)。下文保留原离线 CLI/Skills 用法。
+[README.md](README.md) 是本项目的中文主说明，包含本地安装、工作台、兼容 CLI、测试、许可与安全边界。
 
+- [使用说明](docs/WORKBENCH_USAGE.md)
+- [部署与恢复](docs/WORKBENCH_DEPLOYMENT.md)
+- [实际验收及环境限制](docs/FULL_DELIVERY_REPORT.md)
+- [第三方许可声明](THIRD_PARTY_NOTICES.md)
 
-当前完整中文说明为 [README.md](README.md)，包含安装、运行、Skills、数据与许可证边界。
-
-- [P0–P6 验收报告](docs/PHASE_REPORTS/)
-- [演示手册](docs/DEMO_RUNBOOK.md)
-- [能力状态与未验证项](docs/CAPABILITY_STATUS.md)
-- [双宿主验证](docs/HOST_VALIDATION.md)
-
-本项目基于 B2B Lead Hunter 的锁定源码二次开发，旧获客/SMTP README 已由当前 V1 流程替换。旧版本仍可从保留的上游 Git 历史查看。
+当前项目基于 B2B Lead Hunter 开发；本地合成案例不代表真实客户调查。真实外部发送默认关闭。
