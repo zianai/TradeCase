@@ -1,0 +1,442 @@
+[
+  {
+    "name": "aiosqlite",
+    "version": "0.22.1",
+    "license": "metadata_not_declared"
+  },
+  {
+    "name": "alembic",
+    "version": "1.20.1",
+    "license": "MIT"
+  },
+  {
+    "name": "annotated-doc",
+    "version": "0.0.5",
+    "license": "MIT"
+  },
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "license": "MIT"
+  },
+  {
+    "name": "anyio",
+    "version": "4.15.1",
+    "license": "MIT"
+  },
+  {
+    "name": "arq",
+    "version": "0.28.0",
+    "license": "MIT"
+  },
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "license": "MIT"
+  },
+  {
+    "name": "boto3",
+    "version": "1.43.120",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "botocore",
+    "version": "1.43.120",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "certifi",
+    "version": "2026.10.23",
+    "license": "MPL-2.0"
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "license": "MIT-0"
+  },
+  {
+    "name": "charset-normalizer",
+    "version": "3.5.2",
+    "license": "MIT"
+  },
+  {
+    "name": "click",
+    "version": "8.5.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "cryptography",
+    "version": "50.0.2",
+    "license": "Apache-2.0 OR BSD-3-Clause"
+  },
+  {
+    "name": "distro",
+    "version": "1.9.0",
+    "license": "Apache License, Version 2.0"
+  },
+  {
+    "name": "fastapi",
+    "version": "0.162.0",
+    "license": "MIT"
+  },
+  {
+    "name": "griffelib",
+    "version": "2.4.1",
+    "license": "ISC"
+  },
+  {
+    "name": "h11",
+    "version": "0.16.0",
+    "license": "MIT"
+  },
+  {
+    "name": "hiredis",
+    "version": "3.5.0",
+    "license": "MIT"
+  },
+  {
+    "name": "httpcore",
+    "version": "1.0.9",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "httpcore2",
+    "version": "2.16.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "httpx2",
+    "version": "2.16.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "iniconfig",
+    "version": "2.3.1",
+    "license": "MIT"
+  },
+  {
+    "name": "jiter",
+    "version": "0.18.0",
+    "license": "MIT"
+  },
+  {
+    "name": "jmespath",
+    "version": "1.1.0",
+    "license": "MIT"
+  },
+  {
+    "name": "jsonpatch",
+    "version": "1.38",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "jsonpointer",
+    "version": "3.6",
+    "license": "Modified BSD License"
+  },
+  {
+    "name": "jsonschema",
+    "version": "4.26.0",
+    "license": "MIT"
+  },
+  {
+    "name": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "license": "MIT"
+  },
+  {
+    "name": "langchain-core",
+    "version": "1.7.0",
+    "license": "MIT"
+  },
+  {
+    "name": "langchain-protocol",
+    "version": "0.0.20",
+    "license": "MIT"
+  },
+  {
+    "name": "langgraph",
+    "version": "1.2.18",
+    "license": "MIT"
+  },
+  {
+    "name": "langgraph-checkpoint",
+    "version": "4.3.1",
+    "license": "MIT"
+  },
+  {
+    "name": "langgraph-checkpoint-postgres",
+    "version": "3.2.0",
+    "license": "MIT"
+  },
+  {
+    "name": "langgraph-checkpoint-sqlite",
+    "version": "3.1.2",
+    "license": "MIT"
+  },
+  {
+    "name": "langgraph-prebuilt",
+    "version": "1.1.1",
+    "license": "MIT"
+  },
+  {
+    "name": "langgraph-sdk",
+    "version": "0.4.10",
+    "license": "MIT"
+  },
+  {
+    "name": "langsmith",
+    "version": "0.14.14",
+    "license": "MIT"
+  },
+  {
+    "name": "Mako",
+    "version": "1.4.3",
+    "license": "MIT"
+  },
+  {
+    "name": "MarkupSafe",
+    "version": "3.0.4",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "mcp",
+    "version": "2.3.0",
+    "license": "MIT"
+  },
+  {
+    "name": "mcp-types",
+    "version": "2.3.0",
+    "license": "MIT"
+  },
+  {
+    "name": "openai",
+    "version": "3.40.0",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "openai-agents",
+    "version": "0.24.0",
+    "license": "MIT"
+  },
+  {
+    "name": "opentelemetry-api",
+    "version": "1.45.1",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "orjson",
+    "version": "3.13.0",
+    "license": "MPL-2.0 AND (Apache-2.0 OR MIT)"
+  },
+  {
+    "name": "ormsgpack",
+    "version": "1.13.0",
+    "license": "Apache-2.0 OR MIT"
+  },
+  {
+    "name": "packaging",
+    "version": "26.3",
+    "license": "Apache-2.0 OR BSD-2-Clause"
+  },
+  {
+    "name": "pillow",
+    "version": "13.0.0",
+    "license": "MIT-CMU"
+  },
+  {
+    "name": "pluggy",
+    "version": "1.7.0",
+    "license": "MIT"
+  },
+  {
+    "name": "psycopg",
+    "version": "3.3.6",
+    "license": "LGPL-3.0-only"
+  },
+  {
+    "name": "psycopg-binary",
+    "version": "3.3.6",
+    "license": "LGPL-3.0-only"
+  },
+  {
+    "name": "psycopg-pool",
+    "version": "3.3.3",
+    "license": "LGPL-3.0-only"
+  },
+  {
+    "name": "pycparser",
+    "version": "3.12",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "pydantic",
+    "version": "2.14.1",
+    "license": "MIT"
+  },
+  {
+    "name": "pydantic_core",
+    "version": "2.50.1",
+    "license": "MIT"
+  },
+  {
+    "name": "Pygments",
+    "version": "2.21.0",
+    "license": "BSD-2-Clause"
+  },
+  {
+    "name": "PyJWT",
+    "version": "2.15.1",
+    "license": "MIT"
+  },
+  {
+    "name": "pytest",
+    "version": "9.1.1",
+    "license": "MIT"
+  },
+  {
+    "name": "python-dateutil",
+    "version": "2.9.0.post0",
+    "license": "Dual License"
+  },
+  {
+    "name": "python-multipart",
+    "version": "0.0.32",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "PyYAML",
+    "version": "6.0.3",
+    "license": "MIT"
+  },
+  {
+    "name": "redis",
+    "version": "5.3.1",
+    "license": "MIT"
+  },
+  {
+    "name": "referencing",
+    "version": "0.37.0",
+    "license": "MIT"
+  },
+  {
+    "name": "reportlab",
+    "version": "5.1.0",
+    "license": "BSD license (see license.txt for details), Copyright (c) 2000-2025, ReportLab Inc."
+  },
+  {
+    "name": "requests",
+    "version": "2.34.2",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "requests-toolbelt",
+    "version": "1.0.0",
+    "license": "Apache 2.0"
+  },
+  {
+    "name": "rpds-py",
+    "version": "2026.9.1",
+    "license": "MIT"
+  },
+  {
+    "name": "ruff",
+    "version": "0.17.3",
+    "license": "MIT"
+  },
+  {
+    "name": "s3transfer",
+    "version": "0.19.3",
+    "license": "Apache License 2.0"
+  },
+  {
+    "name": "six",
+    "version": "1.17.0",
+    "license": "MIT"
+  },
+  {
+    "name": "sniffio",
+    "version": "1.3.1",
+    "license": "MIT OR Apache-2.0"
+  },
+  {
+    "name": "SQLAlchemy",
+    "version": "2.1.6",
+    "license": "MIT"
+  },
+  {
+    "name": "sqlite-vec",
+    "version": "0.1.9",
+    "license": "MIT License, Apache License, Version 2.0"
+  },
+  {
+    "name": "sse-starlette",
+    "version": "3.6.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "starlette",
+    "version": "1.10.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "tenacity",
+    "version": "9.2.1",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "truststore",
+    "version": "0.10.5",
+    "license": "MIT"
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.4",
+    "license": "MIT"
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "license": "PSF-2.0"
+  },
+  {
+    "name": "urllib3",
+    "version": "2.8.0",
+    "license": "MIT"
+  },
+  {
+    "name": "uuid_utils",
+    "version": "0.19.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "uvicorn",
+    "version": "0.54.0",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "websockets",
+    "version": "16.1.1",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "xxhash",
+    "version": "4.0.2",
+    "license": "BSD-2-Clause"
+  },
+  {
+    "name": "zstandard",
+    "version": "0.25.0",
+    "license": "BSD-3-Clause"
+  }
+]

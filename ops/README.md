@@ -75,3 +75,6 @@ workflow identity, source/object checks, final status and outbound-denial result
 Use `--smoke-only` for a subsequent deployment smoke without backup/restore; its
 evidence explicitly records `actual_backup_restore=false`. Both modes compare the
 running Python package digest against the local release before exercising it.
+The recorded `request_to_review_seconds` timer begins at acceptance startup, so it
+includes local operator provisioning and package checks; it is a conservative
+end-to-end setup measurement, not isolated workflow latency or a production SLA.

@@ -1,0 +1,89 @@
+{
+  "mode": "synthetic_offline_sqlite",
+  "samples": 7,
+  "model_calls": 0,
+  "network_calls": 0,
+  "real_email_sends": 0,
+  "timing_definition": "create through persisted approval interrupt; no human wait, not production latency",
+  "median_seconds": 0.7715,
+  "p95_nearest_rank_seconds": 1.9675,
+  "scenarios": [
+    {
+      "scenario": "case_strong",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "COMPLETE",
+      "coverage": 1.0,
+      "claims": 7,
+      "source_snapshots": 5,
+      "elapsed_seconds": 1.7679,
+      "synthetic": true
+    },
+    {
+      "scenario": "case_name_collision",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "PARTIAL",
+      "coverage": 0.0,
+      "claims": 7,
+      "source_snapshots": 5,
+      "elapsed_seconds": 1.9675,
+      "synthetic": true
+    },
+    {
+      "scenario": "case_missing_platform",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "COMPLETE",
+      "coverage": 1.0,
+      "claims": 7,
+      "source_snapshots": 5,
+      "elapsed_seconds": 0.7715,
+      "synthetic": true
+    },
+    {
+      "scenario": "case_regulation_unknown",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "COMPLETE",
+      "coverage": 1.0,
+      "claims": 7,
+      "source_snapshots": 5,
+      "elapsed_seconds": 1.1382,
+      "synthetic": true
+    },
+    {
+      "scenario": "case_inferred_email",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "PARTIAL",
+      "coverage": 0.9,
+      "claims": 7,
+      "source_snapshots": 5,
+      "elapsed_seconds": 0.3035,
+      "synthetic": true
+    },
+    {
+      "scenario": "case_prompt_injection",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "PARTIAL",
+      "coverage": 1.0,
+      "claims": 8,
+      "source_snapshots": 6,
+      "elapsed_seconds": 0.3228,
+      "synthetic": true
+    },
+    {
+      "scenario": "case_resume_after_failure",
+      "workflow_status": "WAITING_HUMAN",
+      "case_status": "NEEDS_REVIEW",
+      "research_status": "COMPLETE",
+      "coverage": 1.0,
+      "claims": 7,
+      "source_snapshots": 5,
+      "elapsed_seconds": 0.2953,
+      "synthetic": true
+    }
+  ]
+}

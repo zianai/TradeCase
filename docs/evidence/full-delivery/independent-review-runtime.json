@@ -1,0 +1,73 @@
+{
+  "reviewed_at_utc": "2026-10-28T14:19:28.861102+00:00",
+  "reviewer": "runtime_workflow, independent review of root/persistence-owned subjects; outbox_check independently reviewed action boundaries",
+  "reviewed_subjects_sha256": {
+    "src/tradecase/platform/services.py": "184193d96c762efef973a142f56fb08afebce92d415254edf98c5ac189ffe92f",
+    "src/tradecase/platform/api.py": "936133b27911f393a4df2c4c32cb901e2f8d0052b6e41c2e4094e8cd8b66b37c",
+    "src/tradecase/platform/actions.py": "7890297186b2a81dcdb17bb54ae2e906b3c4285f9a94758475e6438596e96f90",
+    "src/tradecase/platform/source_intake.py": "374277e7722b5666b100fd3e031c4f871e16ff3f856d87646234f1effe6cb81a",
+    "src/tradecase/platform/source_cache.py": "96e5ebf1bb03adafb39f8195ad4f1df03dae519e3e798c3b27cb6bb54700f776",
+    "src/tradecase/platform/knowledge.py": "6b99da2f889eaac1efa4e951f3d11fae2549bf55b9f7bc964d2a796179f05f24",
+    "src/tradecase/platform/workers.py": "ebeb7f018267910a21bed9e4da16a89eeefc0540f0a97f066ab6e77d4b22f23a",
+    "src/tradecase/platform/maintenance.py": "82241cb874a324a5ee230f8f21ed3153ba7b5390f050212d803f022edb5f7ac4"
+  },
+  "supporting_integration_sha256": {
+    "src/tradecase/platform/coordinator.py": "fb13b8018257c0b542a28f1f221b0f95f4ca9c058a13e164674c788fbbf95c49",
+    "src/tradecase/platform/contracts.py": "ec09ba01c33bf3c5d2c64e7d347742ccecb6f8b471d43464a67d39a767b26c9c",
+    "tests/platform/test_actions.py": "6d356c8edfb48c4b6b27afbb1eb4ebddc1d950cb0e2cb85514a03a1751344e6c",
+    "tests/platform/test_coordinator.py": "2e47d8c4ad522b6708d2ab1de9f7fa331ee70497900a589b6442be23595a6e01",
+    "tests/platform/test_maintenance.py": "04d7bd6e86a3faf77724a361278bdad6e29e10b86026bba4caa92971afc02cc2"
+  },
+  "test_run": {
+    "command": ".venv/bin/python -m pytest tests/platform/test_actions.py tests/platform/test_api.py tests/platform/test_source_intake.py tests/platform/test_source_cache.py tests/platform/test_knowledge.py tests/platform/test_maintenance.py tests/platform/test_workers.py tests/platform/test_coordinator.py -q",
+    "exit_code": 0,
+    "result": "55 passed in 57.53s"
+  },
+  "independent_outbox_recheck": {
+    "result": "11 passed in 12.03s",
+    "original_race_setup_http_status": 403,
+    "delayed_rejection_or_revision_authorization_http_status": 403,
+    "fake_mail_calls_for_denied_probes": 0,
+    "reviewed_subjects_sha256": {
+      "src/tradecase/platform/services.py": "3f1b791418d2d0166ffce60f651194b217e76fc2d6a0c07b9fd92ebb28a7f7cc",
+      "src/tradecase/platform/actions.py": "da2f96b9b0e4e0578740f8b4c3897b28e2cf619f79cb90202b17c14cbb9d9c7e"
+    },
+    "scope": "Race fix independently checked before the additive pending-cancellation change; the final 55-test suite and cancellation probes check final bytes."
+  },
+  "approval_tamper_probes": "independent-approval-probes.json",
+  "findings": [
+    {
+      "priority": "P1",
+      "id": "review-materialization-retention",
+      "status": "resolved",
+      "reproduction": "Purge returned PURGED while historic reviewed or crash-staging inquiry copies remained in work_root.",
+      "fix": "Bounded ordinary, historical review and crash-staging Case paths are preflighted for symlinks and deleted under the Case lock; unrelated Case paths are preserved.",
+      "verification": "18 maintenance tests passed, including actual kernel-layout historical and crash-staging regression tests."
+    },
+    {
+      "priority": "P1",
+      "id": "draft-decision-delivery-race",
+      "status": "resolved",
+      "reproduction": "A pending draft request_changes during DISPATCHING advanced Case version and invalidated an already sending action; reverse ordering left old mail approval usable before workflow wake.",
+      "fix": "Require current approved draft review at external authorization creation, decision, enqueue and dispatch; block draft decisions during uncertain/inflight delivery; atomically invalidate external approvals for negative decisions; fence resumed workflow draft writes.",
+      "verification": "Original admission now403; negative delayed-wake authorization403; legacy inflight states409; no denied-probe FakeMail calls."
+    },
+    {
+      "priority": "P2",
+      "id": "stale-pending-outbox-retention",
+      "status": "resolved",
+      "reproduction": "An approval-invalidated PENDING action could remain after closing the Case and block retention indefinitely.",
+      "fix": "Version-checked admin/reviewer cancellation allows only PENDING -> CANCELLED under the same Case lock as dispatch; Case close atomically cancels remaining PENDING rows.",
+      "verification": "Three cancellation regressions plus independent role/tenant/version/input probes and blocked-dispatch cancellation409; one explicitly authorized FakeMail call completes once, zero real external calls."
+    }
+  ],
+  "verdict": "No remaining reproducible P1 identified within the reviewed subjects and tested scenarios.",
+  "limits": [
+    "Not a whole-product penetration test or production authorization.",
+    "All API/action probes used temporary SQLite databases, synthetic fixtures and fake connectors.",
+    "No live SMTP/CRM writes or paid model/API calls were executed.",
+    "Real provider contracts, credentials, source licenses, TLS deployment and production retention/backups require deployment-specific validation.",
+    "Coordinator implementation is owned by this reviewer; its regression is integration verification, not an independent self-review claim."
+  ],
+  "cancel_boundary_probes": "independent-cancel-probes.json"
+}

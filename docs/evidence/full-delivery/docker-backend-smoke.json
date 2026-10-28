@@ -1,0 +1,9 @@
+{
+  "http_status": 200,
+  "body": {
+    "status": "ok",
+    "database": true
+  },
+  "mode": "real_local_container",
+  "outbound_enabled": false
+}

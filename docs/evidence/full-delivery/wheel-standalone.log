@@ -1,0 +1,27 @@
+Using CPython 3.12.13
+Creating virtual environment at: .tradecase/isolated-wheel-release
+Activate with: source .tradecase/isolated-wheel-release/bin/activate
+Using Python 3.12.13 environment at: .tradecase/isolated-wheel-release
+Resolved 6 packages in 23ms
+Prepared 1 package in 17ms
+Installed 6 packages in 9ms
+ + annotated-types==0.8.0
+ + pydantic==2.14.1
+ + pydantic-core==2.50.1
+ + tradecase==0.1.0 (from file:///Users/a/workspaces/AForeign%20Trade/tradecase-v1/.tradecase/wheel-release/tradecase-0.1.0-py3-none-any.whl)
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+{
+  "case": "/Users/a/workspaces/AForeign Trade/tradecase-v1/.tradecase/wheel-release-case",
+  "state": "completed",
+  "valid": true,
+  "mode": "synthetic_offline",
+  "network_calls": 0,
+  "email_sends": 0,
+  "report": "/Users/a/workspaces/AForeign Trade/tradecase-v1/.tradecase/wheel-release-case/report.md"
+}
+{
+  "valid": true,
+  "strict": true,
+  "errors": []
+}

@@ -1,0 +1,31 @@
+{
+  "requested_url": "https://www.wto.org/",
+  "captured_at": "2026-10-28T13:43:05.236528Z",
+  "status": "blocked",
+  "final_url": null,
+  "http_status": null,
+  "source_title": null,
+  "content_type": null,
+  "sha256": null,
+  "text_sha256": null,
+  "byte_count": 0,
+  "retrieved_by": "tradecase.public-http",
+  "untrusted": true,
+  "assertion_status": "unverified",
+  "is_synthetic": false,
+  "redirects": [],
+  "blockers": [
+    "non_public_address"
+  ],
+  "budget": {
+    "pages_used": 1,
+    "requests_used": 0,
+    "origin_last_requested_at": {},
+    "origin_min_interval": {}
+  },
+  "warnings": [],
+  "robots": [],
+  "hash_basis": "raw HTTP response bytes",
+  "raw_bytes": "b''",
+  "network_smoke_only": true
+}

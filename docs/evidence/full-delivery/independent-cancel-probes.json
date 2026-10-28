@@ -1,0 +1,31 @@
+{
+  "probes": [
+    {
+      "probe": "viewer",
+      "status": 403
+    },
+    {
+      "probe": "operator",
+      "status": 403
+    },
+    {
+      "probe": "other_tenant",
+      "status": 404
+    },
+    {
+      "probe": "stale_version",
+      "status": 409
+    },
+    {
+      "probe": "forged_status",
+      "status": 422
+    },
+    {
+      "probe": "cancel_during_blocked_dispatch",
+      "status": 409
+    }
+  ],
+  "final_status": "SANDBOX_ACCEPTED",
+  "authorized_fake_mail_calls": 1,
+  "real_external_calls": 0
+}

@@ -1,0 +1,44 @@
+{
+  "projects": [
+    {
+      "project": "tradecase-full-acceptance-20261028",
+      "removed_container_ids": [
+        "950c53edfcda",
+        "c6729b112c5e",
+        "93e0f8be83ab",
+        "bb655070f340",
+        "fb6854d7ff4b",
+        "9c822c721616",
+        "1dbf1583b65e"
+      ],
+      "removed_volumes": [
+        "tradecase-full-acceptance-20261028_objects-and-work",
+        "tradecase-full-acceptance-20261028_postgres-data",
+        "tradecase-full-acceptance-20261028_redis-data"
+      ],
+      "remaining_containers": 0,
+      "remaining_volumes": 0
+    },
+    {
+      "project": "tradecase-restore-acceptance-20261028",
+      "removed_container_ids": [
+        "6fe586265ba3",
+        "b817332b085d",
+        "eff37ce620bf",
+        "5d3fa1e47ccf",
+        "7428c8572984",
+        "4c92086c93e7",
+        "b5eb5a7cde6c"
+      ],
+      "removed_volumes": [
+        "tradecase-restore-acceptance-20261028_objects-and-work",
+        "tradecase-restore-acceptance-20261028_postgres-data",
+        "tradecase-restore-acceptance-20261028_redis-data"
+      ],
+      "remaining_containers": 0,
+      "remaining_volumes": 0
+    }
+  ],
+  "retained_backup": true,
+  "standalone_preview_infrastructure_unchanged": true
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/ops/compose_acceptance.py", line 168, in <module>
+    args.evidence.write_text(json.dumps(result, indent=2) + "\n")
+    ^^^^^^
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/ops/compose_acceptance.py", line 118, in main
+    backup = run(["sh", "ops/backup.sh", str(args.backup_dir.absolute())], env=env)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/a/workspaces/AForeign Trade/tradecase-v1/ops/compose_acceptance.py", line 28, in run
+    return subprocess.run(args, cwd=ROOT, env=env, check=True, capture_output=True, text=True, timeout=300)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/a/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['sh', 'ops/restore.sh', '/Users/a/workspaces/AForeign Trade/tradecase-v1/.tradecase/docker-acceptance-77033201/backup-probe', 'tradecase-restore-probe-20261028']' returned non-zero exit status 1.

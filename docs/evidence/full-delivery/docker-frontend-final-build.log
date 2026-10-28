@@ -1,0 +1,103 @@
+ Image tradecase-api:local Building 
+ Image tradecase-frontend:local Building 
+ Image tradecase-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.56kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 622B 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#3 DONE 5.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 32B
+#4 transferring context: 103B 0.1s done
+#4 DONE 0.3s
+
+#5 [deps 1/4] FROM docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#5 resolve docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c 0.1s done
+#5 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 262.60kB 0.2s done
+#6 DONE 0.3s
+
+#7 [deps 2/4] WORKDIR /app
+#7 CACHED
+
+#8 [deps 3/4] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [deps 4/4] RUN npm ci --no-audit --no-fund
+#9 CACHED
+
+#10 [build 3/5] COPY --from=deps /app/node_modules ./node_modules
+#10 CACHED
+
+#11 [build 4/5] COPY . .
+#11 DONE 0.5s
+
+#12 [build 5/5] RUN npm run build
+#12 14.66 
+#12 14.66 > tradecase-workbench@1.0.0 build
+#12 14.66 > NEXT_TELEMETRY_DISABLED=1 next build
+#12 14.66 
+#12 20.95 ▲ Next.js 16.4.3 (Turbopack)
+#12 23.09 ✓ Running next.config.ts took 2.1s
+#12 23.16 
+#12 23.33   Creating an optimized production build ...
+#12 88.67 ✓ Compiled successfully in 65s
+#12 88.88   Running TypeScript ...
+#12 116.9 ✓ Finished writing to filesystem cache in 28.1s
+#12 144.8   Finished TypeScript in 57s ...
+#12 145.0   Collecting page data using 5 workers ...
+#12 148.9   Generating static pages using 5 workers (0/2) ...
+#12 150.5 ✓ Generating static pages using 5 workers (2/2) in 1659ms
+#12 150.6   Finalizing page optimization ...
+#12 153.2 
+#12 153.2 Route (app)
+#12 153.2 ┌ ○ /_not-found
+#12 153.2 ├ ƒ /[[...path]]
+#12 153.2 └ ƒ /api/[...path]
+#12 153.2 
+#12 153.2 
+#12 153.2 ○  (Static)   prerendered as static content
+#12 153.2 ƒ  (Dynamic)  server-rendered on demand
+#12 153.2 
+#12 154.9 npm notice
+#12 154.9 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+#12 154.9 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#12 154.9 npm notice To update run: npm install -g npm@12.2.1
+#12 154.9 npm notice
+#12 DONE 158.6s
+
+#7 [deps 2/4] WORKDIR /app
+#7 CACHED
+
+#13 [runtime 3/4] COPY --from=build --chown=node:node /app/.next/standalone ./
+#13 DONE 5.4s
+
+#14 [runtime 4/4] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#14 DONE 0.4s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 3.2s done
+#15 exporting manifest sha256:b569c42423a160740727511c4c30dced56e4fe6f431289d903bccab868928108 0.0s done
+#15 exporting config sha256:0213d1701cf90dfaa7ffb4a15a6866501a803d166edb99d8614ba71ff5194b25 0.0s done
+#15 exporting attestation manifest sha256:c90109eb59c894de2ea92c4c0a78e580e4a2e034a6d93805a1331cecb1d685d1
+#15 exporting attestation manifest sha256:c90109eb59c894de2ea92c4c0a78e580e4a2e034a6d93805a1331cecb1d685d1 0.2s done
+#15 exporting manifest list sha256:0a0ca7aa7a39e461d4acdc645efc828819fb8f4d2a2c5d8c4c24d6534f481e5d
+#15 exporting manifest list sha256:0a0ca7aa7a39e461d4acdc645efc828819fb8f4d2a2c5d8c4c24d6534f481e5d 0.1s done
+#15 naming to docker.io/library/tradecase-frontend:local
+#15 naming to docker.io/library/tradecase-frontend:local 0.0s done
+#15 unpacking to docker.io/library/tradecase-frontend:local
+#15 unpacking to docker.io/library/tradecase-frontend:local 2.1s done
+#15 DONE 5.9s
+
+#16 resolving provenance for metadata file
+#16 DONE 0.1s
+ Image tradecase-frontend:local Built 

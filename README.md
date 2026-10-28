@@ -1,5 +1,9 @@
 # TradeCase V1
 
+> 完整 Case 工作台已在保留业务内核的基础上增量实现：FastAPI、PostgreSQL、LangGraph、SDK 适配器、任务租约、Next.js GUI、版本审批与默认关闭的 Outbox。
+> [使用说明](docs/WORKBENCH_USAGE.md) · [部署与恢复](docs/WORKBENCH_DEPLOYMENT.md) · [实际验收与限制](docs/FULL_DELIVERY_REPORT.md)。下文保留原离线 CLI/Skills 用法。
+
+
 基于 B2B Lead Hunter 二次开发的外贸 Agent-native Skills 能力包。Codex / Claude Code 负责调查和判断；Python CLI 负责 Case、证据、确定性评分、规则检查和交付物。**不包含自研 Agent Loop、前端或后台调度服务，不发送邮件。**
 
 已实现询盘解析、买家候选与消歧、来源记录、两类合规检查、英文回复草稿、人工行动项、可恢复 Case。七组演示均为显式 **SYNTHETIC / OFFLINE**；真实公开来源抽查和受阻能力另列，不能把测试通过当作真实买家或商品认证。

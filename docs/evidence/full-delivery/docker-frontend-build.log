@@ -1,0 +1,142 @@
+ Image tradecase-full-acceptance-20261028-frontend Building 
+ Image tradecase-api:local Building 
+ Image tradecase-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.58kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 622B 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#3 DONE 7.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 113B done
+#4 DONE 0.0s
+
+#5 [deps 1/4] FROM docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#5 resolve docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c 0.0s done
+#5 DONE 0.2s
+
+#6 [internal] load build context
+#6 transferring context: 350.13kB 0.1s done
+#6 DONE 0.2s
+
+#5 [deps 1/4] FROM docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#5 sha256:1df5cdf85ecfbe1f91d38e11d14a8a71e573a7ad62d321a3366f18f628620032 0B / 3.31kB 0.2s
+#5 sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 0B / 1.71MB 0.2s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 0B / 51.05MB 0.2s
+#5 sha256:baff30000c3659c6bb58cd94e81f7a015a84ab86af9fbc74f61c83f194339d49 0B / 448B 0.2s
+#5 sha256:1df5cdf85ecfbe1f91d38e11d14a8a71e573a7ad62d321a3366f18f628620032 3.31kB / 3.31kB 0.7s done
+#5 extracting sha256:1df5cdf85ecfbe1f91d38e11d14a8a71e573a7ad62d321a3366f18f628620032 0.1s done
+#5 sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 1.29MB / 1.71MB 2.9s
+#5 sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 1.71MB / 1.71MB 2.9s done
+#5 sha256:baff30000c3659c6bb58cd94e81f7a015a84ab86af9fbc74f61c83f194339d49 448B / 448B 3.0s done
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 3.15MB / 51.05MB 3.8s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 6.29MB / 51.05MB 4.8s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 9.44MB / 51.05MB 6.0s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 12.58MB / 51.05MB 7.1s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 15.73MB / 51.05MB 8.6s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 18.87MB / 51.05MB 9.5s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 21.50MB / 51.05MB 10.7s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 24.12MB / 51.05MB 11.7s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 27.58MB / 51.05MB 13.1s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 30.41MB / 51.05MB 14.0s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 33.55MB / 51.05MB 15.5s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 36.70MB / 51.05MB 16.5s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 40.23MB / 51.05MB 18.0s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 42.99MB / 51.05MB 19.1s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 46.14MB / 51.05MB 20.3s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 48.87MB / 51.05MB 21.3s
+#5 sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 51.05MB / 51.05MB 22.1s done
+#5 extracting sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8
+#5 extracting sha256:99ad8657158dff09e9fd7a9fa071c9b663d4c3841ad00ddbdbd3c8ebb6a446e8 7.5s done
+#5 DONE 29.8s
+
+#5 [deps 1/4] FROM docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#5 extracting sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5
+#5 extracting sha256:92c5f1f753d32c7606b5f4ec086931d14e864bdedaa59d343b81e2da62f175c5 0.2s done
+#5 DONE 30.0s
+
+#5 [deps 1/4] FROM docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#5 extracting sha256:baff30000c3659c6bb58cd94e81f7a015a84ab86af9fbc74f61c83f194339d49 0.0s done
+#5 DONE 30.0s
+
+#7 [deps 2/4] WORKDIR /app
+#7 DONE 0.6s
+
+#8 [deps 3/4] COPY package.json package-lock.json ./
+#8 DONE 0.1s
+
+#9 [deps 4/4] RUN npm ci --no-audit --no-fund
+#9 67.27 
+#9 67.27 added 31 packages in 1m
+#9 67.29 npm notice
+#9 67.29 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+#9 67.29 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#9 67.29 npm notice To update run: npm install -g npm@12.2.1
+#9 67.29 npm notice
+#9 DONE 70.7s
+
+#10 [build 3/5] COPY --from=deps /app/node_modules ./node_modules
+#10 DONE 26.0s
+
+#11 [build 4/5] COPY . .
+#11 DONE 0.3s
+
+#12 [build 5/5] RUN npm run build
+#12 5.810 
+#12 5.810 > tradecase-workbench@1.0.0 build
+#12 5.810 > NEXT_TELEMETRY_DISABLED=1 next build
+#12 5.810 
+#12 9.217 ▲ Next.js 16.4.3 (Turbopack)
+#12 9.481 ✓ Running next.config.ts took 264ms
+#12 9.504 
+#12 9.542   Creating an optimized production build ...
+#12 33.32 ✓ Compiled successfully in 23.8s
+#12 33.34   Running TypeScript ...
+#12 46.14   Finished TypeScript in 12.8s ...
+#12 46.28   Collecting page data using 5 workers ...
+#12 46.99   Generating static pages using 5 workers (0/2) ...
+#12 47.41 ✓ Generating static pages using 5 workers (2/2) in 391ms
+#12 47.44   Finalizing page optimization ...
+#12 48.09 
+#12 48.10 Route (app)
+#12 48.10 ┌ ○ /_not-found
+#12 48.10 ├ ƒ /[[...path]]
+#12 48.10 └ ƒ /api/[...path]
+#12 48.10 
+#12 48.10 
+#12 48.10 ○  (Static)   prerendered as static content
+#12 48.10 ƒ  (Dynamic)  server-rendered on demand
+#12 48.10 
+#12 48.35 npm notice
+#12 48.35 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+#12 48.35 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#12 48.35 npm notice To update run: npm install -g npm@12.2.1
+#12 48.35 npm notice
+#12 DONE 49.7s
+
+#13 [runtime 3/4] COPY --from=build --chown=node:node /app/.next/standalone ./
+#13 DONE 1.3s
+
+#14 [runtime 4/4] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#14 DONE 0.2s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 0.9s done
+#15 exporting manifest sha256:9ff1dacf7536d3b0f1357653aa126e564aa458e3a7c86a5c9cd22209243a54ee done
+#15 exporting config sha256:2cf5a61876260b525fe6ec87019da8fc12ee15d3b7b93aba013acf244365c5d1 done
+#15 exporting attestation manifest sha256:1f50589da377de2f714eccffcb33dbaca1aa94ac3689c9f6a4dc79f240ac7bc6 0.0s done
+#15 exporting manifest list sha256:a53b52042730f3607f9f5cf8de3536ea71f4d0b4dceee47b54d8e8c2e5f0b4da done
+#15 naming to docker.io/library/tradecase-full-acceptance-20261028-frontend:latest done
+#15 unpacking to docker.io/library/tradecase-full-acceptance-20261028-frontend:latest
+#15 unpacking to docker.io/library/tradecase-full-acceptance-20261028-frontend:latest 0.6s done
+#15 DONE 1.5s
+
+#16 resolving provenance for metadata file
+#16 DONE 0.1s
+ Image tradecase-full-acceptance-20261028-frontend Built 

@@ -1,0 +1,47 @@
+{
+  "probes": [
+    {
+      "probe": "viewer",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "probe": "operator",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "probe": "other_tenant",
+      "status": 404,
+      "expected": 404
+    },
+    {
+      "probe": "forged_hash",
+      "status": 409,
+      "expected": 409
+    },
+    {
+      "probe": "stale_version",
+      "status": 409,
+      "expected": 409
+    },
+    {
+      "probe": "forged_reviewer",
+      "status": 422,
+      "expected": 422
+    },
+    {
+      "probe": "forged_tenant",
+      "status": 422,
+      "expected": 422
+    },
+    {
+      "probe": "forged_scope",
+      "status": 422,
+      "expected": 422
+    }
+  ],
+  "approval_unmodified": true,
+  "external_calls": 0,
+  "fixture": "case_strong synthetic"
+}

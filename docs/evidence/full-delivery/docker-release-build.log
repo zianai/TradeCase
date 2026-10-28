@@ -1,0 +1,224 @@
+ Image tradecase-api:local Building 
+ Image tradecase-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.05kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 30B 0.1s
+#2 transferring dockerfile: 1.26kB 0.2s done
+#2 DONE 0.3s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm
+#3 DONE 8.9s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [stage-0  1/18] FROM docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337
+#5 resolve docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337
+#5 resolve docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337 0.4s done
+#5 DONE 0.5s
+
+#6 [stage-0  2/18] WORKDIR /app
+#6 CACHED
+
+#7 [stage-0  3/18] RUN pip install --no-cache-dir uv==0.11.7 &&     useradd --uid 10001 --create-home app
+#7 ...
+
+#4 [internal] load build context
+#4 transferring context: 79.15kB 0.6s done
+#4 DONE 2.8s
+
+#7 [stage-0  3/18] RUN pip install --no-cache-dir uv==0.11.7 &&     useradd --uid 10001 --create-home app
+#7 24.29 Collecting uv==0.11.7
+#7 25.90   Downloading uv-0.11.7-py3-none-manylinux_2_28_aarch64.whl.metadata (11 kB)
+#7 26.25 Downloading uv-0.11.7-py3-none-manylinux_2_28_aarch64.whl (23.7 MB)
+#7 35.30    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 23.7/23.7 MB 2.8 MB/s eta 0:00:00
+#7 35.46 Installing collected packages: uv
+#7 38.05 Successfully installed uv-0.11.7
+#7 38.06 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#7 40.40 
+#7 40.40 [notice] A new release of pip is available: 25.0.1 -> 26.2.2
+#7 40.40 [notice] To update, run: pip install --upgrade pip
+#7 DONE 42.5s
+
+#8 [stage-0  4/18] COPY pyproject.toml uv.lock README.md ./
+#8 DONE 0.9s
+
+#9 [stage-0  5/18] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --extra platform --no-dev --no-install-project
+#9 4.051 Using CPython 3.12.16 interpreter at: /usr/local/bin/python3
+#9 4.052 Creating virtual environment at: .venv
+#9 5.935 Downloading zstandard (4.8MiB)
+#9 5.948 Downloading botocore (15.4MiB)
+#9 6.262 Downloading pillow (6.2MiB)
+#9 6.585 Downloading psycopg-binary (6.5MiB)
+#9 13.04  Downloaded zstandard
+#9 14.67 Downloading cryptography (4.5MiB)
+#9 14.68  Downloaded pillow
+#9 14.73  Downloaded psycopg-binary
+#9 16.28 Downloading sqlalchemy (4.5MiB)
+#9 16.93 Downloading openai (2.2MiB)
+#9 20.61  Downloaded cryptography
+#9 21.07  Downloaded sqlalchemy
+#9 21.49 Downloading pydantic-core (2.0MiB)
+#9 21.84  Downloaded openai
+#9 22.34 Downloading reportlab (1.9MiB)
+#9 22.36  Downloaded pydantic-core
+#9 23.44 Downloading openai-agents (1.2MiB)
+#9 24.13  Downloaded reportlab
+#9 25.36  Downloaded openai-agents
+#9 25.72  Downloaded botocore
+#9 36.73 Prepared 83 packages in 32.34s
+#9 36.81 warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+#9 36.81          If the cache and target directories are on different filesystems, hardlinking may not be supported.
+#9 36.81          If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+#9 55.28 Installed 83 packages in 18.54s
+#9 55.28  + aiosqlite==0.22.1
+#9 55.28  + alembic==1.20.1
+#9 55.28  + annotated-doc==0.0.5
+#9 55.28  + annotated-types==0.8.0
+#9 55.28  + anyio==4.15.1
+#9 55.28  + arq==0.28.0
+#9 55.28  + attrs==26.1.0
+#9 55.28  + boto3==1.43.120
+#9 55.28  + botocore==1.43.120
+#9 55.28  + certifi==2026.10.23
+#9 55.28  + cffi==2.1.1
+#9 55.28  + charset-normalizer==3.5.2
+#9 55.28  + click==8.5.0
+#9 55.28  + cryptography==50.0.2
+#9 55.28  + distro==1.9.0
+#9 55.28  + fastapi==0.162.0
+#9 55.28  + griffelib==2.4.1
+#9 55.28  + h11==0.16.0
+#9 55.28  + hiredis==3.5.0
+#9 55.28  + httpcore==1.0.9
+#9 55.28  + httpcore2==2.16.0
+#9 55.28  + httpx==0.28.1
+#9 55.28  + httpx2==2.16.0
+#9 55.28  + idna==3.20
+#9 55.28  + jiter==0.18.0
+#9 55.28  + jmespath==1.1.0
+#9 55.28  + jsonpatch==1.38
+#9 55.28  + jsonpointer==3.6
+#9 55.28  + jsonschema==4.26.0
+#9 55.28  + jsonschema-specifications==2025.9.1
+#9 55.28  + langchain-core==1.7.0
+#9 55.28  + langchain-protocol==0.0.20
+#9 55.28  + langgraph==1.2.18
+#9 55.28  + langgraph-checkpoint==4.3.1
+#9 55.28  + langgraph-checkpoint-postgres==3.2.0
+#9 55.28  + langgraph-checkpoint-sqlite==3.1.2
+#9 55.28  + langgraph-prebuilt==1.1.1
+#9 55.28  + langgraph-sdk==0.4.10
+#9 55.28  + langsmith==0.14.14
+#9 55.28  + mako==1.4.3
+#9 55.28  + markupsafe==3.0.4
+#9 55.28  + mcp==2.3.0
+#9 55.28  + mcp-types==2.3.0
+#9 55.28  + openai==3.40.0
+#9 55.28  + openai-agents==0.24.0
+#9 55.28  + opentelemetry-api==1.45.1
+#9 55.28  + orjson==3.13.0
+#9 55.28  + ormsgpack==1.13.0
+#9 55.29  + packaging==26.3
+#9 55.29  + pillow==13.0.0
+#9 55.29  + psycopg==3.3.6
+#9 55.29  + psycopg-binary==3.3.6
+#9 55.29  + psycopg-pool==3.3.3
+#9 55.29  + pycparser==3.12
+#9 55.29  + pydantic==2.14.1
+#9 55.29  + pydantic-core==2.50.1
+#9 55.29  + pyjwt==2.15.1
+#9 55.29  + python-dateutil==2.9.0.post0
+#9 55.29  + python-multipart==0.0.32
+#9 55.29  + pyyaml==6.0.3
+#9 55.29  + redis==5.3.1
+#9 55.29  + referencing==0.37.0
+#9 55.29  + reportlab==5.1.0
+#9 55.29  + requests==2.34.2
+#9 55.29  + requests-toolbelt==1.0.0
+#9 55.29  + rpds-py==2026.9.1
+#9 55.29  + s3transfer==0.19.3
+#9 55.29  + six==1.17.0
+#9 55.29  + sniffio==1.3.1
+#9 55.29  + sqlalchemy==2.1.6
+#9 55.29  + sqlite-vec==0.1.9
+#9 55.29  + sse-starlette==3.6.0
+#9 55.29  + starlette==1.10.0
+#9 55.29  + tenacity==9.2.1
+#9 55.29  + truststore==0.10.5
+#9 55.29  + typing-extensions==4.16.0
+#9 55.29  + typing-inspection==0.4.4
+#9 55.29  + urllib3==2.8.0
+#9 55.29  + uuid-utils==0.19.0
+#9 55.29  + uvicorn==0.54.0
+#9 55.29  + websockets==16.1.1
+#9 55.29  + xxhash==4.0.2
+#9 55.29  + zstandard==0.25.0
+#9 DONE 57.9s
+
+#10 [stage-0  6/18] COPY src ./src
+#10 DONE 0.4s
+
+#11 [stage-0  7/18] COPY scripts ./scripts
+#11 DONE 0.1s
+
+#12 [stage-0  8/18] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --extra platform --no-dev
+#12 1.546    Building tradecase @ file:///app
+#12 9.534       Built tradecase @ file:///app
+#12 9.544 Prepared 1 package in 7.99s
+#12 9.560 warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+#12 9.560          If the cache and target directories are on different filesystems, hardlinking may not be supported.
+#12 9.560          If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+#12 9.587 Installed 1 package in 35ms
+#12 9.587  + tradecase==0.1.0 (from file:///app)
+#12 DONE 9.8s
+
+#13 [stage-0  9/18] COPY rules ./rules
+#13 DONE 0.1s
+
+#14 [stage-0 10/18] COPY fixtures ./fixtures
+#14 DONE 0.1s
+
+#15 [stage-0 11/18] COPY skills ./skills
+#15 DONE 0.1s
+
+#16 [stage-0 12/18] COPY _shared ./_shared
+#16 DONE 0.1s
+
+#17 [stage-0 13/18] COPY templates ./templates
+#17 DONE 0.1s
+
+#18 [stage-0 14/18] COPY migrations ./migrations
+#18 DONE 0.2s
+
+#19 [stage-0 15/18] COPY alembic.ini ./
+#19 DONE 0.0s
+
+#20 [stage-0 16/18] COPY ops/setup_checkpoint.py ./ops/setup_checkpoint.py
+#20 DONE 0.0s
+
+#21 [stage-0 17/18] COPY ops/verify_object_references.py ./ops/verify_object_references.py
+#21 DONE 0.1s
+
+#22 [stage-0 18/18] RUN mkdir -p /app/.tradecase/objects /app/.tradecase/work && chown -R app:app /app/.tradecase
+#22 DONE 1.1s
+
+#23 exporting to image
+#23 exporting layers
+#23 exporting layers 11.1s done
+#23 exporting manifest sha256:753a3557467077c0398453e98c362937e3642a54ae9e5739b611f8c450c18d49 0.0s done
+#23 exporting config sha256:56a2fa20ecf63c4334367da972d64bdf9c13503f38e9b46f2b18fa417d3d0424 0.0s done
+#23 exporting attestation manifest sha256:5c448c7e692646bfbdb0dc3997e3a9ba050da236f7fa04cce1562eeb3a5769e1 0.0s done
+#23 exporting manifest list sha256:d95b78324a995b5bf2be1e0eecc504b7d39790df16758f40a5b84f764e75c0f0
+#23 exporting manifest list sha256:d95b78324a995b5bf2be1e0eecc504b7d39790df16758f40a5b84f764e75c0f0 0.0s done
+#23 naming to docker.io/library/tradecase-api:local done
+#23 unpacking to docker.io/library/tradecase-api:local
+#23 unpacking to docker.io/library/tradecase-api:local 15.7s done
+#23 DONE 27.1s
+
+#24 resolving provenance for metadata file
+#24 DONE 0.2s
+ Image tradecase-api:local Built 

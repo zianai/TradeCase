@@ -1,5 +1,9 @@
 # Architecture
 
+The current workbench adds `tradecase.platform` around the retained business kernel. See `architecture/adr-001-platform-boundaries.md` through ADR004, the full implementation specification and `WORKBENCH_DEPLOYMENT.md`. PostgreSQL is workbench business truth; LangGraph owns sequence, TaskManager leases work, the SDK executes bounded research, and humans approve exact artifact versions. The following section describes the preserved standalone file CLI.
+
+## Standalone CLI baseline
+
 The existing host Agent owns searching, reasoning and the execution loop. Shared
 Skills describe evidence and stop conditions. Python owns contracts, persistence,
 normalization, scoring, rule applicability and rendering. There is no model client,

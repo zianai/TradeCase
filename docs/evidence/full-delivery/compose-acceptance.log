@@ -1,0 +1,6 @@
+Starting synthetic acceptance through Next.js proxy and ARQ worker
+Workflow persisted at human approval; evidence hashes and event replay verified
+Quiesced PostgreSQL and object backup completed
+Restored into separate project; object references verified
+Same restored workflow resumed to follow-up; external writes remained disabled
+{"actual_backup_restore": true, "backend_package_sha256": "df5106a3cd3ca5c6bab50d8325dc28cd9c938725a161fddb59751071e9b72ffb", "backup_finished": true, "case_id": "9890d937e78f4d4aba997e1e0cbfcded", "claim_count": 7, "elapsed_seconds": 137.771, "external_sends": 0, "follow_up_count": 1, "frontend_proxy": true, "initial_status": "NEEDS_REVIEW", "mode": "synthetic_real_compose", "outbound_denial_http": 403, "postgres_and_arq": true, "request_to_review_seconds": 11.999, "research_agent_runs": 3, "restore_integrity_checked": true, "restore_project": "tradecase-restore-acceptance-20261028", "restored_objects_verified": 22, "restored_status": "READY_TO_FOLLOW_UP", "same_workflow_after_restore": true, "source_count": 5, "source_project": "tradecase-full-acceptance-20261028", "workflow_run_id": "3a78689c48ee45bfaa4289983b706623"}

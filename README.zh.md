@@ -1,5 +1,9 @@
 # TradeCase V1 中文入口
 
+> 完整 Case 工作台已在保留业务内核的基础上增量实现：FastAPI、PostgreSQL、LangGraph、SDK 适配器、任务租约、Next.js GUI、版本审批与默认关闭的 Outbox。
+> [使用说明](docs/WORKBENCH_USAGE.md) · [部署与恢复](docs/WORKBENCH_DEPLOYMENT.md) · [实际验收与限制](docs/FULL_DELIVERY_REPORT.md)。下文保留原离线 CLI/Skills 用法。
+
+
 当前完整中文说明为 [README.md](README.md)，包含安装、运行、Skills、数据与许可证边界。
 
 - [P0–P6 验收报告](docs/PHASE_REPORTS/)

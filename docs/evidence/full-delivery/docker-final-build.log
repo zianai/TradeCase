@@ -1,0 +1,349 @@
+ Image tradecase-api:local Building 
+ Image tradecase-api:local Building 
+ Image tradecase-frontend:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.57kB done
+#1 DONE 0.0s
+
+#2 [api internal] load build definition from Dockerfile
+#2 transferring dockerfile: 854B 0.0s done
+#2 DONE 0.0s
+
+#3 [frontend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 622B 0.0s done
+#3 DONE 0.1s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim-bookworm
+#4 ...
+
+#5 [frontend internal] load metadata for docker.io/library/node:24-bookworm-slim
+#5 DONE 3.6s
+
+#6 [frontend internal] load .dockerignore
+#6 transferring context: 103B done
+#6 DONE 0.0s
+
+#7 [frontend deps 1/4] FROM docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c
+#7 resolve docker.io/library/node:24-bookworm-slim@sha256:be8204d4bd327363357f532187b752ff62759c31bedf98e9e18fc08c9cbd605c 0.0s done
+#7 DONE 0.0s
+
+#8 [frontend internal] load build context
+#8 transferring context: 269.74kB 0.1s done
+#8 DONE 0.1s
+
+#9 [frontend deps 2/4] WORKDIR /app
+#9 CACHED
+
+#10 [frontend deps 3/4] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [frontend deps 4/4] RUN npm ci --no-audit --no-fund
+#11 CACHED
+
+#12 [frontend build 3/5] COPY --from=deps /app/node_modules ./node_modules
+#12 CACHED
+
+#13 [frontend build 4/5] COPY . .
+#13 DONE 0.2s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim-bookworm
+#4 DONE 4.7s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#15 [api internal] load .dockerignore
+#15 transferring context: 2B 0.0s done
+#15 DONE 0.0s
+
+#16 [api  1/17] FROM docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337
+#16 resolve docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337 done
+#16 DONE 0.0s
+
+#17 [api internal] load build context
+#17 transferring context: 55.37kB 0.1s done
+#17 DONE 0.1s
+
+#18 [api  2/17] WORKDIR /app
+#18 CACHED
+
+#19 [api  3/17] RUN pip install --no-cache-dir uv==0.11.7 &&     useradd --uid 10001 --create-home app
+#19 CACHED
+
+#20 [api  4/17] COPY pyproject.toml uv.lock README.md ./
+#20 CACHED
+
+#21 [api  5/17] COPY src ./src
+#21 DONE 0.8s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#22 [api  6/17] COPY scripts ./scripts
+#22 DONE 0.2s
+
+#23 [api  7/17] RUN uv sync --frozen --extra platform --no-dev
+#23 2.147 Using CPython 3.12.16 interpreter at: /usr/local/bin/python3
+#23 2.149 Creating virtual environment at: .venv
+#23 2.399    Building tradecase @ file:///app
+#23 ...
+
+#14 [frontend build 5/5] RUN npm run build
+#14 7.757 
+#14 7.757 > tradecase-workbench@1.0.0 build
+#14 7.757 > NEXT_TELEMETRY_DISABLED=1 next build
+#14 7.757 
+#14 12.11 ▲ Next.js 16.4.3 (Turbopack)
+#14 13.55 ✓ Running next.config.ts took 1439ms
+#14 13.62 
+#14 13.78   Creating an optimized production build ...
+#14 ...
+
+#23 [api  7/17] RUN uv sync --frozen --extra platform --no-dev
+#23 14.71 Downloading botocore (15.4MiB)
+#23 14.74 Downloading pillow (6.2MiB)
+#23 14.79 Downloading reportlab (1.9MiB)
+#23 14.87 Downloading cryptography (4.5MiB)
+#23 14.92 Downloading pydantic-core (2.0MiB)
+#23 15.01 Downloading openai (2.2MiB)
+#23 15.06 Downloading psycopg-binary (6.5MiB)
+#23 15.08 Downloading zstandard (4.8MiB)
+#23 15.11 Downloading openai-agents (1.2MiB)
+#23 15.12 Downloading sqlalchemy (4.5MiB)
+#23 57.84  Downloaded pydantic-core
+#23 60.75  Downloaded openai-agents
+#23 66.30  Downloaded reportlab
+#23 70.73  Downloaded sqlalchemy
+#23 70.84  Downloaded zstandard
+#23 71.77  Downloaded cryptography
+#23 71.86  Downloaded pillow
+#23 71.94  Downloaded psycopg-binary
+#23 ...
+
+#14 [frontend build 5/5] RUN npm run build
+#14 84.82 ✓ Compiled successfully in 71s
+#14 85.00   Running TypeScript ...
+#14 ...
+
+#23 [api  7/17] RUN uv sync --frozen --extra platform --no-dev
+#23 85.06  Downloaded openai
+#23 94.25       Built tradecase @ file:///app
+#23 ...
+
+#14 [frontend build 5/5] RUN npm run build
+#14 96.93 ✓ Finished writing to filesystem cache in 12.0s
+#14 ...
+
+#23 [api  7/17] RUN uv sync --frozen --extra platform --no-dev
+#23 97.80  Downloaded botocore
+#23 97.83 Prepared 84 packages in 1m 35s
+#23 101.6 Installed 84 packages in 3.76s
+#23 101.6  + aiosqlite==0.22.1
+#23 101.7  + alembic==1.20.1
+#23 101.7  + annotated-doc==0.0.5
+#23 101.7  + annotated-types==0.8.0
+#23 101.7  + anyio==4.15.1
+#23 101.7  + arq==0.28.0
+#23 101.7  + attrs==26.1.0
+#23 101.7  + boto3==1.43.120
+#23 101.7  + botocore==1.43.120
+#23 101.7  + certifi==2026.10.23
+#23 101.7  + cffi==2.1.1
+#23 101.7  + charset-normalizer==3.5.2
+#23 101.7  + click==8.5.0
+#23 101.7  + cryptography==50.0.2
+#23 101.7  + distro==1.9.0
+#23 101.7  + fastapi==0.162.0
+#23 101.7  + griffelib==2.4.1
+#23 101.7  + h11==0.16.0
+#23 101.7  + hiredis==3.5.0
+#23 101.7  + httpcore==1.0.9
+#23 101.7  + httpcore2==2.16.0
+#23 101.7  + httpx==0.28.1
+#23 101.7  + httpx2==2.16.0
+#23 101.7  + idna==3.20
+#23 101.7  + jiter==0.18.0
+#23 101.7  + jmespath==1.1.0
+#23 101.7  + jsonpatch==1.38
+#23 101.7  + jsonpointer==3.6
+#23 101.7  + jsonschema==4.26.0
+#23 101.7  + jsonschema-specifications==2025.9.1
+#23 101.7  + langchain-core==1.7.0
+#23 101.7  + langchain-protocol==0.0.20
+#23 101.7  + langgraph==1.2.18
+#23 101.7  + langgraph-checkpoint==4.3.1
+#23 101.7  + langgraph-checkpoint-postgres==3.2.0
+#23 101.7  + langgraph-checkpoint-sqlite==3.1.2
+#23 101.7  + langgraph-prebuilt==1.1.1
+#23 101.7  + langgraph-sdk==0.4.10
+#23 101.7  + langsmith==0.14.14
+#23 101.7  + mako==1.4.3
+#23 101.7  + markupsafe==3.0.4
+#23 101.7  + mcp==2.3.0
+#23 101.7  + mcp-types==2.3.0
+#23 101.7  + openai==3.40.0
+#23 101.7  + openai-agents==0.24.0
+#23 101.7  + opentelemetry-api==1.45.1
+#23 101.7  + orjson==3.13.0
+#23 101.7  + ormsgpack==1.13.0
+#23 101.7  + packaging==26.3
+#23 101.7  + pillow==13.0.0
+#23 101.7  + psycopg==3.3.6
+#23 101.7  + psycopg-binary==3.3.6
+#23 101.7  + psycopg-pool==3.3.3
+#23 101.7  + pycparser==3.12
+#23 101.7  + pydantic==2.14.1
+#23 101.7  + pydantic-core==2.50.1
+#23 101.7  + pyjwt==2.15.1
+#23 101.7  + python-dateutil==2.9.0.post0
+#23 101.7  + python-multipart==0.0.32
+#23 101.7  + pyyaml==6.0.3
+#23 101.7  + redis==5.3.1
+#23 101.7  + referencing==0.37.0
+#23 101.7  + reportlab==5.1.0
+#23 101.7  + requests==2.34.2
+#23 101.7  + requests-toolbelt==1.0.0
+#23 101.7  + rpds-py==2026.9.1
+#23 101.7  + s3transfer==0.19.3
+#23 101.7  + six==1.17.0
+#23 101.7  + sniffio==1.3.1
+#23 101.7  + sqlalchemy==2.1.6
+#23 101.7  + sqlite-vec==0.1.9
+#23 101.7  + sse-starlette==3.6.0
+#23 101.7  + starlette==1.10.0
+#23 101.7  + tenacity==9.2.1
+#23 101.7  + tradecase==0.1.0 (from file:///app)
+#23 101.7  + truststore==0.10.5
+#23 101.7  + typing-extensions==4.16.0
+#23 101.7  + typing-inspection==0.4.4
+#23 101.7  + urllib3==2.8.0
+#23 101.7  + uuid-utils==0.19.0
+#23 101.7  + uvicorn==0.54.0
+#23 101.7  + websockets==16.1.1
+#23 101.7  + xxhash==4.0.2
+#23 101.7  + zstandard==0.25.0
+#23 DONE 108.3s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#24 [api  8/17] COPY rules ./rules
+#24 DONE 0.7s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#25 [api  9/17] COPY fixtures ./fixtures
+#25 DONE 0.1s
+
+#26 [api 10/17] COPY skills ./skills
+#26 DONE 0.1s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#27 [api 11/17] COPY _shared ./_shared
+#27 DONE 0.1s
+
+#28 [api 12/17] COPY templates ./templates
+#28 DONE 0.1s
+
+#29 [api 13/17] COPY migrations ./migrations
+#29 DONE 0.1s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#30 [api 14/17] COPY alembic.ini ./
+#30 DONE 0.1s
+
+#31 [api 15/17] COPY ops/setup_checkpoint.py ./ops/setup_checkpoint.py
+#31 DONE 0.1s
+
+#32 [api 16/17] COPY ops/verify_object_references.py ./ops/verify_object_references.py
+#32 DONE 0.1s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#33 [api 17/17] RUN mkdir -p /app/.tradecase/objects /app/.tradecase/work && chown -R app:app /app/.tradecase
+#33 DONE 2.2s
+
+#14 [frontend build 5/5] RUN npm run build
+#14 ...
+
+#34 [api] exporting to image
+#34 exporting layers
+#34 ...
+
+#14 [frontend build 5/5] RUN npm run build
+#14 115.4   Finished TypeScript in 30.4s ...
+#14 115.4   Collecting page data using 5 workers ...
+#14 116.2   Generating static pages using 5 workers (0/2) ...
+#14 116.5 ✓ Generating static pages using 5 workers (2/2) in 314ms
+#14 116.5   Finalizing page optimization ...
+#14 117.4 
+#14 117.4 Route (app)
+#14 117.4 ┌ ○ /_not-found
+#14 117.4 ├ ƒ /[[...path]]
+#14 117.4 └ ƒ /api/[...path]
+#14 117.4 
+#14 117.4 
+#14 117.4 ○  (Static)   prerendered as static content
+#14 117.4 ƒ  (Dynamic)  server-rendered on demand
+#14 117.4 
+#14 117.5 npm notice
+#14 117.5 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+#14 117.5 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#14 117.5 npm notice To update run: npm install -g npm@12.2.1
+#14 117.5 npm notice
+#14 DONE 118.3s
+
+#34 [api] exporting to image
+#34 ...
+
+#9 [frontend deps 2/4] WORKDIR /app
+#9 CACHED
+
+#35 [frontend runtime 3/4] COPY --from=build --chown=node:node /app/.next/standalone ./
+#35 DONE 0.7s
+
+#34 [api] exporting to image
+#34 ...
+
+#36 [frontend runtime 4/4] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#36 DONE 0.1s
+
+#37 [frontend] exporting to image
+#37 exporting layers
+#37 exporting layers 0.7s done
+#37 exporting manifest sha256:b4e5e4e6a7fbb2321ba58d72d3034aa82c44174f09190aad118aac077ad2575d done
+#37 exporting config sha256:09ec9613e89d07d3b5d71f35045e4268891d60dc2fa92df4a17a3306349deeff done
+#37 exporting attestation manifest sha256:2c1e36d11a70a19d4c44f7442bccebccbbe9f831d3514446719d1300742ee0fe done
+#37 exporting manifest list sha256:2c581f479cb48e920fe696bb09c3f1f8723c6aabc22b941a05318cf8a87a7af7 done
+#37 naming to docker.io/library/tradecase-frontend:local done
+#37 unpacking to docker.io/library/tradecase-frontend:local
+#37 unpacking to docker.io/library/tradecase-frontend:local 0.5s done
+#37 DONE 1.3s
+
+#34 [api] exporting to image
+#34 ...
+
+#38 [frontend] resolving provenance for metadata file
+#38 DONE 0.1s
+
+#34 [api] exporting to image
+#34 exporting layers 10.5s done
+#34 exporting manifest sha256:2e906e5c0375b4f24f6ce47c62a1a80d3535b8f6869944b6dc82c65bbfe7cd3e done
+#34 exporting config sha256:463731cd9e88bf30dde8e74e8a99a5fa2d30a2910f68e71bfb4cac40b13a5c5d done
+#34 exporting attestation manifest sha256:8c44795e815f19e6e068840436da9f1abfbbcaa1bacd0ca24e29ffd9a6b794da 0.0s done
+#34 exporting manifest list sha256:8e2307d6f4c7d52fbb63ed8824fbeb81c6407c8c2532e1a638e453875ca0e8d8 done
+#34 naming to docker.io/library/tradecase-api:local done
+#34 unpacking to docker.io/library/tradecase-api:local
+#34 unpacking to docker.io/library/tradecase-api:local 8.0s done
+#34 DONE 18.6s
+
+#39 [api] resolving provenance for metadata file
+#39 DONE 0.0s
+ Image tradecase-frontend:local Built 
+ Image tradecase-api:local Built 

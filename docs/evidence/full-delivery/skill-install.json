@@ -1,0 +1,16 @@
+{
+  "status": "unchanged",
+  "scope": "project",
+  "target": "both",
+  "source_hashes": {
+    "buyer-research/SKILL.md": "2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e",
+    "trade-compliance/SKILL.md": "334eced02a2387e26bca04934607a32fce2e8e572c11f1b345c3a876729e192e",
+    "trade-inquiry/SKILL.md": "e3d91d6792a2cb5ea327713c6a643575eb7d4eca4832919f4bd514132aedf78f"
+  },
+  "destinations": {
+    "codex": ".agents/skills",
+    "claude": ".claude/skills"
+  },
+  "changed": [],
+  "manifest_ref": ".tradecase/skill-installation.json"
+}

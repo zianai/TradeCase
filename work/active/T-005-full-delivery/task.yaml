@@ -1,7 +1,7 @@
 schema_version: 3
 protocol_version: "3.0"
 id: "T-005-full-delivery"
-status: in_progress
+status: ready_for_review
 goal: "Deliver the full Case workbench from the supplied specification while retaining the existing business kernel"
 scope: ["Platform persistence, workflow, task leases, adapters, API and Web GUI", "Versioned approvals, safe outbox, evidence and deployment verification"]
 non_goals: ["No real mail or CRM writes", "No paid model calls or credential provisioning without direct authorization", "No upstream rewrite or remote publication"]
@@ -11,8 +11,10 @@ risk_reasons: [cross-component, reversible-migration, security-or-safety]
 protected_paths: []
 context_refs: [docs/tradecase-full-implementation-plan.md, docs/architecture/adr-002-reuse-audit.md]
 decision_refs: [docs/architecture/adr-001-platform-boundaries.md]
-evidence_refs: [docs/evidence/full-delivery/baseline-pytest.log]
+evidence_refs: [docs/FULL_DELIVERY_REPORT.md, docs/evidence/full-delivery/full-check.log, docs/evidence/full-delivery/compose-acceptance.json, frontend/design/acceptance.md]
 updated: "2026-10-28"
 implementation_started: true
 external_effects: none
 conformance_status: pending
+review_ref: work/active/T-005-full-delivery/review.md
+review_current: true

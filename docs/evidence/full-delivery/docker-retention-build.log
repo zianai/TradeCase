@@ -1,0 +1,199 @@
+ Image tradecase-api:local Building 
+ Image tradecase-api:local Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.05kB done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 854B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm
+#3 DONE 2.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B 0.0s done
+#4 DONE 0.0s
+
+#5 [ 1/17] FROM docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337
+#5 resolve docker.io/library/python:3.12-slim-bookworm@sha256:e697c81897302a4c4333bade000d98038fbb21eb064f8ee1fd42d02ebcd9d337 done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 55.26kB 0.1s done
+#6 DONE 0.1s
+
+#7 [ 2/17] WORKDIR /app
+#7 CACHED
+
+#8 [ 3/17] RUN pip install --no-cache-dir uv==0.11.7 &&     useradd --uid 10001 --create-home app
+#8 CACHED
+
+#9 [ 4/17] COPY pyproject.toml uv.lock README.md ./
+#9 CACHED
+
+#10 [ 5/17] COPY src ./src
+#10 DONE 0.5s
+
+#11 [ 6/17] COPY scripts ./scripts
+#11 DONE 0.1s
+
+#12 [ 7/17] RUN uv sync --frozen --extra platform --no-dev
+#12 1.996 Using CPython 3.12.16 interpreter at: /usr/local/bin/python3
+#12 2.001 Creating virtual environment at: .venv
+#12 2.190    Building tradecase @ file:///app
+#12 11.70 Downloading pillow (6.2MiB)
+#12 11.71 Downloading cryptography (4.5MiB)
+#12 11.72 Downloading botocore (15.4MiB)
+#12 11.72 Downloading openai (2.2MiB)
+#12 11.74 Downloading pydantic-core (2.0MiB)
+#12 11.75 Downloading zstandard (4.8MiB)
+#12 11.75 Downloading reportlab (1.9MiB)
+#12 11.76 Downloading openai-agents (1.2MiB)
+#12 11.76 Downloading psycopg-binary (6.5MiB)
+#12 11.88 Downloading sqlalchemy (4.5MiB)
+#12 25.86  Downloaded openai-agents
+#12 27.76  Downloaded reportlab
+#12 28.21  Downloaded pydantic-core
+#12 28.49  Downloaded openai
+#12 33.42  Downloaded cryptography
+#12 34.17  Downloaded sqlalchemy
+#12 34.18  Downloaded zstandard
+#12 34.36       Built tradecase @ file:///app
+#12 35.78  Downloaded pillow
+#12 36.30  Downloaded psycopg-binary
+#12 39.59  Downloaded botocore
+#12 39.59 Prepared 84 packages in 37.46s
+#12 40.29 Installed 84 packages in 690ms
+#12 40.29  + aiosqlite==0.22.1
+#12 40.29  + alembic==1.20.1
+#12 40.29  + annotated-doc==0.0.5
+#12 40.29  + annotated-types==0.8.0
+#12 40.29  + anyio==4.15.1
+#12 40.29  + arq==0.28.0
+#12 40.29  + attrs==26.1.0
+#12 40.29  + boto3==1.43.120
+#12 40.29  + botocore==1.43.120
+#12 40.29  + certifi==2026.10.23
+#12 40.29  + cffi==2.1.1
+#12 40.29  + charset-normalizer==3.5.2
+#12 40.29  + click==8.5.0
+#12 40.29  + cryptography==50.0.2
+#12 40.29  + distro==1.9.0
+#12 40.29  + fastapi==0.162.0
+#12 40.29  + griffelib==2.4.1
+#12 40.29  + h11==0.16.0
+#12 40.29  + hiredis==3.5.0
+#12 40.29  + httpcore==1.0.9
+#12 40.29  + httpcore2==2.16.0
+#12 40.29  + httpx==0.28.1
+#12 40.29  + httpx2==2.16.0
+#12 40.29  + idna==3.20
+#12 40.29  + jiter==0.18.0
+#12 40.29  + jmespath==1.1.0
+#12 40.29  + jsonpatch==1.38
+#12 40.29  + jsonpointer==3.6
+#12 40.29  + jsonschema==4.26.0
+#12 40.29  + jsonschema-specifications==2025.9.1
+#12 40.29  + langchain-core==1.7.0
+#12 40.29  + langchain-protocol==0.0.20
+#12 40.29  + langgraph==1.2.18
+#12 40.29  + langgraph-checkpoint==4.3.1
+#12 40.29  + langgraph-checkpoint-postgres==3.2.0
+#12 40.29  + langgraph-checkpoint-sqlite==3.1.2
+#12 40.29  + langgraph-prebuilt==1.1.1
+#12 40.29  + langgraph-sdk==0.4.10
+#12 40.29  + langsmith==0.14.14
+#12 40.29  + mako==1.4.3
+#12 40.29  + markupsafe==3.0.4
+#12 40.29  + mcp==2.3.0
+#12 40.29  + mcp-types==2.3.0
+#12 40.29  + openai==3.40.0
+#12 40.29  + openai-agents==0.24.0
+#12 40.29  + opentelemetry-api==1.45.1
+#12 40.29  + orjson==3.13.0
+#12 40.29  + ormsgpack==1.13.0
+#12 40.29  + packaging==26.3
+#12 40.29  + pillow==13.0.0
+#12 40.29  + psycopg==3.3.6
+#12 40.29  + psycopg-binary==3.3.6
+#12 40.29  + psycopg-pool==3.3.3
+#12 40.29  + pycparser==3.12
+#12 40.29  + pydantic==2.14.1
+#12 40.29  + pydantic-core==2.50.1
+#12 40.29  + pyjwt==2.15.1
+#12 40.29  + python-dateutil==2.9.0.post0
+#12 40.29  + python-multipart==0.0.32
+#12 40.29  + pyyaml==6.0.3
+#12 40.29  + redis==5.3.1
+#12 40.29  + referencing==0.37.0
+#12 40.29  + reportlab==5.1.0
+#12 40.29  + requests==2.34.2
+#12 40.29  + requests-toolbelt==1.0.0
+#12 40.29  + rpds-py==2026.9.1
+#12 40.29  + s3transfer==0.19.3
+#12 40.29  + six==1.17.0
+#12 40.29  + sniffio==1.3.1
+#12 40.29  + sqlalchemy==2.1.6
+#12 40.29  + sqlite-vec==0.1.9
+#12 40.29  + sse-starlette==3.6.0
+#12 40.29  + starlette==1.10.0
+#12 40.29  + tenacity==9.2.1
+#12 40.29  + tradecase==0.1.0 (from file:///app)
+#12 40.29  + truststore==0.10.5
+#12 40.29  + typing-extensions==4.16.0
+#12 40.29  + typing-inspection==0.4.4
+#12 40.29  + urllib3==2.8.0
+#12 40.29  + uuid-utils==0.19.0
+#12 40.29  + uvicorn==0.54.0
+#12 40.29  + websockets==16.1.1
+#12 40.29  + xxhash==4.0.2
+#12 40.29  + zstandard==0.25.0
+#12 DONE 41.4s
+
+#13 [ 8/17] COPY rules ./rules
+#13 DONE 0.3s
+
+#14 [ 9/17] COPY fixtures ./fixtures
+#14 DONE 0.1s
+
+#15 [10/17] COPY skills ./skills
+#15 DONE 0.0s
+
+#16 [11/17] COPY _shared ./_shared
+#16 DONE 0.1s
+
+#17 [12/17] COPY templates ./templates
+#17 DONE 0.1s
+
+#18 [13/17] COPY migrations ./migrations
+#18 DONE 0.1s
+
+#19 [14/17] COPY alembic.ini ./
+#19 DONE 0.1s
+
+#20 [15/17] COPY ops/setup_checkpoint.py ./ops/setup_checkpoint.py
+#20 DONE 0.1s
+
+#21 [16/17] COPY ops/verify_object_references.py ./ops/verify_object_references.py
+#21 DONE 0.0s
+
+#22 [17/17] RUN mkdir -p /app/.tradecase/objects /app/.tradecase/work && chown -R app:app /app/.tradecase
+#22 DONE 0.5s
+
+#23 exporting to image
+#23 exporting layers
+#23 exporting layers 8.0s done
+#23 exporting manifest sha256:229f97a5901e866d7a38180709765d3e648e0a8cd41e50482b27e8774f56fae1 0.0s done
+#23 exporting config sha256:ea93b799512d2bde1278b8c9fe9b4d052e9c2d90fc14b1a7a73aede1cc90970a done
+#23 exporting attestation manifest sha256:e6800dda4c84a1fb213ee168ba8386bc6c66f965e0dfbd70a40cadc32efe4066 0.0s done
+#23 exporting manifest list sha256:b58f35ef73ce9a474c0a7b72aa7a956100e4a263e8f90d9a233694641c16d590 0.0s done
+#23 naming to docker.io/library/tradecase-api:local
+#23 naming to docker.io/library/tradecase-api:local done
+#23 unpacking to docker.io/library/tradecase-api:local
+#23 unpacking to docker.io/library/tradecase-api:local 9.8s done
+#23 DONE 18.0s
+
+#24 resolving provenance for metadata file
+#24 DONE 0.1s
+ Image tradecase-api:local Built 
