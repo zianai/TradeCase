@@ -1,0 +1,18 @@
+schema_version: 3
+protocol_version: "3.0"
+id: "T-005-full-delivery"
+status: in_progress
+goal: "Deliver the full Case workbench from the supplied specification while retaining the existing business kernel"
+scope: ["Platform persistence, workflow, task leases, adapters, API and Web GUI", "Versioned approvals, safe outbox, evidence and deployment verification"]
+non_goals: ["No real mail or CRM writes", "No paid model calls or credential provisioning without direct authorization", "No upstream rewrite or remote publication"]
+acceptance: ["Existing 347 tests and seven Case fixtures regress cleanly", "New persistence and concurrency tests pass", "Browser completes Case research, evidence, approval and follow-up", "Migration, packaging, recovery and deployment artifacts have execution evidence", "Environmental gaps are disclosed"]
+risk: high
+risk_reasons: [cross-component, reversible-migration, security-or-safety]
+protected_paths: []
+context_refs: [docs/tradecase-full-implementation-plan.md, docs/architecture/adr-002-reuse-audit.md]
+decision_refs: [docs/architecture/adr-001-platform-boundaries.md]
+evidence_refs: [docs/evidence/full-delivery/baseline-pytest.log]
+updated: "2026-10-28"
+implementation_started: true
+external_effects: none
+conformance_status: pending
