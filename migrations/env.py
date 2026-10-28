@@ -6,6 +6,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
+from tradecase.platform import source_cache  # noqa: F401
 from tradecase.platform.db import Base
 
 config = context.config

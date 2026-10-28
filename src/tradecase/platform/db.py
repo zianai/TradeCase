@@ -449,6 +449,7 @@ class Database:
 
     def create_schema(self) -> None:
         """For tests/demo only. Deployment uses Alembic migrations."""
+        from tradecase.platform import source_cache  # noqa: F401
         Base.metadata.create_all(self.engine)
 
     def ping(self) -> bool:

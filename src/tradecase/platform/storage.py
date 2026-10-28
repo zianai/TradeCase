@@ -128,6 +128,7 @@ class S3Storage:
             raise ValueError("server side encryption must be configured")
         if client is None:
             import boto3
+
             client = boto3.client("s3")
         self.client = client
         self.bucket = bucket
@@ -141,8 +142,11 @@ class S3Storage:
     def put(self, data: bytes) -> ObjectRef:
         ref = _reference(data)
         self.client.put_object(
-            Bucket=self.bucket, Key=self._key(ref.key), Body=data,
-            ContentType="application/octet-stream", ServerSideEncryption=self.encryption,
+            Bucket=self.bucket,
+            Key=self._key(ref.key),
+            Body=data,
+            ContentType="application/octet-stream",
+            ServerSideEncryption=self.encryption,
             Metadata={"sha256": ref.sha256},
         )
         return ref
@@ -169,3 +173,20 @@ class S3Storage:
 
     def delete(self, key: str) -> None:
         self.client.delete_object(Bucket=self.bucket, Key=self._key(key))
+
+
+def configured_storage(settings):
+    """No connection is made for the default local backend; S3 uses deployment identity."""
+    if settings.storage_backend == "local":
+        return LocalStorage(settings.storage_root)
+    if settings.storage_backend != "s3" or not settings.s3_bucket:
+        raise ValueError("storage backend must be local or an explicitly configured S3 bucket")
+    import boto3
+    from botocore.config import Config
+
+    client = boto3.client(
+        "s3",
+        endpoint_url=settings.s3_endpoint_url or None,
+        config=Config(connect_timeout=5, read_timeout=15, retries={"max_attempts": 2}),
+    )
+    return S3Storage(settings.s3_bucket, client=client, encryption=settings.s3_encryption)

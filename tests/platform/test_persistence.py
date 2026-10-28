@@ -40,7 +40,8 @@ def seeded_db(tmp_path):
 
 def test_schema_has_business_entities_and_timezone(tmp_path):
     db = seeded_db(tmp_path)
-    assert len(inspect(db.engine).get_table_names()) == 21
+    assert set(Base.metadata.tables) == set(inspect(db.engine).get_table_names())
+    assert "source_cache" in Base.metadata.tables
     assert db.ping()
     with db.session() as session:
         case = session.get(Case, "case1")

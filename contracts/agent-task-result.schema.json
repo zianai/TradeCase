@@ -1,0 +1,367 @@
+{
+  "$defs": {
+    "AgentEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_run_id": {
+          "title": "Agent Run Id",
+          "type": "string"
+        },
+        "sequence": {
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "event_type": {
+          "title": "Event Type",
+          "type": "string"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "data_redacted": {
+          "additionalProperties": true,
+          "title": "Data Redacted",
+          "type": "object"
+        }
+      },
+      "required": [
+        "agent_run_id",
+        "sequence",
+        "event_type"
+      ],
+      "title": "AgentEvent",
+      "type": "object"
+    },
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "identity": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Identity",
+          "type": "number"
+        },
+        "company": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Company",
+          "type": "number"
+        },
+        "intent": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Intent",
+          "type": "number"
+        }
+      },
+      "title": "Coverage",
+      "type": "object"
+    },
+    "ResearchClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "entity_id": {
+          "default": "unresolved",
+          "maxLength": 160,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "attribute": {
+          "maxLength": 100,
+          "title": "Attribute",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 2000,
+          "title": "Text",
+          "type": "string"
+        },
+        "classification": {
+          "default": "UNKNOWN",
+          "enum": [
+            "FACT",
+            "INFERENCE",
+            "UNKNOWN"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "excerpt": {
+          "default": "",
+          "maxLength": 4000,
+          "title": "Excerpt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claim_id",
+        "attribute",
+        "text"
+      ],
+      "title": "ResearchClaim",
+      "type": "object"
+    },
+    "SourceSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "maxLength": 160,
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 4096,
+          "title": "Url",
+          "type": "string"
+        },
+        "source_type": {
+          "default": "website",
+          "maxLength": 80,
+          "title": "Source Type",
+          "type": "string"
+        },
+        "title": {
+          "default": "",
+          "maxLength": 500,
+          "title": "Title",
+          "type": "string"
+        },
+        "captured_at": {
+          "title": "Captured At",
+          "type": "string"
+        },
+        "text": {
+          "default": "",
+          "maxLength": 65536,
+          "title": "Text",
+          "type": "string"
+        },
+        "sha256": {
+          "default": "",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "status": {
+          "default": "fetched",
+          "enum": [
+            "fetched",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "gap_reason": {
+          "default": "",
+          "maxLength": 500,
+          "title": "Gap Reason",
+          "type": "string"
+        },
+        "is_synthetic": {
+          "default": false,
+          "title": "Is Synthetic",
+          "type": "boolean"
+        },
+        "license_status": {
+          "default": "unknown",
+          "enum": [
+            "permitted",
+            "unknown",
+            "unavailable"
+          ],
+          "title": "License Status",
+          "type": "string"
+        },
+        "authority": {
+          "default": "source_claim",
+          "enum": [
+            "source_claim",
+            "user_provided_unverified"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "document_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Version"
+        },
+        "valid_until": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid Until"
+        },
+        "document_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Document Hash"
+        }
+      },
+      "required": [
+        "source_id",
+        "url"
+      ],
+      "title": "SourceSnapshot",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "default": "PARTIAL",
+      "enum": [
+        "COMPLETE",
+        "PARTIAL"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/ResearchClaim"
+      },
+      "maxItems": 100,
+      "title": "Claims",
+      "type": "array"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/SourceSnapshot"
+      },
+      "maxItems": 50,
+      "title": "Sources",
+      "type": "array"
+    },
+    "unresolved_questions": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 50,
+      "title": "Unresolved Questions",
+      "type": "array"
+    },
+    "conflicts": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 50,
+      "title": "Conflicts",
+      "type": "array"
+    },
+    "coverage": {
+      "$ref": "#/$defs/Coverage"
+    },
+    "stop_reason": {
+      "default": "insufficient_evidence",
+      "maxLength": 500,
+      "title": "Stop Reason",
+      "type": "string"
+    },
+    "agent_run_id": {
+      "title": "Agent Run Id",
+      "type": "string"
+    },
+    "provider": {
+      "title": "Provider",
+      "type": "string"
+    },
+    "model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model"
+    },
+    "token_usage": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Token Usage",
+      "type": "object"
+    },
+    "cost_usd": {
+      "default": 0,
+      "title": "Cost Usd",
+      "type": "number"
+    },
+    "cost_is_estimate": {
+      "default": false,
+      "title": "Cost Is Estimate",
+      "type": "boolean"
+    },
+    "error_class": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Class"
+    },
+    "tool_events": {
+      "items": {
+        "$ref": "#/$defs/AgentEvent"
+      },
+      "title": "Tool Events",
+      "type": "array"
+    },
+    "synthetic": {
+      "default": false,
+      "title": "Synthetic",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "agent_run_id",
+    "provider"
+  ],
+  "title": "AgentTaskResult",
+  "type": "object"
+}

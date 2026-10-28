@@ -1,0 +1,788 @@
+{
+  "$defs": {
+    "BuyerProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "candidate_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Candidate Ids",
+          "type": "array"
+        },
+        "selected_candidate_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Candidate Id"
+        },
+        "company_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Company Name"
+        },
+        "website": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Website"
+        },
+        "domain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Domain"
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "buyer_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Buyer Role"
+        },
+        "inquiry_relationship": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inquiry Relationship"
+        },
+        "contacts": {
+          "items": {
+            "$ref": "#/$defs/Contact"
+          },
+          "title": "Contacts",
+          "type": "array"
+        },
+        "claim_evidence_map": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Claim Evidence Map",
+          "type": "object"
+        },
+        "unresolved_items": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Items",
+          "type": "array"
+        },
+        "is_synthetic": {
+          "default": false,
+          "title": "Is Synthetic",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "case_id"
+      ],
+      "title": "BuyerProfile",
+      "type": "object"
+    },
+    "Candidate": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "website": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Website"
+        },
+        "domain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Domain"
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "registry_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Registry Id"
+        },
+        "identity_status": {
+          "default": "unverified",
+          "enum": [
+            "unverified",
+            "supported",
+            "ambiguous"
+          ],
+          "title": "Identity Status",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "is_synthetic": {
+          "default": false,
+          "title": "Is Synthetic",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "name"
+      ],
+      "title": "Candidate",
+      "type": "object"
+    },
+    "Contact": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "email": {
+          "title": "Email",
+          "type": "string"
+        },
+        "source_class": {
+          "default": "unknown",
+          "enum": [
+            "public",
+            "inferred",
+            "user_provided",
+            "unknown"
+          ],
+          "title": "Source Class",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "verified": {
+          "default": false,
+          "title": "Verified",
+          "type": "boolean"
+        },
+        "send_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Send Allowed",
+          "type": "boolean"
+        },
+        "domain_relation": {
+          "default": "unknown",
+          "enum": [
+            "same_domain",
+            "parent_domain",
+            "third_party",
+            "free_mail",
+            "unknown"
+          ],
+          "title": "Domain Relation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "title": "Contact",
+      "type": "object"
+    },
+    "EvidenceBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "claim_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "source_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "entity_candidate_id": {
+          "anyOf": [
+            {
+              "maxLength": 100,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Entity Candidate Id"
+        },
+        "assertion_status": {
+          "default": "unverified",
+          "enum": [
+            "supported",
+            "contradicted",
+            "unverified"
+          ],
+          "title": "Assertion Status",
+          "type": "string"
+        },
+        "source_type": {
+          "default": "other",
+          "enum": [
+            "official_site",
+            "government",
+            "platform_official",
+            "registry",
+            "news",
+            "directory",
+            "user_provided",
+            "search_snippet",
+            "other"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_permission_confirmed": {
+          "const": true,
+          "title": "Source Permission Confirmed",
+          "type": "boolean"
+        },
+        "source_role_confirmed": {
+          "const": true,
+          "title": "Source Role Confirmed",
+          "type": "boolean"
+        },
+        "confidence_label": {
+          "default": "medium",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ],
+          "title": "Confidence Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "claim_id",
+        "source_id",
+        "source_permission_confirmed",
+        "source_role_confirmed"
+      ],
+      "title": "EvidenceBinding",
+      "type": "object"
+    },
+    "Rule": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "check_type": {
+          "enum": [
+            "country",
+            "platform"
+          ],
+          "title": "Check Type",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        },
+        "product_scope": {
+          "minLength": 1,
+          "title": "Product Scope",
+          "type": "string"
+        },
+        "applicability": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "minProperties": 1,
+          "title": "Applicability",
+          "type": "object"
+        },
+        "attributes_required": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Attributes Required",
+          "type": "array"
+        },
+        "required_values": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "minProperties": 1,
+          "title": "Required Values",
+          "type": "object"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "source_evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Evidence Ids",
+          "type": "array"
+        },
+        "effective_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective Date"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "valid_until": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid Until"
+        },
+        "source_current": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": false,
+          "title": "Source Current"
+        },
+        "is_synthetic": {
+          "title": "Is Synthetic",
+          "type": "boolean"
+        },
+        "severity": {
+          "default": "high",
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low",
+            "info"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "suggested_action": {
+          "minLength": 1,
+          "title": "Suggested Action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "check_type",
+        "version",
+        "product_scope",
+        "applicability",
+        "attributes_required",
+        "required_values",
+        "is_synthetic",
+        "rationale",
+        "suggested_action"
+      ],
+      "title": "Rule",
+      "type": "object"
+    },
+    "RuleSet": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "rules": {
+          "items": {
+            "$ref": "#/$defs/Rule"
+          },
+          "title": "Rules",
+          "type": "array"
+        }
+      },
+      "title": "RuleSet",
+      "type": "object"
+    },
+    "SellerContext": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "company_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Company Name"
+        },
+        "website": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Website"
+        },
+        "product_summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Product Summary"
+        },
+        "product_attributes": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Product Attributes",
+          "type": "object"
+        },
+        "allowed_claims": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Claims",
+          "type": "array"
+        },
+        "forbidden_claims": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Claims",
+          "type": "array"
+        },
+        "source_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "is_synthetic": {
+          "default": false,
+          "title": "Is Synthetic",
+          "type": "boolean"
+        }
+      },
+      "title": "SellerContext",
+      "type": "object"
+    },
+    "Signal": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "value": {
+          "default": "unknown",
+          "enum": [
+            "supported",
+            "contradicted",
+            "unknown"
+          ],
+          "title": "Value",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "rationale": {
+          "default": "",
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "title": "Signal",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "case_version": {
+      "minimum": 1,
+      "title": "Case Version",
+      "type": "integer"
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/Candidate"
+      },
+      "maxItems": 50,
+      "title": "Candidates",
+      "type": "array"
+    },
+    "profile": {
+      "$ref": "#/$defs/BuyerProfile"
+    },
+    "signals": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Signal"
+      },
+      "title": "Signals",
+      "type": "object"
+    },
+    "seller_context": {
+      "$ref": "#/$defs/SellerContext"
+    },
+    "rules": {
+      "$ref": "#/$defs/RuleSet"
+    },
+    "evidence_bindings": {
+      "items": {
+        "$ref": "#/$defs/EvidenceBinding"
+      },
+      "maxItems": 100,
+      "title": "Evidence Bindings",
+      "type": "array"
+    },
+    "current_rules_confirmed": {
+      "default": false,
+      "title": "Current Rules Confirmed",
+      "type": "boolean"
+    },
+    "review_note": {
+      "maxLength": 4000,
+      "minLength": 1,
+      "title": "Review Note",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_version",
+    "profile",
+    "review_note"
+  ],
+  "title": "ReviewInputs",
+  "type": "object"
+}
