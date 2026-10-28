@@ -1,0 +1,23 @@
+
+> tradecase-workbench@1.0.0 test:e2e
+> playwright test
+
+
+Running 12 tests using 1 worker
+
+(node:68296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/draft-actions.spec.ts:93:5 › three courtesy tones preserve facts and signature, remain unsaved, and save only through the versioned editor (7.7s)
+  ✓   2 tests/draft-actions.spec.ts:132:5 › reviewer cancels only a pending external action with a reason and current case version (1.6s)
+  ✓   3 tests/draft-actions.spec.ts:160:5 › viewer cannot see the queued action cancellation control (1.1s)
+  ✓   4 tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up (1.1m)
+  ✓   5 tests/live-e2e.spec.ts:222:5 › real API knowledge versions remain separate and explicitly unverified (3.2s)
+  ✓   6 tests/manual-review.spec.ts:9:5 › manual snapshot and reviewer input preserve unknown status and require explicit source confirmations (3.8s)
+  ✓   7 tests/ui.spec.ts:20:5 › empty workbench remains truthful, keyboard dialog closes and narrow layout has no overflow (1.1s)
+  ✓   8 tests/ui.spec.ts:61:5 › untrusted source content stays text and cannot trigger an outbound request (851ms)
+  ✓   9 tests/ui.spec.ts:138:7 › approval reject carries exact hash/version and never calls send (811ms)
+  ✓  10 tests/ui.spec.ts:138:7 › approval request_changes carries exact hash/version and never calls send (716ms)
+  ✓  11 tests/ui.spec.ts:138:7 › approval request_evidence carries exact hash/version and never calls send (740ms)
+  ✓  12 tests/ui.spec.ts:190:5 › switching workspace credentials discards late responses from the previous tenant (1.1s)
+
+  12 passed (1.6m)

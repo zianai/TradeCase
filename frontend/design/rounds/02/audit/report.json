@@ -1,0 +1,1738 @@
+{
+  "target": "design/rounds/01/dashboard-render.html",
+  "url": "file:///Users/a/workspaces/AForeign%20Trade/tradecase-v1/frontend/design/rounds/01/dashboard-render.html",
+  "generatedAt": "2026-10-28T13:33:34.103Z",
+  "browser": "/Users/a/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing 156.0.8078.4",
+  "options": {
+    "out": "design/rounds/02/audit",
+    "viewports": "1440x900,390x844",
+    "states": [],
+    "tokens": null,
+    "primary": ".page-heading > .button",
+    "grid": 4,
+    "minTarget": 24,
+    "minTargetMobile": 44,
+    "wait": 300,
+    "browser": "/Users/a/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "fullPage": true,
+    "target": "design/rounds/01/dashboard-render.html"
+  },
+  "runs": [
+    {
+      "viewport": "1440x900",
+      "state": "default",
+      "screenshots": {
+        "first": "1440x900-default.png",
+        "full": "1440x900-default-full.png"
+      },
+      "checks": {
+        "console-errors": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "failed-requests": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "horizontal-overflow": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "clipped-text": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "touch-target": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "primary-action": {
+          "level": "ok",
+          "count": 1,
+          "items": [
+            {
+              "selector": "main#main > div.page-heading > button.button",
+              "label": "导入询盘",
+              "rect": [
+                1282,
+                171,
+                118,
+                43
+              ]
+            }
+          ],
+          "note": "selector .page-heading > .button；首屏内 1 个"
+        },
+        "focus-visible": {
+          "level": "ok",
+          "count": 0,
+          "items": [],
+          "note": "Tab 走过 18 个焦点"
+        },
+        "focus-hidden-stop": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "a11y-axe": {
+          "level": "fail",
+          "count": 1,
+          "items": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "count": 1,
+              "nodes": [
+                ".brand"
+              ]
+            }
+          ]
+        },
+        "font-families": {
+          "level": "ok",
+          "count": 2,
+          "items": [
+            {
+              "family": "Avenir Next",
+              "chars": 668,
+              "inTokens": true
+            },
+            {
+              "family": "Iowan Old Style",
+              "chars": 31,
+              "inTokens": false
+            },
+            {
+              "family": "SFMono-Regular",
+              "chars": 2,
+              "inTokens": false
+            }
+          ],
+          "note": "等宽字体不计入"
+        },
+        "off-token-colors": {
+          "level": "warn",
+          "count": 30,
+          "items": [
+            {
+              "color": "rgb(169, 187, 176)",
+              "count": 6,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "nav > a.nav-item.active > span > small",
+                "nav > a.nav-item > span > small",
+                "nav > a.nav-item > span > small"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(199, 212, 203)",
+              "count": 5,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "aside.sidebar > nav > a.nav-item > span",
+                "aside.sidebar > nav > a.nav-item > span",
+                "aside.sidebar > nav > a.nav-item > span"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(241, 242, 235)",
+              "count": 5,
+              "props": [
+                "background"
+              ],
+              "examples": [
+                "table > thead > tr > th",
+                "table > thead > tr > th",
+                "table > thead > tr > th"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(119, 147, 135)",
+              "count": 4,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "div.shell > aside.sidebar > a.brand > span.brand-mark",
+                "div.shell > aside.sidebar > a.brand > span.brand-mark",
+                "div.shell > aside.sidebar > a.brand > span.brand-mark"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(209, 216, 201)",
+              "count": 4,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(91, 108, 93)",
+              "count": 4,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "table > thead > tr > th",
+                "table > thead > tr > th",
+                "table > thead > tr > th"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(230, 216, 184)",
+              "count": 4,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "tr > td > div.table-sub > span.synthetic-tag",
+                "tr > td > div.table-sub > span.synthetic-tag",
+                "tr > td > div.table-sub > span.synthetic-tag"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(238, 242, 233)",
+              "count": 3,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "div.shell > aside.sidebar > a.brand > span.brand-mark",
+                "aside.sidebar > a.brand > span.brand-mark > span",
+                "div.shell > aside.sidebar > a.brand > span"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(54, 80, 70)",
+              "count": 3,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "body > div.shell > aside.sidebar > div.workspace-label",
+                "body > div.shell > aside.sidebar > div.workspace-label",
+                "div.shell > aside.sidebar > div.sidebar-bottom > button.connection"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(88, 110, 93)",
+              "count": 3,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "main#main > div.page-heading > div > span.eyebrow",
+                "section.panel > div.panel-heading > div > span.eyebrow",
+                "section.decision-column > div.panel-heading > div > span.eyebrow"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(94, 112, 92)",
+              "count": 3,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "body > div.shell > div.workspace > footer.footer",
+                "div.shell > div.workspace > footer.footer > span",
+                "div.shell > div.workspace > footer.footer > span"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(255, 255, 255)",
+              "count": 2,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "aside.sidebar > nav > a.nav-item.active > span",
+                "main#main > div.page-heading > button.button"
+              ],
+              "token": null
+            }
+          ],
+          "note": "token 来源：page :root，14 个颜色 token"
+        },
+        "spacing-off-grid": {
+          "level": "warn",
+          "count": 16,
+          "items": [
+            {
+              "value": "6px",
+              "count": 8,
+              "examples": [
+                "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingRight}",
+                "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingLeft}",
+                "section.panel > div.panel-heading > div > span.eyebrow {marginBottom}"
+              ]
+            },
+            {
+              "value": "5px",
+              "count": 4,
+              "examples": [
+                "body > div.shell > aside.sidebar > nav {rowGap}",
+                "body > div.shell > aside.sidebar > nav {columnGap}",
+                "aside.sidebar > div.sidebar-bottom > p > small {marginTop}"
+              ]
+            },
+            {
+              "value": "14px",
+              "count": 2,
+              "examples": [
+                "body > div.shell > aside.sidebar > div.workspace-label {paddingTop}",
+                "body > div.shell > aside.sidebar > div.workspace-label {paddingBottom}"
+              ]
+            },
+            {
+              "value": "10px",
+              "count": 2,
+              "examples": [
+                "main#main > div.page-heading > div > span.eyebrow {marginBottom}",
+                "main#main > div.page-heading > div > p {marginTop}"
+              ]
+            }
+          ],
+          "note": "栅格 4px，≤2px 视为光学微调不计"
+        },
+        "gradients": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        }
+      },
+      "inventory": {
+        "tokenSource": "page :root",
+        "tokenColorCount": 14,
+        "fonts": [
+          {
+            "family": "Avenir Next",
+            "chars": 668,
+            "inTokens": true
+          },
+          {
+            "family": "Iowan Old Style",
+            "chars": 31,
+            "inTokens": false
+          },
+          {
+            "family": "SFMono-Regular",
+            "chars": 2,
+            "inTokens": false
+          }
+        ],
+        "fontSizes": [
+          {
+            "size": "9px/500",
+            "count": 1
+          },
+          {
+            "size": "10px/400",
+            "count": 16
+          },
+          {
+            "size": "10px/650",
+            "count": 3
+          },
+          {
+            "size": "10px/500",
+            "count": 4
+          },
+          {
+            "size": "10px/550",
+            "count": 1
+          },
+          {
+            "size": "11px/400",
+            "count": 11
+          },
+          {
+            "size": "12px/400",
+            "count": 8
+          },
+          {
+            "size": "12px/500",
+            "count": 1
+          },
+          {
+            "size": "12px/550",
+            "count": 1
+          },
+          {
+            "size": "13px/400",
+            "count": 1
+          },
+          {
+            "size": "13px/550",
+            "count": 1
+          },
+          {
+            "size": "14px/400",
+            "count": 8
+          },
+          {
+            "size": "15px/650",
+            "count": 1
+          },
+          {
+            "size": "15px/400",
+            "count": 1
+          },
+          {
+            "size": "16px/650",
+            "count": 1
+          },
+          {
+            "size": "18px/650",
+            "count": 2
+          },
+          {
+            "size": "22px/400",
+            "count": 1
+          },
+          {
+            "size": "23px/650",
+            "count": 1
+          },
+          {
+            "size": "32px/650",
+            "count": 2
+          },
+          {
+            "size": "46px/400",
+            "count": 4
+          }
+        ],
+        "colors": [
+          {
+            "color": "rgb(220, 224, 215)",
+            "count": 19,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "body > div.shell > div.workspace > header.topbar",
+              "main#main > div.stats-band > a",
+              "main#main > div.stats-band > a"
+            ],
+            "token": "line"
+          },
+          {
+            "color": "rgb(24, 55, 47)",
+            "count": 12,
+            "props": [
+              "color",
+              "background",
+              "border"
+            ],
+            "examples": [
+              "html > body > div.shell > a.skip-link",
+              "main#main > div.page-heading > div > h1",
+              "main#main > div.page-heading > button.button"
+            ],
+            "token": "ink"
+          },
+          {
+            "color": "rgb(99, 115, 107)",
+            "count": 12,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div > span.breadcrumb",
+              "main#main > div.safety-strip > span.muted",
+              "main#main > div.page-heading > div > p"
+            ],
+            "token": "muted"
+          },
+          {
+            "color": "rgb(37, 59, 51)",
+            "count": 8,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div > strong",
+              "main#main > div.stats-band > a > span",
+              "main#main > div.stats-band > a > span"
+            ],
+            "token": "text"
+          },
+          {
+            "color": "rgb(169, 187, 176)",
+            "count": 6,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "nav > a.nav-item.active > span > small",
+              "nav > a.nav-item > span > small",
+              "nav > a.nav-item > span > small"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(199, 212, 203)",
+            "count": 5,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "aside.sidebar > nav > a.nav-item > span",
+              "aside.sidebar > nav > a.nav-item > span",
+              "aside.sidebar > nav > a.nav-item > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(241, 242, 235)",
+            "count": 5,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "table > thead > tr > th",
+              "table > thead > tr > th",
+              "table > thead > tr > th"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(119, 147, 135)",
+            "count": 4,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > a.brand > span.brand-mark",
+              "div.shell > aside.sidebar > a.brand > span.brand-mark",
+              "div.shell > aside.sidebar > a.brand > span.brand-mark"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(175, 192, 184)",
+            "count": 4,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "aside.sidebar > a.brand > span > small",
+              "body > div.shell > aside.sidebar > div.workspace-label",
+              "div.shell > aside.sidebar > div.workspace-label > span.mono"
+            ],
+            "token": "nav-muted"
+          },
+          {
+            "color": "rgb(209, 216, 201)",
+            "count": 4,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(91, 108, 93)",
+            "count": 4,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "table > thead > tr > th",
+              "table > thead > tr > th",
+              "table > thead > tr > th"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(230, 216, 184)",
+            "count": 4,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "tr > td > div.table-sub > span.synthetic-tag",
+              "tr > td > div.table-sub > span.synthetic-tag",
+              "tr > td > div.table-sub > span.synthetic-tag"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(253, 252, 248)",
+            "count": 3,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "html > body > div.shell > a.skip-link",
+              "body > div.shell > div.workspace > header.topbar",
+              "main#main > div.dashboard-grid > section.panel"
+            ],
+            "token": "surface"
+          },
+          {
+            "color": "rgb(238, 242, 233)",
+            "count": 3,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > a.brand > span.brand-mark",
+              "aside.sidebar > a.brand > span.brand-mark > span",
+              "div.shell > aside.sidebar > a.brand > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(54, 80, 70)",
+            "count": 3,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "body > div.shell > aside.sidebar > div.workspace-label",
+              "body > div.shell > aside.sidebar > div.workspace-label",
+              "div.shell > aside.sidebar > div.sidebar-bottom > button.connection"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(88, 110, 93)",
+            "count": 3,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.page-heading > div > span.eyebrow",
+              "section.panel > div.panel-heading > div > span.eyebrow",
+              "section.decision-column > div.panel-heading > div > span.eyebrow"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(94, 112, 92)",
+            "count": 3,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "body > div.shell > div.workspace > footer.footer",
+              "div.shell > div.workspace > footer.footer > span",
+              "div.shell > div.workspace > footer.footer > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(20, 47, 41)",
+            "count": 2,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "html > body > div.shell > aside.sidebar",
+              "aside.sidebar > a.brand > span.brand-mark > span"
+            ],
+            "token": "nav"
+          },
+          {
+            "color": "rgb(255, 255, 255)",
+            "count": 2,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "aside.sidebar > nav > a.nav-item.active > span",
+              "main#main > div.page-heading > button.button"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(201, 216, 206)",
+            "count": 2,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > div.sidebar-bottom > button.connection",
+              "aside.sidebar > div.sidebar-bottom > button.connection > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(174, 187, 171)",
+            "count": 2,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "main#main > div.stats-band",
+              "main#main > div.stats-band"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(36, 98, 71)",
+            "count": 2,
+            "props": [
+              "color",
+              "background"
+            ],
+            "examples": [
+              "tbody > tr > td > span.badge.good",
+              "tr > td > span.badge.good > i"
+            ],
+            "token": "good"
+          },
+          {
+            "color": "rgb(186, 158, 110)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > div.workspace-label > span.workspace-dot"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(43, 72, 60)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > nav > a.nav-item.active"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(210, 220, 211)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > div.sidebar-bottom > p"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(165, 194, 155)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "aside.sidebar > div.sidebar-bottom > button.connection > span.dot"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(162, 170, 161)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div > span.separator"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(75, 97, 83)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(231, 233, 221)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(73, 96, 86)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.safety-strip > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(197, 207, 193)",
+            "count": 1,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "main#main > div.safety-strip > span.muted"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(162, 77, 40)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.stats-band > a > strong.accent"
+            ],
+            "token": "accent"
+          },
+          {
+            "color": "rgb(56, 94, 73)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.panel > div.panel-heading > a.text-link"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(119, 87, 36)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "tr > td > div.table-sub > span.synthetic-tag"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(242, 234, 215)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "tr > td > div.table-sub > span.synthetic-tag"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(228, 238, 228)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "tbody > tr > td > span.badge.good"
+            ],
+            "token": "good-light"
+          },
+          {
+            "color": "rgb(162, 178, 154)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.decision-column > div.empty > span.empty-line"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(74, 100, 80)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.decision-column > div.empty > h3"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(139, 162, 142)",
+            "count": 1,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "main#main > div.dashboard-grid > section.decision-column > div.method-note"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(92, 114, 90)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.decision-column > div.method-note > span"
+            ],
+            "token": null
+          }
+        ],
+        "gradients": [],
+        "spacingOffGrid": [
+          {
+            "value": "6px",
+            "count": 8,
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingRight}",
+              "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingLeft}",
+              "section.panel > div.panel-heading > div > span.eyebrow {marginBottom}"
+            ]
+          },
+          {
+            "value": "5px",
+            "count": 4,
+            "examples": [
+              "body > div.shell > aside.sidebar > nav {rowGap}",
+              "body > div.shell > aside.sidebar > nav {columnGap}",
+              "aside.sidebar > div.sidebar-bottom > p > small {marginTop}"
+            ]
+          },
+          {
+            "value": "14px",
+            "count": 2,
+            "examples": [
+              "body > div.shell > aside.sidebar > div.workspace-label {paddingTop}",
+              "body > div.shell > aside.sidebar > div.workspace-label {paddingBottom}"
+            ]
+          },
+          {
+            "value": "10px",
+            "count": 2,
+            "examples": [
+              "main#main > div.page-heading > div > span.eyebrow {marginBottom}",
+              "main#main > div.page-heading > div > p {marginTop}"
+            ]
+          }
+        ],
+        "spacingOffGridCount": 16,
+        "radii": [
+          {
+            "value": "2px",
+            "count": 8
+          },
+          {
+            "value": "4px",
+            "count": 3
+          }
+        ]
+      }
+    },
+    {
+      "viewport": "390x844",
+      "state": "default",
+      "screenshots": {
+        "first": "390x844-default.png",
+        "full": "390x844-default-full.png"
+      },
+      "checks": {
+        "console-errors": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "failed-requests": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "horizontal-overflow": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "clipped-text": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "touch-target": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "primary-action": {
+          "level": "ok",
+          "count": 1,
+          "items": [
+            {
+              "selector": "main#main > div.page-heading > button.button",
+              "label": "导入询盘",
+              "rect": [
+                20,
+                342,
+                350,
+                44
+              ]
+            }
+          ],
+          "note": "selector .page-heading > .button；首屏内 1 个"
+        },
+        "focus-visible": {
+          "level": "ok",
+          "count": 0,
+          "items": [],
+          "note": "Tab 走过 16 个焦点"
+        },
+        "focus-hidden-stop": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        },
+        "a11y-axe": {
+          "level": "fail",
+          "count": 1,
+          "items": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "count": 1,
+              "nodes": [
+                ".brand"
+              ]
+            }
+          ]
+        },
+        "font-families": {
+          "level": "ok",
+          "count": 2,
+          "items": [
+            {
+              "family": "Avenir Next",
+              "chars": 443,
+              "inTokens": true
+            },
+            {
+              "family": "Iowan Old Style",
+              "chars": 31,
+              "inTokens": false
+            }
+          ],
+          "note": "等宽字体不计入"
+        },
+        "off-token-colors": {
+          "level": "warn",
+          "count": 20,
+          "items": [
+            {
+              "color": "rgb(119, 147, 135)",
+              "count": 4,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "div.shell > aside.sidebar > a.brand > span.brand-mark",
+                "div.shell > aside.sidebar > a.brand > span.brand-mark",
+                "div.shell > aside.sidebar > a.brand > span.brand-mark"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(209, 216, 201)",
+              "count": 4,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(230, 216, 184)",
+              "count": 4,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "tr > td > div.table-sub > span.synthetic-tag",
+                "tr > td > div.table-sub > span.synthetic-tag",
+                "tr > td > div.table-sub > span.synthetic-tag"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(88, 110, 93)",
+              "count": 3,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "main#main > div.page-heading > div > span.eyebrow",
+                "section.panel > div.panel-heading > div > span.eyebrow",
+                "section.decision-column > div.panel-heading > div > span.eyebrow"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(94, 112, 92)",
+              "count": 3,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "body > div.shell > div.workspace > footer.footer",
+                "div.shell > div.workspace > footer.footer > span",
+                "div.shell > div.workspace > footer.footer > span"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(238, 242, 233)",
+              "count": 2,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "div.shell > aside.sidebar > a.brand > span.brand-mark",
+                "aside.sidebar > a.brand > span.brand-mark > span"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(174, 187, 171)",
+              "count": 2,
+              "props": [
+                "border"
+              ],
+              "examples": [
+                "main#main > div.stats-band",
+                "main#main > div.stats-band"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(43, 72, 60)",
+              "count": 1,
+              "props": [
+                "background"
+              ],
+              "examples": [
+                "div.shell > aside.sidebar > nav > a.nav-item.active"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(162, 170, 161)",
+              "count": 1,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "div.workspace > header.topbar > div > span.separator"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(75, 97, 83)",
+              "count": 1,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(231, 233, 221)",
+              "count": 1,
+              "props": [
+                "background"
+              ],
+              "examples": [
+                "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+              ],
+              "token": null
+            },
+            {
+              "color": "rgb(73, 96, 86)",
+              "count": 1,
+              "props": [
+                "color"
+              ],
+              "examples": [
+                "main#main > div.safety-strip > span"
+              ],
+              "token": null
+            }
+          ],
+          "note": "token 来源：page :root，14 个颜色 token"
+        },
+        "spacing-off-grid": {
+          "level": "warn",
+          "count": 28,
+          "items": [
+            {
+              "value": "14px",
+              "count": 14,
+              "examples": [
+                "body > div.shell > aside.sidebar > a.brand {paddingRight}",
+                "body > div.shell > aside.sidebar > a.brand {paddingLeft}",
+                "div.shell > aside.sidebar > nav > a.nav-item.active {paddingRight}"
+              ]
+            },
+            {
+              "value": "6px",
+              "count": 10,
+              "examples": [
+                "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingRight}",
+                "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingLeft}",
+                "main#main > div.safety-strip {rowGap}"
+              ]
+            },
+            {
+              "value": "10px",
+              "count": 4,
+              "examples": [
+                "body > div.shell > aside.sidebar > a.brand {rowGap}",
+                "body > div.shell > aside.sidebar > a.brand {columnGap}",
+                "main#main > div.page-heading > div > span.eyebrow {marginBottom}"
+              ]
+            }
+          ],
+          "note": "栅格 4px，≤2px 视为光学微调不计"
+        },
+        "gradients": {
+          "level": "ok",
+          "count": 0,
+          "items": []
+        }
+      },
+      "inventory": {
+        "tokenSource": "page :root",
+        "tokenColorCount": 14,
+        "fonts": [
+          {
+            "family": "Avenir Next",
+            "chars": 443,
+            "inTokens": true
+          },
+          {
+            "family": "Iowan Old Style",
+            "chars": 31,
+            "inTokens": false
+          }
+        ],
+        "fontSizes": [
+          {
+            "size": "9px/650",
+            "count": 3
+          },
+          {
+            "size": "9px/400",
+            "count": 5
+          },
+          {
+            "size": "9px/500",
+            "count": 1
+          },
+          {
+            "size": "10px/400",
+            "count": 6
+          },
+          {
+            "size": "10px/550",
+            "count": 1
+          },
+          {
+            "size": "11px/650",
+            "count": 1
+          },
+          {
+            "size": "11px/400",
+            "count": 8
+          },
+          {
+            "size": "12px/400",
+            "count": 3
+          },
+          {
+            "size": "12px/500",
+            "count": 1
+          },
+          {
+            "size": "12px/550",
+            "count": 1
+          },
+          {
+            "size": "13px/550",
+            "count": 1
+          },
+          {
+            "size": "14px/400",
+            "count": 2
+          },
+          {
+            "size": "15px/650",
+            "count": 1
+          },
+          {
+            "size": "15px/400",
+            "count": 1
+          },
+          {
+            "size": "17px/650",
+            "count": 2
+          },
+          {
+            "size": "20px/400",
+            "count": 1
+          },
+          {
+            "size": "23px/650",
+            "count": 1
+          },
+          {
+            "size": "26px/650",
+            "count": 1
+          },
+          {
+            "size": "38px/400",
+            "count": 4
+          }
+        ],
+        "colors": [
+          {
+            "color": "rgb(24, 55, 47)",
+            "count": 12,
+            "props": [
+              "color",
+              "background",
+              "border"
+            ],
+            "examples": [
+              "html > body > div.shell > a.skip-link",
+              "main#main > div.page-heading > div > h1",
+              "main#main > div.page-heading > button.button"
+            ],
+            "token": "ink"
+          },
+          {
+            "color": "rgb(99, 115, 107)",
+            "count": 12,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div > span.breadcrumb",
+              "main#main > div.safety-strip > span.muted",
+              "main#main > div.page-heading > div > p"
+            ],
+            "token": "muted"
+          },
+          {
+            "color": "rgb(220, 224, 215)",
+            "count": 10,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "body > div.shell > div.workspace > header.topbar",
+              "main#main > div.stats-band > a",
+              "main#main > div.stats-band > a"
+            ],
+            "token": "line"
+          },
+          {
+            "color": "rgb(37, 59, 51)",
+            "count": 7,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div > strong",
+              "main#main > div.stats-band > a > span",
+              "main#main > div.stats-band > a > span"
+            ],
+            "token": "text"
+          },
+          {
+            "color": "rgb(119, 147, 135)",
+            "count": 4,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > a.brand > span.brand-mark",
+              "div.shell > aside.sidebar > a.brand > span.brand-mark",
+              "div.shell > aside.sidebar > a.brand > span.brand-mark"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(209, 216, 201)",
+            "count": 4,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar",
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(230, 216, 184)",
+            "count": 4,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "tr > td > div.table-sub > span.synthetic-tag",
+              "tr > td > div.table-sub > span.synthetic-tag",
+              "tr > td > div.table-sub > span.synthetic-tag"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(253, 252, 248)",
+            "count": 3,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "html > body > div.shell > a.skip-link",
+              "body > div.shell > div.workspace > header.topbar",
+              "main#main > div.dashboard-grid > section.panel"
+            ],
+            "token": "surface"
+          },
+          {
+            "color": "rgb(88, 110, 93)",
+            "count": 3,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.page-heading > div > span.eyebrow",
+              "section.panel > div.panel-heading > div > span.eyebrow",
+              "section.decision-column > div.panel-heading > div > span.eyebrow"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(94, 112, 92)",
+            "count": 3,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "body > div.shell > div.workspace > footer.footer",
+              "div.shell > div.workspace > footer.footer > span",
+              "div.shell > div.workspace > footer.footer > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(20, 47, 41)",
+            "count": 2,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "html > body > div.shell > aside.sidebar",
+              "aside.sidebar > a.brand > span.brand-mark > span"
+            ],
+            "token": "nav"
+          },
+          {
+            "color": "rgb(238, 242, 233)",
+            "count": 2,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > a.brand > span.brand-mark",
+              "aside.sidebar > a.brand > span.brand-mark > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(174, 187, 171)",
+            "count": 2,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "main#main > div.stats-band",
+              "main#main > div.stats-band"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(36, 98, 71)",
+            "count": 2,
+            "props": [
+              "color",
+              "background"
+            ],
+            "examples": [
+              "tbody > tr > td > span.badge.good",
+              "tr > td > span.badge.good > i"
+            ],
+            "token": "good"
+          },
+          {
+            "color": "rgb(43, 72, 60)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.shell > aside.sidebar > nav > a.nav-item.active"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(162, 170, 161)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div > span.separator"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(75, 97, 83)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(231, 233, 221)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > span.avatar"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(73, 96, 86)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.safety-strip > span"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(255, 255, 255)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.page-heading > button.button"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(162, 77, 40)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "main#main > div.stats-band > a > strong.accent"
+            ],
+            "token": "accent"
+          },
+          {
+            "color": "rgb(56, 94, 73)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.panel > div.panel-heading > a.text-link"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(119, 87, 36)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "tr > td > div.table-sub > span.synthetic-tag"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(242, 234, 215)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "tr > td > div.table-sub > span.synthetic-tag"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(228, 238, 228)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "tbody > tr > td > span.badge.good"
+            ],
+            "token": "good-light"
+          },
+          {
+            "color": "rgb(162, 178, 154)",
+            "count": 1,
+            "props": [
+              "background"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.decision-column > div.empty > span.empty-line"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(74, 100, 80)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.decision-column > div.empty > h3"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(139, 162, 142)",
+            "count": 1,
+            "props": [
+              "border"
+            ],
+            "examples": [
+              "main#main > div.dashboard-grid > section.decision-column > div.method-note"
+            ],
+            "token": null
+          },
+          {
+            "color": "rgb(92, 114, 90)",
+            "count": 1,
+            "props": [
+              "color"
+            ],
+            "examples": [
+              "div.dashboard-grid > section.decision-column > div.method-note > span"
+            ],
+            "token": null
+          }
+        ],
+        "gradients": [],
+        "spacingOffGrid": [
+          {
+            "value": "14px",
+            "count": 14,
+            "examples": [
+              "body > div.shell > aside.sidebar > a.brand {paddingRight}",
+              "body > div.shell > aside.sidebar > a.brand {paddingLeft}",
+              "div.shell > aside.sidebar > nav > a.nav-item.active {paddingRight}"
+            ]
+          },
+          {
+            "value": "6px",
+            "count": 10,
+            "examples": [
+              "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingRight}",
+              "div.workspace > header.topbar > div.topbar-actions > button.icon-button {paddingLeft}",
+              "main#main > div.safety-strip {rowGap}"
+            ]
+          },
+          {
+            "value": "10px",
+            "count": 4,
+            "examples": [
+              "body > div.shell > aside.sidebar > a.brand {rowGap}",
+              "body > div.shell > aside.sidebar > a.brand {columnGap}",
+              "main#main > div.page-heading > div > span.eyebrow {marginBottom}"
+            ]
+          }
+        ],
+        "spacingOffGridCount": 28,
+        "radii": [
+          {
+            "value": "4px",
+            "count": 3
+          },
+          {
+            "value": "2px",
+            "count": 2
+          }
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "fail": 2,
+    "warn": 4
+  },
+  "status": "fail"
+}

@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:55935) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up (9.7s)
+  ✓  2 tests/live-e2e.spec.ts:215:5 › real API knowledge versions remain separate and explicitly unverified (859ms)
+
+  2 passed (11.6s)

@@ -1,0 +1,70 @@
+
+Running 7 tests using 1 worker
+
+(node:53336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up (1.5m)
+(node:53906) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 tests/live-e2e.spec.ts:213:5 › real API knowledge versions remain separate and explicitly unverified (1.5m)
+(node:54375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 tests/ui.spec.ts:20:5 › empty workbench remains truthful, keyboard dialog closes and narrow layout has no overflow (633ms)
+  ✓  4 tests/ui.spec.ts:61:5 › untrusted source content stays text and cannot trigger an outbound request (445ms)
+  ✓  5 tests/ui.spec.ts:138:7 › approval reject carries exact hash/version and never calls send (340ms)
+  ✓  6 tests/ui.spec.ts:138:7 › approval request_changes carries exact hash/version and never calls send (302ms)
+  ✓  7 tests/ui.spec.ts:138:7 › approval request_evidence carries exact hash/version and never calls send (299ms)
+
+
+  1) tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.fill: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByLabel('标签', { exact: true })
+
+
+      43 |   await page
+      44 |     .getByLabel("标签", { exact: true })
+    > 45 |     .fill("browser-acceptance, synthetic");
+         |      ^
+      46 |   await page.getByRole("button", { name: "保存案件信息", exact: true }).click();
+      47 |   await expect(page.locator(".case-status")).toContainText("版本 2");
+      48 |   await page.locator(".case-metadata summary").click();
+        at /Users/a/workspaces/AForeign Trade/tradecase-v1/frontend/tests/live-e2e.spec.ts:45:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/live-e2e-real-API-import-→-53e2a--draft-revision-→-follow-up/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/live-e2e-real-API-import-→-53e2a--draft-revision-→-follow-up/error-context.md
+
+  2) tests/live-e2e.spec.ts:213:5 › real API knowledge versions remain separate and explicitly unverified 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.inputValue: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByLabel('资料内容', { exact: true })
+
+
+      238 |   );
+      239 |   await page.getByRole("button", { name: "修订当前版本", exact: true }).click();
+    > 240 |   const first = await page.getByLabel("资料内容", { exact: true }).inputValue();
+          |                                                                ^
+      241 |   await page
+      242 |     .getByLabel("资料内容", { exact: true })
+      243 |     .fill(first + "\nVersion two: confirm preferred carton dimensions.");
+        at /Users/a/workspaces/AForeign Trade/tradecase-v1/frontend/tests/live-e2e.spec.ts:240:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/live-e2e-real-API-knowledg-5433e-e-and-explicitly-unverified/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/live-e2e-real-API-knowledg-5433e-e-and-explicitly-unverified/error-context.md
+
+  2 failed
+    tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up 
+    tests/live-e2e.spec.ts:213:5 › real API knowledge versions remain separate and explicitly unverified 
+  5 passed (3.1m)
