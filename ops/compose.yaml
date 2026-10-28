@@ -1,0 +1,107 @@
+name: tradecase
+
+x-runtime: &runtime
+  TRADECASE_DATABASE_URL: postgresql+psycopg://tradecase:${TRADECASE_DB_PASSWORD:?Set TRADECASE_DB_PASSWORD}@postgres:5432/tradecase
+  TRADECASE_CHECKPOINT_URL: postgresql://tradecase:${TRADECASE_DB_PASSWORD:?Set TRADECASE_DB_PASSWORD}@postgres:5432/tradecase
+  TRADECASE_REDIS_URL: redis://redis:6379/0
+  TRADECASE_STORAGE_ROOT: /app/.tradecase/objects
+  TRADECASE_WORK_ROOT: /app/.tradecase/work
+  TRADECASE_QUEUE_MODE: arq
+  TRADECASE_RUNTIME: fake
+  TRADECASE_LIVE_MODEL_ENABLED: "false"
+  TRADECASE_OUTBOUND_ENABLED: "false"
+  TRADECASE_MAIL_CONNECTOR: disabled
+  TRADECASE_DEMO_ENABLED: ${TRADECASE_DEMO_ENABLED:-false}
+  TRADECASE_HOST: 0.0.0.0
+  TRADECASE_PORT: "8000"
+
+services:
+  postgres:
+    image: postgres:17.6-bookworm
+    environment:
+      POSTGRES_DB: tradecase
+      POSTGRES_USER: tradecase
+      POSTGRES_PASSWORD: ${TRADECASE_DB_PASSWORD:?Set TRADECASE_DB_PASSWORD}
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -h 127.0.0.1 -U tradecase -d tradecase"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    restart: unless-stopped
+  redis:
+    image: redis:7.4.6-alpine
+    command: [redis-server, --appendonly, "yes"]
+    volumes: [redis-data:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    restart: unless-stopped
+  migrate:
+    build: {context: .., dockerfile: ops/Dockerfile}
+    image: tradecase-api:local
+    environment: *runtime
+    command: [sh, -c, "alembic upgrade head && python ops/setup_checkpoint.py"]
+    depends_on:
+      postgres: {condition: service_healthy}
+  storage-init:
+    image: tradecase-api:local
+    user: "0:0"
+    command: [sh, -c, "mkdir -p /app/.tradecase/objects /app/.tradecase/work && chown 10001:10001 /app/.tradecase /app/.tradecase/objects /app/.tradecase/work"]
+    volumes:
+      - type: volume
+        source: objects-and-work
+        target: /app/.tradecase
+        volume: {nocopy: true}
+  api:
+    image: tradecase-api:local
+    build: {context: .., dockerfile: ops/Dockerfile}
+    environment: *runtime
+    ports: ["127.0.0.1:${TRADECASE_API_PORT:-8800}:8000"]
+    volumes:
+      - type: volume
+        source: objects-and-work
+        target: /app/.tradecase
+        volume: {nocopy: true}
+    depends_on:
+      storage-init: {condition: service_completed_successfully}
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+  worker:
+    image: tradecase-api:local
+    environment: *runtime
+    command: [arq, tradecase.platform.workers.WorkerSettings]
+    volumes:
+      - type: volume
+        source: objects-and-work
+        target: /app/.tradecase
+        volume: {nocopy: true}
+    depends_on:
+      storage-init: {condition: service_completed_successfully}
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    restart: unless-stopped
+  frontend:
+    image: tradecase-frontend:local
+    build: {context: ../frontend, dockerfile: Dockerfile}
+    environment:
+      TRADECASE_API_URL: http://api:8000
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+    ports: ["127.0.0.1:${TRADECASE_WEB_PORT:-3300}:3000"]
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  redis-data:
+  objects-and-work:

@@ -15,3 +15,22 @@ Optional projects currently not bundled: Crawl4AI `888299fb...` has Apache-2.0 p
 `src/tradecase/vendor/ai_hunter/url_filter.py` is adapted from `backend/tools/url_filter.py` in https://github.com/xiongQvQ/AI_Find_Customer at `9b2fde8f719623c627516da2663707a893ee6805`. Copyright (c) 2026 AI Hunter. Full MIT grant/disclaimer is retained in `src/tradecase/vendor/ai_hunter/LICENSE`. Modifications validate scheme/host/ports and correctly scope LinkedIn matching. No other AI Hunter code, agents, services or PDF dependencies are bundled.
 
 Installed core/dev distribution metadata and the bundled MIT notices are checked by `tools/check_licenses.py`; this does not claim clearance for uninstalled optional stacks. Dependency versions and download hashes are pinned in `uv.lock`.
+
+## Full workbench dependencies (2026-10-28)
+
+The optional `platform` extra uses installed libraries, not copied AionUI,
+AionCore or Multica application code. It includes FastAPI/Pydantic, SQLAlchemy,
+Alembic, LangGraph and its checkpoint adapters, OpenAI Agents SDK, ARQ/Redis,
+psycopg, boto3, httpx, Uvicorn and ReportLab. Python versions and distribution
+hashes are fixed in `uv.lock`; the Next.js/React frontend is fixed in
+`frontend/package-lock.json`. Original third-party license notices remain with
+installed packages and must accompany distributed builds as applicable.
+
+The installed Python metadata inventory is recorded in
+`docs/evidence/full-delivery/dependency-license-inventory.json`. This includes
+licenses beyond MIT/Apache, notably psycopg's LGPL and MPL metadata in transitive
+dependencies; an inventory is not a legal clearance opinion. The original
+`tools/check_licenses.py` continues to check its defined core/dev and vendored
+source scope and does not claim to audit every frontend/platform transitive
+obligation. No paid registry data, authenticated browser content, restricted
+upstream source or real customer evidence is redistributed in this delivery.

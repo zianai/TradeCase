@@ -56,3 +56,11 @@ cookies*
 .claude/skills/
 !docs/evidence/**/*.log
 .tradecase/
+
+# Workbench generated dependencies and local outputs
+frontend/node_modules/
+frontend/.next/
+frontend/test-results/
+frontend/playwright-report/
+frontend/tsconfig.tsbuildinfo
+!frontend/design/**/*.log

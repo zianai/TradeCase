@@ -13,5 +13,61 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e '.[dev]'
+      - run: pip install -e '.[dev,platform]'
       - run: make check
+
+  infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e '.[dev,platform]'
+      - run: python ops/verify_infrastructure.py
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e '.[platform]'
+      - run: npm ci && npm run build && npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Start isolated local acceptance services
+        env:
+          TRADECASE_DEMO_ENABLED: 'true'
+          TRADECASE_PORT: '8800'
+          TRADECASE_API_URL: http://127.0.0.1:8800
+        run: |
+          mkdir -p .tradecase
+          python -m tradecase.platform.cli init-db
+          python -m tradecase.platform.cli provision-user --tenant ci --name CI --token-file .tradecase/ci-token
+          python -m tradecase.platform.server > .tradecase/api.log 2>&1 &
+          cd frontend
+          npm run start -- --port 3300 > ../.tradecase/web.log 2>&1 &
+          python - <<'PYREADY'
+          import time, urllib.request
+          opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+          for url in ("http://127.0.0.1:8800/api/health", "http://127.0.0.1:3300"):
+              for attempt in range(60):
+                  try:
+                      with opener.open(url, timeout=2) as response:
+                          assert response.status == 200
+                      break
+                  except Exception:
+                      if attempt == 59:
+                          raise
+                      time.sleep(1)
+          PYREADY
+      - run: npm run test:e2e
+        working-directory: frontend
+        env:
+          TRADECASE_E2E_TOKEN_FILE: ../.tradecase/ci-token
+          TRADECASE_WEB_URL: http://127.0.0.1:3300
