@@ -138,10 +138,20 @@ export async function streamCaseEvents(
       "Last-Event-ID": String(cursor),
     });
     if (token()) headers.set("Authorization", "Bearer " + token());
+    // Cancel an established stream through its reader. Aborting fetch after
+    // headers can also reject the browser's internal stream promises (WebKit).
+    const connection = new AbortController();
+    let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
+    const cancel = () => {
+      if (reader) void reader.cancel().catch(() => {});
+      else connection.abort();
+    };
+    signal.addEventListener("abort", cancel, { once: true });
+    if (signal.aborted) cancel();
     try {
       const response = await fetch(
         `/api/cases/${encodeURIComponent(caseId)}/events`,
-        { headers, signal, cache: "no-store" },
+        { headers, signal: connection.signal, cache: "no-store" },
       );
       if (
         response.status === 401 ||
@@ -155,13 +165,14 @@ export async function streamCaseEvents(
         !response.headers.get("content-type")?.includes("text/event-stream")
       )
         throw new Error("Event connection unavailable");
-      const reader = response.body.getReader();
+      reader = response.body.getReader();
+      void reader.closed.catch(() => {});
       const decoder = new TextDecoder();
       let buffer = "";
       try {
         while (!signal.aborted) {
           const next = await reader.read();
-          if (next.done) break;
+          if (next.done || signal.aborted) break;
           buffer += decoder
             .decode(next.value, { stream: true })
             .replace(/\r\n/g, "\n");
@@ -187,9 +198,12 @@ export async function streamCaseEvents(
         }
       } finally {
         await reader.cancel().catch(() => {});
+        reader.releaseLock();
       }
     } catch {
       if (signal.aborted) return;
+    } finally {
+      signal.removeEventListener("abort", cancel);
     }
     // Server streams are bounded. Reconnect from the durable sequence, not zero.
     await new Promise<void>((resolve) => {

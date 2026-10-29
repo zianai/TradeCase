@@ -549,6 +549,21 @@ class CaseService:
                 )
                 .values(status="INVALIDATED")
             )
+            # Invalidated reviews must not remain actionable waiting tasks.
+            obsolete = list(s.scalars(select(m.Task).where(
+                m.Task.tenant_id == case.tenant_id,
+                m.Task.case_id == case.id,
+                m.Task.task_type == "prepare_approval",
+                m.Task.status == "WAITING_HUMAN",
+            )))
+            for task in obsolete:
+                approval_id = (task.result or {}).get("approval_id")
+                if approval_id:
+                    approval = self.scoped(s, m.Approval, case.tenant_id, approval_id)
+                    if approval.status == "INVALIDATED":
+                        task.status = "CANCELLED"
+                        self.event(s, case.tenant_id, case.id, "task.cancelled",
+                                   {"reason": "approval_invalidated"}, actor=actor["id"], task_id=task.id)
             self.transition(s, case, "NEEDS_REVIEW")
             self.prepare_approval(s, case)
             # Re-enter same workflow from a new approval preparation checkpoint via coordinator.
