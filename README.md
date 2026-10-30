@@ -67,3 +67,9 @@ cd frontend && npm run typecheck && npm run build
 项目继承 [MIT 许可证](LICENSE)及原作者版权声明；上游代码和第三方依赖说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 和 [源码复用矩阵](docs/SOURCE_REUSE_MATRIX.md)。依赖许可证清单并不等同于完整法律审查。将仓库公开前应完成这些审查并确认维护者和安全问题的联系方式。
 
 更多资料：[中文入口](README.zh.md) · [架构与决策](docs/ARCHITECTURE.md) · [安全复核](docs/architecture/SECURITY_REVIEW.md) · [保留与删除](docs/RETENTION.md) · [API 契约](contracts/workbench-openapi.json)。
+
+## Optional Visual Tasks
+
+The Visual Domain adds product truth snapshots, authorized references, separate plan and image approvals, Creative Engine integration and traceable Buyer Proposals. It is disabled by default and does not block ordinary Case analysis. Generated images never become factual evidence, and proposals do not authorize email sending.
+
+See [Visual Task usage and deployment](docs/VISUAL_TASKS.md), [architecture decision](docs/architecture/adr-005-visual-domain.md), and [executed upgrade validation](docs/VISUAL_UPGRADE_REPORT.md). Real HTTP integration with Creative Engine 1.0.0, Mock Provider and deterministic composition has been tested; paid generation and production authentication deployment are not validated.

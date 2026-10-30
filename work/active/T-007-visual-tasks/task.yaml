@@ -1,0 +1,18 @@
+schema_version: 3
+protocol_version: "3.0"
+id: "T-007-visual-tasks"
+status: ready_for_review
+goal: "Incremental optional Visual Domain with approved product truth, plans, assets and buyer proposals"
+scope: ["Visual domain and migration", "Creative Engine HTTP adapter", "Optional workflow integration", "API CLI Web", "Contract and regression validation"]
+non_goals: ["No image generator or general visual QA", "No real mail or customer publication", "No paid provider execution"]
+acceptance: ["Old Case flows remain independent", "Versioned plan and asset approvals", "Truth and Evidence isolated from generated assets", "Actual tested mock and available service integration"]
+risk: high
+risk_reasons: [cross-component, security-or-safety]
+protected_paths: []
+context_refs: [docs/visual-task-upgrade-plan.md, docs/VISUAL_TASKS.md]
+decision_refs: [docs/architecture/adr-005-visual-domain.md]
+evidence_refs: [docs/VISUAL_UPGRADE_REPORT.md]
+updated: "2026-10-30"
+implementation_started: true
+review_ref: work/active/T-007-visual-tasks/review.md
+review_current: true

@@ -3,5 +3,5 @@ protocol_version: "3.0"
 project_id: "TRADECASE_V1"
 project_name: "TradeCase V1"
 status: active
-active_task: "T-005-full-delivery"
-updated: "2026-10-28"
+active_task: "T-007-visual-tasks"
+updated: "2026-10-30"
