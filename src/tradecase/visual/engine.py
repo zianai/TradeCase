@@ -300,7 +300,7 @@ class CreativeEngineClient:
             "project_id": _id(value.get("project_id")),
             "status": REMOTE_STATES.get(value.get("status"), "reconciling"),
             "remote_status": value.get("status"),
-            "cost_usd": _finite(value.get("cost_usd", 0)),
+            "cost_usd": _finite(value.get("cost_usd")),
             "provider": value.get("provider"),
             "assets": [],
             "tasks": value.get("tasks", []),

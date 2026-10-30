@@ -1,4 +1,8 @@
-.PHONY: check lint demo
+.PHONY: check lint demo contract
+
+contract:
+	python contracts/visual-task/verify.py
+	python -m pytest contracts/visual-task/test_consumer.py contracts/visual-task/test_verifier.py -q
 
 check:
 	python -m compileall -q src scripts

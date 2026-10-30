@@ -1,0 +1,1042 @@
+{
+  "version": "1.0.0",
+  "purpose": "Synthetic zero-cost consumer requirements, not a product or model-quality fixture. Additive response fields allowed.",
+  "fixture_bindings": {
+    "project_id": "project-fixture",
+    "source_id": "source-fixture",
+    "truth_id": "truth-fixture",
+    "brief_id": "brief-fixture",
+    "plan_id": "plan-fixture",
+    "batch_id": "batch-fixture",
+    "task_id": "task-fixture",
+    "asset_id": "asset-fixture",
+    "asset_sha": "c8de58785d4d8a34d7d077efbc511cb1a023eae1489d9dc67c0d82fdc789b641",
+    "asset_size": 79
+  },
+  "fixture_png": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAFklEQVR4nGPgCdAgCTGMahjVMHw1AAAS5oQBDTCNRAAAAABJRU5ErkJggg==",
+  "consumer_plan": {
+    "visual_task_id": "contract-visual",
+    "product_id": "SYNTHETIC-CONTRACT",
+    "concept": true,
+    "intent": "logo_customization",
+    "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+    "source_assets": [
+      {
+        "external_id": "logo-fixture",
+        "filename": "fictional-logo.png",
+        "data_base64": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAFklEQVR4nGPgCdAgCTGMahjVMHw1AAAS5oQBDTCNRAAAAABJRU5ErkJggg==",
+        "kind": "logo",
+        "authorized": true,
+        "verified": false,
+        "sensitive_data_cleared": true,
+        "source_version": "1"
+      }
+    ],
+    "truth_snapshot": {
+      "version": 1,
+      "facts": [
+        {
+          "name": "material",
+          "value": "synthetic test wood",
+          "source_asset_id": "logo-fixture",
+          "source_version": "1",
+          "evidence_status": "concept",
+          "confirmed_at": "2026-10-30T00:00:00Z",
+          "external_allowed": false
+        }
+      ]
+    },
+    "allowed_changes": [
+      "authorized_logo"
+    ],
+    "forbidden_changes": [
+      "structure"
+    ],
+    "variants": 1,
+    "budget_usd": 0,
+    "provider": "mock"
+  },
+  "steps": [
+    {
+      "name": "health",
+      "method": "GET",
+      "path": "/health",
+      "fixture": {
+        "status": "ok",
+        "schema_version": "1.0.0"
+      },
+      "expect": {
+        "status": "ok",
+        "schema_version": "1.0.0"
+      }
+    },
+    {
+      "name": "authentication",
+      "method": "GET",
+      "path": "/health",
+      "fixture": {
+        "error": {
+          "code": "UNAUTHORIZED"
+        }
+      },
+      "expect": {
+        "error": {
+          "code": "UNAUTHORIZED"
+        }
+      },
+      "status": 401,
+      "consumer": false,
+      "headers": {
+        "Authorization": "Bearer invalid-fixture-token"
+      }
+    },
+    {
+      "name": "unsupported-version",
+      "method": "GET",
+      "path": "/health",
+      "fixture": {
+        "error": {
+          "code": "UNSUPPORTED_API_VERSION"
+        }
+      },
+      "expect": {
+        "error": {
+          "code": "UNSUPPORTED_API_VERSION"
+        }
+      },
+      "status": 409,
+      "consumer": false,
+      "headers": {
+        "X-API-Version": "2.0.0"
+      }
+    },
+    {
+      "name": "project",
+      "method": "POST",
+      "path": "/projects",
+      "fixture": {
+        "id": "${project_id}"
+      },
+      "expect": {
+        "id": "${project_id}"
+      },
+      "status": 201,
+      "capture": {
+        "project_id": "id"
+      },
+      "key": "contract-plan",
+      "body": {
+        "name": "TradeCase visual contract-visual",
+        "product_id": "SYNTHETIC-CONTRACT"
+      }
+    },
+    {
+      "name": "source",
+      "method": "POST",
+      "path": "/assets/import",
+      "fixture": {
+        "id": "${source_id}",
+        "identity": "source",
+        "authorized": true,
+        "source_version": "1"
+      },
+      "expect": {
+        "id": "${source_id}",
+        "identity": "source",
+        "authorized": true,
+        "source_version": "1"
+      },
+      "status": 201,
+      "capture": {
+        "source_id": "id"
+      },
+      "body": {
+        "project_id": "${project_id}",
+        "filename": "fictional-logo.png",
+        "data_base64": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAFklEQVR4nGPgCdAgCTGMahjVMHw1AAAS5oQBDTCNRAAAAABJRU5ErkJggg==",
+        "kind": "logo",
+        "authorized": true,
+        "verified": false,
+        "sensitive_data_cleared": true,
+        "source_version": "1"
+      }
+    },
+    {
+      "name": "truth",
+      "method": "POST",
+      "path": "/truth-snapshots",
+      "fixture": {
+        "id": "${truth_id}",
+        "facts": [
+          {
+            "name": "material",
+            "value": "synthetic test wood",
+            "source_asset_id": "${source_id}",
+            "source_version": "1",
+            "evidence_status": "concept",
+            "confirmed_at": "2026-10-30T00:00:00Z",
+            "external_allowed": false
+          }
+        ]
+      },
+      "expect": {
+        "id": "${truth_id}",
+        "facts": [
+          {
+            "name": "material",
+            "value": "synthetic test wood",
+            "source_asset_id": "${source_id}",
+            "source_version": "1",
+            "evidence_status": "concept",
+            "confirmed_at": "2026-10-30T00:00:00Z",
+            "external_allowed": false
+          }
+        ]
+      },
+      "status": 201,
+      "capture": {
+        "truth_id": "id"
+      },
+      "body": {
+        "project_id": "${project_id}",
+        "product_id": "SYNTHETIC-CONTRACT",
+        "version": "1",
+        "facts": [
+          {
+            "name": "material",
+            "value": "synthetic test wood",
+            "source_asset_id": "${source_id}",
+            "source_version": "1",
+            "evidence_status": "concept",
+            "confirmed_at": "2026-10-30T00:00:00Z",
+            "external_allowed": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "brief",
+      "method": "POST",
+      "path": "/briefs",
+      "fixture": {
+        "id": "${brief_id}"
+      },
+      "expect": {
+        "id": "${brief_id}"
+      },
+      "status": 201,
+      "capture": {
+        "brief_id": "id"
+      },
+      "body": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}"
+      }
+    },
+    {
+      "name": "plan",
+      "method": "POST",
+      "path": "/briefs/${brief_id}/plan",
+      "fixture": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}",
+        "id": "${plan_id}",
+        "strategy": "generate",
+        "requires_human_approval": true,
+        "blocked_reasons": []
+      },
+      "expect": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}",
+        "id": "${plan_id}",
+        "strategy": "generate",
+        "requires_human_approval": true,
+        "blocked_reasons": []
+      },
+      "capture": {
+        "plan_id": "id"
+      }
+    },
+    {
+      "name": "paid-generation-denied",
+      "method": "POST",
+      "path": "/batches",
+      "fixture": {
+        "error": {
+          "code": "PAID_AUTHORIZATION_REQUIRED"
+        }
+      },
+      "expect": {
+        "error": {
+          "code": "PAID_AUTHORIZATION_REQUIRED"
+        }
+      },
+      "status": 400,
+      "consumer": false,
+      "body": {
+        "plan_id": "${plan_id}",
+        "budget_usd": 0,
+        "authorize_paid": false,
+        "vision_review": false,
+        "provider": "contract-paid"
+      }
+    },
+    {
+      "name": "budget-ceiling",
+      "method": "POST",
+      "path": "/batches",
+      "fixture": {
+        "error": {
+          "code": "BUDGET_EXCEEDED"
+        }
+      },
+      "expect": {
+        "error": {
+          "code": "BUDGET_EXCEEDED"
+        }
+      },
+      "status": 400,
+      "consumer": false,
+      "body": {
+        "plan_id": "${plan_id}",
+        "budget_usd": 0,
+        "authorize_paid": true,
+        "vision_review": false,
+        "provider": "contract-paid"
+      }
+    },
+    {
+      "name": "submit",
+      "method": "POST",
+      "path": "/batches",
+      "fixture": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "queued",
+        "tasks": []
+      },
+      "expect": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0
+      },
+      "status": 202,
+      "capture": {
+        "batch_id": "id"
+      },
+      "key": "contract-submit",
+      "one_of": {
+        "status": [
+          "queued",
+          "running",
+          "qa_pending",
+          "review_pending"
+        ]
+      },
+      "body": {
+        "plan_id": "${plan_id}",
+        "budget_usd": 0,
+        "authorize_paid": false,
+        "vision_review": false,
+        "provider": "mock"
+      }
+    },
+    {
+      "name": "idempotent-replay",
+      "method": "POST",
+      "path": "/batches",
+      "fixture": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "queued",
+        "tasks": []
+      },
+      "expect": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0
+      },
+      "status": 202,
+      "key": "contract-submit",
+      "one_of": {
+        "status": [
+          "queued",
+          "running",
+          "qa_pending",
+          "review_pending"
+        ]
+      },
+      "body": {
+        "plan_id": "${plan_id}",
+        "budget_usd": 0,
+        "authorize_paid": false,
+        "vision_review": false,
+        "provider": "mock"
+      }
+    },
+    {
+      "name": "idempotent-conflict",
+      "method": "POST",
+      "path": "/batches",
+      "fixture": {
+        "error": {
+          "code": "IDEMPOTENCY_CONFLICT"
+        }
+      },
+      "expect": {
+        "error": {
+          "code": "IDEMPOTENCY_CONFLICT"
+        }
+      },
+      "status": 409,
+      "consumer": false,
+      "key": "contract-submit",
+      "body": {
+        "plan_id": "${plan_id}",
+        "budget_usd": 1,
+        "authorize_paid": false,
+        "vision_review": false,
+        "provider": "mock"
+      }
+    },
+    {
+      "name": "batch-review-pending",
+      "method": "GET",
+      "path": "/batches/${batch_id}",
+      "fixture": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "review_pending",
+        "tasks": [
+          {
+            "id": "${task_id}",
+            "batch_id": "${batch_id}",
+            "plan_id": "${plan_id}",
+            "provider": "mock",
+            "asset_id": "${asset_id}"
+          }
+        ]
+      },
+      "expect": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "review_pending",
+        "tasks": [
+          {
+            "id": "${task_id}",
+            "batch_id": "${batch_id}",
+            "plan_id": "${plan_id}",
+            "provider": "mock",
+            "asset_id": "${asset_id}"
+          }
+        ]
+      },
+      "capture": {
+        "task_id": "tasks.0.id",
+        "asset_id": "tasks.0.asset_id"
+      },
+      "poll": true
+    },
+    {
+      "name": "batch-plan",
+      "method": "GET",
+      "path": "/plans/${plan_id}",
+      "fixture": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}",
+        "id": "${plan_id}",
+        "strategy": "generate",
+        "requires_human_approval": true,
+        "blocked_reasons": []
+      },
+      "expect": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}",
+        "id": "${plan_id}",
+        "strategy": "generate",
+        "requires_human_approval": true,
+        "blocked_reasons": []
+      }
+    },
+    {
+      "name": "batch-asset",
+      "method": "GET",
+      "path": "/assets/${asset_id}",
+      "fixture": {
+        "id": "${asset_id}",
+        "project_id": "${project_id}",
+        "batch_id": "${batch_id}",
+        "task_id": "${task_id}",
+        "provider": "mock",
+        "truth_snapshot_id": "${truth_id}",
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "format": "png",
+        "identity": "mock",
+        "sha256": "${asset_sha}",
+        "size_bytes": "${asset_size}",
+        "review_status": "pending",
+        "qa": {
+          "status": "warn",
+          "checks": [],
+          "issues": []
+        }
+      },
+      "expect": {
+        "id": "${asset_id}",
+        "project_id": "${project_id}",
+        "batch_id": "${batch_id}",
+        "task_id": "${task_id}",
+        "provider": "mock",
+        "truth_snapshot_id": "${truth_id}",
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "format": "png",
+        "identity": "mock",
+        "sha256": "${asset_sha}",
+        "size_bytes": "${asset_size}",
+        "review_status": "pending"
+      },
+      "capture": {
+        "asset_sha": "sha256",
+        "asset_size": "size_bytes"
+      },
+      "one_of": {
+        "qa.status": [
+          "pass",
+          "warn"
+        ]
+      }
+    },
+    {
+      "name": "asset-metadata",
+      "method": "GET",
+      "path": "/assets/${asset_id}",
+      "fixture": {
+        "id": "${asset_id}",
+        "project_id": "${project_id}",
+        "batch_id": "${batch_id}",
+        "task_id": "${task_id}",
+        "provider": "mock",
+        "truth_snapshot_id": "${truth_id}",
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "format": "png",
+        "identity": "mock",
+        "sha256": "${asset_sha}",
+        "size_bytes": "${asset_size}",
+        "review_status": "pending",
+        "qa": {
+          "status": "warn",
+          "checks": [],
+          "issues": []
+        }
+      },
+      "expect": {
+        "id": "${asset_id}",
+        "project_id": "${project_id}",
+        "batch_id": "${batch_id}",
+        "task_id": "${task_id}",
+        "provider": "mock",
+        "truth_snapshot_id": "${truth_id}",
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "format": "png",
+        "identity": "mock",
+        "sha256": "${asset_sha}",
+        "size_bytes": "${asset_size}",
+        "review_status": "pending"
+      },
+      "one_of": {
+        "qa.status": [
+          "pass",
+          "warn"
+        ]
+      }
+    },
+    {
+      "name": "asset-bytes",
+      "method": "GET",
+      "path": "/assets/${asset_id}/file",
+      "fixture": null,
+      "expect": null,
+      "binary": true
+    },
+    {
+      "name": "generated-is-not-evidence",
+      "method": "POST",
+      "path": "/truth-snapshots",
+      "fixture": {
+        "error": {
+          "code": "INVALID_EVIDENCE"
+        }
+      },
+      "expect": {
+        "error": {
+          "code": "INVALID_EVIDENCE"
+        }
+      },
+      "status": 400,
+      "consumer": false,
+      "body": {
+        "project_id": "${project_id}",
+        "product_id": "SYNTHETIC-CONTRACT",
+        "version": "2",
+        "facts": [
+          {
+            "name": "material",
+            "value": "synthetic test wood",
+            "source_asset_id": "${asset_id}",
+            "source_version": "1",
+            "evidence_status": "concept",
+            "confirmed_at": "2026-10-30T00:00:00Z",
+            "external_allowed": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "no-automatic-approval",
+      "method": "GET",
+      "path": "/integrations/tradecase/batches/${batch_id}",
+      "fixture": {
+        "batch_id": "${batch_id}",
+        "execution_status": "review_pending",
+        "approved_asset_ids": [],
+        "export_package": []
+      },
+      "expect": {
+        "batch_id": "${batch_id}",
+        "execution_status": "review_pending",
+        "approved_asset_ids": [],
+        "export_package": []
+      },
+      "consumer": false
+    },
+    {
+      "name": "reconcile-list",
+      "method": "GET",
+      "path": "/batches?limit=200&offset=0",
+      "fixture": {
+        "items": [
+          {
+            "id": "${batch_id}",
+            "project_id": "${project_id}",
+            "plan_id": "${plan_id}",
+            "provider": "mock",
+            "cost_usd": 0,
+            "status": "review_pending",
+            "tasks": [
+              {
+                "id": "${task_id}",
+                "batch_id": "${batch_id}",
+                "plan_id": "${plan_id}",
+                "provider": "mock",
+                "asset_id": "${asset_id}"
+              }
+            ]
+          }
+        ],
+        "total": 1
+      },
+      "expect": {
+        "items": [
+          {
+            "id": "${batch_id}",
+            "project_id": "${project_id}",
+            "plan_id": "${plan_id}",
+            "provider": "mock",
+            "cost_usd": 0,
+            "status": "review_pending",
+            "tasks": [
+              {
+                "id": "${task_id}",
+                "batch_id": "${batch_id}",
+                "plan_id": "${plan_id}",
+                "provider": "mock",
+                "asset_id": "${asset_id}"
+              }
+            ]
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "name": "reconcile-batch",
+      "method": "GET",
+      "path": "/batches/${batch_id}",
+      "fixture": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "review_pending",
+        "tasks": [
+          {
+            "id": "${task_id}",
+            "batch_id": "${batch_id}",
+            "plan_id": "${plan_id}",
+            "provider": "mock",
+            "asset_id": "${asset_id}"
+          }
+        ]
+      },
+      "expect": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "review_pending",
+        "tasks": [
+          {
+            "id": "${task_id}",
+            "batch_id": "${batch_id}",
+            "plan_id": "${plan_id}",
+            "provider": "mock",
+            "asset_id": "${asset_id}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reconcile-plan",
+      "method": "GET",
+      "path": "/plans/${plan_id}",
+      "fixture": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}",
+        "id": "${plan_id}",
+        "strategy": "generate",
+        "requires_human_approval": true,
+        "blocked_reasons": []
+      },
+      "expect": {
+        "project_id": "${project_id}",
+        "source": {
+          "system": "tradecase",
+          "external_id": "contract-visual"
+        },
+        "workflow": "buyer-proposal",
+        "intent": "logo_customization",
+        "requirements": "FICTIONAL contract fixture. Show a concept with authorized logo; no safety or manufacturing claims.",
+        "product": {
+          "product_id": "SYNTHETIC-CONTRACT",
+          "stage": "concept",
+          "truth_snapshot_id": "${truth_id}"
+        },
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "fidelity": "exploratory",
+        "allowed_changes": [
+          "authorized_logo"
+        ],
+        "forbidden_changes": [
+          "structure"
+        ],
+        "variants": 1,
+        "budget_usd": 0,
+        "provider": "mock",
+        "delivery_target": "buyer_review",
+        "scenes": [
+          "Studio"
+        ],
+        "authorized_logo_asset_id": "${source_id}",
+        "id": "${plan_id}",
+        "strategy": "generate",
+        "requires_human_approval": true,
+        "blocked_reasons": []
+      }
+    },
+    {
+      "name": "reconcile-asset",
+      "method": "GET",
+      "path": "/assets/${asset_id}",
+      "fixture": {
+        "id": "${asset_id}",
+        "project_id": "${project_id}",
+        "batch_id": "${batch_id}",
+        "task_id": "${task_id}",
+        "provider": "mock",
+        "truth_snapshot_id": "${truth_id}",
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "format": "png",
+        "identity": "mock",
+        "sha256": "${asset_sha}",
+        "size_bytes": "${asset_size}",
+        "review_status": "pending",
+        "qa": {
+          "status": "warn",
+          "checks": [],
+          "issues": []
+        }
+      },
+      "expect": {
+        "id": "${asset_id}",
+        "project_id": "${project_id}",
+        "batch_id": "${batch_id}",
+        "task_id": "${task_id}",
+        "provider": "mock",
+        "truth_snapshot_id": "${truth_id}",
+        "reference_asset_ids": [
+          "${source_id}"
+        ],
+        "format": "png",
+        "identity": "mock",
+        "sha256": "${asset_sha}",
+        "size_bytes": "${asset_size}",
+        "review_status": "pending"
+      },
+      "one_of": {
+        "qa.status": [
+          "pass",
+          "warn"
+        ]
+      }
+    },
+    {
+      "name": "cancel",
+      "method": "POST",
+      "path": "/batches/${batch_id}/cancel",
+      "fixture": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "cancelled",
+        "tasks": []
+      },
+      "expect": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "cancelled"
+      }
+    },
+    {
+      "name": "cancel-replay",
+      "method": "POST",
+      "path": "/batches/${batch_id}/cancel",
+      "fixture": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "cancelled",
+        "tasks": []
+      },
+      "expect": {
+        "id": "${batch_id}",
+        "project_id": "${project_id}",
+        "plan_id": "${plan_id}",
+        "provider": "mock",
+        "cost_usd": 0,
+        "status": "cancelled"
+      },
+      "consumer": false
+    }
+  ]
+}

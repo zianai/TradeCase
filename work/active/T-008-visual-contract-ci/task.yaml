@@ -1,0 +1,16 @@
+schema_version: 3
+protocol_version: "3.0"
+id: T-008-visual-contract-ci
+status: ready_for_review
+goal: Audit and add independent permanent Visual Task contract CI gates.
+scope: [Versioned synthetic HTTP contract, Consumer CI, Provider compatibility verification, Documentation]
+non_goals: [Paid generation, Customer data or mail, Publishing or changing GitHub visibility, Existing uncommitted test sets]
+acceptance: [Real adapter verified, Real HTTP provider verified, Breaking changes fail, Additive responses pass, Remote activation limits explicit]
+risk: medium
+risk_reasons: [cross-component]
+protected_paths: []
+context_refs: [docs/VISUAL_CONTRACT_CI.md]
+decision_refs: [docs/architecture/adr-006-visual-contract-ci.md]
+evidence_refs: [docs/VISUAL_CONTRACT_REPORT.md]
+updated: "2026-10-30"
+implementation_started: true

@@ -1,0 +1,40 @@
+name: Visual Task contract
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 8 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  consumer:
+    name: visual-contract-consumer-v1
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated contract dependencies
+        run: python -m pip install -r contracts/visual-task/requirements.txt
+      - name: Protect released contract bytes
+        env:
+          CONTRACT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: python contracts/visual-task/verify.py --base "$CONTRACT_BASE"
+      - name: Verify actual consumer and failure boundaries
+        env:
+          PYTHONPATH: src
+        run: python -m pytest contracts/visual-task/test_consumer.py contracts/visual-task/test_verifier.py -q --junitxml=contract-results.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-contract-consumer-v1
+          path: contract-results.xml
+          if-no-files-found: error
