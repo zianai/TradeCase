@@ -14,6 +14,7 @@ import {
 } from "react";
 import Link from "next/link";
 import ModalOverlay from "./modal-overlay";
+import VisualWorkspace, { VisualRecommendations } from "./visuals";
 import { applyDraftTone, DraftTone } from "@/lib/draft-tone";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -341,7 +342,9 @@ export default function Workbench() {
               key={n.key}
               href={n.key === "dashboard" ? "/" : "/" + n.key}
               className={section === n.key ? "nav-item active" : "nav-item"}
-              aria-label={`${n.label} ${n.sub}`}
+              aria-label={
+                n.key === "approvals" ? undefined : `${n.label} ${n.sub}`
+              }
               title={n.label}
               aria-current={section === n.key ? "page" : undefined}
             >
@@ -1410,10 +1413,15 @@ function CaseDetail({
         }}
         related={related}
       />
+      <VisualRecommendations
+        caseId={caseId}
+        onOpen={() => navigateTab("visuals")}
+      />
       <div className="case-tabs" role="tablist" aria-label="案件详情">
         {[
           ["research", "调查与证据"],
           ["risks", "风险与规则"],
+          ["visuals", "视觉任务与提案"],
           ["draft", "邮件草稿与审核"],
           ["runs", "执行记录"],
           ["timeline", "跟进时间线"],
@@ -1569,6 +1577,18 @@ function CaseDetail({
             </Empty>
           )}
         </section>
+      )}
+      {tab === "visuals" && (
+        <VisualWorkspace
+          key={caseId}
+          caseId={caseId}
+          caseVersion={Number(data.version)}
+          canReview={canReview}
+          onChange={() => {
+            void refresh();
+            onChange();
+          }}
+        />
       )}
       {tab === "draft" && (
         <DraftWorkspace

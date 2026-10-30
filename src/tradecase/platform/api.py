@@ -53,6 +53,8 @@ def create_app(settings=None, db=None, runner=None, connector=None):
 
             task = asyncio.create_task(recover_local(service, coordinator))
             pending.add(task)
+            from tradecase.visual.worker import recover_visual_local
+            pending.add(asyncio.create_task(recover_visual_local(service)))
         yield
         for task in pending:
             task.cancel()
@@ -432,5 +434,10 @@ def create_app(settings=None, db=None, runner=None, connector=None):
     @app.post("/api/outbound-actions/{identity}/cancel")
     def cancel_action(identity: str, body: CancelAction, user=Depends(actor)):
         return outbox.cancel(user, identity, body.case_version, body.reason)
+
+    from tradecase.visual.api import router as visual_router
+    from tradecase.visual.service import VisualService
+    app.state.visual = VisualService(service)
+    app.include_router(visual_router(app.state.visual, actor, idem))
 
     return app

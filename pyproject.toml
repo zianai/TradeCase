@@ -36,7 +36,7 @@ tradecase = "tradecase.cli:main"
 tradecase-workbench = "tradecase.platform.cli:main"
 
 [tool.setuptools]
-packages = ["tradecase", "tradecase.platform", "tradecase.models", "tradecase.ingestion", "tradecase.vendor", "tradecase.vendor.ai_hunter", "tradecase_upstream"]
+packages = ["tradecase", "tradecase.visual", "tradecase.platform", "tradecase.models", "tradecase.ingestion", "tradecase.vendor", "tradecase.vendor.ai_hunter", "tradecase_upstream"]
 include-package-data = true
 
 [tool.setuptools.package-dir]

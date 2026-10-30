@@ -19,9 +19,13 @@ from tradecase.platform.services import ServiceError
 from tradecase.platform.storage import LocalStorage
 from tradecase.platform.workflow import checkpoint_saver
 from tradecase.util import no_symlinks
+from tradecase.visual import models as visual
 
 _KEY = re.compile(r"sha256/[a-f0-9]{2}/[a-f0-9]{64}$")
 _DELETE_ORDER = (
+    visual.BuyerProposal, visual.VisualReview, visual.VisualEvent, visual.VisualAsset,
+    visual.EngineRun, visual.PlanSnapshot, visual.VisualTask, visual.TruthSnapshot,
+    visual.SourceAsset, visual.Product,
     m.AgentRun, m.TaskAttempt, m.ClaimEvidenceLink, m.OutboundAction, m.Approval,
     m.ArtifactVersion, m.Artifact, m.RiskFinding, m.LeadAssessment, m.Source,
     m.Claim, m.FollowUp, m.EventLog, m.AuditLog, m.Task, m.WorkflowRun,
@@ -70,7 +74,9 @@ def verify_object_references(db, storage, tenant=None):
     with db.session() as session:
         for model, ref_field, hash_field in ((m.Inquiry, "raw_content_ref", "raw_hash"),
                                            (m.Source, "snapshot_ref", "snapshot_hash"),
-                                           (m.ArtifactVersion, "storage_ref", "content_hash")):
+                                           (m.ArtifactVersion, "storage_ref", "content_hash"),
+                                           (visual.SourceAsset, "storage_ref", "content_hash"),
+                                           (visual.VisualAsset, "storage_ref", "content_hash")):
             statement = select(model)
             if tenant is not None:
                 statement = statement.where(model.tenant_id == tenant)
@@ -132,6 +138,19 @@ class MaintenanceService:
             raise ServiceError("Only closed Cases older than the retention cutoff may be purged")
         if case.version != expected_version:
             raise ServiceError("Case changed; review retention plan again")
+        active_visual = session.scalar(select(visual.VisualTask.id).where(
+            visual.VisualTask.tenant_id == case.tenant_id, visual.VisualTask.case_id == case.id,
+            visual.VisualTask.status.in_(["queued", "running", "qa_pending", "reconciling", "cancelling"]),
+        ))
+        if active_visual:
+            raise ServiceError("Visual execution must be reconciled before retention")
+        unresolved_visual_run = session.scalar(select(visual.EngineRun.id).where(
+            visual.EngineRun.tenant_id == case.tenant_id, visual.EngineRun.case_id == case.id,
+            or_(visual.EngineRun.status.in_(["queued", "planning", "submitting", "running", "qa_pending", "reconciling"]),
+                visual.EngineRun.data["lease_until"].as_float() > m.utcnow().timestamp()),
+        ))
+        if unresolved_visual_run:
+            raise ServiceError("Remote Visual run must be reconciled before retention")
         active = session.scalar(select(m.WorkflowRun.id).where(
             m.WorkflowRun.tenant_id == case.tenant_id, m.WorkflowRun.case_id == case.id,
             or_(m.WorkflowRun.status.in_(["PENDING", "RUNNING", "WAITING_HUMAN"]),
@@ -223,6 +242,10 @@ class MaintenanceService:
             counts = {model.__tablename__: session.scalar(select(func.count()).select_from(model).where(
                 model.tenant_id == tenant, model.case_id == case_id,
             )) for model in _DELETE_ORDER}
+            receipts = (visual.RequestReceipt.tenant_id == tenant,
+                        visual.RequestReceipt.result["case_id"].as_string() == case_id)
+            counts[visual.RequestReceipt.__tablename__] = session.scalar(
+                select(func.count()).select_from(visual.RequestReceipt).where(*receipts))
             work_caches = self._work_caches(tenant, case_id)
             if dry_run:
                 return {"status": "PLANNED", "dry_run": True, "case_id": case_id, "version": case.version,
@@ -246,6 +269,7 @@ class MaintenanceService:
                 no_symlinks(work_cache)
                 if work_cache.exists():
                     shutil.rmtree(work_cache)
+            session.execute(delete(visual.RequestReceipt).where(*receipts))
             inquiry_id, entity_id = case.inquiry_id, case.buyer_entity_id
             for model in _DELETE_ORDER:
                 session.execute(delete(model).where(model.tenant_id == tenant, model.case_id == case_id))

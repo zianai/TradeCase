@@ -91,6 +91,13 @@ class OutboxService:
             else None
         )
 
+    def _visual_delivery_gate(self, session, case, version):
+        draft = json.loads(self.service.storage.get(version.storage_ref))
+        if draft.get("visual_attachment_ids"):
+            from tradecase.visual.engine import DisabledCreativeEngine
+            from tradecase.visual.service import VisualService
+            VisualService(self.service, engine=DisabledCreativeEngine()).validate_delivery(session, case, draft)
+
     def request_approval(self, actor, case_id, request):
         self.service.require(actor, "admin", "reviewer")
         target = email_address(request.target) if request.channel == "mail" else request.target
@@ -98,6 +105,7 @@ class OutboxService:
             case = self.service.lock_case(s, actor["tenant_id"], case_id, request.case_version)
             self.service.require_reviewed_draft(s, case)
             version = self.service.current_artifact(s, case.tenant_id, case.id, "draft")
+            self._visual_delivery_gate(s, case, version)
             if version.content_hash != request.artifact_hash:
                 raise ServiceError("Draft changed")
             if request.channel == "mail":
@@ -121,6 +129,7 @@ class OutboxService:
             approval = self.service.scoped(s, m.Approval, case.tenant_id, request.approval_id)
             version = self.service.validate_approval(s, case, approval, "mail_send")
             self.service.require_reviewed_draft(s, case)
+            self._visual_delivery_gate(s, case, version)
             if approval.status != "APPROVED" or approval.decision != "approved":
                 raise ServiceError("Explicit send approval required", 403)
             if request.artifact_hash != version.content_hash:
@@ -181,6 +190,7 @@ class OutboxService:
             approval = self.service.scoped(s, m.Approval, tenant, row.approval_id)
             version = self.service.validate_approval(s, case, approval, "mail_send")
             self.service.require_reviewed_draft(s, case)
+            self._visual_delivery_gate(s, case, version)
             if approval.status != "APPROVED":
                 raise ServiceError("Approval revoked", 403)
             if (

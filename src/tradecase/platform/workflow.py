@@ -49,6 +49,8 @@ class WorkflowState(TypedDict, total=False):
     outcome: str
     action_ref: str
     follow_up_ref: str
+    visual_summary: dict
+    visual_dispatch_count: int
 
 
 class WorkflowHost(Protocol):
@@ -125,7 +127,14 @@ def build_workflow(host: WorkflowHost, checkpointer: Any):
     graph.add_node("approval_interrupt", approval)
     graph.add_edge(START, "parse_inquiry")
     graph.add_edge("parse_inquiry", "normalize_entities")
-    graph.add_edge("normalize_entities", "plan_research")
+    if getattr(host, "visual_enabled", False):
+        graph.add_node("visual_opportunity", node("visual_opportunity"))
+        graph.add_node("visual_dispatch", node("visual_dispatch"))
+        graph.add_edge("normalize_entities", "visual_opportunity")
+        graph.add_edge("visual_opportunity", "visual_dispatch")
+        graph.add_edge("visual_dispatch", "plan_research")
+    else:
+        graph.add_edge("normalize_entities", "plan_research")
     research = ["identity_research", "company_profile_research", "buying_intent_research"]
     for name in research:
         graph.add_edge("plan_research", name)

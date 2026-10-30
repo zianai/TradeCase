@@ -270,6 +270,9 @@ def capture_url(store, url):
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "visual":
+        from tradecase.visual.cli import main as visual_main
+        return visual_main(sys.argv[2:])
     args = build_parser().parse_args()
     try:
         return dispatch(args)

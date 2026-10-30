@@ -37,6 +37,8 @@ RESEARCH = {"identity_research", "company_profile_research", "buying_intent_rese
 class PlatformWorkflowHost:
     def __init__(self, service, runner=None):
         self.service = service
+        from tradecase.visual.settings import VisualSettings
+        self.visual_enabled = VisualSettings().enabled
         self.db = service.db
         self.kernel = BusinessKernel(service)
         self.tasks = TaskManager(self.db)
@@ -358,11 +360,34 @@ class PlatformWorkflowHost:
             + version.content_hash
             + "\n\n"
         )
-        return head + current + tail
+        visual = ""
+        if self.visual_enabled:
+            try:
+                from tradecase.visual.service import VisualService
+                summary = VisualService(self.service).summary_for_case(tenant, case_id)
+                if summary["tasks"]:
+                    visual = "\n\n## Visual Proposal\n\n"
+                    for item in summary["tasks"]:
+                        visual += safe_md(item["id"] + ": " + item["status"]) + "\n\n"
+                    visual += "Generated visuals are communication artifacts, not factual evidence. Only current human-approved assets may be delivered.\n"
+            except Exception:
+                pass
+        return head + current + tail + visual
 
     def _deterministic(self, name, state):
         tenant, case_id = state["tenant_id"], state["case_id"]
         service = self.service
+        if name in {"visual_opportunity", "visual_dispatch"}:
+            # Optional branch is read-only and cannot make Case research depend on an engine.
+            try:
+                from tradecase.visual.service import VisualService
+                summary = VisualService(service).summary_for_case(tenant, case_id)
+                if name == "visual_opportunity":
+                    return {"visual_summary": {"count": len(summary["suggestions"]),
+                            "status": "suggested" if summary["suggestions"] else "not_recommended"}}
+                return {"visual_dispatch_count": sum(t["status"] == "queued" for t in summary["tasks"])}
+            except Exception:
+                return {"visual_summary": {"status": "unavailable", "count": 0}} if name == "visual_opportunity" else {"visual_dispatch_count": 0}
         if name == "parse_inquiry":
             store = self.kernel.materialize(tenant, case_id)
             return {"inquiry_ref": service.get(tenant, case_id)["inquiry_id"]}

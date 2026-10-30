@@ -12,6 +12,7 @@ from tradecase.platform import db as m
 from tradecase.platform.config import Settings
 from tradecase.platform.coordinator import CaseRunCoordinator
 from tradecase.platform.services import CaseService
+from tradecase.visual.worker import recover_visual
 
 
 async def startup(ctx):
@@ -104,7 +105,8 @@ class WorkerSettings:
     functions = [run_case_job]
     on_startup = startup
     on_shutdown = shutdown
-    cron_jobs = [cron(recover_due, second={0, 15, 30, 45}, run_at_startup=True)]
+    cron_jobs = [cron(recover_due, second={0, 15, 30, 45}, run_at_startup=True),
+                 cron(recover_visual, second={5, 20, 35, 50}, run_at_startup=True)]
     redis_settings = RedisSettings.from_dsn(Settings().redis_url)
     max_jobs = 8
     job_timeout = 180

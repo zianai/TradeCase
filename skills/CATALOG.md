@@ -1,7 +1,7 @@
 # TradeCase Skill catalog
 
-Canonical portable Markdown remains in the three original directories below.
-No new duplicate Skill or prompt-owned business state is introduced. `SkillAdapter`
+Canonical portable Markdown remains in the original directories below, with an optional visual-opportunity skill for the Visual Domain.
+No duplicate business Skill or prompt-owned business state is introduced. `SkillAdapter`
 loads these files byte-for-byte and records their SHA-256; the platform supplies
 bounded task context, available read-only tools and a typed result contract.
 
@@ -28,3 +28,5 @@ for Codex and Claude without changing them. The hash parity result for this deli
 is in [`skill-install.json`](../docs/evidence/full-delivery/skill-install.json).
 Skills grant no sending authority; the workbench's separately approved external
 actions remain outside the read-only Agent tool registry.
+
+| [visual-opportunity](visual-opportunity/SKILL.md) | Optional inquiry quotations and product context. | Ranked, schema-validated suggestions only; never execution, evidence promotion or sending authority. |
