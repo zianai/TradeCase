@@ -61,10 +61,8 @@ pnpm test:contract:tradecase
 
 ## GitHub 启用状态与限制
 
-本次仅新增本地代码、验证和提交，没有推送、建远程仓库、改套餐、公开仓库或设置分支保护。
+本次契约 CI 已按用户后续授权发布到两个私有仓库，首轮 GitHub Actions 均实际成功。精确提交、运行链接、发布范围及安全审计见 [GitHub 发布记录](GITHUB_CONTRACT_CI_PUBLICATION.md)。
 
-只读核查发现 `zianai/TradeCase` 为私有仓库，默认分支 main；远端当时只有 `TradeCase offline validation`，最近 `064e056` 的综合检查成功。新增契约 job 需推送后才会实际运行，不能把本地成功称为 GitHub Actions 成功。
-
-Creative Engine 没有配置 Git remote，需先指定并发布其独立仓库。两边 workflow 上线后，将各自稳定 job 名列为主分支必需检查。TradeCase 的保护接口目前返回 HTTP 403，提示需 GitHub Pro 或公开仓库；因此尚不能宣称“失败必定阻止合并”。没有为此修改账号套餐或仓库可见性。即使 CI 自动运行，也要把“有检查”与“合并强制门禁”区分开。
+CreativeEngine 的新私有仓库采用不含旧测试及运行数据的无父根快照；保留原本地历史。TradeCase 推送到现有功能分支，未合并 main。没有升级套餐或修改仓库可见性；分支保护套餐限制保持原状，因此“CI 自动运行”仍不等于“强制合并门禁”。
 
 过去不提交测试集的约束继续适用于旧测试、客户数据、截图和运行产物。本次固定 CI 所需的合成协议发布物和可执行检查随代码版本管理，否则独立仓库无法长期执行契约检查。

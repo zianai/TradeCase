@@ -1,5 +1,7 @@
 # Visual Task 契约 CI 实际验证记录
 
+后续远端发布已完成，见 [GitHub 实际执行记录](GITHUB_CONTRACT_CI_PUBLICATION.md)。以下保留发布前的本地验证历史。
+
 日期：2026-10-30。原始 Git 基线：TradeCase `064e0568b4d45e8368a57f7fb6cf288b979ef8fb`；Creative Engine `9275a01`。两个仓库的既有未提交修改均保留，本次提交只包含新增固定契约检查及相关边界修复。
 
 | 实际执行 | 结果 | 说明 |
@@ -21,7 +23,7 @@
 
 实际双边运行的费用为 USD 0，所有图片为合成 fixture，测试素材保持 pending，未创建用户业务审批或邮件。本次没有使用已有 OpenAI 密钥、浏览器或用户工作数据库。确定性契约测试不证明真实模型的 Logo 还原、图片质量或生产部署配置。
 
-## 远端状态（只读核查）
+## 远端状态（首次本地验证时的只读核查）
 
 GitHub 连接器读取 TradeCase 返回 404，使用已有本机 gh 登录核查到私有仓库 `zianai/TradeCase`。默认 main，当时仅有 `TradeCase offline validation` 工作流；最新 Visual Tasks 提交的既有综合 CI 成功： https://github.com/zianai/TradeCase/actions/runs/41090581913 。它没有验证本次新契约工作流。
 
