@@ -1,6 +1,7 @@
 ---
 task_ref: work/active/T-011-p8-p10/task.yaml
 subject: git:381fbc182429562046461dd518bcb4d8851ff77e
+subject_paths: [".github/workflows/check.yml", ".gitignore", "Makefile", "frontend/components/workbench.tsx", "frontend/tests/live-e2e.spec.ts", "frontend/tests/p8-provenance.spec.ts", "ops/p8_browser_acceptance.py", "ops/p8_ce_http_smoke.py", "ops/p8_tls_acceptance.py", "src/tradecase/platform/api.py", "src/tradecase/platform/cli.py", "src/tradecase/platform/coordinator.py", "src/tradecase/platform/pilot.py", "src/tradecase/platform/review_inputs.py", "src/tradecase/platform/runtime.py", "src/tradecase/platform/services.py", "src/tradecase/platform/source_intake.py", "tests/platform/test_deployment.py", "tests/platform/test_p8_p10.py", "tests/platform/test_runtime.py", "tests/unit/test_p7_policy.py"]
 ---
 
 # Local handoff to the three-system coordinator
