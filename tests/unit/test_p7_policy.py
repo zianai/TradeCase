@@ -330,4 +330,4 @@ def test_authorized_synthetic_live_runner_accepts_original_synthetic_snapshot(po
     monkeypatch.setenv("TRADECASE_P7_ROOT", str(p.root))
     monkeypatch.setenv("TRADECASE_P7_APPROVED_GRANT_SHA256", p.approved_sha)
     result = asyncio.run(OpenAIAgentRunner(live_enabled=True, usd_per_token_upper_bound=rate).run(request))
-    assert result.error_class is None and result.sources[0].is_synthetic and result.token_usage["total_tokens"] == 20
+    assert result.error_class is None and result.synthetic and result.sources[0].is_synthetic and result.token_usage["total_tokens"] == 20

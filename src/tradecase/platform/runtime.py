@@ -593,7 +593,8 @@ class OpenAIAgentRunner:
                 return AgentTaskResult(**researched.model_dump(), agent_run_id=request.agent_run_id,
                                        provider="openai-agents", model=request.model,
                                        token_usage={"total_tokens": execution.total_tokens}, cost_usd=execution.cost,
-                                       tool_events=execution.events, synthetic=self.model is not None)
+                                       tool_events=execution.events, synthetic=self.model is not None or bool(
+                                           permission_request and permission_request.get("data_classification") == "synthetic"))
             except MaxTurnsExceeded:
                 execution.event("budget_exhausted", reason="max_turns_exhausted")
                 return partial("max_turns_exhausted", "BudgetExceeded")
