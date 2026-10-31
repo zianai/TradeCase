@@ -1,0 +1,17 @@
+{
+  "system": "tradecase",
+  "run_id": "live-synthetic-20261031T080134Z",
+  "environment": "E2",
+  "data_classification": "synthetic",
+  "actual_api_smoke": "succeeded",
+  "business_pilot_reviewed": false,
+  "business_validation": "not_evaluable",
+  "billing_actual_usd": null,
+  "external_business_writes": 0,
+  "user_authorization": "2026-10-31: synthetic paid three-system smoke, total <= USD 10, no business writes",
+  "source_sha_at_live_call": "b5044d480af30547207bb59371a3400d5fecc132",
+  "limitations": [
+    "Synthetic smoke only; no human business assessment or real-case validation.",
+    "First real request failed after a settled response; deterministic defect fixed. Separate second case succeeded. Final current code also adds offline-tested synthetic labeling."
+  ]
+}

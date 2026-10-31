@@ -1,0 +1,1 @@
+{"cost_actual_usd": null, "cost_estimated_usd": 0.007555000000000001, "error_class": null, "status": "PARTIAL", "stop_reason": "The supplied synthetic text contains no identifying or business details. The source metadata was supplied by the user and was not independently verified.", "synthetic_input": true, "system": "tradecase", "token_usage": {"total_tokens": 1511}}
