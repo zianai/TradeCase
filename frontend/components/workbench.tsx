@@ -1324,7 +1324,7 @@ function CaseDetail({
         .catch(() => setRelated([]));
       setData(row(results[0]));
       setTasks(list(results[1]));
-      setEvidence({ ...row(results[2]), conflicts: row(results[0]).conflicts });
+      setEvidence(row(results[2]));
       setRisks(list(results[3]).map((r) => ({ ...row(r.data), ...r })));
       setArtifacts(list(results[4]));
       const ev = list(results[5]);
@@ -1824,8 +1824,7 @@ function CaseDetail({
                 ).catch((e) => setError(e.message))
               }
             >
-              导出 {format === "markdown" ? "Markdown" : format.toUpperCase()}{" "}
-              ↗
+              导出 {format === "markdown" ? "Markdown" : format.toUpperCase()} ↗
             </button>
           ))}
         </div>
@@ -1925,8 +1924,17 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
   const [selected, setSelected] = useState<Row | null>(null),
     [snapshot, setSnapshot] = useState(""),
     [error, setError] = useState("");
-  const show = async (source: Row) => {
-    setSelected(source);
+  const show = async (source: Row, link?: Row) => {
+    setSelected(
+      link
+        ? {
+            ...source,
+            excerpt: link.excerpt,
+            locator: link.locator,
+            relation: link.relation,
+          }
+        : source,
+    );
     setSnapshot("");
     setError("");
     try {
@@ -2032,7 +2040,12 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
                         {relevant.map((s) => (
                           <button
                             key={text(s.id ?? s.source_id)}
-                            onClick={() => void show(s)}
+                            onClick={() =>
+                              void show(
+                                s,
+                                linked.find((link) => link.source_id === s.id),
+                              )
+                            }
                           >
                             ↗ {sourceName(s)}
                           </button>
@@ -2108,6 +2121,30 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
                 <dt>许可 / 可用性</dt>
                 <dd>
                   {licenseLabel(selected.license ?? selected.license_status)}
+                </dd>
+              </div>
+              <div>
+                <dt>当前有效性</dt>
+                <dd>
+                  {selected.current_validity === "expired"
+                    ? "已过期，需要重新核查"
+                    : "尚需人工确认适用范围和时效"}
+                </dd>
+              </div>
+              <div>
+                <dt>引用定位</dt>
+                <dd>
+                  {text(selected.locator, "未提供行号，请对照精确引用和原文")}
+                </dd>
+              </div>
+              <div>
+                <dt>与主张的关系</dt>
+                <dd>
+                  {selected.relation === "contradicts"
+                    ? "来源与主张冲突"
+                    : selected.relation === "supports"
+                      ? "来源支持，仍需人工判断"
+                      : "上下文 / 未标注"}
                 </dd>
               </div>
             </dl>

@@ -103,6 +103,23 @@ class CaseService:
                 raise ServiceError("Invalid credentials", 401)
             return {"id": user.id, "tenant_id": user.tenant_id, "role": user.role, "name": user.name}
 
+    def rotate_credential(self, actor, user_id, *, revoke=False):
+        """Operator CLI rotation; scoped admin identity, no credential in audit data."""
+        self.require(actor, "admin")
+        token = None if revoke else secrets.token_urlsafe(40)
+        with self.db.session() as s:
+            user = self.scoped(s, m.User, actor["tenant_id"], user_id)
+            if revoke:
+                user.active = False
+            else:
+                if not user.active:
+                    raise ServiceError("Revoked users require separate re-provisioning", 409)
+                user.token_hash = hashlib.sha256(token.encode()).hexdigest()
+            s.add(m.AuditLog(tenant_id=actor["tenant_id"], actor_id=actor["id"],
+                            action="credential.revoked" if revoke else "credential.rotated",
+                            data_redacted={"user_id": user_id}))
+        return token
+
     @staticmethod
     def require(actor, *roles):
         if actor["role"] not in roles:
@@ -144,7 +161,7 @@ class CaseService:
             case.status = status
             self.event(s, case.tenant_id, case.id, "case.status", {"status": status, "version": case.version})
 
-    def create(self, actor, request: CreateCase, key: str, raw_bytes: bytes | None = None):
+    def create(self, actor, request: CreateCase, key: str, raw_bytes: bytes | None = None, *, pilot_metadata=None):
         self.require(actor, "admin", "operator", "reviewer")
         tenant = actor["tenant_id"]
         digest = fingerprint(
@@ -153,6 +170,8 @@ class CaseService:
                 "raw_bytes_hash": hashlib.sha256(raw_bytes).hexdigest() if raw_bytes is not None else None,
             }
         )
+        if pilot_metadata is not None:
+            digest = fingerprint({"request_fingerprint": digest, "pilot": pilot_metadata})
         if request.fixture and not self.settings.demo_enabled:
             raise ServiceError("Synthetic fixtures are disabled in this deployment", 403)
         with self.db.session() as s:
@@ -187,6 +206,8 @@ class CaseService:
                 buyer_website_hint=request.website,
                 platform=request.platform,
             )
+        if pilot_metadata and pilot_metadata["synthetic"]:
+            inquiry = inquiry.model_copy(update={"is_synthetic": True})
         obj = self.storage.put(raw)
         domain = (inquiry.buyer_email or "").rpartition("@")[2].lower() or None
         try:
@@ -210,7 +231,8 @@ class CaseService:
                     input_fingerprint=digest,
                     data={
                         "fixture": request.fixture,
-                        "synthetic": bool(request.fixture),
+                        "synthetic": bool(request.fixture) or bool(pilot_metadata and pilot_metadata["synthetic"]),
+                        **({"pilot": pilot_metadata} if pilot_metadata is not None else {}),
                         "domain": domain,
                         "research_status": "UNKNOWN",
                     },
@@ -277,6 +299,7 @@ class CaseService:
             ]
 
     def evidence(self, tenant, case_id):
+        case = self.get(tenant, case_id)
         claims = self.rows(tenant, case_id, m.Claim)
         sources = self.rows(tenant, case_id, m.Source)
         links = self.rows(tenant, case_id, m.ClaimEvidenceLink)
@@ -287,7 +310,21 @@ class CaseService:
         for x in sources:
             x["excerpt"] = x["data"].get("excerpt", "")
             x["snapshot_url"] = f"/api/cases/{case_id}/sources/{x['id']}/snapshot"
-        return {"claims": claims, "sources": sources, "links": links}
+            expiry = x["data"].get("expires_at")
+            x["current_validity"] = "unknown"
+            if expiry:
+                try:
+                    from datetime import datetime
+                    x["current_validity"] = "expired" if datetime.fromisoformat(expiry) <= m.utcnow() else "needs_review"
+                except (ValueError, TypeError):
+                    x["current_validity"] = "needs_review"
+        conflicts = [*case["conflicts"], *[
+            {"claim_id": link["claim_id"], "source_id": link["source_id"],
+             "reason": "Captured source contradicts this claim", "status": "unresolved"}
+            for link in links if link["relation"] == "contradicts"
+        ]]
+        return {"claims": claims, "sources": sources, "links": links,
+                "case_version": case["version"], "conflicts": conflicts}
 
     def source_body(self, tenant, case_id, source_id):
         with self.db.session() as s:
@@ -804,6 +841,10 @@ class CaseService:
             )
             return {
                 "case_counts": counts,
+                "task_counts": dict(s.execute(select(m.Task.status, func.count()).where(
+                    m.Task.tenant_id == tenant).group_by(m.Task.status)).all()),
+                "outbound_counts": dict(s.execute(select(m.OutboundAction.status, func.count()).where(
+                    m.OutboundAction.tenant_id == tenant).group_by(m.OutboundAction.status)).all()),
                 "total_cases": sum(counts.values()),
                 "pending_approvals": s.scalar(
                     select(func.count())

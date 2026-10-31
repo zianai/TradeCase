@@ -1,0 +1,142 @@
+"""Thin pilot intake and frozen review exports over existing Case/Evidence services.
+
+No new queue, model loop, authorization authority or business acceptance is added.
+Real input requires the existing OS-installed P7 grant before any storage write.
+"""
+
+from datetime import datetime
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from sqlalchemy import select
+
+from tradecase.p7_policy import PolicyDenied, ValidationRunPolicy, digest
+from tradecase.platform import db as m
+from tradecase.platform.contracts import CreateCase
+from tradecase.platform.services import ServiceError
+
+
+class PilotIntake(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    title: str = Field(min_length=1, max_length=300)
+    raw_content: str = Field(min_length=1, max_length=100000)
+    classification: Literal["synthetic", "public_licensed", "private_cleared", "restricted"]
+    synthetic: bool
+    dataset_id: str = Field(pattern=r"^[a-zA-Z0-9_-]{1,100}$")
+    dataset_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    rights_reference: str = Field(min_length=1, max_length=1000)
+    source_locator: str = Field(min_length=1, max_length=1000)
+    captured_at: datetime
+    retention_until: datetime
+
+    @field_validator("captured_at", "retention_until")
+    @classmethod
+    def aware(cls, value):
+        if value.tzinfo is None:
+            raise ValueError("Timezone is required")
+        return value
+
+    @field_validator("source_locator")
+    @classmethod
+    def locator_is_not_path(cls, value):
+        if value.startswith(("/", "\\")) or ".." in value.replace("\\", "/").split("/"):
+            raise ValueError("Locator must be relative metadata, not a filesystem path")
+        return value
+
+    @model_validator(mode="after")
+    def validate_origin(self):
+        if self.synthetic != (self.classification == "synthetic"):
+            raise ValueError("Synthetic classification mismatch")
+        if digest(self.raw_content.encode()) != self.dataset_sha256:
+            raise ValueError("Input hash mismatch")
+        if self.captured_at > m.utcnow() or self.retention_until <= m.utcnow():
+            raise ValueError("Capture/retention period is not current")
+        return self
+
+
+class PilotService:
+    def __init__(self, service):
+        self.service = service
+
+    @staticmethod
+    def authorize_data(actor, metadata, input_hash):
+        """Revalidate operator scope on each private read/write, including exports."""
+        try:
+            retained = datetime.fromisoformat(metadata["retention_until"])
+            if retained.tzinfo is None or retained <= m.utcnow():
+                raise PolicyDenied("RETENTION_EXPIRED")
+            policy = ValidationRunPolicy.from_env("tradecase")
+            context = policy.context()
+            if (context.get("tenant_id") != actor["tenant_id"]
+                    or context.get("dataset_id") != metadata["dataset_id"]
+                    or context.get("input_hash") != input_hash
+                    or context.get("rights_hash") != digest(metadata["rights_reference"].encode())):
+                raise PolicyDenied("SUBJECT_MISMATCH")
+            mapped = {"public_licensed": "public", "private_cleared": "redacted_business"}.get(metadata["classification"])
+            if not mapped or context.get("data_classification") != mapped:
+                raise PolicyDenied("DATA_SCOPE_DENIED")
+            if policy.preflight({**context, "action": "inspect_customer_data"}, 0)["status"] != "allowed":
+                raise PolicyDenied("AUTH_REQUIRED")
+        except (PolicyDenied, OSError, KeyError, TypeError, ValueError):
+            raise ServiceError("BLOCKED_EXTERNAL: current scoped operator data grant and retention required", 403) from None
+
+    def intake(self, actor, request):
+        self.service.require(actor, "admin", "reviewer", "operator")
+        if request.classification == "restricted":
+            raise ServiceError("BLOCKED_EXTERNAL: restricted data is not eligible", 403)
+        if not request.synthetic:
+            self.authorize_data(actor, request.model_dump(mode="json"), request.dataset_sha256)
+        elif not self.service.settings.demo_enabled:
+            raise ServiceError("Synthetic pilot intake is disabled", 403)
+        metadata = request.model_dump(mode="json", exclude={"raw_content", "title"})
+        # Equal input+provenance is the same logical sample even under a new HTTP key.
+        key = "pilot:" + digest({"tenant": actor["tenant_id"], "metadata": metadata})
+        return self.service.create(
+            actor, CreateCase(title=request.title, raw_content=request.raw_content), key,
+            pilot_metadata=metadata,
+        )
+
+    def export(self, actor, case_id):
+        tenant = actor["tenant_id"]
+        case = self.service.get(tenant, case_id)
+        with self.service.db.session() as session:
+            inquiry = self.service.scoped(session, m.Inquiry, tenant, case["inquiry_id"])
+            if not case["synthetic"]:
+                self.authorize_data(actor, case["data"].get("pilot", {}), inquiry.raw_hash)
+            runs = session.scalars(select(m.AgentRun).where(m.AgentRun.tenant_id == tenant, m.AgentRun.case_id == case_id)).all()
+            input_hash = inquiry.raw_hash
+            run_versions = [{"id": run.id, "model": run.model, "provider": run.provider,
+                             "provenance": run.data.get("provenance", {}), "status": run.status,
+                             "result_refs": run.artifact_refs} for run in runs]
+        evidence = self.service.evidence(tenant, case_id)
+        source_map = {source["id"]: source for source in evidence["sources"]}
+        citations = []
+        for link in evidence["links"]:
+            source = source_map[link["source_id"]]
+            raw = self.service.source_body(tenant, case_id, source["id"]) if source["snapshot_ref"] else b""
+            excerpt = link["excerpt"] or ""
+            locatable = bool(excerpt and excerpt in raw.decode("utf-8", errors="replace"))
+            citations.append({
+                "claim_id": link["claim_id"], "source_id": source["id"], "relation": link["relation"],
+                "excerpt": excerpt, "locator": link["locator"], "snapshot_sha256": source["snapshot_hash"],
+                "captured_at": source["captured_at"].isoformat() if source["captured_at"] else None,
+                "rights_status": source["license_status"],
+                "current_validity": source["current_validity"], "locatable": locatable,
+            })
+        card = {
+            "schema_version": "1.0.0", "project": "tradecase", "case_id": case_id,
+            "case_version": case["version"], "input_sha256": input_hash,
+            "synthetic": case["synthetic"], "classification": case["data"].get("pilot", {}).get(
+                "classification", "synthetic" if case["synthetic"] else "unclassified"),
+            "distribution_policy": "private_review_only; never auto-publish",
+            "pilot_provenance": case["data"].get("pilot"),
+            "claims": [{"id": x["id"], "statement": x["statement"], "classification": x["classification"],
+                        "status": x["status"]} for x in evidence["claims"]],
+            "citations": sorted(citations, key=lambda x: (x["claim_id"], x["source_id"])),
+            "conflicts": evidence["conflicts"], "run_versions": sorted(run_versions, key=lambda x: x["id"]),
+            "human_review_status": "pending", "business_evaluation": None,
+            "human_baseline_minutes": None, "human_review_minutes": None,
+            "critical_errors": None, "external_send_authorized": False,
+        }
+        card["claims"].sort(key=lambda x: x["id"])
+        return {**card, "subject_sha256": digest(card)}

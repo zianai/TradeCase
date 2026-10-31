@@ -80,6 +80,9 @@ def test_sdk_actual_runner_structured_output_and_provenance():
         assert result.status == "COMPLETE", result
         assert result.provider == "openai-agents" and result.synthetic
         assert result.token_usage["total_tokens"] == 40
+        assert len(result.provenance["input_sha256"]) == 64
+        assert len(result.provenance["prompt_sha256"]) == 64
+        assert result.provenance["skill_versions"][0]["name"] == "buyer-research"
         assert result.claims[0].excerpt in result.sources[0].text
         assert len(model.calls) == 1
         assert model.calls[0]["model_settings"].max_tokens == 2000

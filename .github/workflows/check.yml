@@ -1,5 +1,12 @@
 name: TradeCase offline validation
 on: [push, pull_request]
+env:
+  OPENAI_AGENTS_DISABLE_TRACING: '1'
+  OTEL_SDK_DISABLED: 'true'
+  ALLOW_TEST_LIVE: 'off'
+  TRADECASE_LIVE_MODEL_ENABLED: 'false'
+  TRADECASE_OUTBOUND_ENABLED: 'false'
+  PYTEST_ADDOPTS: '--tb=short'
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -25,6 +32,7 @@ jobs:
           python-version: '3.12'
       - run: pip install -e '.[dev,platform]'
       - run: python ops/verify_infrastructure.py
+      - run: python ops/p8_tls_acceptance.py --evidence .tradecase/tls-evidence
   frontend:
     runs-on: ubuntu-latest
     steps:
@@ -71,3 +79,4 @@ jobs:
         env:
           TRADECASE_E2E_TOKEN_FILE: ../.tradecase/ci-token
           TRADECASE_WEB_URL: http://127.0.0.1:3300
+          TRADECASE_SCREENSHOT_DIR: ../.tradecase/browser-evidence

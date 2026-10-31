@@ -9,6 +9,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, File, Header, Query, Request, UploadFile
 from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 from sqlalchemy.exc import IntegrityError
 
@@ -30,6 +31,7 @@ from tradecase.platform.contracts import (
 )
 from tradecase.platform.coordinator import CaseRunCoordinator
 from tradecase.platform.knowledge import KnowledgeInput, KnowledgeService
+from tradecase.platform.pilot import PilotIntake, PilotService
 from tradecase.platform.review_inputs import ReviewInputs, ReviewInputsService
 from tradecase.platform.services import CaseService, ServiceError
 from tradecase.platform.source_intake import SourceInput, SourceIntakeService
@@ -72,6 +74,15 @@ def create_app(settings=None, db=None, runner=None, connector=None):
     @app.exception_handler(ValueError)
     async def invalid_input(request, exc):
         return JSONResponse({"detail": "Invalid input or integrity check failed"}, status_code=422)
+
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request, exc):
+        # Pydantic's input/ctx can contain credentials or private source material.
+        # Preserve field-level correction hints without echoing submitted values.
+        detail = [{"loc": [error["loc"][0]] if error["loc"] and error["loc"][0] in {"body", "query", "path", "header"} else ["request"],
+                   "type": error["type"], "msg": "Invalid field value"}
+                  for error in exc.errors()]
+        return JSONResponse({"detail": detail}, status_code=422)
 
     @app.exception_handler(TaskConflict)
     async def task_error(request, exc):
@@ -185,6 +196,14 @@ def create_app(settings=None, db=None, runner=None, connector=None):
     @app.get("/api/cases/{case_id}")
     def case(case_id: str, user=Depends(actor)):
         return service.get(user["tenant_id"], case_id)
+
+    @app.post("/api/pilot/cases", status_code=201)
+    def pilot_intake(body: PilotIntake, user=Depends(actor)):
+        return PilotService(service).intake(user, body)
+
+    @app.get("/api/cases/{case_id}/pilot-export")
+    def pilot_export(case_id: str, user=Depends(actor)):
+        return PilotService(service).export(user, case_id)
 
     @app.patch("/api/cases/{case_id}")
     async def metadata(case_id: str, body: CaseMetadata, user=Depends(actor)):

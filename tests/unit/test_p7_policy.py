@@ -117,6 +117,20 @@ def test_expired_revoked_hash_and_price(policy):
     assert install({**g, "revoked_at_utc": "2026-01-01T00:00:00Z"}).preflight(r, 0.01)["reasons"] == ["AUTH_REVOKED"]
 
 
+def test_queued_request_rechecks_revocation_before_reservation(policy):
+    p, request, _, _ = policy
+    assert p.preflight(request, 0.01)["status"] == "allowed"
+    # A queued request retains its subject, but does not retain authorization.
+    queued = dict(request)
+    (p.root / "revoked").touch()
+    provider_calls = []
+    with pytest.raises(PolicyDenied, match="AUTH_REVOKED"):
+        p.reserve("queued-before-revocation", queued, 0.01)
+        provider_calls.append("would-call-provider")
+    assert provider_calls == []
+    assert not (p.root / "reservations.sqlite").exists()
+
+
 def test_concurrent_reservations_and_unknown_survive_restart(policy):
     p, r, g, _ = policy
 

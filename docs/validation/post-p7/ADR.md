@@ -1,0 +1,3 @@
+# P8–P10 boundary and topology
+
+Direct user instruction on 2026-10-31 authorizes reversible local engineering across three independent repositories. Retain Skills, Agent SDK, LangGraph, TaskManager and CreativeEngine HTTP 1.0.0. No shared business DB or new orchestrator. Select controlled single-host loopback staging: LaunchCase SQLite checkpoint; CE SQLite; TradeCase existing PG/Redis topology where available. Multi-host and production remain untested and unauthorized. Original worktrees and P7 history are preserved. UI design approval remains pending; runtime screenshots prove rendering only.

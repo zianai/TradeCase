@@ -1,0 +1,19 @@
+schema_version: 3
+protocol_version: "3.0"
+id: T-011-p8-p10
+status: in_progress
+goal: Implement and verify authorized P8 through P10 local incremental engineering
+scope: [src/, packages/, apps/, frontend/, scripts/, tools/, ops/, tests/, contracts/, .github/, docs/validation/post-p7/, docs/validation/p8-p10/, project/, work/active/T-011-p8-p10/]
+non_goals: [Private business data access, Paid provider calls, Remote Git mutations, Production and external business actions]
+acceptance: [Traceable executable acceptance matrix, Real local regressions, Per-repository commits and reports, Explicit external blockers]
+risk: medium
+risk_reasons: [cross-component, local-reversible]
+protected_paths: [docs/validation/p7/]
+context_refs: [docs/validation/post-p7/BASELINE.md]
+decision_refs: [docs/validation/post-p7/ADR.md]
+evidence_refs: [docs/validation/post-p7/P7_DELTA_REGISTER.json]
+updated: "2026-10-31"
+implementation_started: true
+external_effects: none
+conformance_status: pending
+baseline_decision_ref: docs/validation/post-p7/ADR.md

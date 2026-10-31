@@ -7,6 +7,7 @@ contract:
 check:
 	python -m compileall -q src scripts
 	ruff check src tests tools
+	ruff check ops/p8_browser_acceptance.py ops/p8_ce_http_smoke.py ops/p8_tls_acceptance.py
 	ruff check scripts/contracts.py scripts/customs_verify.py scripts/dedupe_leads.py scripts/evaluate_outreach_drafts.py scripts/extract_contacts.py scripts/normalize_search_results.py scripts/send_smtp.py
 	python -m pytest -q
 	python tools/check_licenses.py

@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import tempfile
+from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
@@ -158,6 +159,14 @@ class ReviewInputsService:
                 raise ServiceError("Claim and source are not linked", 422)
             if source.status.upper() != "FETCHED" or not source.snapshot_ref or not source.snapshot_hash:
                 raise ServiceError("Source has no available immutable snapshot", 422)
+            expiry = source.data.get("expires_at")
+            if expiry and binding.assertion_status == "supported":
+                try:
+                    current = datetime.fromisoformat(expiry) > m.utcnow()
+                except (TypeError, ValueError):
+                    current = False
+                if not current:
+                    raise ServiceError("Expired source cannot support a current decision; retain as historical context", 422)
             raw = self.service.storage.get(source.snapshot_ref)
             if hashlib.sha256(raw).hexdigest() != source.snapshot_hash:
                 raise ServiceError("Source snapshot hash mismatch", 422)

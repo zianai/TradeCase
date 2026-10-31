@@ -64,3 +64,8 @@ frontend/test-results/
 frontend/playwright-report/
 frontend/tsconfig.tsbuildinfo
 !frontend/design/**/*.log
+
+# P8–P10 evidence contains only reviewed synthetic logs and renders.
+!docs/validation/p8-p10/evidence/**/*.log
+docs/validation/p8-p10/evidence/**/home/
+docs/validation/p8-p10/evidence/**/data/

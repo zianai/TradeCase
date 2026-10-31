@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlalchemy import select, update
@@ -21,12 +22,22 @@ class SourceInput(BaseModel):
     text: str = Field(min_length=1, max_length=100000)
     excerpt: str = Field(min_length=1, max_length=4000)
     claim: str = Field(min_length=1, max_length=2000)
+    locator: str = Field(default="", max_length=1000)
+    relation: Literal["supports", "contradicts", "context"] = "supports"
+    expires_at: datetime | None = None
 
     @field_validator("captured_at")
     @classmethod
     def aware(cls, value):
         if value.tzinfo is None:
             raise ValueError("capture time requires timezone")
+        return value
+
+    @field_validator("expires_at")
+    @classmethod
+    def expiry_aware(cls, value):
+        if value is not None and value.tzinfo is None:
+            raise ValueError("expiry requires timezone")
         return value
 
 
@@ -82,6 +93,7 @@ class SourceIntakeService:
                     "retrieval_method": "human_uploaded_snapshot",
                     "tested_live": False,
                     "excerpt": request.excerpt,
+                    "expires_at": request.expires_at.isoformat() if request.expires_at else None,
                     "intake_key": key,
                     "request_fingerprint": digest,
                     "uploaded_by": actor["id"],
@@ -108,8 +120,9 @@ class SourceIntakeService:
                     case_id=case.id,
                     claim_id=claim.id,
                     source_id=source.id,
-                    relation="supports",
+                    relation=request.relation,
                     excerpt=request.excerpt,
+                    locator=request.locator,
                     data={"reviewed": False},
                 )
             )

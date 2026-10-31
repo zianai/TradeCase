@@ -278,6 +278,7 @@ class PlatformWorkflowHost:
                 "result_ref": obj.key,
                 "synthetic": result.synthetic,
                 "cost_is_estimate": result.cost_is_estimate,
+                "provenance": result.provenance,
             }
             self.service.event(
                 s,

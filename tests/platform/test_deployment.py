@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+import shutil
 import socket
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
@@ -32,7 +33,22 @@ from psycopg import sql
 from sqlalchemy import inspect, select
 from sqlalchemy.engine import make_url
 
-from tradecase.platform.db import Case, Database, Inquiry, Organization, Source, TaskAttempt, utcnow
+from tradecase.platform.actions import FakeMail, OutboxService
+from tradecase.platform.config import Settings
+from tradecase.platform.db import (
+    Approval,
+    Artifact,
+    ArtifactVersion,
+    Case,
+    Database,
+    Inquiry,
+    Organization,
+    OutboundAction,
+    Source,
+    TaskAttempt,
+    utcnow,
+)
+from tradecase.platform.services import CaseService
 from tradecase.platform.storage import LocalStorage
 from tradecase.platform.tasks import LeaseLost, TaskManager
 
@@ -205,6 +221,18 @@ def test_postgres_dump_restore_objects_and_interrupted_checkpoint(postgres_datab
     with db.session() as session:
         session.add(Source(id="synthetic-source", tenant_id="synthetic-org", case_id="synthetic-case",
                            snapshot_ref=ref.key, snapshot_hash=ref.sha256))
+        session.add(Artifact(id="synthetic-artifact", tenant_id="synthetic-org", case_id="synthetic-case", kind="draft", current_version=1))
+        session.flush()
+        session.add(ArtifactVersion(id="synthetic-version", tenant_id="synthetic-org", case_id="synthetic-case",
+                                    artifact_id="synthetic-artifact", version=1, content_hash=ref.sha256, storage_ref=ref.key))
+        session.flush()
+        session.add(Approval(id="synthetic-approval", tenant_id="synthetic-org", case_id="synthetic-case",
+                             artifact_version_id="synthetic-version", artifact_hash=ref.sha256, case_version=1,
+                             action_scope="mail_send", status="APPROVED", data={"synthetic": True}))
+        session.flush()
+        session.add(OutboundAction(id="synthetic-unknown", tenant_id="synthetic-org", case_id="synthetic-case",
+                                   approval_id="synthetic-approval", artifact_hash=ref.sha256, idempotency_key="synthetic-once",
+                                   status="DELIVERY_UNCERTAIN", receipt={"retry_allowed": False, "synthetic": True}))
     config = {"configurable": {"thread_id": "stable-synthetic-workflow"}}
 
     async def checkpoint():
@@ -229,10 +257,23 @@ def test_postgres_dump_restore_objects_and_interrupted_checkpoint(postgres_datab
     try:
         subprocess.run(["docker", "exec", "-i", container, "pg_restore", "-U", user, "-d", target_name,
                         "--no-owner", "--exit-on-error"], input=dump, check=True, capture_output=True, timeout=60)
+        shutil.copytree(store.root, tmp_path / "restored-objects")
+        restored_store = LocalStorage(tmp_path / "restored-objects")
         with restored.session() as session:
             assert session.get(Case, "synthetic-case").tenant_id == "synthetic-org"
             saved = session.get(Source, "synthetic-source")
-            assert store.verify(saved.snapshot_ref, saved.snapshot_hash)
+            assert restored_store.verify(saved.snapshot_ref, saved.snapshot_hash)
+            approval = session.get(Approval, "synthetic-approval")
+            version = session.get(ArtifactVersion, "synthetic-version")
+            assert approval.artifact_hash == version.content_hash == ref.sha256
+            assert restored_store.get(version.storage_ref) == store.get(ref.key)
+        settings = Settings(database_url=restored_url, storage_root=restored_store.root,
+                            work_root=tmp_path / "restored-work", checkpoint_url="sqlite:///" + str(tmp_path / "unused.sqlite"),
+                            outbound_enabled=True)
+        mail = FakeMail()
+        outbox = OutboxService(CaseService(restored, settings), mail)
+        assert outbox.dispatch("synthetic-org", "synthetic-unknown")["status"] == "DELIVERY_UNCERTAIN"
+        assert mail.calls == []
 
         async def resume_restored():
             async with AsyncPostgresSaver.from_conn_string(_dsn(restored_url)) as saver:

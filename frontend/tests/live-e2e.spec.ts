@@ -20,7 +20,9 @@ test("real API import → research → source → review → draft revision → 
   );
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  const directory = path.resolve(process.env.TRADECASE_SCREENSHOT_DIR || "design/rounds/01");
+  const directory = path.resolve(
+    process.env.TRADECASE_SCREENSHOT_DIR || "design/rounds/01",
+  );
   await mkdir(directory, { recursive: true });
   await page.goto("/");
   await expect(
@@ -196,7 +198,7 @@ test("real API import → research → source → review → draft revision → 
         case_id: caseId,
         title,
         verified: [
-          "real Postgres API through Next proxy",
+          "real local API and isolated database through Next proxy",
           "explicit synthetic import",
           "versioned priority and tag editing",
           "research workflow",
@@ -264,7 +266,10 @@ test("real API knowledge versions remain separate and explicitly unverified", as
     "Version two",
   );
   await page.screenshot({
-    path: path.join(process.env.TRADECASE_SCREENSHOT_DIR || "design/rounds/01", "knowledge-versions.png"),
+    path: path.join(
+      process.env.TRADECASE_SCREENSHOT_DIR || "design/rounds/01",
+      "knowledge-versions.png",
+    ),
     fullPage: true,
   });
 });

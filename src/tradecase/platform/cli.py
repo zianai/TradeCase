@@ -25,6 +25,12 @@ def main():
     provision.add_argument("--name", required=True)
     provision.add_argument("--role", default="admin")
     provision.add_argument("--token-file", required=True)
+    for name in ("rotate-token", "revoke-user"):
+        credential = sub.add_parser(name)
+        credential.add_argument("--user-id", required=True)
+        credential.add_argument("--token-file", required=True, help="Existing scoped admin credential")
+        if name == "rotate-token":
+            credential.add_argument("--new-token-file", required=True, help="New private credential destination")
     demo = sub.add_parser("demo")
     demo.add_argument("--token-file", required=True)
     listing = sub.add_parser("list")
@@ -81,6 +87,25 @@ def main():
         return
     token = Path(args.token_file).read_text().strip()
     actor = service.authenticate(token)
+    if args.command == "revoke-user":
+        service.rotate_credential(actor, args.user_id, revoke=True)
+        print(json.dumps({"user_id": args.user_id, "status": "revoked"}))
+        return
+    if args.command == "rotate-token":
+        path = Path(args.new_token_file).absolute()
+        # Reserve a new private destination before invalidating the old credential.
+        fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        try:
+            with os.fdopen(fd, "w") as output:
+                replacement = service.rotate_credential(actor, args.user_id)
+                output.write(replacement)
+                output.flush()
+                os.fsync(output.fileno())
+        except BaseException:
+            path.unlink(missing_ok=True)
+            raise
+        print(json.dumps({"user_id": args.user_id, "token_file": str(path), "status": "rotated"}))
+        return
     if args.command == "maintenance":
         from datetime import datetime
 

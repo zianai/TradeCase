@@ -166,6 +166,7 @@ class AgentTaskResult(ResearchResult):
     error_class: str | None = None
     tool_events: list[AgentEvent] = Field(default_factory=list)
     synthetic: bool = False
+    provenance: dict = Field(default_factory=dict)
 
 
 class RuntimeCapabilities(Contract):
@@ -576,6 +577,11 @@ class OpenAIAgentRunner:
                           model_settings=ModelSettings(max_tokens=budget.max_output_tokens, parallel_tool_calls=False))
             inputs = json.dumps({"goal": request.goal, "context_untrusted": request.context,
                                 "sources_untrusted": [s.model_dump() for s in request.sources]}, ensure_ascii=False)
+            provenance = {
+                "input_sha256": hashlib.sha256(inputs.encode()).hexdigest(),
+                "prompt_sha256": hashlib.sha256(instructions.encode()).hexdigest(),
+                "skill_versions": [{"name": skill["name"], "sha256": skill["sha256"]} for skill in skills],
+            }
             execution.event("run_started", provider="openai-agents", synthetic=self.model is not None)
             try:
                 async with asyncio.timeout(budget.max_wall_seconds):
@@ -592,6 +598,7 @@ class OpenAIAgentRunner:
                 execution.event("run_completed", status=researched.status)
                 return AgentTaskResult(**researched.model_dump(), agent_run_id=request.agent_run_id,
                                        provider="openai-agents", model=request.model,
+                                       provenance=provenance,
                                        token_usage={"total_tokens": execution.total_tokens}, cost_usd=execution.cost,
                                        tool_events=execution.events, synthetic=self.model is not None or bool(
                                            permission_request and permission_request.get("data_classification") == "synthetic"))
