@@ -205,6 +205,10 @@ def create_app(settings=None, db=None, runner=None, connector=None):
     def pilot_export(case_id: str, user=Depends(actor)):
         return PilotService(service).export(user, case_id)
 
+    @app.get("/api/cases/{case_id}/pilot-export-scope")
+    def pilot_export_scope(case_id: str, user=Depends(actor)):
+        return PilotService(service).export_scope(user, case_id)
+
     @app.patch("/api/cases/{case_id}")
     async def metadata(case_id: str, body: CaseMetadata, user=Depends(actor)):
         result = service.update_metadata(user, case_id, body)

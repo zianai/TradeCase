@@ -184,7 +184,55 @@ def test_pilot_export_rechecks_real_scope_and_retention_using_only_synthetic_byt
     imported = client.post("/api/pilot/cases", headers=headers, json=payload)
     assert imported.status_code == 201, imported.text
     case_id = imported.json()["id"]
+    # The intake grant is never an export grant, even before a new source is added.
+    assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 403
+    scope = client.get(f"/api/cases/{case_id}/pilot-export-scope", headers=headers).json()
+    assert "claims" not in scope and "sources" not in scope
+
+    def pin_export(subject):
+        for key in ("tenant_id", "case_id", "dataset_id", "input_hash", "rights_hash", "data_classification"):
+            context[key] = subject[key]
+            grant[key] = subject[key]
+        grant["data_classifications"] = [subject["data_classification"]]
+        (root / "context.json").write_text(json.dumps(context))
+        (root / "grant.json").write_text(json.dumps(grant))
+        monkeypatch.setenv("TRADECASE_P7_APPROVED_GRANT_SHA256", digest((root / "grant.json").read_bytes()))
+
+    pin_export(scope)
     assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 200
+    receipt = client.post(f"/api/cases/{case_id}/sources", headers={**headers, "Idempotency-Key": "added-after-grant"}, json={
+        "case_version": imported.json()["version"], "url": "https://synthetic.example.org/notice", "title": "Synthetic only",
+        "captured_at": payload["captured_at"], "text": "SYNTHETIC new source subject.", "excerpt": "new source subject",
+        "claim": "SYNTHETIC claim", "locator": "fixture.txt:line:1",
+    })
+    assert receipt.status_code == 200
+    assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 403
+    revised = client.get(f"/api/cases/{case_id}/pilot-export-scope", headers=headers).json()
+    assert revised["input_hash"] != scope["input_hash"] and revised["rights_hash"] != scope["rights_hash"]
+    assert revised["data_classification"] == "sensitive_business"
+    pin_export(revised)
+    exported = client.get(f"/api/cases/{case_id}/pilot-export", headers=headers)
+    assert exported.status_code == 200 and exported.json()["synthetic"] is False
+    original_read = app.state.service.source_body
+
+    def change_rights_during_read(*args):
+        value = original_read(*args)
+        with app.state.service.db.session() as session:
+            session.get(m.Source, receipt.json()["source_id"]).license_status = "REVOKED"
+        return value
+
+    monkeypatch.setattr(app.state.service, "source_body", change_rights_during_read)
+    assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 409
+    with app.state.service.db.session() as session:
+        session.get(m.Source, receipt.json()["source_id"]).license_status = "UNCONFIRMED"
+
+    def revoke_during_read(*args):
+        value = original_read(*args)
+        (root / "revoked").touch()
+        return value
+    monkeypatch.setattr(app.state.service, "source_body", revoke_during_read)
+    assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 403
+    monkeypatch.setattr(app.state.service, "source_body", original_read)
     (root / "revoked").touch()
     assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 403
     (root / "revoked").unlink()
@@ -194,6 +242,22 @@ def test_pilot_export_rechecks_real_scope_and_retention_using_only_synthetic_byt
     assert client.get(f"/api/cases/{case_id}/pilot-export", headers=headers).status_code == 403
     legacy = client.post("/api/cases", headers=headers, json={"raw_content": "SYNTHETIC legacy unknown origin"}).json()["id"]
     assert client.get(f"/api/cases/{legacy}/pilot-export", headers=headers).status_code == 403
+
+
+def test_manual_source_cannot_inherit_synthetic_case_export_authority(api):
+    client, _, headers, *_ = api
+    case = client.post("/api/pilot/cases", headers=headers, json=pilot_payload()).json()
+    assert client.get(f"/api/cases/{case['id']}/pilot-export", headers=headers).status_code == 200
+    source = client.post(f"/api/cases/{case['id']}/sources", headers={**headers, "Idempotency-Key": "mixed"}, json={
+        "case_version": case["version"], "url": "https://synthetic.example.org/notice", "title": "Synthetic fixture only",
+        "captured_at": pilot_payload()["captured_at"], "text": "SYNTHETIC DATA simulating an unknown upload.",
+        "excerpt": "unknown upload", "claim": "Source does not inherit case classification.",
+    })
+    assert source.status_code == 200
+    response = client.get(f"/api/cases/{case['id']}/pilot-export", headers=headers)
+    assert response.status_code == 403 and "unknown upload" not in response.text
+    scope = client.get(f"/api/cases/{case['id']}/pilot-export-scope", headers=headers).json()
+    assert scope["requires_data_grant"] is True and scope["data_classification"] == "sensitive_business"
 
 
 def test_operator_credential_rotation_revocation_and_tenant_scope(api):

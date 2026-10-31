@@ -7,6 +7,7 @@ Real input requires the existing OS-installed P7 grant before any storage write.
 from datetime import datetime
 from typing import Literal
 
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 from sqlalchemy import select
 
@@ -96,13 +97,61 @@ class PilotService:
             pilot_metadata=metadata,
         )
 
+    def export_scope(self, actor, case_id):
+        """Only IDs/hashes/version; this is an authorization subject, never a grant."""
+        case = self.service.get(actor["tenant_id"], case_id)
+        evidence = self.service.evidence(actor["tenant_id"], case_id)
+        with self.service.db.session() as session:
+            inquiry = self.service.scoped(session, m.Inquiry, actor["tenant_id"], case["inquiry_id"])
+            input_hash = inquiry.raw_hash
+        sources = sorted(evidence["sources"], key=lambda item: item["id"])
+        mixed = any(source["data"].get("synthetic") is not True for source in sources)
+        pilot = case["data"].get("pilot", {})
+        # Any manual/unknown source is a new data subject; Case.synthetic does not
+        # establish the provenance or permission of its added sources.
+        classification = ("sensitive_business" if mixed else
+                          "synthetic" if case["synthetic"] else
+                          "public" if pilot.get("classification") == "public_licensed" else "redacted_business")
+        return {"case_id": case_id, "case_version": case["version"], "tenant_id": actor["tenant_id"],
+                "dataset_id": pilot.get("dataset_id", case_id), "data_classification": classification,
+                "requires_data_grant": not case["synthetic"] or mixed,
+                "input_hash": digest(jsonable_encoder({"case_id": case_id, "case_version": case["version"],
+                    "inquiry_hash": input_hash, "sources": sources,
+                    "claims": sorted(evidence["claims"], key=lambda x: x["id"]),
+                    "links": sorted(evidence["links"], key=lambda x: x["id"]), "conflicts": evidence["conflicts"]})),
+                "rights_hash": digest({"pilot": pilot, "sources": [{"id": source["id"],
+                    "snapshot_hash": source["snapshot_hash"], "license_status": source["license_status"],
+                    "authority": source["data"].get("authority"), "synthetic": source["data"].get("synthetic"),
+                    "expires_at": source["data"].get("expires_at")} for source in sources]})}
+
+    def authorize_export(self, actor, case, scope):
+        if not scope["requires_data_grant"]:
+            return
+        try:
+            pilot = case["data"].get("pilot", {})
+            if not case["synthetic"] and not pilot:
+                raise PolicyDenied("ORIGIN_UNKNOWN")
+            if pilot:
+                retained = datetime.fromisoformat(pilot["retention_until"])
+                if retained.tzinfo is None or retained <= m.utcnow():
+                    raise PolicyDenied("RETENTION_EXPIRED")
+            policy = ValidationRunPolicy.from_env("tradecase")
+            context = policy.context()
+            for key in ("tenant_id", "case_id", "dataset_id", "input_hash", "rights_hash", "data_classification"):
+                if context.get(key) != scope[key]:
+                    raise PolicyDenied("SUBJECT_MISMATCH")
+            if policy.preflight({**context, "action": "inspect_customer_data"}, 0)["status"] != "allowed":
+                raise PolicyDenied("AUTH_REQUIRED")
+        except (PolicyDenied, OSError, KeyError, TypeError, ValueError):
+            raise ServiceError("BLOCKED_EXTERNAL: exact current export subject and data-read grant required", 403) from None
+
     def export(self, actor, case_id):
         tenant = actor["tenant_id"]
         case = self.service.get(tenant, case_id)
+        scope = self.export_scope(actor, case_id)
+        self.authorize_export(actor, case, scope)
         with self.service.db.session() as session:
             inquiry = self.service.scoped(session, m.Inquiry, tenant, case["inquiry_id"])
-            if not case["synthetic"]:
-                self.authorize_data(actor, case["data"].get("pilot", {}), inquiry.raw_hash)
             runs = session.scalars(select(m.AgentRun).where(m.AgentRun.tenant_id == tenant, m.AgentRun.case_id == case_id)).all()
             input_hash = inquiry.raw_hash
             run_versions = [{"id": run.id, "model": run.model, "provider": run.provider,
@@ -126,8 +175,8 @@ class PilotService:
         card = {
             "schema_version": "1.0.0", "project": "tradecase", "case_id": case_id,
             "case_version": case["version"], "input_sha256": input_hash,
-            "synthetic": case["synthetic"], "classification": case["data"].get("pilot", {}).get(
-                "classification", "synthetic" if case["synthetic"] else "unclassified"),
+            "synthetic": not scope["requires_data_grant"], "classification": scope["data_classification"],
+            "authorization_subject": scope,
             "distribution_policy": "private_review_only; never auto-publish",
             "pilot_provenance": case["data"].get("pilot"),
             "claims": [{"id": x["id"], "statement": x["statement"], "classification": x["classification"],
@@ -139,4 +188,7 @@ class PilotService:
             "critical_errors": None, "external_send_authorized": False,
         }
         card["claims"].sort(key=lambda x: x["id"])
+        if self.export_scope(actor, case_id) != scope:
+            raise ServiceError("Export subject changed during read; review the new scope", 409)
+        self.authorize_export(actor, self.service.get(tenant, case_id), scope)
         return {**card, "subject_sha256": digest(card)}

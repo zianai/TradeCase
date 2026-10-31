@@ -116,10 +116,13 @@ test("P9-T004 provenance and conflicts remain reviewable on desktop and mobile",
   const frozen = await page.request.get(`/api/cases/${c.id}/pilot-export`, {
     headers,
   });
-  expect(frozen.ok()).toBeTruthy();
-  const pack = await frozen.json();
-  expect(pack.citations[0].locatable).toBe(true);
-  expect(pack.business_evaluation).toBeNull();
-  expect(pack.external_send_authorized).toBe(false);
+  // A manual snapshot has unknown origin even when its parent Case is synthetic.
+  // The real data export needs a separately pinned current subject grant.
+  expect(frozen.status()).toBe(403);
+  const scope = await page.request.get(
+    `/api/cases/${c.id}/pilot-export-scope`,
+    { headers },
+  );
+  expect((await scope.json()).requires_data_grant).toBe(true);
   expect(errors).toEqual([]);
 });
