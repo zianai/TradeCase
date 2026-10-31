@@ -312,36 +312,66 @@ const qaChecksFailed: Record<string, string> = {
   concept_identity: "概念图标识有问题",
   vision_review: "产品外观检查未通过",
 };
-/** Plain QA conclusion; the raw record stays available behind technical details. */
+const isPassState = (value: string) => ["pass", "passed"].includes(value);
+const isBlockState = (value: string) =>
+  ["block", "blocked", "failed", "fail"].includes(value);
+const lower = (value: unknown) => text(value, "").toLowerCase();
+/**
+ * Plain QA conclusion; the raw record stays available behind technical details.
+ * The engine adapter reports `warn` as `passed` for gating and keeps the engine's
+ * own result in `report`, so that result decides what reviewers read. Only an
+ * explicit pass with nothing outstanding reads as passed.
+ */
 export function qaSummary(raw: unknown) {
   const qa = row(raw);
-  const status = text(qa.status, "").toLowerCase();
-  const isFixture = row(qa.report).mode === "mock_fixture_not_visual_qa";
-  const checks = rows(qa.checks).map((check) => {
+  const report = row(qa.report);
+  const status = lower(report.status ?? qa.status);
+  const isFixture = report.mode === "mock_fixture_not_visual_qa";
+  const rawChecks = rows(report.checks ?? qa.checks);
+  const rawIssues = rows(report.issues ?? qa.issues);
+  const checks = rawChecks.map((check) => {
     const name = text(check.name, "");
-    const state = text(check.status, "").toLowerCase();
+    const state = lower(check.status);
     return {
       name,
       state,
       label:
         qaChecks[name]?.[state] ||
-        (state === "pass"
+        (isPassState(state)
           ? qaChecksFailed[name]
             ? "检查通过"
             : "其他检查通过"
           : qaChecksFailed[name] || "有一项检查需要确认"),
     };
   });
-  const passed = checks.filter((c) => c.state === "pass").map((c) => c.label);
-  const issues = checks.filter((c) => c.state !== "pass").map((c) => c.label);
-  const headline = !status
-    ? "尚无自动检查结果"
+  const passed = checks.filter((c) => isPassState(c.state)).map((c) => c.label);
+  const issues = checks
+    .filter((c) => !isPassState(c.state))
+    .map((c) => c.label);
+  for (const issue of rawIssues) {
+    if (checks.some((c) => c.name === text(issue.category, ""))) continue;
+    issues.push(
+      qaChecks[text(issue.category, "")]?.warn ||
+        text(issue.description ?? issue.message, "有一项需要确认"),
+    );
+  }
+  const blocked =
+    isBlockState(status) ||
+    isBlockState(lower(qa.status)) ||
+    checks.some((c) => isBlockState(c.state)) ||
+    rawIssues.some((i) => isBlockState(lower(i.severity)));
+  const headline = blocked
+    ? "自动检查未通过，不能使用"
     : isFixture
       ? "模拟测试图片，未做真实画面检查"
-      : ["block", "blocked", "failed", "fail"].includes(status)
-        ? "自动检查未通过，不能使用"
-        : issues.length || status === "warn"
-          ? "有待人工确认项"
-          : "自动检查通过";
-  return { headline, passed, issues, needsAttention: status !== "passed" };
+      : issues.length
+        ? "有待人工确认项"
+        : !status
+          ? "尚无自动检查结果"
+          : status === "pending"
+            ? "自动检查尚未完成"
+            : isPassState(status)
+              ? "自动检查通过"
+              : "检查信息不完整，请人工确认";
+  return { headline, passed, issues };
 }

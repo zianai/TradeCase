@@ -1,4 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
+import { qaSummary } from "../lib/business-labels";
 
 const hash = "b".repeat(64);
 const caseId = "9745c8d1821f46eaa7f003d70da2356f";
@@ -174,4 +175,53 @@ test("draft review shows the current version first and folds hash and history", 
     "true",
   );
   await expect(page.locator(".source-catalog")).toBeVisible();
+});
+
+test("QA reads as passed only on an explicit pass with nothing outstanding", () => {
+  // The adapter reports an engine warning as `passed`; the engine's result decides.
+  const engineWarn = qaSummary({
+    status: "passed",
+    issues: [{ category: "vision_review", description: "not verified" }],
+    report: {
+      status: "warn",
+      checks: [
+        { name: "file_integrity", status: "pass" },
+        { name: "vision_review", status: "warn" },
+      ],
+    },
+  });
+  expect(engineWarn.headline).toBe("有待人工确认项");
+  expect(engineWarn.passed).toEqual(["文件完好"]);
+  expect(engineWarn.issues).toEqual([
+    "产品外观尚未自动核验，请人工对照实物或原图",
+  ]);
+  for (const qa of [
+    { status: "warn" },
+    { status: "warn", checks: [], issues: [] },
+    { status: "passed", report: { status: "warn", checks: [] } },
+    { status: "unknown" },
+  ])
+    expect(qaSummary(qa).headline).toBe("检查信息不完整，请人工确认");
+  expect(qaSummary({}).headline).toBe("尚无自动检查结果");
+  expect(qaSummary({ status: "pending", report: {} }).headline).toBe(
+    "自动检查尚未完成",
+  );
+  expect(
+    qaSummary({ status: "passed", report: { status: "pass", checks: [] } })
+      .headline,
+  ).toBe("自动检查通过");
+  expect(qaSummary({ status: "passed" }).headline).toBe("自动检查通过");
+  for (const qa of [
+    { status: "failed" },
+    { status: "warn", checks: [{ name: "dimensions", status: "block" }] },
+    { status: "passed", issues: [{ severity: "block", description: "bad" }] },
+  ])
+    expect(qaSummary(qa).headline).toBe("自动检查未通过，不能使用");
+  expect(
+    qaSummary({
+      status: "passed",
+      issues: [],
+      report: { mode: "mock_fixture_not_visual_qa" },
+    }).headline,
+  ).toBe("模拟测试图片，未做真实画面检查");
 });
