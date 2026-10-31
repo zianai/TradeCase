@@ -94,7 +94,7 @@ export async function api<T = unknown>(
       response.status === 401
         ? "需要有效的工作区访问令牌。请在连接设置中登录。"
         : response.status === 409
-          ? "操作未应用，请核对当前版本与质量门禁：" + message
+          ? "操作未生效，内容可能已更新或未通过检查，请刷新后核对：" + message
           : message,
     );
   }

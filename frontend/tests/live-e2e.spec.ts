@@ -88,6 +88,8 @@ test("real API import → research → source → review → draft revision → 
     .getByLabel("英文正文")
     .fill(original + "\n\nPlease confirm your destination port.");
   await page.getByRole("button", { name: "保存新版本", exact: true }).click();
+  // Superseded reviews stay on record, folded under the current decision.
+  await page.locator(".approval-history > summary").first().click();
   await expect(
     page.locator(".approval-card").filter({ hasText: "版本失效" }),
   ).toBeVisible();

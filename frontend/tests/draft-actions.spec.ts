@@ -133,7 +133,7 @@ test("reviewer cancels only a pending external action with a reason and current 
   page,
 }) => {
   const writes = await draftWorkspace(page, { queued: true });
-  await page.locator(".outbound-panel summary").click();
+  await page.locator(".outbound-panel > summary").click();
   const cancel = page.getByRole("button", {
     name: "取消待执行动作",
     exact: true,
@@ -161,7 +161,7 @@ test("viewer cannot see the queued action cancellation control", async ({
   page,
 }) => {
   const writes = await draftWorkspace(page, { queued: true, role: "viewer" });
-  await page.locator(".outbound-panel summary").click();
+  await page.locator(".outbound-panel > summary").click();
   await expect(page.locator(".receipt")).toHaveCount(3);
   await expect(
     page.getByRole("button", { name: "取消待执行动作", exact: true }),

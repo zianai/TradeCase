@@ -30,6 +30,23 @@ import {
   streamCaseEvents,
   text,
 } from "@/lib/api";
+import {
+  approvalTask,
+  caseCustomer,
+  caseHeadline,
+  caseProduct,
+  claimSubjectLabel,
+  eventLabel,
+  licenseLabel,
+  missingLabel,
+  priorityInfo,
+  reasonLabel,
+  riskCategoryLabel,
+  severityLabel,
+  signalRows,
+  sourceTypeLabel,
+  taskLabel,
+} from "@/lib/business-labels";
 
 const labels: Record<string, string> = {
   NEW: "新询盘",
@@ -70,6 +87,15 @@ const labels: Record<string, string> = {
   AVAILABLE: "可用",
   UNAVAILABLE: "未接入",
   DELIVERY_UNCERTAIN: "回执待核对",
+  PASS: "已通过",
+  FAIL: "未通过",
+  WARNING: "需注意",
+  NEEDS_VERIFICATION: "待核实",
+  NEEDS_CONTEXT: "缺少背景资料",
+  NOT_APPLICABLE: "不适用",
+  CONTRADICTED: "存在相反依据",
+  UNVERIFIED: "待核实",
+  FETCHED: "已取得",
 };
 const statusText = (value: unknown) =>
   labels[text(value, "").toUpperCase()] || text(value);
@@ -88,13 +114,15 @@ function scopeLabel(value: unknown) {
 function Badge({ value }: { value: unknown }) {
   const status = text(value, "UNKNOWN").toUpperCase();
   const tone =
-    /FAIL|REJECT|UNCERTAIN|BLOCK|EXPIRED|STALE|INVALIDATED|CONFLICT/.test(
+    /FAIL|REJECT|UNCERTAIN|BLOCK|EXPIRED|STALE|INVALIDATED|CONFLICT|CONTRADICTED/.test(
       status,
     )
       ? "danger"
-      : /REVIEW|HUMAN|PENDING|PARTIAL|INPUT|CHANGES|EVIDENCE/.test(status)
+      : /REVIEW|HUMAN|PENDING|PARTIAL|INPUT|CHANGES|EVIDENCE|WARNING|NEEDS_|UNVERIFIED/.test(
+            status,
+          )
         ? "warn"
-        : /SUCCEEDED|APPROVED|COMPLETE|FOLLOW_UP|VERIFIED|SUPPORTED|AVAILABLE/.test(
+        : /SUCCEEDED|APPROVED|COMPLETE|FOLLOW_UP|VERIFIED|SUPPORTED|AVAILABLE|PASS/.test(
               status,
             ) && status !== "UNAVAILABLE"
           ? "good"
@@ -225,6 +253,24 @@ function Field({
 function Details({ value }: { value: unknown }) {
   return <pre className="json">{JSON.stringify(value, null, 2)}</pre>;
 }
+/** Third information layer: everything needed for audit, closed by default. */
+function TechDetails({
+  label = "技术追溯信息",
+  value,
+  children,
+}: {
+  label?: string;
+  value?: unknown;
+  children?: ReactNode;
+}) {
+  return (
+    <details className="tech-details">
+      <summary>{label}</summary>
+      {children}
+      {value !== undefined && <Details value={value} />}
+    </details>
+  );
+}
 function Note({ children }: { children: ReactNode }) {
   return <div className="notice">{children}</div>;
 }
@@ -297,22 +343,20 @@ export default function Workbench() {
       ),
   );
   const nav = [
-    { key: "dashboard", label: "工作台", sub: "Overview", icon: "dashboard" },
-    { key: "cases", label: "询盘案件", sub: "Cases", icon: "cases" },
+    { key: "dashboard", label: "工作台", icon: "dashboard" },
+    { key: "cases", label: "询盘案件", icon: "cases" },
     {
       key: "approvals",
       label: "决策收件箱",
-      sub: "Decisions",
       icon: "approvals",
     },
     {
       key: "follow-ups",
       label: "跟进计划",
-      sub: "Follow-ups",
       icon: "followups",
     },
-    { key: "sources", label: "来源与知识", sub: "Sources", icon: "sources" },
-    { key: "settings", label: "工作区设置", sub: "Settings", icon: "settings" },
+    { key: "sources", label: "来源与知识", icon: "sources" },
+    { key: "settings", label: "工作区设置", icon: "settings" },
   ];
   const current = nav.find((n) => n.key === section) || nav[0];
   return (
@@ -342,17 +386,11 @@ export default function Workbench() {
               key={n.key}
               href={n.key === "dashboard" ? "/" : "/" + n.key}
               className={section === n.key ? "nav-item active" : "nav-item"}
-              aria-label={
-                n.key === "approvals" ? undefined : `${n.label} ${n.sub}`
-              }
               title={n.label}
               aria-current={section === n.key ? "page" : undefined}
             >
               <Icon name={n.icon} />
-              <span>
-                {n.label}
-                <small>{n.sub}</small>
-              </span>
+              <span>{n.label}</span>
               {n.key === "approvals" && pending.length > 0 && (
                 <b>{pending.length}</b>
               )}
@@ -379,7 +417,7 @@ export default function Workbench() {
           <div>
             <span className="breadcrumb">工作区</span>
             <span className="separator">/</span>
-            <strong>{caseId ? "Case 详情" : current.label}</strong>
+            <strong>{caseId ? "询盘详情" : current.label}</strong>
           </div>
           <div className="topbar-actions">
             <button
@@ -467,17 +505,21 @@ export default function Workbench() {
           {section === "approvals" && (
             <>
               <PageHeading
-                eyebrow="HUMAN DECISIONS"
-                title="把判断留给人"
-                description="对照原文、证据与当前草稿，审核每一个需要明确决定的事项。"
+                eyebrow="决策收件箱"
+                title="等你决定的事项"
+                description="先看是哪位客户、要决定什么，再对照依据作出判断。"
               />
-              <ApprovalList approvals={approvals} onChange={changed} />
+              <ApprovalList
+                approvals={approvals}
+                cases={cases}
+                onChange={changed}
+              />
             </>
           )}
           {section === "follow-ups" && (
             <>
               <PageHeading
-                eyebrow="NEXT CONVERSATION"
+                eyebrow="跟进计划"
                 title="让每一次沟通都有后续"
                 description="已安排的下一步、负责人和到期时间。"
               />
@@ -528,7 +570,7 @@ export default function Workbench() {
             >
               <Icon name="close" />
             </button>
-            <span className="eyebrow">WORKSPACE ACCESS</span>
+            <span className="eyebrow">工作区连接</span>
             <h2 id="connection-title">连接工作区</h2>
             <p className="muted">
               输入管理员为你的工作区配置的访问令牌。令牌仅保存在当前浏览器标签页会话，不会进入网址。
@@ -628,9 +670,13 @@ function Dashboard({
   return (
     <>
       <PageHeading
-        eyebrow="YOUR TRADE DESK"
+        eyebrow="工作台"
         title="从一封询盘，走向下一次机会。"
-        description="查看正在推进的案件，处理需要你判断的事项。"
+        description={
+          approvals.length || due
+            ? `当前有 ${approvals.length} 项等你审核，${due} 项跟进已到期。`
+            : "目前没有等你审核的事项，也没有到期的跟进。"
+        }
         action={
           <button className="button" onClick={onImport}>
             <Icon name="plus" />
@@ -666,7 +712,7 @@ function Dashboard({
         <section className="panel">
           <div className="panel-heading">
             <div>
-              <span className="eyebrow">CASE QUEUE</span>
+              <span className="eyebrow">询盘列表</span>
               <h2>近期询盘</h2>
             </div>
             <Link href="/cases" className="text-link">
@@ -678,35 +724,44 @@ function Dashboard({
         <section className="decision-column">
           <div className="panel-heading">
             <div>
-              <span className="eyebrow">YOUR NEXT MOVE</span>
+              <span className="eyebrow">下一步</span>
               <h2>需要关注</h2>
             </div>
           </div>
           {approvals.length ? (
-            approvals.slice(0, 3).map((a) => (
-              <Link
-                key={id(a)}
-                href={`/cases/${text(a.case_id)}?tab=draft`}
-                className="decision-preview"
-              >
-                <span className="mini-label">人工审核</span>
-                <h3>{text(a.title, scopeLabel(a.scope ?? a.action_scope))}</h3>
-                <p>
-                  Case {text(a.case_id).slice(0, 12)} · 版本{" "}
-                  {text(a.case_version)}
-                </p>
-                <span className="text-link">
-                  查看证据与草稿 <Icon name="arrow" />
-                </span>
-              </Link>
-            ))
+            approvals.slice(0, 3).map((a) => {
+              const owner = cases.find((c) => id(c) === text(a.case_id));
+              return (
+                <Link
+                  key={id(a)}
+                  href={`/cases/${text(a.case_id)}?tab=draft`}
+                  className="decision-preview"
+                >
+                  <span className="mini-label">
+                    {approvalTask(a.scope ?? a.action_scope)}
+                  </span>
+                  <h3>
+                    {owner
+                      ? caseHeadline(owner)
+                      : text(a.title, scopeLabel(a.scope ?? a.action_scope))}
+                  </h3>
+                  <p>
+                    询盘第 {text(a.case_version)} 版 · 审核截止{" "}
+                    {date(a.expires_at)}
+                  </p>
+                  <span className="text-link">
+                    查看草稿与依据 <Icon name="arrow" />
+                  </span>
+                </Link>
+              );
+            })
           ) : (
             <Empty title="暂时没有待审核项">
               调查完成后，需要你判断的证据与草稿会出现在这里。
             </Empty>
           )}
           <div className="method-note">
-            <span>01 — 04</span>
+            <span>处理顺序</span>
             <h3>好的跟进，始于清楚的判断。</h3>
             <p>询盘 → 调查 → 审核 → 跟进</p>
             <p>事实有出处，推断有标记，未知保持未知。</p>
@@ -794,7 +849,7 @@ function CaseList({
   return (
     <>
       <PageHeading
-        eyebrow="CASE DIRECTORY"
+        eyebrow="询盘案件"
         title="询盘案件"
         description="每一个客户机会，都有完整的证据、判断与跟进记录。"
         action={
@@ -934,7 +989,7 @@ function CasesTable({
           <tr>
             <th>客户 / 询盘</th>
             <th>状态</th>
-            <th>优先级</th>
+            <th>跟进建议</th>
             <th>最近更新</th>
             <th>
               <span className="sr-only">打开案件</span>
@@ -958,19 +1013,14 @@ function CasesTable({
                   {text(c.title ?? c.buyer_company, "未命名询盘")}
                 </Link>
                 <div className="table-sub">
+                  {caseCustomer(c) && <>{caseCustomer(c)} · </>}
                   {text(
                     c.buyer_country ??
                       row(c.inquiry).buyer_country ??
                       row(c.inquiry).target_country,
                     "地区待确认",
                   )}{" "}
-                  ·{" "}
-                  {text(
-                    c.product ??
-                      row(c.inquiry).product ??
-                      row(c.inquiry).product_summary,
-                    "产品待确认",
-                  )}
+                  · {caseProduct(c) || "产品待确认"}
                   {Array.isArray(c.tags) &&
                     c.tags.map((tag) => (
                       <span className="case-tag" key={String(tag)}>
@@ -986,7 +1036,7 @@ function CasesTable({
                 <Badge value={c.status} />
               </td>
               <td>
-                <span className="priority">{text(c.priority, "待评估")}</span>
+                <PriorityCell caseData={c} />
               </td>
               <td className="muted">{date(c.updated_at ?? c.created_at)}</td>
               <td>
@@ -1003,6 +1053,16 @@ function CasesTable({
         </tbody>
       </table>
     </div>
+  );
+}
+
+function PriorityCell({ caseData }: { caseData: Row }) {
+  const info = priorityInfo(caseData);
+  return (
+    <span className={`priority priority-${info.tone}`} title={info.advice}>
+      {info.label}
+      {info.detail && <small>{info.detail}</small>}
+    </span>
   );
 }
 
@@ -1071,8 +1131,7 @@ function ImportDialog({
         );
       }
       const newId = id(row(result));
-      if (!newId)
-        throw new Error("服务未返回 Case ID，请检查案件列表后再重试。");
+      if (!newId) throw new Error("服务未返回新案件，请检查案件列表后再重试。");
       onCreated(newId);
     } catch (e) {
       setError((e as Error).message);
@@ -1095,7 +1154,7 @@ function ImportDialog({
         >
           <Icon name="close" />
         </button>
-        <span className="eyebrow">START A CASE</span>
+        <span className="eyebrow">导入询盘</span>
         <h2 id="import-title">把询盘放到工作台上</h2>
         <p className="muted">
           原文会保留。任何缺失与不确定信息，都需要在调查中确认。
@@ -1358,13 +1417,49 @@ function CaseDetail({
     window.history.replaceState(null, "", `/cases/${caseId}?tab=${value}`);
   };
   if (loading) return <div className="loading">正在读取案件…</div>;
+  const status = text(data.status);
+  const next = pending.length
+    ? {
+        title: `审核回复草稿（${pending.length} 项）`,
+        detail: "批准只表示草稿可供人工使用，不会发送邮件。",
+      }
+    : ["READY_TO_FOLLOW_UP", "FOLLOW_UP_IN_PROGRESS"].includes(status)
+      ? { title: "安排下一步跟进", detail: "记录下一次联系的事项和时间。" }
+      : status === "NEW"
+        ? {
+            title: "开始调查",
+            detail: "核实客户身份和需求，整理依据后生成草稿。",
+          }
+        : status === "RESEARCHING"
+          ? { title: "调查进行中", detail: "无需操作，结果会自动更新。" }
+          : status === "NEEDS_INPUT"
+            ? { title: "补充缺失资料", detail: "补齐资料后更新调查。" }
+            : status === "FAILED"
+              ? {
+                  title: "处理调查失败",
+                  detail: "可在“执行记录”查看原因，或直接恢复调查。",
+                }
+              : status === "CLOSED"
+                ? {
+                    title: "询盘已关闭",
+                    detail: "没有待办事项，记录可随时查阅。",
+                  }
+                : {
+                    title: "核对调查结论",
+                    detail: "没有待审核项；如资料有变化，可以更新调查。",
+                  };
+  const assessment = row(data.assessment);
+  const priority = priorityInfo(data);
+  const missing = Array.isArray(assessment.missing_information)
+    ? assessment.missing_information.map(missingLabel).filter(Boolean)
+    : [];
   return (
     <>
       <Link href="/cases" className="back-link">
         ← 返回询盘案件
       </Link>
       <PageHeading
-        eyebrow={"CASE / " + caseId.slice(0, 16)}
+        eyebrow="询盘详情"
         title={text(data.title, "询盘详情")}
         description={`${text(inquiry.buyer_company ?? inquiry.buyer_company_hint ?? data.buyer_company, "客户待确认")} · ${text(inquiry.buyer_country ?? inquiry.target_country ?? data.buyer_country, "国家待确认")}`}
         action={
@@ -1404,6 +1499,41 @@ function CaseDetail({
         )}
       </div>
       <ErrorBox error={error} />
+      <section className="case-brief" aria-label="询盘摘要">
+        <div>
+          <span className="eyebrow">客户与需求</span>
+          <strong>
+            {caseCustomer(data) || "客户待确认"}
+            {" · "}
+            {text(
+              inquiry.buyer_country ??
+                inquiry.target_country ??
+                data.buyer_country,
+              "地区待确认",
+            )}
+          </strong>
+          <p>{caseProduct(data) || "产品需求待确认"}</p>
+        </div>
+        <div>
+          <span className="eyebrow">调查结论</span>
+          <strong>
+            {priority.label}
+            {priority.detail && <small> · {priority.detail}</small>}
+          </strong>
+          <p>
+            {missing.length
+              ? `还缺：${missing.join("、")}`
+              : data.assessment
+                ? priority.advice
+                : "调查完成后显示结论与缺失资料。"}
+          </p>
+        </div>
+        <div className="case-brief-next">
+          <span className="eyebrow">推荐下一步</span>
+          <strong>{next.title}</strong>
+          <p>{next.detail}</p>
+        </div>
+      </section>
       <CaseMetadata
         caseData={data}
         prefix={prefix}
@@ -1420,11 +1550,11 @@ function CaseDetail({
       <div className="case-tabs" role="tablist" aria-label="案件详情">
         {[
           ["research", "调查与证据"],
+          ["draft", "邮件草稿与审核"],
           ["risks", "风险与规则"],
           ["visuals", "视觉任务与提案"],
-          ["draft", "邮件草稿与审核"],
-          ["runs", "执行记录"],
           ["timeline", "跟进时间线"],
+          ["runs", "执行记录"],
         ].map(([v, l]) => (
           <button
             key={v}
@@ -1443,7 +1573,7 @@ function CaseDetail({
       {tab === "research" && (
         <div className="case-grid">
           <section className="summary-panel">
-            <span className="eyebrow">INQUIRY FACTS</span>
+            <span className="eyebrow">询盘内容</span>
             <h2>客户询盘</h2>
             <dl className="fact-list">
               {[
@@ -1491,13 +1621,16 @@ function CaseDetail({
           <section className="findings-panel">
             <div className="panel-heading">
               <div>
-                <span className="eyebrow">EVIDENCE LEDGER</span>
+                <span className="eyebrow">调查结论</span>
                 <h2>结论，以及它的依据</h2>
               </div>
               <span className="count">
-                {claims.length} 条主张 · {sources.length} 个来源
+                {claims.length} 条记录 · {sources.length} 个来源
               </span>
             </div>
+            {Boolean(data.assessment) && (
+              <AssessmentView assessment={assessment} claims={claims} />
+            )}
             <EvidenceView evidence={evidence} prefix={prefix} />
             {canReview && (
               <AdvancedReview
@@ -1517,18 +1650,12 @@ function CaseDetail({
                 onChange();
               }}
             />
-            {Boolean(data.assessment) && (
-              <section className="assessment-section">
-                <h3>分维度评估</h3>
-                <Details value={data.assessment} />
-              </section>
-            )}
           </section>
         </div>
       )}
       {tab === "risks" && (
         <section className="panel content-panel">
-          <span className="eyebrow">RULES & CONTEXT</span>
+          <span className="eyebrow">风险与规则</span>
           <h2>风险需要放回适用范围</h2>
           <p className="muted">
             规则有来源、版本和有效期。未覆盖或证据不足会保留为待审核，不构成法律上的最终判断。
@@ -1544,11 +1671,16 @@ function CaseDetail({
                     }
                   />
                   <span className="mini-label">
-                    {text(r.category ?? r.check_type)} ·{" "}
-                    {text(r.severity, "待评估")}
+                    {riskCategoryLabel(r.category ?? r.check_type)} ·{" "}
+                    {severityLabel(r.severity)}
                   </span>
                 </div>
-                <h3>{text(r.title ?? r.rule_id ?? r.summary, "规则检查")}</h3>
+                <h3>
+                  {text(
+                    r.title ?? r.summary,
+                    `${riskCategoryLabel(r.category ?? r.check_type)}检查`,
+                  )}
+                </h3>
                 <p>{text(r.rationale ?? r.description ?? r.message)}</p>
                 <dl className="inline-facts">
                   <div>
@@ -1564,10 +1696,7 @@ function CaseDetail({
                     <dd>{date(r.valid_until)}</dd>
                   </div>
                 </dl>
-                <details>
-                  <summary>查看依据与来源</summary>
-                  <Details value={r} />
-                </details>
+                <TechDetails label="查看依据与原始记录" value={r} />
               </article>
             ))
           ) : (
@@ -1602,26 +1731,26 @@ function CaseDetail({
             onChange();
           }}
           onNotice={onNotice}
+          onOpenEvidence={() => navigateTab("research")}
         />
       )}
       {tab === "runs" && (
         <section className="panel content-panel">
           <div className="panel-heading">
             <div>
-              <span className="eyebrow">EXECUTION HISTORY</span>
-              <h2>任务与执行尝试</h2>
+              <span className="eyebrow">执行记录</span>
+              <h2>系统做过哪些处理</h2>
             </div>
-            <span className="muted">工作流安排依赖，任务管理器领取执行</span>
+            <span className="muted">用于排查问题；日常跟进无需查看</span>
           </div>
           {tasks.length ? (
             tasks.map((t) => (
               <article className="task-row" key={id(t)}>
                 <div>
-                  <h3>{text(t.task_type ?? t.type)}</h3>
-                  <span className="mono muted">{id(t)}</span>
+                  <h3>{taskLabel(t.task_type ?? t.type)}</h3>
                 </div>
                 <Badge value={t.status} />
-                <span>尝试 {text(t.attempt_count, "0")}</span>
+                <span>已执行 {text(t.attempt_count, "0")} 次</span>
                 {text(t.status) === "FAILED" && (
                   <button
                     className="button secondary compact"
@@ -1631,18 +1760,15 @@ function CaseDetail({
                     重试此任务
                   </button>
                 )}
-                <details>
-                  <summary>依赖、预算与执行结果</summary>
-                  <Details value={t} />
-                </details>
+                <TechDetails label="依赖、预算与执行结果" value={t} />
               </article>
             ))
           ) : (
             <Empty title="尚未开始调查">
-              启动调查后，任务依赖、Agent 执行与失败原因会保存于此。
+              启动调查后，每个处理步骤和失败原因都会保存在这里。
             </Empty>
           )}
-          <h3 className="section-label">持久事件</h3>
+          <h3 className="section-label">处理时间线</h3>
           <EventList events={events} />
         </section>
       )}
@@ -1668,6 +1794,22 @@ function CaseDetail({
           </section>
         </>
       )}
+      <TechDetails label="案件技术追溯信息">
+        <dl className="approval-binding">
+          <div>
+            <dt>案件编号</dt>
+            <dd className="mono">{caseId}</dd>
+          </div>
+          <div>
+            <dt>案件版本</dt>
+            <dd>{text(data.version)}</dd>
+          </div>
+          <div>
+            <dt>内部状态</dt>
+            <dd className="mono">{status}</dd>
+          </div>
+        </dl>
+      </TechDetails>
       <div className="export-bar">
         <span>报告可追溯至原始记录</span>
         <div className="button-row">
@@ -1682,12 +1824,97 @@ function CaseDetail({
                 ).catch((e) => setError(e.message))
               }
             >
-              导出 {format === "markdown" ? "Markdown" : format.toUpperCase()} ↗
+              导出 {format === "markdown" ? "Markdown" : format.toUpperCase()}{" "}
+              ↗
             </button>
           ))}
         </div>
       </div>
     </>
+  );
+}
+
+function sourceName(s: Row) {
+  return text(
+    s.title ?? s.source_title,
+    text(s.url ?? s.source_url, "") ||
+      `${sourceTypeLabel(s.source_type ?? s.type)}资料`,
+  );
+}
+/** Conclusion → per-dimension basis → missing items; the raw record stays folded. */
+function AssessmentView({
+  assessment,
+  claims,
+}: {
+  assessment: Row;
+  claims: Row[];
+}) {
+  const info = priorityInfo({ assessment });
+  const reasons = Array.isArray(assessment.reason_codes)
+    ? assessment.reason_codes.map(reasonLabel)
+    : [];
+  const missing = Array.isArray(assessment.missing_information)
+    ? assessment.missing_information.map(missingLabel).filter(Boolean)
+    : [];
+  const coverage = Number(assessment.evidence_coverage);
+  const statement = (evidenceId: string) => {
+    const claim = claims.find(
+      (c) => row(c.data).legacy_evidence_id === evidenceId,
+    );
+    return claim ? text(claim.text ?? claim.statement, "") : "";
+  };
+  return (
+    <section className="assessment-section">
+      <h3>分维度评估</h3>
+      <div className="assessment-verdict">
+        <strong className={`priority-${info.tone}`}>{info.label}</strong>
+        <span>
+          {info.detail}
+          {Number.isFinite(coverage) &&
+            ` · 依据覆盖 ${Math.round(coverage * 100)}%`}
+        </span>
+        <p>{info.advice} 这是跟进建议，不是资信评级。</p>
+      </div>
+      {reasons.length > 0 && (
+        <div className="notice">
+          <strong>需要留意</strong>
+          <ul>
+            {reasons.map((reason) => (
+              <li key={reason}>{reason}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <div className="assessment-signals">
+        {signalRows(assessment).map((signal) => {
+          const basis = signal.evidenceIds.map(statement).filter(Boolean);
+          return (
+            <article key={signal.key}>
+              <div>
+                <strong>{signal.name}</strong>
+                <Badge value={signal.status} />
+              </div>
+              <p>{signal.label}</p>
+              {basis.length > 0 ? (
+                <ul>
+                  {basis.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              ) : (
+                signal.rationale && <p className="muted">{signal.rationale}</p>
+              )}
+            </article>
+          );
+        })}
+      </div>
+      <p className={missing.length ? "assessment-missing" : "muted"}>
+        {missing.length
+          ? `缺失资料：${missing.join("、")}`
+          : "未记录缺失资料。"}
+      </p>
+      <TechDetails label="查看评估原始记录" value={assessment} />
+    </section>
   );
 }
 
@@ -1753,8 +1980,10 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
     <>
       {Array.isArray(evidence.conflicts) && evidence.conflicts.length > 0 && (
         <div className="notice danger">
-          <strong>存在来源冲突，需要人工判断。</strong>
-          <Details value={evidence.conflicts} />
+          <strong>
+            有 {evidence.conflicts.length} 处来源互相矛盾，需要人工判断。
+          </strong>
+          <TechDetails label="查看冲突记录" value={evidence.conflicts} />
         </div>
       )}
       {groups.map((group) => {
@@ -1797,7 +2026,7 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
                         <Badge
                           value={c.status ?? c.assertion_status ?? c.kind}
                         />
-                        <span>{text(c.subject ?? c.entity_id, "")}</span>
+                        <span>{claimSubjectLabel(c.subject)}</span>
                       </div>
                       <div className="source-links">
                         {relevant.map((s) => (
@@ -1805,14 +2034,7 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
                             key={text(s.id ?? s.source_id)}
                             onClick={() => void show(s)}
                           >
-                            ↗{" "}
-                            {text(
-                              s.title ??
-                                s.source_title ??
-                                s.url ??
-                                s.source_url,
-                              "查看来源",
-                            )}
+                            ↗ {sourceName(s)}
                           </button>
                         ))}
                       </div>
@@ -1835,14 +2057,10 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
             onClick={() => void show(s)}
           >
             <span>
-              <strong>
-                {text(
-                  s.title ?? s.source_title ?? s.url ?? s.source_url,
-                  "来源",
-                )}
-              </strong>
+              <strong>{sourceName(s)}</strong>
               <small>
-                {text(s.source_type ?? s.type)} · {date(s.captured_at)}
+                {sourceTypeLabel(s.source_type ?? s.type)} ·{" "}
+                {date(s.captured_at)}
               </small>
             </span>
             <span>↗</span>
@@ -1867,7 +2085,7 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
             >
               <Icon name="close" />
             </button>
-            <span className="eyebrow">SOURCE SNAPSHOT</span>
+            <span className="eyebrow">来源原文</span>
             <h2 id="source-title">
               {text(selected.title ?? selected.source_title, "来源证据")}
             </h2>
@@ -1881,24 +2099,15 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
                 <dd>{date(selected.captured_at)}</dd>
               </div>
               <div>
-                <dt>快照 hash</dt>
-                <dd className="mono">
-                  {text(
-                    selected.snapshot_hash ??
-                      selected.sha256 ??
-                      selected.content_hash,
-                  )}
+                <dt>来源类型</dt>
+                <dd>
+                  {sourceTypeLabel(selected.source_type ?? selected.type)}
                 </dd>
               </div>
               <div>
                 <dt>许可 / 可用性</dt>
                 <dd>
-                  {text(
-                    selected.license ??
-                      selected.license_status ??
-                      selected.status,
-                    "未记录",
-                  )}
+                  {licenseLabel(selected.license ?? selected.license_status)}
                 </dd>
               </div>
             </dl>
@@ -1922,6 +2131,16 @@ function EvidenceView({ evidence, prefix }: { evidence: Row; prefix: string }) {
             <ErrorBox error={error} />
             <h3>原始快照（纯文本）</h3>
             <pre className="snapshot">{snapshot || "正在读取…"}</pre>
+            <TechDetails>
+              <p className="mono">
+                原文校验值{" "}
+                {text(
+                  selected.snapshot_hash ??
+                    selected.sha256 ??
+                    selected.content_hash,
+                )}
+              </p>
+            </TechDetails>
           </section>
         </ModalOverlay>
       )}
@@ -1961,6 +2180,16 @@ function draftText(a: Row): string {
         "",
       );
 }
+function artifactKindLabel(value: unknown) {
+  const key = text(value, "").toLowerCase();
+  return /report/.test(key)
+    ? "调查报告"
+    : /proposal/.test(key)
+      ? "买家提案"
+      : /review/.test(key)
+        ? "人工复核记录"
+        : "其他资料";
+}
 function DraftWorkspace({
   caseData,
   canReview,
@@ -1969,6 +2198,7 @@ function DraftWorkspace({
   prefix,
   onChange,
   onNotice,
+  onOpenEvidence,
 }: {
   caseData: Row;
   canReview: boolean;
@@ -1977,6 +2207,7 @@ function DraftWorkspace({
   prefix: string;
   onChange: () => void;
   onNotice: (v: string) => void;
+  onOpenEvidence: () => void;
 }) {
   const all = normalizeArtifacts(artifacts);
   const drafts = all
@@ -2024,7 +2255,7 @@ function DraftWorkspace({
       <section className="panel content-panel">
         <div className="panel-heading">
           <div>
-            <span className="eyebrow">REPLY WORKSPACE</span>
+            <span className="eyebrow">回复草稿</span>
             <h2>英文回复草稿</h2>
           </div>
           {latest && (
@@ -2051,14 +2282,11 @@ function DraftWorkspace({
         {latest ? (
           <>
             <div className="draft-meta">
+              <span>第 {text(selected.version)} 版</span>
               <span>
-                SHA256{" "}
-                <code>
-                  {text(selected.hash ?? selected.content_hash).slice(0, 20)}…
-                </code>
-              </span>
-              <span>
-                {selected === latest ? "当前版本" : "历史版本 · 只读"}
+                {selected === latest
+                  ? "当前版本，本次审核针对该版本"
+                  : "历史版本 · 只读"}
               </span>
             </div>
             {editing ? (
@@ -2207,7 +2435,12 @@ function DraftWorkspace({
         )}
       </section>
       <aside className="approval-column">
-        <ApprovalList approvals={approvals} onChange={onChange} compact />
+        <ApprovalList
+          approvals={approvals}
+          onChange={onChange}
+          onOpenEvidence={onOpenEvidence}
+          compact
+        />
         {all
           .filter(
             (a) => !/draft|reply|email/i.test(text(a.kind ?? a.type ?? a.name)),
@@ -2218,7 +2451,7 @@ function DraftWorkspace({
               key={text(a.id, i.toString())}
             >
               <summary>
-                {text(a.kind ?? a.type, "报告")} · 版本 {text(a.version)}
+                {artifactKindLabel(a.kind ?? a.type)} · 第 {text(a.version)} 版
               </summary>
               <pre>{draftText(a) || JSON.stringify(a.content, null, 2)}</pre>
             </details>
@@ -2250,11 +2483,15 @@ function LineDiff({ before, after }: { before: string; after: string }) {
 }
 function ApprovalList({
   approvals,
+  cases = [],
   onChange,
+  onOpenEvidence,
   compact = false,
 }: {
   approvals: Row[];
+  cases?: Row[];
   onChange: () => void;
+  onOpenEvidence?: () => void;
   compact?: boolean;
 }) {
   const [error, setError] = useState(""),
@@ -2294,107 +2531,133 @@ function ApprovalList({
         </Empty>
       </section>
     );
+  const isPending = (a: Row) => text(a.status).toUpperCase() === "PENDING";
+  const open = approvals.filter(isPending);
+  const history = approvals.filter((a) => !isPending(a));
+  const card = (a: Row) => {
+    const aid = id(a);
+    const pending = isPending(a);
+    const owner = cases.find((c) => id(c) === text(a.case_id));
+    const scope = a.scope ?? a.action_scope;
+    return (
+      <article className="approval-card" key={aid}>
+        <div className="approval-top">
+          <span className="eyebrow">
+            {pending ? approvalTask(scope) : scopeLabel(scope)}
+          </span>
+          <Badge value={a.status} />
+        </div>
+        <h3>
+          {owner ? caseHeadline(owner) : text(a.title, scopeLabel(scope))}
+        </h3>
+        {onOpenEvidence ? (
+          <button className="text-button" onClick={onOpenEvidence}>
+            查看本案调查与证据 ↗
+          </button>
+        ) : (
+          <Link
+            className="text-link"
+            href={`/cases/${text(a.case_id)}?tab=research`}
+          >
+            查看本案调查与证据 ↗
+          </Link>
+        )}
+        {Boolean(a.reason) && <p>{text(a.reason)}</p>}
+        <dl className="approval-binding">
+          <div>
+            <dt>审核范围</dt>
+            <dd>{scopeLabel(scope)}</dd>
+          </div>
+          {Boolean(row(a.data).target) && (
+            <div>
+              <dt>动作目标</dt>
+              <dd>{text(row(a.data).target)}</dd>
+            </div>
+          )}
+          <div>
+            <dt>审核版本</dt>
+            <dd>询盘第 {text(a.case_version)} 版，本次审核针对该版本</dd>
+          </div>
+          <div>
+            <dt>审核截止</dt>
+            <dd>{date(a.expires_at)}</dd>
+          </div>
+        </dl>
+        {pending ? (
+          <>
+            <Field label="审核说明">
+              <textarea
+                rows={2}
+                value={comments[aid] || ""}
+                onChange={(e) =>
+                  setComments({ ...comments, [aid]: e.target.value })
+                }
+                placeholder="记录判断依据或需要补充的信息"
+              />
+            </Field>
+            <div className="approval-buttons">
+              <button
+                className="button"
+                disabled={Boolean(busy)}
+                onClick={() => void decide(a, "approve")}
+              >
+                审核并批准
+              </button>
+              <button
+                className="button secondary"
+                disabled={Boolean(busy)}
+                onClick={() => void decide(a, "reject")}
+              >
+                拒绝
+              </button>
+              <button
+                className="text-button"
+                disabled={Boolean(busy)}
+                onClick={() => void decide(a, "request_changes")}
+              >
+                要求修改
+              </button>
+              <button
+                className="text-button"
+                disabled={Boolean(busy)}
+                onClick={() => void decide(a, "request_evidence")}
+              >
+                要求补证据
+              </button>
+            </div>
+            <small className="muted">
+              本次决定只对这一版有效；内容变化后需重新审核。
+            </small>
+          </>
+        ) : (
+          <p className="muted">
+            {a.decided_at
+              ? `${date(a.decided_at)} · ${text(a.reviewer_id, "已记录审核人")}`
+              : "内容已更新，这条审核不再有效"}
+            {(a.comment ?? row(a.data).comment)
+              ? " · " + text(a.comment ?? row(a.data).comment)
+              : ""}
+          </p>
+        )}
+        <TechDetails>
+          <p className="mono">审核内容校验值 {text(a.artifact_hash)}</p>
+        </TechDetails>
+      </article>
+    );
+  };
   return (
     <div className={compact ? "approvals-list compact-list" : "approvals-list"}>
       <ErrorBox error={error} />
-      {approvals.map((a) => {
-        const aid = id(a);
-        const pending = text(a.status).toUpperCase() === "PENDING";
-        return (
-          <article className="approval-card" key={aid}>
-            <div className="approval-top">
-              <span className="eyebrow">HUMAN REVIEW</span>
-              <Badge value={a.status} />
-            </div>
-            <h3>{text(a.title, scopeLabel(a.scope ?? a.action_scope))}</h3>
-            <Link
-              className="text-link"
-              href={`/cases/${text(a.case_id)}?tab=draft`}
-            >
-              查看案件与证据 ↗
-            </Link>
-            {Boolean(a.reason) && <p>{text(a.reason)}</p>}
-            <dl className="approval-binding">
-              <div>
-                <dt>审核范围</dt>
-                <dd>{scopeLabel(a.scope ?? a.action_scope)}</dd>
-              </div>
-              {Boolean(row(a.data).target) && (
-                <div>
-                  <dt>动作目标</dt>
-                  <dd>{text(row(a.data).target)}</dd>
-                </div>
-              )}
-              <div>
-                <dt>案件版本</dt>
-                <dd>{text(a.case_version)}</dd>
-              </div>
-              <div>
-                <dt>内容 hash</dt>
-                <dd className="mono">{text(a.artifact_hash)}</dd>
-              </div>
-              <div>
-                <dt>到期时间</dt>
-                <dd>{date(a.expires_at)}</dd>
-              </div>
-            </dl>
-            {pending ? (
-              <>
-                <Field label="审核说明">
-                  <textarea
-                    rows={2}
-                    value={comments[aid] || ""}
-                    onChange={(e) =>
-                      setComments({ ...comments, [aid]: e.target.value })
-                    }
-                    placeholder="记录判断依据或需要补充的信息"
-                  />
-                </Field>
-                <div className="approval-buttons">
-                  <button
-                    className="button"
-                    disabled={Boolean(busy)}
-                    onClick={() => void decide(a, "approve")}
-                  >
-                    审核并批准
-                  </button>
-                  <button
-                    className="button secondary"
-                    disabled={Boolean(busy)}
-                    onClick={() => void decide(a, "reject")}
-                  >
-                    拒绝
-                  </button>
-                  <button
-                    className="text-button"
-                    disabled={Boolean(busy)}
-                    onClick={() => void decide(a, "request_changes")}
-                  >
-                    要求修改
-                  </button>
-                  <button
-                    className="text-button"
-                    disabled={Boolean(busy)}
-                    onClick={() => void decide(a, "request_evidence")}
-                  >
-                    要求补证据
-                  </button>
-                </div>
-                <small className="muted">
-                  本次决定绑定以上版本；内容变化后需重新审核。
-                </small>
-              </>
-            ) : (
-              <p className="muted">
-                {date(a.decided_at)} · {text(a.reviewer_id, "已记录审核人")}
-                {(a.comment ?? row(a.data).comment)
-                  ? " · " + text(a.comment ?? row(a.data).comment)
-                  : ""}
-              </p>
-            )}
-          </article>
-        );
-      })}
+      {open.map(card)}
+      {!open.length && compact && (
+        <p className="quiet-empty">当前没有待你审核的事项。</p>
+      )}
+      {history.length > 0 && (
+        <details className="approval-history" open={!compact && !open.length}>
+          <summary>历史审核记录（{history.length}）</summary>
+          {history.map(card)}
+        </details>
+      )}
     </div>
   );
 }
@@ -2600,23 +2863,20 @@ function EventList({ events }: { events: Row[] }) {
         <li key={text(e.event_id ?? e.id, i.toString())}>
           <span className="event-dot" />
           <div>
-            <span className="event-label">{text(e.event_type ?? e.type)}</span>
+            <span className="event-label">
+              {eventLabel(e.event_type ?? e.type)}
+            </span>
             <time>{date(e.created_at)}</time>
-            <div className="event-refs">
-              <span>序号 {text(e.sequence)}</span>
-              {Boolean(e.task_id) && (
-                <span>任务 {text(e.task_id).slice(0, 16)}</span>
-              )}
-              {Boolean(e.agent_run_id) && (
-                <span>执行 {text(e.agent_run_id).slice(0, 16)}</span>
-              )}
-            </div>
-            {Boolean(e.data_redacted || e.data) && (
-              <details>
-                <summary>事件详情</summary>
-                <Details value={e.data_redacted ?? e.data} />
-              </details>
-            )}
+            <TechDetails
+              label="技术详情"
+              value={{
+                event_type: e.event_type ?? e.type,
+                sequence: e.sequence,
+                task_id: e.task_id,
+                agent_run_id: e.agent_run_id,
+                data: e.data_redacted ?? e.data,
+              }}
+            />
           </div>
         </li>
       ))}
@@ -2632,7 +2892,7 @@ function Sources({ settings }: { settings: Row }) {
   return (
     <>
       <PageHeading
-        eyebrow="SOURCES & KNOWLEDGE"
+        eyebrow="来源与知识"
         title="知道依据来自哪里"
         description="只使用明确可用且获得授权的来源。来源不可访问时，保留缺口与失败原因。"
       />
@@ -2653,10 +2913,7 @@ function Sources({ settings }: { settings: Row }) {
               <Badge
                 value={s.status ?? (s.available ? "AVAILABLE" : "UNAVAILABLE")}
               />
-              <details>
-                <summary>权限、许可与限制</summary>
-                <Details value={s} />
-              </details>
+              <TechDetails label="权限、许可与限制" value={s} />
             </article>
           ))
         ) : (
@@ -2681,13 +2938,13 @@ function Settings({
   return (
     <>
       <PageHeading
-        eyebrow="WORKSPACE SETTINGS"
+        eyebrow="工作区设置"
         title="清楚的权限，明确的边界"
         description="工作区配置由服务端管理；这里展示实际生效值。"
       />
       <div className="settings-grid">
         <section className="panel content-panel">
-          <span className="eyebrow">ACCESS</span>
+          <span className="eyebrow">访问</span>
           <h2>访问与身份</h2>
           <p>
             {hasToken ? "当前标签页已配置访问令牌。" : "尚未配置访问令牌。"}
@@ -2700,7 +2957,7 @@ function Settings({
           </button>
         </section>
         <section className="panel content-panel">
-          <span className="eyebrow">OUTBOUND POLICY</span>
+          <span className="eyebrow">外发</span>
           <h2>外部动作</h2>
           <Badge
             value={
@@ -2708,15 +2965,57 @@ function Settings({
             }
           />
           <p>
-            每个发送动作必须绑定独立授权、精确内容版本和幂等键。连接未配置时，继续使用手动跟进。
+            每次发送都需要单独授权，并且只对审核过的那一版内容有效。未连接邮箱时，继续手动发送和跟进。
           </p>
           <p className="muted">此界面不会通过草稿批准自动发送邮件。</p>
         </section>
         <section className="panel content-panel wide">
-          <span className="eyebrow">ACTIVE CONFIGURATION</span>
+          <span className="eyebrow">当前配置</span>
           <h2>模型、预算与保留策略</h2>
           {Object.keys(settings).length ? (
-            <Details value={settings} />
+            <>
+              <dl className="fact-list">
+                <div>
+                  <dt>运行方式</dt>
+                  <dd>
+                    {["fake", "offline", "demo"].includes(
+                      text(settings.runtime, ""),
+                    )
+                      ? "离线模拟，结果不代表真实调查"
+                      : "在线调查"}
+                  </dd>
+                </div>
+                <div>
+                  <dt>调查模型</dt>
+                  <dd>
+                    {text(settings.model, "") === "not configured"
+                      ? "未配置"
+                      : text(settings.model)}
+                  </dd>
+                </div>
+                <div>
+                  <dt>单个询盘费用上限</dt>
+                  <dd>${text(settings.max_case_cost_usd)}</dd>
+                </div>
+                <div>
+                  <dt>单个询盘调查时限</dt>
+                  <dd>{text(settings.max_case_seconds)} 秒</dd>
+                </div>
+                <div>
+                  <dt>上传文件上限</dt>
+                  <dd>
+                    {Math.round(Number(settings.max_upload_bytes) / 1048576) ||
+                      "—"}{" "}
+                    MiB
+                  </dd>
+                </div>
+                <div>
+                  <dt>公开网页抓取</dt>
+                  <dd>{settings.public_fetch_enabled ? "已开启" : "已关闭"}</dd>
+                </div>
+              </dl>
+              <TechDetails label="查看完整配置记录" value={settings} />
+            </>
           ) : (
             <Empty title="配置尚未加载">
               连接工作区后查看生效中的模型、费用、超时与数据保留策略。
@@ -2815,7 +3114,7 @@ function OutboundPanel({
   };
   return (
     <details className="outbound-panel">
-      <summary>独立外部动作授权与回执</summary>
+      <summary>邮件发送授权与回执</summary>
       <p className="muted">
         草稿审核和发送审核分别记录。发送目标固定为当前版本草稿中的收件人，不能由网页内容改变。
       </p>
@@ -2832,14 +3131,16 @@ function OutboundPanel({
               <dd>{target || "草稿未指定收件人，禁止发送"}</dd>
             </div>
             <div>
-              <dt>案件版本</dt>
-              <dd>{text(caseData.version)}</dd>
-            </div>
-            <div>
-              <dt>内容 hash</dt>
-              <dd className="mono">{hash}</dd>
+              <dt>发送版本</dt>
+              <dd>
+                草稿第 {text(draft.version)} 版 · 询盘第{" "}
+                {text(caseData.version)} 版
+              </dd>
             </div>
           </dl>
+          <TechDetails>
+            <p className="mono">发送内容校验值 {hash}</p>
+          </TechDetails>
           <label className="confirm-action">
             <input
               type="checkbox"
@@ -2877,7 +3178,7 @@ function OutboundPanel({
       )}
       {receipts.length > 0 && (
         <>
-          <h3>持久回执</h3>
+          <h3>发送回执</h3>
           {receipts.map((r) => (
             <article key={id(r)} className="receipt">
               <Badge value={r.status} />
@@ -2932,11 +3233,11 @@ function OutboundPanel({
                     取消待执行动作
                   </button>
                   <p className="muted">
-                    仅可取消尚未执行的动作；服务端再次校验权限、状态与案件版本。
+                    仅可取消尚未执行的动作；系统会再次核对权限和案件版本。
                   </p>
                 </form>
               )}
-              <Details value={r} />
+              <TechDetails label="回执原始记录" value={r} />
             </article>
           ))}
         </>
@@ -3165,7 +3466,7 @@ function KnowledgeLibrary() {
     <section className="panel content-panel knowledge-library">
       <div className="panel-heading">
         <div>
-          <span className="eyebrow">VERSIONED KNOWLEDGE</span>
+          <span className="eyebrow">内部资料</span>
           <h2>内部知识与规则版本</h2>
         </div>
         <button className="button secondary" onClick={startNew}>
@@ -3173,8 +3474,7 @@ function KnowledgeLibrary() {
         </button>
       </div>
       <p className="muted">
-        资料用于提供背景，不自动成为案件证据，也不自动证明产品认证或法律合规。每个版本保留有效期、范围和内容
-        hash。
+        资料用于提供背景，不自动成为案件证据，也不自动证明产品认证或法律合规。每个版本都保留有效期和适用范围。
       </p>
       <ErrorBox error={error} />
       {editing && (
@@ -3277,7 +3577,7 @@ function KnowledgeLibrary() {
                   </p>
                   <span className="mini-label">用户提供 · 尚未核实</span>
                 </div>
-                <Badge value={latest.expired ? "EXPIRED" : "UNKNOWN"} />
+                <Badge value={latest.expired ? "EXPIRED" : "UNVERIFIED"} />
                 <select
                   aria-label={`知识版本 ${text(latest.title)}`}
                   defaultValue=""
@@ -3326,8 +3626,10 @@ function KnowledgeLibrary() {
               </button>
             )}
           </div>
-          <p className="mono">SHA256 {text(selected.content_hash)}</p>
           <pre className="snapshot">{text(selected.content)}</pre>
+          <TechDetails>
+            <p className="mono">内容校验值 {text(selected.content_hash)}</p>
+          </TechDetails>
         </section>
       )}
     </section>

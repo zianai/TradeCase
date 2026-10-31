@@ -2645,3 +2645,155 @@ summary:hover {
     white-space: normal;
   }
 }
+
+/* Business summary → business detail → technical trace. */
+.tech-details {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.tech-details > summary {
+  cursor: pointer;
+  width: fit-content;
+}
+.tech-details .mono,
+.tech-details pre {
+  overflow-wrap: anywhere;
+}
+.case-brief {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 24px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.case-brief > div {
+  padding: 16px 20px;
+  background: var(--surface);
+  min-width: 0;
+}
+.case-brief strong {
+  display: block;
+  color: var(--ink);
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+.case-brief strong small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.case-brief p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.case-brief-next {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.priority small {
+  display: block;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+.priority-good {
+  color: var(--good);
+}
+.priority-warn {
+  color: var(--accent);
+}
+.assessment-section {
+  border-top: 0;
+  margin: 0 0 24px;
+  padding-top: 0;
+}
+.assessment-verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+.assessment-verdict strong {
+  font-size: 20px;
+}
+.assessment-verdict span {
+  color: var(--muted);
+}
+.assessment-verdict p {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+}
+.assessment-signals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.assessment-signals article {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+.assessment-signals article > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+.assessment-signals p,
+.assessment-signals ul {
+  margin: 8px 0 0;
+  overflow-wrap: anywhere;
+}
+.assessment-signals ul {
+  padding-left: 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.assessment-missing {
+  color: var(--accent);
+}
+.approval-history {
+  margin-top: 16px;
+}
+.approval-history > summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+.approval-history .approval-card {
+  margin-top: 12px;
+  opacity: 0.86;
+}
+.visual-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.visual-options > p,
+.visual-options > label.visual-wide {
+  flex-basis: 100%;
+  margin: 0;
+}
+.qa-conclusion p {
+  margin: 4px 0;
+  font-weight: 600;
+}
+.qa-conclusion small {
+  display: block;
+  color: var(--muted);
+}
+.qa-conclusion ul {
+  margin: 4px 0;
+  padding-left: 16px;
+}
+@media (max-width: 760px) {
+  .case-brief {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

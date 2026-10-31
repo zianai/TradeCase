@@ -1,9 +1,19 @@
 "use client";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { api, download, id, mutate, row, rows, Row, text } from "@/lib/api";
+import {
+  assetKindLabel,
+  changeList,
+  changeOptions,
+  factStatusLabel,
+  missingInputList,
+  qaSummary,
+  strategyLabel,
+  structuralOptions,
+} from "@/lib/business-labels";
 
 const intents: Record<string, string> = {
-  product_comparison: "多 SKU 产品比较",
+  product_comparison: "多款产品对比",
   oem_preview: "OEM 定制预览",
   packaging_preview: "包装预览",
   spec_illustration: "规格示意",
@@ -17,7 +27,7 @@ const statuses: Record<string, string> = {
   awaiting_plan_approval: "等待计划审批",
   queued: "已排队",
   running: "制作中",
-  qa_pending: "等待视觉 QA",
+  qa_pending: "等待自动检查",
   awaiting_asset_review: "等待图片业务审核",
   awaiting_review: "待图片审核",
   not_recommended: "无需出图",
@@ -29,6 +39,24 @@ const statuses: Record<string, string> = {
   cancelled: "已取消",
   reconciling: "正在核对远端结果",
 };
+function QaConclusion({ qa }: { qa: unknown }) {
+  const summary = qaSummary(qa);
+  return (
+    <div className="qa-conclusion">
+      <p>{summary.headline}</p>
+      {summary.passed.length > 0 && (
+        <small>已检查：{summary.passed.join("、")}</small>
+      )}
+      {summary.issues.length > 0 && (
+        <ul>
+          {summary.issues.map((issue) => (
+            <li key={issue}>{issue}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 const humanList = (s: unknown) =>
   Array.isArray(s) ? s.map((v) => text(v)).join("、") : text(s);
 const label = (s: unknown) => statuses[text(s)] || text(s);
@@ -117,9 +145,9 @@ export function VisualRecommendations({
   }, [caseId]);
   if (!suggestions.length) return null;
   return (
-    <section className="visual-recommendation" aria-label="Recommended Actions">
+    <section className="visual-recommendation" aria-label="视觉建议">
       <div>
-        <span className="eyebrow">RECOMMENDED ACTIONS</span>
+        <span className="eyebrow">建议</span>
         <h2>可选的产品视觉方案</h2>
         <p>{text(suggestions[0].reason)}</p>
       </div>
@@ -156,7 +184,14 @@ export default function VisualWorkspace({
   const [comments, setComments] = useState<Record<string, string>>({}),
     [authorization, setAuthorization] = useState<Record<string, boolean>>({}),
     [preview, setPreview] = useState(false);
-  const [concept, setConcept] = useState(false);
+  const [concept, setConcept] = useState(false),
+    [allowed, setAllowed] = useState<string[]>([]),
+    [preserved, setPreserved] = useState<string[]>([
+      "product_structure",
+      "dimensions",
+    ]),
+    [otherPreserve, setOtherPreserve] = useState("");
+  const conceptPlan = intent === "odm_concept" || concept;
   const refresh = useCallback(async () => {
     try {
       setData(row(await api(prefix)));
@@ -254,16 +289,22 @@ export default function VisualWorkspace({
   const createPlan = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
+    const finalAllowed = allowed.filter(
+      (v) => conceptPlan || changeOptions.some((o) => o.value === v),
+    );
     const payload = {
       product_id: productId,
       intent,
       requirement,
       source_asset_ids: selectedSources,
-      allowed_changes: split(String(f.get("allowed_changes"))),
-      preserve: split(String(f.get("preserve"))),
+      allowed_changes: finalAllowed,
+      preserve: [
+        ...preserved.filter((v) => !finalAllowed.includes(v)),
+        ...split(otherPreserve),
+      ],
       variants: Number(f.get("variants")),
       budget_usd: Number(f.get("budget_usd")),
-      concept: intent === "odm_concept" || f.get("concept") === "on",
+      concept: conceptPlan,
       evidence_refs: [],
     };
     const result = await action(
@@ -279,20 +320,30 @@ export default function VisualWorkspace({
     }
   };
   if (!loaded) return <div className="loading">正在读取视觉任务…</div>;
+  const toggle = (
+    setter: (update: (old: string[]) => string[]) => void,
+    value: string,
+    on: boolean,
+  ) => setter((old) => (on ? [...old, value] : old.filter((v) => v !== value)));
+  const productName = (candidate: Row | undefined) => {
+    if (!candidate) return "未选择产品";
+    const name = text(row(candidate.data).name, "");
+    return name ? `${text(candidate.sku)} · ${name}` : text(candidate.sku);
+  };
   return (
     <div className="visual-workspace">
       <header className="panel content-panel">
-        <span className="eyebrow">VISUAL TASKS</span>
-        <h2>从产品事实到买家视觉提案</h2>
+        <span className="eyebrow">视觉任务</span>
+        <h2>产品图片与买家提案</h2>
         <p>
-          可选分支。先审核生成计划，再审核图片；原询盘分析继续独立运行。图片用于沟通展示，不作为事实证据。
+          可选步骤。先批准制作计划，再逐张审核图片；图片用于沟通展示，不能当作产品事实的证据。
         </p>
         <p className="visual-mode">
           {data.engine_mode === "mock"
-            ? "模拟 Creative Engine · 使用契约测试素材，非真实生成"
+            ? "模拟制作 · 使用测试素材，不是真实生成的图片"
             : data.engine_mode === "http"
-              ? "独立 Creative Engine · 实际执行以任务回执为准"
-              : "Creative Engine 未连接 · 可整理资料和计划，原业务不受影响"}
+              ? "图片制作服务已连接 · 实际结果以任务回执为准"
+              : "图片制作服务未连接 · 可先整理资料和计划，询盘流程不受影响"}
         </p>
       </header>
       {error && (
@@ -305,370 +356,6 @@ export default function VisualWorkspace({
           {notice}
         </p>
       )}
-      <section className="panel content-panel" aria-label="视觉需求建议">
-        <div className="panel-heading">
-          <h2>Recommended Actions · 视觉需求建议</h2>
-          <button
-            className="text-button"
-            onClick={() => {
-              setPreview(true);
-              document
-                .getElementById("visual-plan-form")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            手动创建视觉任务
-          </button>
-        </div>
-        {rows(data.suggestions).length ? (
-          rows(data.suggestions).map((s, i) => (
-            <article className="visual-row" key={i}>
-              <div>
-                <h3>{intents[text(s.intent)] || "当前询盘无需出图"}</h3>
-                <p>{text(s.reason)}</p>
-                {Boolean(s.requirement_quote) && (
-                  <blockquote>{text(s.requirement_quote)}</blockquote>
-                )}
-                <p className="muted">
-                  策略：{text(s.strategy)} · {label(s.status)}
-                </p>
-                {Array.isArray(s.missing_inputs) &&
-                  s.missing_inputs.length > 0 && (
-                    <p>需补充：{s.missing_inputs.join("、")}</p>
-                  )}
-              </div>
-              {text(s.status) !== "not_recommended" && (
-                <button
-                  className="button secondary compact"
-                  onClick={() => {
-                    setIntent(text(s.intent));
-                    setRequirement(text(s.requirement_quote, ""));
-                    setPreview(true);
-                  }}
-                >
-                  准备此方案
-                </button>
-              )}
-            </article>
-          ))
-        ) : (
-          <p className="muted">
-            没有必须生成的视觉任务；你可以继续原有草稿审核流程。
-          </p>
-        )}
-      </section>
-      <section className="panel content-panel">
-        <h2>产品事实与授权素材</h2>
-        <p className="muted">
-          填写已知资料；未知字段可留空。系统会阻止资料或授权不足的真实产品预览。
-        </p>
-        <details>
-          <summary>新增 / 更新产品资料</summary>
-          <form className="visual-form" onSubmit={importProduct}>
-            <label>
-              SKU / 产品标识
-              <input name="sku" required maxLength={100} />
-            </label>
-            <label>
-              产品名称
-              <input name="name" required maxLength={200} />
-            </label>
-            <label>
-              尺寸
-              <input name="dimensions" placeholder="未确认可留空" />
-            </label>
-            <label>
-              材质
-              <input name="material" placeholder="未确认可留空" />
-            </label>
-            <label>
-              可选颜色（逗号分隔）
-              <input name="colors" />
-            </label>
-            <label>
-              结构特征（逗号分隔）
-              <input name="structure" />
-            </label>
-            <label>
-              已确认定制能力（逗号分隔）
-              <input name="customization" />
-            </label>
-            <label>
-              事实状态
-              <select
-                aria-label="事实状态"
-                name="fact_status"
-                defaultValue="unverified"
-              >
-                <option value="unverified">未核实</option>
-                <option value="supplier_claim">供应商声明</option>
-                <option value="verified">已核实</option>
-                <option value="concept">概念</option>
-              </select>
-            </label>
-            <label className="visual-wide">
-              事实来源与核验依据
-              <textarea name="source" required rows={2} />
-            </label>
-            <label className="visual-check visual-wide">
-              <input name="external_use" type="checkbox" />
-              这些产品资料允许用于对外提案
-            </label>
-            <button className="button secondary compact" disabled={busy}>
-              保存产品资料
-            </button>
-          </form>
-        </details>
-        {products.map((p) => (
-          <div className="visual-row" key={id(p)}>
-            <div>
-              <strong>
-                {text(p.sku)} · {text(row(p.data).name)}
-              </strong>
-              <p className="muted">
-                资料版本 {text(p.version)} · {text(row(p.data).fact_status)} ·{" "}
-                {text(row(p.data).source)}
-              </p>
-            </div>
-            <button
-              className="text-button"
-              onClick={() => {
-                setProductId(id(p));
-                setSelectedSources([]);
-                setPreview(true);
-              }}
-            >
-              用于新计划
-            </button>
-          </div>
-        ))}
-        <details>
-          <summary>上传真实产品图 / 已授权 Logo / 包装素材</summary>
-          <form className="visual-form" onSubmit={uploadSource}>
-            <label>
-              关联产品
-              <select aria-label="关联产品" name="product_id" required>
-                <option value="">请选择产品</option>
-                {products.map((p) => (
-                  <option key={id(p)} value={id(p)}>
-                    {text(p.sku)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              素材类型
-              <select aria-label="素材类型" name="kind">
-                <option value="product">真实产品图</option>
-                <option value="logo">Logo</option>
-                <option value="packaging">包装素材</option>
-              </select>
-            </label>
-            <label className="visual-wide">
-              图片文件（PNG / JPEG / WebP，最大 2 MiB）
-              <input
-                name="file"
-                type="file"
-                accept="image/png,image/jpeg,image/webp"
-                required
-              />
-            </label>
-            <label className="visual-wide">
-              素材来源与授权说明
-              <input name="source" required />
-            </label>
-            <label className="visual-check">
-              <input type="checkbox" name="authorized" />
-              已取得使用授权
-            </label>
-            <label className="visual-check">
-              <input type="checkbox" name="external_use" />
-              允许对外使用
-            </label>
-            <button className="button secondary compact" disabled={busy}>
-              保存参考素材
-            </button>
-          </form>
-        </details>
-        {sources.length > 0 && (
-          <details>
-            <summary>查看原始素材（{sources.length}）</summary>
-            <div className="visual-gallery">
-              {sources.map((a) => (
-                <figure key={id(a)}>
-                  <AssetImage
-                    path={text(
-                      a.content_url,
-                      `/api/visual-assets/${id(a)}/content`,
-                    )}
-                    alt={`参考素材 ${text(a.kind)}`}
-                  />
-                  <figcaption>
-                    {text(a.kind)} · {a.authorized ? "已授权" : "未授权"} ·{" "}
-                    {a.external_use ? "允许外用" : "不可外用"}
-                    <small className="mono">{text(a.content_hash)}</small>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </details>
-        )}
-      </section>
-      <section className="panel content-panel" id="visual-plan-form">
-        <h2>{revisionTask ? "创建修订计划" : "准备生成计划"}</h2>
-        <p>保存计划不产生生成费用。提交前会绑定当前产品事实快照和参考素材。</p>
-        <details
-          open={preview}
-          onToggle={(e) => setPreview(e.currentTarget.open)}
-        >
-          <summary>填写视觉需求与执行约束</summary>
-          <form className="visual-form" onSubmit={createPlan}>
-            <label>
-              使用产品
-              <select
-                aria-label="使用产品"
-                required
-                value={productId}
-                onChange={(e) => {
-                  setProductId(e.target.value);
-                  setSelectedSources([]);
-                }}
-              >
-                <option value="">请选择产品</option>
-                {products.map((p) => (
-                  <option key={id(p)} value={id(p)}>
-                    {text(p.sku)} · 版本 {text(p.version)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              视觉用途
-              <select
-                aria-label="视觉用途"
-                value={intent}
-                onChange={(e) => setIntent(e.target.value)}
-              >
-                {Object.entries(intents).map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="visual-wide">
-              对应的买家需求
-              <textarea
-                required
-                value={requirement}
-                onChange={(e) => setRequirement(e.target.value)}
-                rows={2}
-                maxLength={2000}
-                placeholder="只描述相关产品视觉需求，不填写买家邮箱或个人联系方式"
-              />
-            </label>
-            <label>
-              允许修改（逗号分隔）
-              <input
-                name="allowed_changes"
-                placeholder="例如 color、authorized_logo"
-              />
-            </label>
-            <label>
-              必须保持不变（逗号分隔）
-              <input
-                name="preserve"
-                defaultValue="product_structure,dimensions"
-              />
-            </label>
-            <label>
-              图片数量
-              <input
-                name="variants"
-                type="number"
-                min={1}
-                max={8}
-                defaultValue={1}
-                required
-              />
-            </label>
-            <label>
-              预算上限（美元）
-              <input
-                name="budget_usd"
-                type="number"
-                min={0.01}
-                max={100}
-                step={0.01}
-                defaultValue={1}
-                required
-              />
-            </label>
-            <fieldset className="visual-wide">
-              <legend>选择参考素材</legend>
-              {sources
-                .filter(
-                  (a) =>
-                    intent === "product_comparison" ||
-                    text(a.product_id) === productId,
-                )
-                .map((a) => (
-                  <label className="visual-check" key={id(a)}>
-                    <input
-                      type="checkbox"
-                      checked={selectedSources.includes(id(a))}
-                      onChange={(e) =>
-                        setSelectedSources((old) =>
-                          e.target.checked
-                            ? [...old, id(a)]
-                            : old.filter((v) => v !== id(a)),
-                        )
-                      }
-                    />
-                    {text(
-                      products.find(
-                        (product) => id(product) === text(a.product_id),
-                      )?.sku,
-                    )}{" "}
-                    · {text(a.kind)} · {id(a).slice(0, 8)} ·{" "}
-                    {a.authorized && a.external_use ? "已授权外用" : "授权不足"}
-                  </label>
-                ))}
-              {!sources.some((a) => text(a.product_id) === productId) && (
-                <p className="muted">此产品尚无参考素材。</p>
-              )}
-            </fieldset>
-            <label className="visual-check visual-wide">
-              <input
-                name="concept"
-                type="checkbox"
-                checked={intent === "odm_concept" || concept}
-                onChange={(e) => setConcept(e.target.checked)}
-                disabled={intent === "odm_concept"}
-              />
-              仅作为概念方案，不宣称已量产或已验证
-            </label>
-            {product && (
-              <p className="muted visual-wide">
-                当前 SKU：{text(product.sku)} · 事实状态：
-                {text(row(product.data).fact_status)}
-              </p>
-            )}
-            <button className="button" disabled={busy || !productId}>
-              保存并预览计划
-            </button>
-            {revisionTask && (
-              <button
-                type="button"
-                className="text-button"
-                onClick={() => setRevisionTask(null)}
-              >
-                取消修订
-              </button>
-            )}
-          </form>
-        </details>
-      </section>
       <section className="panel content-panel">
         <div className="panel-heading">
           <h2>任务、计划与结果审核</h2>
@@ -688,10 +375,14 @@ export default function VisualWorkspace({
             <article className="visual-task" key={tid}>
               <div className="panel-heading">
                 <div>
-                  <h3>{intents[text(t.intent)] || text(t.intent)}</h3>
-                  <span className="mono muted">
-                    {tid.slice(0, 12)} · 任务版本 {text(t.version)}
-                  </span>
+                  <h3>
+                    {intents[text(t.intent)] || "视觉任务"} ·{" "}
+                    {text(
+                      row(p.product).name,
+                      text(row(p.product).sku, "产品待确认"),
+                    )}
+                  </h3>
+                  <span className="muted">任务第 {text(t.version)} 版</span>
                 </div>
                 <strong className="visual-state">{label(t.status)}</strong>
               </div>
@@ -702,7 +393,9 @@ export default function VisualWorkspace({
               )}
               {Array.isArray(p.missing_inputs) &&
                 p.missing_inputs.length > 0 && (
-                  <p role="status">需补充：{p.missing_inputs.join("、")}</p>
+                  <p role="status">
+                    需补充：{missingInputList(p.missing_inputs)}
+                  </p>
                 )}
               {Boolean(row(t.data).error) && (
                 <p role="status">{text(row(t.data).error)}</p>
@@ -713,16 +406,20 @@ export default function VisualWorkspace({
                   <dd>{text(p.requirement ?? t.requirement)}</dd>
                 </div>
                 <div>
-                  <dt>产品事实快照</dt>
-                  <dd className="mono">{text(plan.truth_snapshot_id)}</dd>
+                  <dt>产品资料</dt>
+                  <dd>
+                    {text(row(p.product).sku, "产品")} · 资料第{" "}
+                    {text(p.product_version, "—")} 版 ·{" "}
+                    {factStatusLabel(row(p.product).fact_status)}
+                  </dd>
                 </div>
                 <div>
-                  <dt>允许修改</dt>
-                  <dd>{humanList(p.allowed_changes)}</dd>
+                  <dt>可以修改</dt>
+                  <dd>{changeList(p.allowed_changes)}</dd>
                 </div>
                 <div>
                   <dt>必须保持</dt>
-                  <dd>{humanList(p.preserve)}</dd>
+                  <dd>{changeList(p.preserve)}</dd>
                 </div>
                 <div>
                   <dt>数量 / 预算上限（尚未报价）</dt>
@@ -735,19 +432,21 @@ export default function VisualWorkspace({
                   <dd>
                     {p.output_is_concept || p.concept
                       ? "输出为概念 / 定制预览，仅供沟通，不证明量产或认证"
-                      : "受控产品预览 · 仍需图片业务审核"}
+                      : "保留产品主体的预览图 · 仍需逐张审核"}
                   </dd>
                 </div>
               </dl>
-              <details>
-                <summary>查看完整计划、版本与追溯信息</summary>
+              <details className="tech-details">
+                <summary>技术追溯信息（完整计划与版本）</summary>
+                <p className="mono">
+                  任务 {tid} · 产品资料快照 {text(plan.truth_snapshot_id)}
+                </p>
                 <pre className="visual-json">{JSON.stringify(t, null, 2)}</pre>
               </details>
               {text(t.status) === "awaiting_plan_approval" && (
                 <div className="visual-approval">
                   <p>
-                    批准计划将授权独立 Creative Engine
-                    按此计划执行，费用不超过上述上限。计划审批与最终图片审批分开记录。
+                    批准后，图片制作服务将按此计划执行，费用不超过上述上限。批准计划不等于批准图片，图片还要逐张审核。
                   </p>
                   <label className="visual-check">
                     <input
@@ -838,6 +537,24 @@ export default function VisualWorkspace({
                       setRevisionTask(t);
                       setProductId(text(t.product_id, ""));
                       setIntent(text(t.intent));
+                      setConcept(Boolean(p.concept));
+                      setAllowed(
+                        Array.isArray(p.allowed_changes)
+                          ? p.allowed_changes.map(String)
+                          : [],
+                      );
+                      {
+                        const kept = Array.isArray(p.preserve)
+                          ? p.preserve.map(String)
+                          : [];
+                        const known = structuralOptions.map(
+                          (o) => o.value as string,
+                        );
+                        setPreserved(kept.filter((v) => known.includes(v)));
+                        setOtherPreserve(
+                          kept.filter((v) => !known.includes(v)).join(", "),
+                        );
+                      }
                       setRequirement(text(p.requirement ?? t.requirement, ""));
                       setSelectedSources(
                         Array.isArray(p.source_asset_ids)
@@ -858,9 +575,7 @@ export default function VisualWorkspace({
                 <>
                   <h4>图片业务审核</h4>
                   <p className="muted">
-                    对照原始素材，检查
-                    SKU、授权、产品结构、参数和声明。远端完成或 QA
-                    通过均不代表业务批准。
+                    对照原始素材，检查产品编号、授权、结构、参数和文字声明。制作完成或自动检查通过，都不代表业务已批准。
                   </p>
                   <div className="visual-gallery">
                     {assets.map((a) => (
@@ -874,8 +589,14 @@ export default function VisualWorkspace({
                         />
                         <figcaption>
                           <strong>{label(a.status)}</strong>
-                          <p>QA：{text(a.qa)}</p>
-                          <small className="mono">{text(a.content_hash)}</small>
+                          <QaConclusion qa={a.qa} />
+                          <details className="tech-details">
+                            <summary>技术追溯信息</summary>
+                            <p className="mono">{text(a.content_hash)}</p>
+                            <pre className="visual-json">
+                              {JSON.stringify(a.qa, null, 2)}
+                            </pre>
+                          </details>
                         </figcaption>
                         {text(a.status) === "approved" ? (
                           <label className="visual-check">
@@ -1001,18 +722,15 @@ export default function VisualWorkspace({
       </section>
       {rows(data.proposals).length > 0 && (
         <section className="panel content-panel">
-          <h2>Buyer Proposal · 已审核提案</h2>
+          <h2>已审核的买家提案</h2>
           {rows(data.proposals).map((p) => (
             <article className="visual-row" key={id(p)}>
               <div>
-                <h3>
-                  {text(row(row(p.data).product).name, "买家提案")} ·{" "}
-                  {id(p).slice(0, 8)}
-                </h3>
+                <h3>{text(row(row(p.data).product).name, "买家提案")}</h3>
                 <p>{text(row(p.data).requirement)}</p>
                 <dl className="visual-facts">
                   <div>
-                    <dt>产品 SKU</dt>
+                    <dt>产品编号</dt>
                     <dd>{text(row(row(p.data).product).sku)}</dd>
                   </div>
                   <div>
@@ -1045,8 +763,8 @@ export default function VisualWorkspace({
                 <p>
                   需要供应商确认：{humanList(row(p.data).supplier_questions)}
                 </p>
-                <details>
-                  <summary>查看提案内容</summary>
+                <details className="tech-details">
+                  <summary>技术追溯信息（提案原始记录）</summary>
                   <pre className="visual-json">
                     {JSON.stringify(p, null, 2)}
                   </pre>
@@ -1067,6 +785,409 @@ export default function VisualWorkspace({
           ))}
         </section>
       )}
+      <section className="panel content-panel" aria-label="视觉需求建议">
+        <div className="panel-heading">
+          <h2>视觉需求建议</h2>
+          <button
+            className="text-button"
+            onClick={() => {
+              setPreview(true);
+              document
+                .getElementById("visual-plan-form")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            手动创建视觉任务
+          </button>
+        </div>
+        {rows(data.suggestions).length ? (
+          rows(data.suggestions).map((s, i) => (
+            <article className="visual-row" key={i}>
+              <div>
+                <h3>{intents[text(s.intent)] || "当前询盘无需出图"}</h3>
+                <p>{text(s.reason)}</p>
+                {Boolean(s.requirement_quote) && (
+                  <blockquote>{text(s.requirement_quote)}</blockquote>
+                )}
+                <p className="muted">
+                  制作方式：{strategyLabel(s.strategy)} · {label(s.status)}
+                </p>
+                {Array.isArray(s.missing_inputs) &&
+                  s.missing_inputs.length > 0 && (
+                    <p>需补充：{missingInputList(s.missing_inputs)}</p>
+                  )}
+              </div>
+              {text(s.status) !== "not_recommended" && (
+                <button
+                  className="button secondary compact"
+                  onClick={() => {
+                    setIntent(text(s.intent));
+                    setRequirement(text(s.requirement_quote, ""));
+                    setPreview(true);
+                  }}
+                >
+                  准备此方案
+                </button>
+              )}
+            </article>
+          ))
+        ) : (
+          <p className="muted">
+            没有必须生成的视觉任务；你可以继续原有草稿审核流程。
+          </p>
+        )}
+      </section>
+      <section className="panel content-panel">
+        <h2>产品资料与授权素材</h2>
+        <p className="muted">
+          填写已知资料；未知字段可留空。系统会阻止资料或授权不足的真实产品预览。
+        </p>
+        <details>
+          <summary>新增 / 更新产品资料</summary>
+          <form className="visual-form" onSubmit={importProduct}>
+            <label>
+              SKU / 产品编号
+              <input name="sku" required maxLength={100} />
+            </label>
+            <label>
+              产品名称
+              <input name="name" required maxLength={200} />
+            </label>
+            <label>
+              尺寸
+              <input name="dimensions" placeholder="未确认可留空" />
+            </label>
+            <label>
+              材质
+              <input name="material" placeholder="未确认可留空" />
+            </label>
+            <label>
+              可选颜色（逗号分隔）
+              <input name="colors" />
+            </label>
+            <label>
+              结构特征（逗号分隔）
+              <input name="structure" />
+            </label>
+            <label>
+              已确认定制能力（逗号分隔）
+              <input name="customization" />
+            </label>
+            <label>
+              事实状态
+              <select
+                aria-label="事实状态"
+                name="fact_status"
+                defaultValue="unverified"
+              >
+                <option value="unverified">未核实</option>
+                <option value="supplier_claim">供应商声明</option>
+                <option value="verified">已核实</option>
+                <option value="concept">概念</option>
+              </select>
+            </label>
+            <label className="visual-wide">
+              事实来源与核验依据
+              <textarea name="source" required rows={2} />
+            </label>
+            <label className="visual-check visual-wide">
+              <input name="external_use" type="checkbox" />
+              这些产品资料允许用于对外提案
+            </label>
+            <button className="button secondary compact" disabled={busy}>
+              保存产品资料
+            </button>
+          </form>
+        </details>
+        {products.map((p) => (
+          <div className="visual-row" key={id(p)}>
+            <div>
+              <strong>{productName(p)}</strong>
+              <p className="muted">
+                资料第 {text(p.version)} 版 ·{" "}
+                {factStatusLabel(row(p.data).fact_status)} ·{" "}
+                {text(row(p.data).source)}
+              </p>
+            </div>
+            <button
+              className="text-button"
+              onClick={() => {
+                setProductId(id(p));
+                setSelectedSources([]);
+                setPreview(true);
+              }}
+            >
+              用于新计划
+            </button>
+          </div>
+        ))}
+        <details>
+          <summary>上传真实产品图 / 已授权品牌标识 / 包装素材</summary>
+          <form className="visual-form" onSubmit={uploadSource}>
+            <label>
+              关联产品
+              <select aria-label="关联产品" name="product_id" required>
+                <option value="">请选择产品</option>
+                {products.map((p) => (
+                  <option key={id(p)} value={id(p)}>
+                    {text(p.sku)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              素材类型
+              <select aria-label="素材类型" name="kind">
+                <option value="product">真实产品图</option>
+                <option value="logo">品牌标识</option>
+                <option value="packaging">包装素材</option>
+              </select>
+            </label>
+            <label className="visual-wide">
+              图片文件（PNG / JPEG / WebP，最大 2 MiB）
+              <input
+                name="file"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                required
+              />
+            </label>
+            <label className="visual-wide">
+              素材来源与授权说明
+              <input name="source" required />
+            </label>
+            <label className="visual-check">
+              <input type="checkbox" name="authorized" />
+              已取得使用授权
+            </label>
+            <label className="visual-check">
+              <input type="checkbox" name="external_use" />
+              允许对外使用
+            </label>
+            <button className="button secondary compact" disabled={busy}>
+              保存参考素材
+            </button>
+          </form>
+        </details>
+        {sources.length > 0 && (
+          <details>
+            <summary>查看原始素材（{sources.length}）</summary>
+            <div className="visual-gallery">
+              {sources.map((a) => (
+                <figure key={id(a)}>
+                  <AssetImage
+                    path={text(
+                      a.content_url,
+                      `/api/visual-assets/${id(a)}/content`,
+                    )}
+                    alt={`参考素材 ${assetKindLabel(a.kind)}`}
+                  />
+                  <figcaption>
+                    {assetKindLabel(a.kind)} ·{" "}
+                    {a.authorized ? "已授权" : "未授权"} ·{" "}
+                    {a.external_use ? "允许外用" : "不可外用"}
+                    <details className="tech-details">
+                      <summary>技术追溯信息</summary>
+                      <small className="mono">{text(a.content_hash)}</small>
+                    </details>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </details>
+        )}
+      </section>
+      <section className="panel content-panel" id="visual-plan-form">
+        <h2>{revisionTask ? "创建修订计划" : "准备生成计划"}</h2>
+        <p>保存计划不产生费用。计划会记录当前这一版产品资料和所选素材。</p>
+        <details
+          open={preview}
+          onToggle={(e) => setPreview(e.currentTarget.open)}
+        >
+          <summary>填写视觉需求与执行约束</summary>
+          <form className="visual-form" onSubmit={createPlan}>
+            <label>
+              使用产品
+              <select
+                aria-label="使用产品"
+                required
+                value={productId}
+                onChange={(e) => {
+                  setProductId(e.target.value);
+                  setSelectedSources([]);
+                }}
+              >
+                <option value="">请选择产品</option>
+                {products.map((p) => (
+                  <option key={id(p)} value={id(p)}>
+                    {productName(p)} · 资料第 {text(p.version)} 版
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              视觉用途
+              <select
+                aria-label="视觉用途"
+                value={intent}
+                onChange={(e) => setIntent(e.target.value)}
+              >
+                {Object.entries(intents).map(([v, l]) => (
+                  <option key={v} value={v}>
+                    {l}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="visual-wide">
+              对应的买家需求
+              <textarea
+                required
+                value={requirement}
+                onChange={(e) => setRequirement(e.target.value)}
+                rows={2}
+                maxLength={2000}
+                placeholder="只描述相关产品视觉需求，不填写买家邮箱或个人联系方式"
+              />
+            </label>
+            <fieldset className="visual-wide visual-options">
+              <legend>可以修改的内容</legend>
+              {[
+                ...changeOptions,
+                ...(conceptPlan ? structuralOptions : []),
+              ].map((option) => (
+                <label className="visual-check" key={option.value}>
+                  <input
+                    type="checkbox"
+                    checked={allowed.includes(option.value)}
+                    onChange={(e) =>
+                      toggle(setAllowed, option.value, e.target.checked)
+                    }
+                  />
+                  {option.label}
+                </label>
+              ))}
+              {!conceptPlan && (
+                <p className="muted">
+                  修改结构、尺寸或材质需要勾选下方的“仅作为概念方案”。
+                </p>
+              )}
+            </fieldset>
+            <fieldset className="visual-wide visual-options">
+              <legend>必须保持不变</legend>
+              {structuralOptions.map((option) => (
+                <label className="visual-check" key={option.value}>
+                  <input
+                    type="checkbox"
+                    disabled={allowed.includes(option.value) && conceptPlan}
+                    checked={
+                      preserved.includes(option.value) &&
+                      !(allowed.includes(option.value) && conceptPlan)
+                    }
+                    onChange={(e) =>
+                      toggle(setPreserved, option.value, e.target.checked)
+                    }
+                  />
+                  {option.label}
+                </label>
+              ))}
+              <label className="visual-wide">
+                其他必须保持的内容（可选，用逗号分隔）
+                <input
+                  value={otherPreserve}
+                  onChange={(e) => setOtherPreserve(e.target.value)}
+                />
+              </label>
+            </fieldset>
+            <label>
+              图片数量
+              <input
+                name="variants"
+                type="number"
+                min={1}
+                max={8}
+                defaultValue={1}
+                required
+              />
+            </label>
+            <label>
+              预算上限（美元）
+              <input
+                name="budget_usd"
+                type="number"
+                min={0.01}
+                max={100}
+                step={0.01}
+                defaultValue={1}
+                required
+              />
+            </label>
+            <fieldset className="visual-wide">
+              <legend>选择参考素材</legend>
+              {sources
+                .filter(
+                  (a) =>
+                    intent === "product_comparison" ||
+                    text(a.product_id) === productId,
+                )
+                .map((a) => (
+                  <label className="visual-check" key={id(a)}>
+                    <input
+                      type="checkbox"
+                      checked={selectedSources.includes(id(a))}
+                      onChange={(e) =>
+                        setSelectedSources((old) =>
+                          e.target.checked
+                            ? [...old, id(a)]
+                            : old.filter((v) => v !== id(a)),
+                        )
+                      }
+                    />
+                    {text(
+                      products.find(
+                        (product) => id(product) === text(a.product_id),
+                      )?.sku,
+                    )}{" "}
+                    · {assetKindLabel(a.kind)} · {text(a.source, "来源未记录")}{" "}
+                    ·{" "}
+                    {a.authorized && a.external_use ? "已授权外用" : "授权不足"}
+                  </label>
+                ))}
+              {!sources.some((a) => text(a.product_id) === productId) && (
+                <p className="muted">此产品尚无参考素材。</p>
+              )}
+            </fieldset>
+            <label className="visual-check visual-wide">
+              <input
+                name="concept"
+                type="checkbox"
+                checked={intent === "odm_concept" || concept}
+                onChange={(e) => setConcept(e.target.checked)}
+                disabled={intent === "odm_concept"}
+              />
+              仅作为概念方案，不宣称已量产或已验证
+            </label>
+            {product && (
+              <p className="muted visual-wide">
+                当前产品：{productName(product)} · 资料状态：
+                {factStatusLabel(row(product.data).fact_status)}
+              </p>
+            )}
+            <button className="button" disabled={busy || !productId}>
+              保存并预览计划
+            </button>
+            {revisionTask && (
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => setRevisionTask(null)}
+              >
+                取消修订
+              </button>
+            )}
+          </form>
+        </details>
+      </section>
     </div>
   );
 }
