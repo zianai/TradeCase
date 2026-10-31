@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 test.skip(
   !process.env.TRADECASE_E2E_TOKEN_FILE,
@@ -115,7 +116,7 @@ test("manual snapshot and reviewer input preserve unknown status and require exp
   );
   expect(await outbox.json()).toEqual([]);
   await page.screenshot({
-    path: "design/rounds/01/manual-source-review.png",
+    path: path.join(process.env.TRADECASE_SCREENSHOT_DIR || "design/rounds/01", "manual-source-review.png"),
     fullPage: true,
   });
 });

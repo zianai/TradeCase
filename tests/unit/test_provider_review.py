@@ -74,7 +74,7 @@ def test_review_truncated_content_length_cannot_be_fetched(monkeypatch):
     sock = RawSocket(b'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 100\r\n\r\nabc')
     monkeypatch.setattr(provider, '_connect_pinned', lambda *args: sock)
     with pytest.raises((provider.ReaderPolicyError, http.client.IncompleteRead, OSError)):
-        provider._http_transport(provider.validate_public_url('https://example.com/'), (PUBLIC,),
+        provider._http_transport_authorized(provider.validate_public_url('https://example.com/'), (PUBLIC,),
                                  provider.ReadPolicy(), time.monotonic() + 1)
 
 
@@ -112,7 +112,7 @@ def test_review_tls_handshake_has_remaining_timeout_or_active_total_watchdog(mon
     monkeypatch.setattr(provider.socket, 'socket', lambda *args: sock)
     monkeypatch.setattr(provider.ssl, 'create_default_context', lambda: Context())
     monkeypatch.setattr(provider.threading, 'Timer', Timer)
-    provider._http_transport(provider.validate_public_url('https://example.com/'), (PUBLIC,),
+    provider._http_transport_authorized(provider.validate_public_url('https://example.com/'), (PUBLIC,),
                              provider.ReadPolicy(), 1.0)
     assert handshake
     allowed_timeout, watchdog_already_active = handshake[0]
@@ -138,7 +138,7 @@ def test_review_rejects_ambiguous_or_unsupported_transfer_framing(monkeypatch, h
     sock = RawSocket(b'HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n' + headers + b'\r\nabc')
     monkeypatch.setattr(provider, '_connect_pinned', lambda *args: sock)
     with pytest.raises((provider.ReaderPolicyError, http.client.HTTPException, OSError)):
-        provider._http_transport(provider.validate_public_url('https://example.com/'), (PUBLIC,),
+        provider._http_transport_authorized(provider.validate_public_url('https://example.com/'), (PUBLIC,),
                                  provider.ReadPolicy(), time.monotonic() + 1)
 
 

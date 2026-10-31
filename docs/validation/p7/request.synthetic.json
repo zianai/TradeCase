@@ -1,0 +1,18 @@
+{
+  "run_id": "EXAMPLE-NOT-AUTHORIZED",
+  "system": "tradecase",
+  "tenant_id": "p7-synthetic",
+  "environment": "live_sandbox",
+  "case_id": "example",
+  "dataset_id": "SYNTHETIC",
+  "plan_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "input_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+  "rights_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+  "provider_config_hash": "4444444444444444444444444444444444444444444444444444444444444444",
+  "rights_current": true,
+  "data_classification": "synthetic",
+  "action": "submit_model",
+  "provider": "openai",
+  "model": "UNSELECTED",
+  "domain": "api.openai.com"
+}

@@ -25,6 +25,7 @@ from urllib.parse import parse_qsl, unquote, urljoin, urlsplit, urlunsplit
 from urllib.robotparser import RobotFileParser
 
 from .models import utc_timestamp
+from .p7_policy import PolicyDenied
 from .upstream import normalize_search
 from .util import utc_now
 
@@ -298,7 +299,7 @@ def _connect_pinned(target: PublicURL, ip: str, timeout: float) -> socket.socket
         raise
 
 
-def _http_transport(
+def _http_transport_authorized(
     target: PublicURL, addresses: tuple[str, ...], policy: ReadPolicy, deadline: float
 ) -> HTTPResponseData:
     # No retry/fallback loop: one resolved, vetted address per actual request.
@@ -372,6 +373,31 @@ def _http_transport(
         timer.cancel()
         connection.close()
         sock.close()
+
+
+def _http_transport(*args, **kwargs):
+    """Default public transport is operator-authorized; injected offline transports stay local."""
+    from uuid import uuid4
+
+    from tradecase.p7_policy import ValidationRunPolicy
+    policy = ValidationRunPolicy.from_env("tradecase")
+    target = args[0] if args else kwargs.get("target")
+    context = policy.context()
+    if getattr(target, "url", str(target)) not in context.get("source_urls", []):
+        raise PolicyDenied("SOURCE_URL_NOT_AUTHORIZED")
+    request = {**context, "action": "read_external", "provider": "public_web", "model": "none", "domain": target.host}
+    grant, _ = policy.validate(request, 0)
+    if context.get("source_urls") != grant.get("source_urls") or target.url not in grant.get("source_urls", []):
+        raise PolicyDenied("SOURCE_URL_NOT_AUTHORIZED")
+    call_id = "read-" + uuid4().hex
+    policy.reserve(call_id, request, 0)
+    try:
+        result = _http_transport_authorized(*args, **kwargs)
+    except BaseException:
+        policy.settle(call_id)
+        raise
+    policy.settle(call_id, 0, "actual")
+    return result
 
 
 class _Text(HTMLParser):
@@ -580,7 +606,7 @@ class ContentReader:
                 for marker in ("enable javascript", "verify you are human", "access denied", "sign in to continue")
             ):
                 result.warnings.append("possible_shell_or_access_challenge")
-        except ReaderPolicyError as exc:
+        except (ReaderPolicyError, PolicyDenied) as exc:
             result.status = "blocked"
             result.blockers.append(str(exc))
         except (OSError, TimeoutError, http.client.HTTPException, UnicodeError) as exc:

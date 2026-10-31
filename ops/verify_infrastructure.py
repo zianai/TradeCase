@@ -34,12 +34,12 @@ def main():
     owned = []
     env = dict(os.environ)
     try:
-        run(["docker", "run", "--detach", "--name", pg, "--label", "tradecase.test=full-delivery",
+        run(["docker", "run", "--pull=never", "--detach", "--name", pg, "--label", "tradecase.test=full-delivery",
              "--publish", "127.0.0.1::5432", "--env", "POSTGRES_USER=tradecase",
              "--env", "POSTGRES_DB=tradecase", "--env", "POSTGRES_PASSWORD=" + password,
              "postgres:17.6-bookworm"])
         owned.append(pg)
-        run(["docker", "run", "--detach", "--name", redis, "--label", "tradecase.test=full-delivery",
+        run(["docker", "run", "--pull=never", "--detach", "--name", redis, "--label", "tradecase.test=full-delivery",
              "--publish", "127.0.0.1::6379", "redis:7.4.6-alpine"])
         owned.append(redis)
         wait(pg, ["pg_isready", "-h", "127.0.0.1", "-U", "tradecase", "-d", "tradecase"])

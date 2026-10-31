@@ -1,0 +1,35 @@
+{
+  "run_id": "EXAMPLE-NOT-AUTHORIZED",
+  "system": "tradecase",
+  "tenant_id": "p7-synthetic",
+  "environment": "live_sandbox",
+  "case_id": "example",
+  "dataset_id": "SYNTHETIC",
+  "plan_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "input_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+  "rights_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+  "provider_config_hash": "4444444444444444444444444444444444444444444444444444444444444444",
+  "actor_id": "EXAMPLE-ONLY",
+  "actor_origin": "operator",
+  "human_reason": "Disabled example, not human approval",
+  "approved_at_utc": "2000-01-01T00:00:00Z",
+  "expires_at_utc": "2000-01-02T00:00:00Z",
+  "revoked_at_utc": "2000-01-01T00:00:00Z",
+  "allow_external_writes": false,
+  "export_allowed": false,
+  "data_classifications": [
+    "synthetic"
+  ],
+  "capabilities": {
+    "submit_model": {
+      "provider": "openai",
+      "model": "UNSELECTED",
+      "domain": "api.openai.com",
+      "max_requests": 0,
+      "max_images": 0,
+      "max_attempts": 1,
+      "max_usd": 0
+    }
+  },
+  "source_urls": []
+}

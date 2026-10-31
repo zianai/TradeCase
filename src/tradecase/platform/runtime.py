@@ -19,6 +19,8 @@ from typing import Any, Literal, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from tradecase.p7_policy import PolicyDenied, ValidationRunPolicy
+from tradecase.p7_policy import digest as policy_digest
 from tradecase.providers import ContentReader, ReaderPolicyError, ReadPolicy, validate_public_url
 from tradecase.util import utc_now
 
@@ -461,6 +463,20 @@ class OpenAIAgentRunner:
                                    or request.budget.max_cost_usd <= 0):
             return partial("live_model_and_pricing_budget_required")
         client = None
+        policy = ValidationRunPolicy.from_env("tradecase")
+        call_index = 0
+        permission_request = None
+        if self.model is None:
+            try:
+                permission_request = {**policy.context(), "action": "submit_model", "provider": "openai",
+                    "model": request.model, "domain": "api.openai.com", "tenant_id": request.tenant_id,
+                    "case_id": request.case_id, "input_hash": policy_digest(request.model_dump()),
+                    "provider_config_hash": policy_digest({"model": request.model, "rate": self.rate})}
+                if permission_request.get("data_classification") == "synthetic" and any(not x.is_synthetic for x in request.sources):
+                    raise PolicyDenied("DATA_SCOPE_DENIED")
+                policy.validate(permission_request, request.budget.max_cost_usd)
+            except (PolicyDenied, OSError):
+                return partial("p7_authorization_required", "PolicyDenied")
         try:
             from agents import Agent, FunctionTool, ModelSettings, RunConfig, Runner
             from agents.exceptions import MaxTurnsExceeded
@@ -472,7 +488,7 @@ class OpenAIAgentRunner:
             if base_model is None:
                 # No ambient retries: Task Manager owns retries; provider calls are bounded.
                 from openai import AsyncOpenAI
-                client = AsyncOpenAI(max_retries=0, timeout=request.budget.max_wall_seconds)
+                client = AsyncOpenAI(base_url="https://api.openai.com/v1", max_retries=0, timeout=request.budget.max_wall_seconds)
                 provider = OpenAIProvider(openai_client=client)
                 base_model = provider.get_model(request.model)
             rate = self.rate or 0
@@ -480,6 +496,7 @@ class OpenAIAgentRunner:
 
             class BudgetedModel(Model):
                 async def get_response(self, *args, **kwargs):
+                    nonlocal call_index
                     execution.check_time()
                     # SDK keyword API includes tool definitions and schema; count these
                     # too. repr is intentionally used only for a byte upper bound, never logs.
@@ -497,7 +514,22 @@ class OpenAIAgentRunner:
                     # Retain the reservation on uncertain delivery/timeout rather than
                     # reporting a free request whose actual bill is unknown.
                     execution.reserved_cost = reserve * rate
-                    response = await base_model.get_response(*args, **kwargs)
+                    call_index += 1
+                    call_id = f"{request.agent_run_id}:{call_index}"
+                    if permission_request is not None:
+                        policy.reserve(call_id, permission_request, reserve * rate)
+                    try:
+                        response = await base_model.get_response(*args, **kwargs)
+                    except BaseException:
+                        if permission_request is not None:
+                            policy.settle(call_id)
+                        raise
+                    if permission_request is not None:
+                        usage_count = getattr(response.usage, "total_tokens", None)
+                        if usage_count is None:
+                            policy.settle(call_id)
+                            raise PolicyDenied("USAGE_UNKNOWN")
+                        policy.settle(call_id, usage_count * rate, "estimated")
                     execution.reserved_cost = 0
                     usage = response.usage.total_tokens
                     execution.total_tokens += usage

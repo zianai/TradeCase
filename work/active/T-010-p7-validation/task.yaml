@@ -1,0 +1,16 @@
+schema_version: 3
+protocol_version: "3.0"
+id: T-010-p7-validation
+status: executing
+goal: Implement P7 E0/E1 validation with explicit live and business blockers
+scope: [src/, packages/, scripts/, tests/, ops/, frontend/tests/, .github/workflows/, pyproject.toml, uv.lock, package.json, docs/validation/p7/, project/, work/]
+non_goals: [Live data, Paid APIs, External writes, Publication, Production]
+acceptance: [Offline safety and HTTP regression, Exact evidence, Separate live and business status]
+risk: medium
+risk_reasons: [cross-component]
+protected_paths: []
+context_refs: [docs/validation/p7/ADR.md]
+decision_refs: [docs/validation/p7/ADR.md]
+evidence_refs: []
+updated: "2026-10-31"
+implementation_started: true
