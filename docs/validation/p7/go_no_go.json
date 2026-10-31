@@ -1,0 +1,15 @@
+{
+  "engineering_ready": true,
+  "engineering_scope": "local E0/E1 on exact implementation commit; self-checked",
+  "scoped_live_validated": false,
+  "business_pilot_reviewed": false,
+  "production_authorized": false,
+  "implementation_sha": "2a156cf7899accfc0050e802e6a3570a5b62e0d9",
+  "status": "tested_local_http",
+  "live_status": "blocked_auth",
+  "business_status": "blocked_data_and_human_review",
+  "visibility_status": "human_decision_required",
+  "external_effects": "none",
+  "live_authorization_id": null,
+  "reviewers": []
+}

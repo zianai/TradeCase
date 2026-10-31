@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "make",
+      "contract"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+      "ops/verify_infrastructure.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "npm",
+      "--prefix",
+      "frontend",
+      "run",
+      "build"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+      "../../scripts/browser.py",
+      "tradecase"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+      "-m",
+      "pytest",
+      "../../legacy-local-tests/tradecase",
+      "-q"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/Users/a/workspaces/AForeign Trade/tradecase-v1/.venv/bin/python",
+      "../../scripts/preflight.py",
+      "tradecase"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,45 @@
+[
+  {
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "name": "release-tc-check",
+    "repository": "tradecase",
+    "cwd": "/Users/a/workspaces/AForeign Trade/p7-validation/worktrees/tradecase",
+    "command": [
+      "make",
+      "check"
+    ],
+    "exit_code": 0,
+    "started_at_utc": "2026-10-31T07:46:58.266498+00:00",
+    "elapsed_seconds": 56.764,
+    "head": "2a156cf7899accfc0050e802e6a3570a5b62e0d9",
+    "log_sha256": "5f33a2f2c1d357693691b133de2b235c58aa1791cbce292c59438f03bdd9c519",
+    "environment": "E0/E1",
+    "data_classification": "synthetic",
+    "public_network": "OS denied",
+    "credentials": "not inherited",
+    "external_writes": 0,
+    "paid_spend_usd": "0"
+  },
+  {
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "name": "release-tc-supplemental",
+    "repository": "tradecase",
+    "cwd": "/Users/a/workspaces/AForeign Trade/p7-validation/worktrees/tradecase",
+    "command": [
+      "python",
+      "../../scripts/final_checks.py",
+      "tradecase"
+    ],
+    "exit_code": 0,
+    "started_at_utc": "2026-10-31T07:48:10.874272+00:00",
+    "elapsed_seconds": 70.563,
+    "head": "2a156cf7899accfc0050e802e6a3570a5b62e0d9",
+    "log_sha256": "bc889826cfb52a8c4d3dc0bd302c468508553e36b63b9640826be3fe62d25218",
+    "environment": "E0/E1",
+    "data_classification": "synthetic",
+    "public_network": "OS denied",
+    "credentials": "not inherited",
+    "external_writes": 0,
+    "paid_spend_usd": "0"
+  }
+]
