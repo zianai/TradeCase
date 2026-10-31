@@ -585,7 +585,7 @@ class OpenAIAgentRunner:
                 trusted = {source.source_id: source for source in request.sources}
                 trusted.update(execution.observed_sources)
                 for source in researched.sources:
-                    if self.model is None and source.is_synthetic:
+                    if self.model is None and source.is_synthetic and permission_request.get("data_classification") != "synthetic":
                         raise ValueError("synthetic_source_in_live_result")
                     if source.source_id not in trusted or source.model_dump() != trusted[source.source_id].model_dump():
                         raise ValueError("model_fabricated_or_modified_source")

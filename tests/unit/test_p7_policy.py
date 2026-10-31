@@ -228,3 +228,106 @@ def test_source_url_list_is_bound_to_operator_grant(policy, monkeypatch):
     with pytest.raises(PolicyDenied, match="SOURCE_URL_NOT_AUTHORIZED"):
         providers._http_transport(providers.validate_public_url(context["source_urls"][-1]))
     assert len(calls) == 1
+
+
+def test_authorized_synthetic_live_runner_accepts_original_synthetic_snapshot(policy, monkeypatch):
+    import asyncio
+    from pathlib import Path
+
+    from agents import Model, ModelResponse
+    from agents.models.openai_provider import OpenAIProvider
+    from agents.usage import Usage
+    from openai.types.responses import ResponseOutputMessage, ResponseOutputText
+
+    from tradecase.platform.runtime import AgentBudget, AgentTaskRequest, OpenAIAgentRunner, SourceSnapshot
+
+    p, _, grant, install = policy
+    source = SourceSnapshot(
+        source_id="s",
+        url="https://example.invalid/",
+        text="Synthetic only",
+        is_synthetic=True,
+        license_status="permitted",
+    )
+    request = AgentTaskRequest(
+        tenant_id="synthetic-tenant",
+        case_id="case-test",
+        task_id="t",
+        agent_run_id="r",
+        goal="Synthetic test",
+        sources=[source],
+        skill_names=[],
+        model="stub-model",
+        budget=AgentBudget(max_cost_usd=0.3, max_total_tokens=50000),
+    )
+    rate = 0.000001
+    context = {
+        "run_id": grant["run_id"],
+        "system": "tradecase",
+        "tenant_id": request.tenant_id,
+        "environment": "live_sandbox",
+        "case_id": request.case_id,
+        "dataset_id": grant["dataset_id"],
+        "plan_hash": grant["plan_hash"],
+        "input_hash": digest(request.model_dump()),
+        "rights_hash": grant["rights_hash"],
+        "provider_config_hash": digest({"model": request.model, "rate": rate}),
+        "rights_current": True,
+        "data_classification": "synthetic",
+    }
+    path = Path(p.root) / "context.json"
+    path.write_text(json.dumps(context))
+    path.chmod(0o600)
+    p = install(
+        {
+            **grant,
+            **{k: context[k] for k in ("input_hash", "provider_config_hash")},
+            "capabilities": {
+                "submit_model": {
+                    "provider": "openai",
+                    "model": "stub-model",
+                    "domain": "api.openai.com",
+                    "max_requests": 1,
+                    "max_images": 0,
+                    "max_attempts": 1,
+                    "max_usd": 0.3,
+                }
+            },
+        }
+    )
+
+    class FakeModel(Model):
+        async def get_response(self, *args, **kwargs):
+            body = {
+                "status": "PARTIAL",
+                "claims": [],
+                "sources": [source.model_dump()],
+                "unresolved_questions": ["No real buyer"],
+                "conflicts": [],
+                "coverage": {"identity": 0, "company": 0, "intent": 0},
+                "stop_reason": "synthetic",
+            }
+            msg = ResponseOutputMessage(
+                id="m",
+                type="message",
+                role="assistant",
+                status="completed",
+                content=[ResponseOutputText(type="output_text", text=json.dumps(body), annotations=[])],
+            )
+            return ModelResponse(
+                output=[msg],
+                usage=Usage(requests=1, total_tokens=20, input_tokens=10, output_tokens=10),
+                response_id="r",
+            )
+
+        async def stream_response(self, *args, **kwargs):
+            raise NotImplementedError
+            yield
+
+    monkeypatch.setattr(OpenAIProvider, "get_model", lambda self, name: FakeModel())
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test-only")
+    monkeypatch.setenv("ALLOW_TEST_LIVE", "on")
+    monkeypatch.setenv("TRADECASE_P7_ROOT", str(p.root))
+    monkeypatch.setenv("TRADECASE_P7_APPROVED_GRANT_SHA256", p.approved_sha)
+    result = asyncio.run(OpenAIAgentRunner(live_enabled=True, usd_per_token_upper_bound=rate).run(request))
+    assert result.error_class is None and result.sources[0].is_synthetic and result.token_usage["total_tokens"] == 20
