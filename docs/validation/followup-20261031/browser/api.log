@@ -1,0 +1,66 @@
+INFO:     Started server process [4597]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:49361 (Press CTRL+C to quit)
+INFO:     127.0.0.1:49384 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/approvals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/events?format=json&after=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49420 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/tasks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/risks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/approvals?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49420 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/follow-ups?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/artifacts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/approvals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/follow-ups HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/related HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/visuals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/sources/b3c4f8fb10c744e3bc22a85557153483/snapshot HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/tasks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/risks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/events?format=json&after=51 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/artifacts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/follow-ups?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/approvals?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/related HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/outbound-actions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/events?format=json&after=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/risks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49444 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/tasks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/artifacts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/approvals?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/follow-ups?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/events HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/approvals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49444 - "GET /api/cases HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/follow-ups HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/related HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/visuals HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/sources/b3c4f8fb10c744e3bc22a85557153483/snapshot HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49444 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/tasks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/risks HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49423 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/evidence HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/artifacts HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49444 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/events?format=json&after=51 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49424 - "GET /api/follow-ups?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49422 - "GET /api/approvals?case_id=2af3b09f68eb4b6ba4b244e7bad70e70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/related HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/outbound-actions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49407 - "GET /api/cases/2af3b09f68eb4b6ba4b244e7bad70e70/outbound-actions HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4597]

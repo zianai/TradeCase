@@ -1,0 +1,50 @@
+{
+  "tenant_id": "followup-synthetic-tc",
+  "case_id": "3f8adb6760b64161a5612a32bf1b4b27",
+  "task_id": "0e274aaebe364798a3ade288bc654535",
+  "agent_run_id": "ace62b7760ba4a069f7eb4534ffc16a1",
+  "task_type": "identity_research",
+  "goal": "Analyze this explicitly fictional inquiry. Preserve both same-name candidates as unresolved. Return exact quoted observations, unknowns, conflicts, and practical follow-up questions. Never invent verified identity, email, specifications, price or compliance. This tests structured output, not business validity.",
+  "context": {
+    "inquiry_untrusted": "SYNTHETIC E2 TEST ONLY. Buyer Clarity Retail requests 250 unprinted stainless steel drink bottles for France. Please ask for capacity, dimensions, finish, packaging, delivery date and confirmed company identity. No supplier capability, price, certification, legal compliance or email identity has been verified."
+  },
+  "input_refs": [
+    "a87cd21877fb41058af0c72101f0a2e4"
+  ],
+  "sources": [
+    {
+      "source_id": "synthetic-e2-source",
+      "url": "https://synthetic.example.invalid/followup",
+      "source_type": "website",
+      "title": "Fictional ambiguity fixture",
+      "captured_at": "2026-10-31T10:06:08.585181+00:00",
+      "text": "SYNTHETIC E2 SOURCE ONLY. Clarity Retail A describes reusable drinkware in France. A separate Clarity Retail B describes office furniture in Canada. These are distinct fictional entities. The inquiry does not identify which entity is the buyer. Requested quantity is 250 unprinted bottles. No official registry, corporate contact, product specification or compliance evidence is supplied.",
+      "sha256": "03dda9460f85c8d458d5d62665f2273a5fd91a86897e363dd5b2f3aa6241fde6",
+      "status": "fetched",
+      "gap_reason": "",
+      "is_synthetic": true,
+      "license_status": "permitted",
+      "authority": "source_claim",
+      "document_version": null,
+      "valid_until": null,
+      "document_hash": null
+    }
+  ],
+  "allowed_tools": [],
+  "allowed_domains": [],
+  "skill_names": [
+    "buyer-research"
+  ],
+  "budget": {
+    "max_turns": 1,
+    "max_tool_calls": 0,
+    "max_wall_seconds": 90.0,
+    "max_tool_seconds": 15.0,
+    "max_total_tokens": 100000,
+    "max_output_tokens": 5000,
+    "max_cost_usd": 1.0,
+    "max_calls_per_domain": 4,
+    "min_domain_interval": 1.0
+  },
+  "model": "gpt-6.1-terra"
+}

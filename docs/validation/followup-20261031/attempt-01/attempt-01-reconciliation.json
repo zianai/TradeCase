@@ -1,0 +1,12 @@
+{
+  "status": "failed_before_network",
+  "reason": "Pydantic serialized default numeric normalization changed digest",
+  "provider_calls": 0,
+  "cost_usd": 0,
+  "evidence": [
+    "execution.json",
+    "execute.log"
+  ],
+  "automatic_retry": false,
+  "next_action": "new frozen request and grant in attempt-02"
+}

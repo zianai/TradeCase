@@ -1,0 +1,29 @@
+action_id: "followup-20261031-tc-native-attempt-03"
+target: "https://api.openai.com/v1/responses"
+environment: "live_sandbox_synthetic_only"
+status: "succeeded"
+payload_sha256: "d7965b556c378c8124941a9407b18ec73dafb57847fb19779b8ce15e7195cb30"
+operator_grant_sha256: "684308b7d64989ba84e063840ae2e9bdd094955e83d75bb393dde771bd751452"
+request_cap_usd: 1
+total_allocation_usd: 2
+response_observed: true
+request_id: "req_4628712c73814238a48f9f15790ead07"
+response_id: "resp_0142394852f95ed4006ae5be1cfac487d2afacb6d2365b6531"
+local_result: "passed_partial_result"
+actual_billed_usd: null
+conservative_upper_estimate_usd: 0.016735
+retry_allowed: false
+reconciliation_ref: "docs/validation/followup-20261031/attempt-03/reservation-reconciliation.json"
+external_business_effects: false
+subject: "sha256:f2d1f7f8f7f262f8f656e4582b77463eeb00518f23755f1fc786a36991a93408"
+subject_ref: "docs/validation/followup-20261031/attempt-03/request.json"
+payload_scope: "One native SDK Responses request; generated synthetic inquiry and sources only; no tools, no sends; maximum USD1 within total TradeCase USD2"
+authorization_basis: "direct-human-instruction"
+authority_ref: "work/active/T-012-authorized-live-followup/AUTHORIZATION.md"
+one_shot: true
+idempotency_key: "followup-20261031-tc-native-attempt-03"
+expires_at: "2026-10-31T12:08:19.953379+00:00"
+timeout_seconds: 90
+observation: "Provider HTTP200 receipt and exact usage retained; native result passed_partial_result"
+compensation: "No rollback of consumed tokens; preserve exact receipt and usage; grant revoked; no automatic retry"
+reconciliation_result: "effect-confirmed"

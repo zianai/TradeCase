@@ -1,0 +1,16 @@
+{
+  "case_id": "2af3b09f68eb4b6ba4b244e7bad70e70",
+  "workflow_run_id": "ed4abb7d5dfb4235bad893428d8d0d24",
+  "state": {
+    "status": "WAITING_HUMAN",
+    "workflow_run_id": "ed4abb7d5dfb4235bad893428d8d0d24",
+    "outcome": null
+  },
+  "case_status": "NEEDS_REVIEW",
+  "approval_statuses": [
+    "PENDING"
+  ],
+  "mode": "one live SDK research result replayed into real local LangGraph; other research branches PARTIAL",
+  "native_model_draft": false,
+  "automatic_business_approval": false
+}

@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "scope": "actual API/browser reading persisted live SDK output; no provider calls or decisions",
+  "loopback_only": true,
+  "service_credentials_inherited": false
+}

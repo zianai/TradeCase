@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "import subprocess,sys; commands=[[sys.executable,\"-m\",\"compileall\",\"-q\",\"src\",\"ops\"],[\".venv/bin/ruff\",\"check\",\"src\",\"tests\",\"tools\",\"ops/followup_live.py\",\"ops/followup_browser.py\"],[sys.executable,\"tools/check_licenses.py\"],[sys.executable,\"tools/source_manifest.py\",\"--check\"]]; [subprocess.run(c,check=True) for c in commands]"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T10:11:54.942927+00:00",
+  "duration_seconds": 0.474,
+  "exit_code": 0,
+  "source_sha": "d6c11f463f79bba51ff0ae303f3c55a7c9253ac2",
+  "tracked_diff_sha256": "e017af63d57f9acc3b5a680188d26fe0892abce8dc37d10304b5f505bc1a0601",
+  "dirty_paths": [
+    " M project/state.yaml",
+    "?? docs/validation/followup-20261031/",
+    "?? work/active/T-012-authorized-live-followup/"
+  ],
+  "log_sha256": "25900da58467e0b63854df395411a13114458b4b21e21f130c9d8a91027f20dc",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

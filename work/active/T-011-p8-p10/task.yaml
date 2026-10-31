@@ -21,4 +21,4 @@ implementation_render_subject: "sha256:cce951fbd8193edb29789576b2ee4ca5d66672d64
 implementation_render_ref: docs/validation/p8-p10/render-manifest.json
 x_visual_approval: "No human approved baseline available; independent agent readability review only"
 handoff_ref: work/active/T-011-p8-p10/handoff.md
-handoff_current: true
+handoff_current: false

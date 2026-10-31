@@ -1,0 +1,200 @@
+{
+  "schema_version": "1.0.0",
+  "project": "tradecase",
+  "case_id": "2af3b09f68eb4b6ba4b244e7bad70e70",
+  "case_version": 1,
+  "input_sha256": "427238c4b5690e25c8aefce97a65ce6b9500d216b5d73ffee5a8aea08af53f46",
+  "synthetic": true,
+  "classification": "synthetic",
+  "authorization_subject": {
+    "case_id": "2af3b09f68eb4b6ba4b244e7bad70e70",
+    "case_version": 1,
+    "tenant_id": "followup-synthetic-tc",
+    "dataset_id": "followup-20261031-tc-generated",
+    "data_classification": "synthetic",
+    "requires_data_grant": false,
+    "input_hash": "50f7e0773fb937769dcbcba61605799cd54112d5571ecc331816a9e62e189017",
+    "rights_hash": "5038a136cdd8a88a0b3b983cc3a62ca31d1065a3eb8374bcd4d21164decad12d"
+  },
+  "distribution_policy": "private_review_only; never auto-publish",
+  "pilot_provenance": {
+    "classification": "synthetic",
+    "synthetic": true,
+    "dataset_id": "followup-20261031-tc-generated",
+    "dataset_sha256": "427238c4b5690e25c8aefce97a65ce6b9500d216b5d73ffee5a8aea08af53f46",
+    "rights_reference": "Generated synthetic fixture for authorized E2 test",
+    "source_locator": "synthetic-inquiry.txt:line:1",
+    "captured_at": "2026-10-31T10:08:18.953379Z",
+    "retention_until": "2026-11-07T10:08:19.953379Z"
+  },
+  "claims": [
+    {
+      "id": "2184117e5ee74a2ca0f27db51fc5e18a",
+      "statement": "Capacity, dimensions, finish and packaging remain unspecified.",
+      "classification": "UNKNOWN",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "32107825a04e4be7965b0b82213d9b5b",
+      "statement": "The fictional fixture describes candidate A as associated with reusable drinkware in France; it does not establish that A is the buyer.",
+      "classification": "INFERENCE",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "a56d27aef52d47f6ad5ec0e5aed2415c",
+      "statement": "The fictional fixture describes candidate B as associated with office furniture in Canada; it does not establish that B is the buyer.",
+      "classification": "INFERENCE",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "b90eefbe1bd240b5bf92dcff588e1a71",
+      "statement": "The fictional inquiry describes a request for 250 unprinted stainless steel drink bottles for France. The buyer identity is unresolved.",
+      "classification": "INFERENCE",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "dfc7acb74b7a43a8ba5bc79d53e628be",
+      "statement": "Neither same-name candidate can be selected as the buyer on the supplied evidence.",
+      "classification": "UNKNOWN",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "fc3010aa7d0b41bd8c8e903896661f97",
+      "statement": "Supplier capability, price, certification, legal compliance and email identity are not verified.",
+      "classification": "UNKNOWN",
+      "status": "UNVERIFIED"
+    }
+  ],
+  "citations": [
+    {
+      "claim_id": "2184117e5ee74a2ca0f27db51fc5e18a",
+      "source_id": "02bc5997958646538e78f403bcf862fc",
+      "relation": "supports",
+      "excerpt": "Please ask for capacity, dimensions, finish, packaging, delivery date and confirmed company identity.",
+      "locator": null,
+      "snapshot_sha256": "427238c4b5690e25c8aefce97a65ce6b9500d216b5d73ffee5a8aea08af53f46",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "rights_status": "permitted",
+      "current_validity": "unknown",
+      "locatable": true
+    },
+    {
+      "claim_id": "32107825a04e4be7965b0b82213d9b5b",
+      "source_id": "b3c4f8fb10c744e3bc22a85557153483",
+      "relation": "supports",
+      "excerpt": "Clarity Retail A describes reusable drinkware in France.",
+      "locator": null,
+      "snapshot_sha256": "03dda9460f85c8d458d5d62665f2273a5fd91a86897e363dd5b2f3aa6241fde6",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "rights_status": "permitted",
+      "current_validity": "unknown",
+      "locatable": true
+    },
+    {
+      "claim_id": "a56d27aef52d47f6ad5ec0e5aed2415c",
+      "source_id": "b3c4f8fb10c744e3bc22a85557153483",
+      "relation": "supports",
+      "excerpt": "A separate Clarity Retail B describes office furniture in Canada.",
+      "locator": null,
+      "snapshot_sha256": "03dda9460f85c8d458d5d62665f2273a5fd91a86897e363dd5b2f3aa6241fde6",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "rights_status": "permitted",
+      "current_validity": "unknown",
+      "locatable": true
+    },
+    {
+      "claim_id": "b90eefbe1bd240b5bf92dcff588e1a71",
+      "source_id": "02bc5997958646538e78f403bcf862fc",
+      "relation": "supports",
+      "excerpt": "Buyer Clarity Retail requests 250 unprinted stainless steel drink bottles for France.",
+      "locator": null,
+      "snapshot_sha256": "427238c4b5690e25c8aefce97a65ce6b9500d216b5d73ffee5a8aea08af53f46",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "rights_status": "permitted",
+      "current_validity": "unknown",
+      "locatable": true
+    },
+    {
+      "claim_id": "dfc7acb74b7a43a8ba5bc79d53e628be",
+      "source_id": "b3c4f8fb10c744e3bc22a85557153483",
+      "relation": "supports",
+      "excerpt": "The inquiry does not identify which entity is the buyer.",
+      "locator": null,
+      "snapshot_sha256": "03dda9460f85c8d458d5d62665f2273a5fd91a86897e363dd5b2f3aa6241fde6",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "rights_status": "permitted",
+      "current_validity": "unknown",
+      "locatable": true
+    },
+    {
+      "claim_id": "fc3010aa7d0b41bd8c8e903896661f97",
+      "source_id": "02bc5997958646538e78f403bcf862fc",
+      "relation": "supports",
+      "excerpt": "No supplier capability, price, certification, legal compliance or email identity has been verified.",
+      "locator": null,
+      "snapshot_sha256": "427238c4b5690e25c8aefce97a65ce6b9500d216b5d73ffee5a8aea08af53f46",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "rights_status": "permitted",
+      "current_validity": "unknown",
+      "locatable": true
+    }
+  ],
+  "conflicts": [
+    "company_name and domain are user-provided hints; verify the legal entity and website ownership",
+    "buyer_role is unknown; require source evidence of purchasing or distribution activity",
+    "inquiry_relationship is unverified; link the sender to the chosen legal entity",
+    "country is unknown; destination country does not establish buyer residence",
+    "No company candidate can be derived from the available hints",
+    "The fictional fixture describes two distinct same-name candidates: A in reusable drinkware in France and B in office furniture in Canada. The inquiry does not identify either as the buyer; neither candidate is selected."
+  ],
+  "run_versions": [
+    {
+      "id": "bef580b06b264714ab3f135125097463",
+      "model": "gpt-6.1-terra",
+      "provider": "openai-agents",
+      "provenance": {
+        "input_sha256": "6893f609b517edc948e79663d2af1259c5a293abbfdae51e9d72443b0d9274a0",
+        "prompt_sha256": "6c151dd48d03fe5977d60ee81e0cb3f7c72886382a6be02c6f597d3baef8c5b8",
+        "skill_versions": [
+          {
+            "name": "buyer-research",
+            "sha256": "2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e"
+          }
+        ],
+        "provider_receipts": [
+          {
+            "http_status": 200,
+            "request_id": "req_4628712c73814238a48f9f15790ead07",
+            "response_id": "resp_0142394852f95ed4006ae5be1cfac487d2afacb6d2365b6531",
+            "model": "gpt-6.1-terra",
+            "usage": {
+              "input_tokens": 1783,
+              "input_tokens_details": {
+                "cache_write_tokens": 1780,
+                "cached_tokens": 0
+              },
+              "output_tokens": 1564,
+              "output_tokens_details": {
+                "reasoning_tokens": 167
+              },
+              "total_tokens": 3347
+            },
+            "error_type": null,
+            "error_code": null
+          }
+        ]
+      },
+      "status": "PARTIAL",
+      "result_refs": [
+        "sha256/28/285fa0b77be3e6cceb13381cf2d500f8c2009298f8303543416ee1fe5c9e68d7"
+      ]
+    }
+  ],
+  "human_review_status": "pending",
+  "business_evaluation": null,
+  "human_baseline_minutes": null,
+  "human_review_minutes": null,
+  "critical_errors": null,
+  "external_send_authorized": false,
+  "subject_sha256": "545c5fc56d2b24660de661d44077ebcc202b03c317e389f10e5d8d37a436e2b7"
+}

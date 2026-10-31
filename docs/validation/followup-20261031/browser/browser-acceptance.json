@@ -1,0 +1,12 @@
+{
+  "mode": "E2 synthetic SDK result displayed through actual API/browser",
+  "case_id": "2af3b09f68eb4b6ba4b244e7bad70e70",
+  "source_visible": true,
+  "desktop_mobile": true,
+  "human_review": "pending",
+  "approved": false,
+  "browser_api_writes": 0,
+  "external_sends": 0,
+  "page_errors": [],
+  "limitation": "Email draft is deterministic kernel output; only one research response used a live model"
+}

@@ -1,0 +1,83 @@
+{
+  "status": "PARTIAL",
+  "claims": [],
+  "sources": [
+    {
+      "source_id": "synthetic-e2-source",
+      "url": "https://synthetic.example.invalid/followup",
+      "source_type": "website",
+      "title": "Fictional ambiguity fixture",
+      "captured_at": "2026-10-31T10:06:08.585181+00:00",
+      "text": "SYNTHETIC E2 SOURCE ONLY. Clarity Retail A describes reusable drinkware in France. A separate Clarity Retail B describes office furniture in Canada. These are distinct fictional entities. The inquiry does not identify which entity is the buyer. Requested quantity is 250 unprinted bottles. No official registry, corporate contact, product specification or compliance evidence is supplied.",
+      "sha256": "03dda9460f85c8d458d5d62665f2273a5fd91a86897e363dd5b2f3aa6241fde6",
+      "status": "fetched",
+      "gap_reason": "",
+      "is_synthetic": true,
+      "license_status": "permitted",
+      "authority": "source_claim",
+      "document_version": null,
+      "valid_until": null,
+      "document_hash": null
+    }
+  ],
+  "unresolved_questions": [
+    "runtime_failed"
+  ],
+  "conflicts": [],
+  "coverage": {
+    "identity": 0.0,
+    "company": 0.0,
+    "intent": 0.0
+  },
+  "stop_reason": "runtime_failed",
+  "agent_run_id": "ace62b7760ba4a069f7eb4534ffc16a1",
+  "provider": "openai-agents",
+  "model": "gpt-6.1-terra",
+  "token_usage": {
+    "total_tokens": 3451
+  },
+  "cost_usd": 0.017255000000000003,
+  "cost_is_estimate": false,
+  "error_class": "ValueError",
+  "tool_events": [
+    {
+      "agent_run_id": "ace62b7760ba4a069f7eb4534ffc16a1",
+      "sequence": 1,
+      "event_type": "run_started",
+      "created_at": "2026-10-31T10:06:37.912922Z",
+      "data_redacted": {
+        "provider": "openai-agents",
+        "synthetic": false
+      }
+    },
+    {
+      "agent_run_id": "ace62b7760ba4a069f7eb4534ffc16a1",
+      "sequence": 2,
+      "event_type": "model_started",
+      "created_at": "2026-10-31T10:06:38.065029Z",
+      "data_redacted": {
+        "input_upper_bound": 17045
+      }
+    },
+    {
+      "agent_run_id": "ace62b7760ba4a069f7eb4534ffc16a1",
+      "sequence": 3,
+      "event_type": "model_completed",
+      "created_at": "2026-10-31T10:07:03.094313Z",
+      "data_redacted": {
+        "total_tokens": 3451
+      }
+    },
+    {
+      "agent_run_id": "ace62b7760ba4a069f7eb4534ffc16a1",
+      "sequence": 4,
+      "event_type": "run_failed",
+      "created_at": "2026-10-31T10:07:03.139185Z",
+      "data_redacted": {
+        "error_class": "ValueError"
+      }
+    }
+  ],
+  "synthetic": false,
+  "provenance": {}
+}

@@ -1,0 +1,63 @@
+{
+  "allocated_hard_cap_usd": 2,
+  "paid_requests": 2,
+  "preflight_failures_without_network": 1,
+  "known_responses": 2,
+  "unknown_outcomes": 0,
+  "conservative_upper_estimate_usd": 0.03399,
+  "reservation_total_usd": 0.22646,
+  "grant_envelopes_total_usd": 2,
+  "actual_billed_usd": null,
+  "pricing_source": "https://developers.openai.com/api/docs/pricing",
+  "pricing_note": "Base-rate estimates exclude cache-write premiums. Conservative bound prices every token at USD5/M; invoice unavailable. No retry or additional paid calls planned.",
+  "attempts": [
+    {
+      "attempt": "attempt-02",
+      "input_hash": "4453798357a4351fb717e412c6793fadd88b79dfd05aa8b0b70cc28540cb66d9",
+      "grant_sha256": "9dd9e1eac2fc0750ce8428f76999b7a0f4d02ca9cdf188b3d6f0b1609b54b457",
+      "request_id": "req_8b6be5a2ec1c44b88810c38a66f6d9a8",
+      "response_id": "resp_0ff22dbc42463409006ae5bdafd45087d29a8347739d21cff1",
+      "native_validation": "rejected_source_identity",
+      "usage": {
+        "input_tokens": 1477,
+        "input_tokens_details": {
+          "cache_write_tokens": 1474,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1974,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3451
+      },
+      "conservative_upper_estimate_usd": 0.017255,
+      "base_rate_estimate_excluding_cache_premium_usd": 0.011347,
+      "actual_billed_usd": null,
+      "reservation_usd": 0.110225
+    },
+    {
+      "attempt": "attempt-03",
+      "input_hash": "d7965b556c378c8124941a9407b18ec73dafb57847fb19779b8ce15e7195cb30",
+      "grant_sha256": "684308b7d64989ba84e063840ae2e9bdd094955e83d75bb393dde771bd751452",
+      "request_id": "req_4628712c73814238a48f9f15790ead07",
+      "response_id": "resp_0142394852f95ed4006ae5be1cfac487d2afacb6d2365b6531",
+      "native_validation": "passed_partial_result",
+      "usage": {
+        "input_tokens": 1783,
+        "input_tokens_details": {
+          "cache_write_tokens": 1780,
+          "cached_tokens": 0
+        },
+        "output_tokens": 1564,
+        "output_tokens_details": {
+          "reasoning_tokens": 167
+        },
+        "total_tokens": 3347
+      },
+      "conservative_upper_estimate_usd": 0.016735,
+      "base_rate_estimate_excluding_cache_premium_usd": 0.009603,
+      "actual_billed_usd": null,
+      "reservation_usd": 0.116235
+    }
+  ]
+}

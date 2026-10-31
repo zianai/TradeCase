@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ✓  1 tests/followup-live.spec.ts:9:5 › actual SDK receipt remains synthetic and pending in the real review UI (7.7s)
+
+  1 passed (10.3s)

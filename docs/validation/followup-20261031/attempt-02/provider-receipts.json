@@ -1,0 +1,22 @@
+[
+  {
+    "http_status": 200,
+    "request_id": "req_8b6be5a2ec1c44b88810c38a66f6d9a8",
+    "response_id": "resp_0ff22dbc42463409006ae5bdafd45087d29a8347739d21cff1",
+    "model": "gpt-6.1-terra",
+    "usage": {
+      "input_tokens": 1477,
+      "input_tokens_details": {
+        "cache_write_tokens": 1474,
+        "cached_tokens": 0
+      },
+      "output_tokens": 1974,
+      "output_tokens_details": {
+        "reasoning_tokens": 516
+      },
+      "total_tokens": 3451
+    },
+    "error_type": null,
+    "error_code": null
+  }
+]

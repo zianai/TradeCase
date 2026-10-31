@@ -1,0 +1,24 @@
+action_id: "followup-20261031-tc-native-1"
+target: "https://api.openai.com/v1/responses"
+environment: "live_sandbox_synthetic_only"
+status: "failed"
+payload_sha256: "dd76707a802d3755c07b46d54b365e41191c79c4aa478717062ac544f55ff9d5"
+operator_grant_sha256: "f894d95135ef47d09d4680e42adf499238567450d646a648802ce04b60884b63"
+first_request_cap_usd: 1
+total_allocation_usd: 2
+retry_allowed: false
+external_business_effects: false
+external_effect_observed: false
+reconciliation_ref: "docs/validation/followup-20261031/attempt-01/attempt-01-reconciliation.json"
+subject: "sha256:f489cebd2e21f80c0008415617c5469523a6ffe3b40a0a5726e6594931d6c10f"
+subject_ref: "docs/validation/followup-20261031/attempt-01/request.json"
+payload_scope: "One native SDK Responses request; generated synthetic inquiry and sources only; no tools, no sends; maximum USD1 within total TradeCase USD2"
+authorization_basis: "direct-human-instruction"
+authority_ref: "work/active/T-012-authorized-live-followup/AUTHORIZATION.md"
+one_shot: true
+idempotency_key: "followup-20261031-tc-native-1"
+expires_at: "2026-10-31T12:05:04.831533+00:00"
+timeout_seconds: 90
+observation: "Local preflight rejected before key or network; no provider request or ledger"
+compensation: "No rollback of consumed tokens; preserve exact receipt and usage; grant revoked; no automatic retry"
+reconciliation_result: "no-effect-confirmed"

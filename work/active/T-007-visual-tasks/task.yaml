@@ -15,4 +15,4 @@ evidence_refs: [docs/VISUAL_UPGRADE_REPORT.md]
 updated: "2026-10-30"
 implementation_started: true
 review_ref: work/active/T-007-visual-tasks/review.md
-review_current: true
+review_current: false

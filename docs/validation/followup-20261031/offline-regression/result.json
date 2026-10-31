@@ -1,0 +1,31 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/platform/test_runtime.py",
+    "tests/unit/test_p7_policy.py",
+    "tests/platform/test_followup.py",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T10:08:03.525608+00:00",
+  "duration_seconds": 6.372,
+  "exit_code": 0,
+  "source_sha": "42ed8e40729c15f50adedcfc69eeea4b645641fc",
+  "tracked_diff_sha256": "c9eddc017e60333c5e35a12044684e524f85e64149d841b87fed2b417d348a4c",
+  "dirty_paths": [
+    " M project/state.yaml",
+    " M src/tradecase/platform/runtime.py",
+    " M tests/unit/test_p7_policy.py",
+    "?? frontend/tests/followup-live.spec.ts",
+    "?? ops/followup_live.py",
+    "?? tests/platform/test_followup.py",
+    "?? work/active/T-012-authorized-live-followup/"
+  ],
+  "log_sha256": "3394282eb3f1f862551f9cdb4308397386d8e774a673fb8bf685f87675fd813d",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

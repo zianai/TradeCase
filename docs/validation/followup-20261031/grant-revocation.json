@@ -1,0 +1,28 @@
+{
+  "revoked_at_utc": "2026-10-31T10:12:40.964756+00:00",
+  "grants": [
+    {
+      "attempt": "tradecase-live",
+      "executed_grant_sha256": "f894d95135ef47d09d4680e42adf499238567450d646a648802ce04b60884b63",
+      "revoked_grant_sha256": "abca55e74499188d32f0539d9f4e43cb14d459f779ae861d8b02b283a3929ab0",
+      "revoked_at_utc": "2026-10-31T10:12:40.964756+00:00",
+      "pin_changed": true
+    },
+    {
+      "attempt": "attempt-02",
+      "executed_grant_sha256": "9dd9e1eac2fc0750ce8428f76999b7a0f4d02ca9cdf188b3d6f0b1609b54b457",
+      "revoked_grant_sha256": "430deae5398be9c476d0ceba7a7664c03b3a6daff9d083a5542b8fe5ef14ba1e",
+      "revoked_at_utc": "2026-10-31T10:12:40.964756+00:00",
+      "pin_changed": true
+    },
+    {
+      "attempt": "attempt-03",
+      "executed_grant_sha256": "684308b7d64989ba84e063840ae2e9bdd094955e83d75bb393dde771bd751452",
+      "revoked_grant_sha256": "2b0ae02c668985bf15707cb13590b50c7db9c3ede9678d6ca676f9e4b2175388",
+      "revoked_at_utc": "2026-10-31T10:12:40.964756+00:00",
+      "pin_changed": true
+    }
+  ],
+  "automatic_retry": false,
+  "actual_key_unchanged": true
+}

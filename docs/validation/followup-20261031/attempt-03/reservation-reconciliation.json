@@ -1,0 +1,19 @@
+{
+  "money_unit": "micro USD",
+  "rows": [
+    {
+      "id": "bef580b06b264714ab3f135125097463:1",
+      "grant_hash": "684308b7d64989ba84e063840ae2e9bdd094955e83d75bb393dde771bd751452",
+      "action": "submit_model",
+      "subject": "978594700d7cf216c79994966fd907d34252d62a6e4fcf6f37e601a47f5bfdea",
+      "status": "completed",
+      "reserved": 116235,
+      "observed": 16735,
+      "images": 0,
+      "basis": "estimated"
+    }
+  ],
+  "actual_invoice_usd": null,
+  "all_responses_known": true,
+  "retry_allowed": false
+}

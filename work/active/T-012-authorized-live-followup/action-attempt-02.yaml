@@ -1,0 +1,29 @@
+action_id: "followup-20261031-tc-native-attempt-02"
+target: "https://api.openai.com/v1/responses"
+environment: "live_sandbox_synthetic_only"
+status: "succeeded"
+payload_sha256: "4453798357a4351fb717e412c6793fadd88b79dfd05aa8b0b70cc28540cb66d9"
+operator_grant_sha256: "9dd9e1eac2fc0750ce8428f76999b7a0f4d02ca9cdf188b3d6f0b1609b54b457"
+request_cap_usd: 1
+total_allocation_usd: 2
+response_observed: true
+request_id: "req_8b6be5a2ec1c44b88810c38a66f6d9a8"
+response_id: "resp_0ff22dbc42463409006ae5bdafd45087d29a8347739d21cff1"
+local_result: "rejected_source_identity"
+actual_billed_usd: null
+conservative_upper_estimate_usd: 0.017255
+retry_allowed: false
+reconciliation_ref: "docs/validation/followup-20261031/attempt-02/reservation-reconciliation.json"
+external_business_effects: false
+subject: "sha256:d0d4ccc62e1cf054bac37cc8c31c21628fb5b0d76b6a5e94d72343d1e8b9250d"
+subject_ref: "docs/validation/followup-20261031/attempt-02/request.json"
+payload_scope: "One native SDK Responses request; generated synthetic inquiry and sources only; no tools, no sends; maximum USD1 within total TradeCase USD2"
+authorization_basis: "direct-human-instruction"
+authority_ref: "work/active/T-012-authorized-live-followup/AUTHORIZATION.md"
+one_shot: true
+idempotency_key: "followup-20261031-tc-native-attempt-02"
+expires_at: "2026-10-31T12:06:08.585181+00:00"
+timeout_seconds: 90
+observation: "Provider HTTP200 receipt and exact usage retained; native result rejected_source_identity"
+compensation: "No rollback of consumed tokens; preserve exact receipt and usage; grant revoked; no automatic retry"
+reconciliation_result: "effect-confirmed"

@@ -1,0 +1,26 @@
+{
+  "command": [
+    "python3",
+    "/Users/a/.agents/skills/managing-vibe-project-memory/scripts/check_project_memory.py",
+    ".",
+    "--full"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T10:14:27.357020+00:00",
+  "duration_seconds": 0.158,
+  "exit_code": 0,
+  "source_sha": "d6c11f463f79bba51ff0ae303f3c55a7c9253ac2",
+  "tracked_diff_sha256": "5ed91a24f72f61684fd3c870458927e12059042b4d9529f4fc6de64280b5e649",
+  "dirty_paths": [
+    " M project/state.yaml",
+    " M work/active/T-005-full-delivery/task.yaml",
+    " M work/active/T-007-visual-tasks/task.yaml",
+    " M work/active/T-011-p8-p10/task.yaml",
+    "?? docs/validation/followup-20261031/",
+    "?? work/active/T-012-authorized-live-followup/"
+  ],
+  "log_sha256": "9b5d1383de8fdf54cd222ac566a2c4aacdaef22fe146b1e8f9bba6f4ddcb3765",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

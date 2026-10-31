@@ -17,4 +17,4 @@ implementation_started: true
 external_effects: none
 conformance_status: pending
 review_ref: work/active/T-005-full-delivery/review.md
-review_current: true
+review_current: false

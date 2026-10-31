@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T10:11:54.297655+00:00",
+  "duration_seconds": 63.386,
+  "exit_code": 0,
+  "source_sha": "d6c11f463f79bba51ff0ae303f3c55a7c9253ac2",
+  "tracked_diff_sha256": "e017af63d57f9acc3b5a680188d26fe0892abce8dc37d10304b5f505bc1a0601",
+  "dirty_paths": [
+    " M project/state.yaml",
+    "?? docs/validation/followup-20261031/",
+    "?? work/active/T-012-authorized-live-followup/"
+  ],
+  "log_sha256": "99037e5f701b6512169f4f642c5b09433609e48c06ec379dd047f45ba16b77e0",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

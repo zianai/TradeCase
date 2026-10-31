@@ -1,0 +1,15 @@
+{
+  "base_commit": "42ed8e40729c15f50adedcfc69eeea4b645641fc",
+  "actual_live_execution": "uncommitted worktree; not asserted to have run a later commit",
+  "tracked_diff_sha256": "c9eddc017e60333c5e35a12044684e524f85e64149d841b87fed2b417d348a4c",
+  "tracked_diff_captured_by": "offline-regression/result.json before attempt-03; hash still matches current tracked source changes",
+  "runtime_file_sha256_observed_after_execution": "3218670c8e791b3f364b97ab3fe4f20ba0a39f1f0ecf72fa988090b689a44618",
+  "runtime_patch_sha256": "ef5dafa27a6218c0f70976e51a807ec4df5c5b8b6b93c5b4963cc91b8ac5a5eb",
+  "capture_limit": "No complete untracked-file snapshot was captured before the paid call. Full actual model request/response are retained. Helper report labels/reason wording changed afterward and browser harness was completed afterward; no additional API call.",
+  "observed_files": {
+    "src/tradecase/platform/runtime.py": "3218670c8e791b3f364b97ab3fe4f20ba0a39f1f0ecf72fa988090b689a44618",
+    "ops/followup_live.py": "8a1436949feb1537f51ed613b6a2e5e71230fba553b70f691f0e6c45cf0fafe6",
+    "ops/followup_browser.py": "84d59e4fceb89c70b4932897fd45d5e8282e19561c340bfe1a59e4c627a05ed7",
+    "frontend/tests/followup-live.spec.ts": "15ce9310663a72e4cb4dff4d4a5089cf9564212370aaf6f65b7e3e4ab3497718"
+  }
+}

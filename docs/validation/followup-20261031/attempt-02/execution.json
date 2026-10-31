@@ -1,0 +1,8 @@
+{
+  "exit_code": 1,
+  "duration_seconds": 32.355,
+  "log_sha256": "d383b9d149685e4290c51111300c4f86eecd58840f01c617c52af11128cd4caa",
+  "new_paid_request_authorized": true,
+  "api_cap_usd": 1,
+  "total_allocation_usd": 2
+}

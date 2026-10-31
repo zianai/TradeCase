@@ -1,0 +1,21 @@
+schema_version: 3
+protocol_version: "3.0"
+id: T-012-authorized-live-followup
+status: implemented_verified
+goal: Run and inspect an explicitly authorized synthetic native SDK followup and local pending-review integration
+scope: [ops/, src/, tests/, frontend/tests/, docs/validation/followup-20261031/, project/, work/active/T-012-authorized-live-followup/, work/active/T-005-full-delivery/task.yaml, work/active/T-007-visual-tasks/task.yaml, work/active/T-011-p8-p10/task.yaml]
+non_goals: [Real private business data, Email or external business writes, Remote Git mutation, Production deployment, Human business approval]
+acceptance: [Real provider response and usage retained, TradeCase hard allocation no more than USD2 including unknown outcomes, Exact request grant revalidated, Actual output visible in local review without auto approval]
+risk: high
+risk_reasons: [payment-or-message]
+protected_paths: [docs/validation/p7/, docs/validation/p8-p10/]
+context_refs: [work/active/T-012-authorized-live-followup/AUTHORIZATION.md]
+decision_refs: [docs/validation/post-p7/ADR.md]
+evidence_refs: [docs/validation/followup-20261031/FOLLOWUP_REPORT.md, docs/validation/followup-20261031/cost-reconciliation.json, docs/validation/followup-20261031/final-full-regression/result.json, docs/validation/followup-20261031/live-browser/result.json]
+updated: "2026-10-31"
+implementation_started: true
+external_effects: authorized_synthetic_api_only
+action_refs: [work/active/T-012-authorized-live-followup/action.yaml, work/active/T-012-authorized-live-followup/action-attempt-02.yaml, work/active/T-012-authorized-live-followup/action-attempt-03.yaml]
+completion_claim: false
+review_ref: work/active/T-012-authorized-live-followup/review.md
+review_current: true

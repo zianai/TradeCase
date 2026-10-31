@@ -1,0 +1,184 @@
+{
+  "status": "PARTIAL",
+  "claims": [
+    {
+      "claim_id": "inquiry-request",
+      "entity_id": "inquiry-buyer-unresolved",
+      "attribute": "purchase_intent",
+      "text": "The fictional inquiry describes a request for 250 unprinted stainless steel drink bottles for France. The buyer identity is unresolved.",
+      "classification": "INFERENCE",
+      "source_ids": [
+        "synthetic-inquiry-source"
+      ],
+      "excerpt": "Buyer Clarity Retail requests 250 unprinted stainless steel drink bottles for France."
+    },
+    {
+      "claim_id": "candidate-a",
+      "entity_id": "clarity-retail-a",
+      "attribute": "candidate_description",
+      "text": "The fictional fixture describes candidate A as associated with reusable drinkware in France; it does not establish that A is the buyer.",
+      "classification": "INFERENCE",
+      "source_ids": [
+        "synthetic-e2-source"
+      ],
+      "excerpt": "Clarity Retail A describes reusable drinkware in France."
+    },
+    {
+      "claim_id": "candidate-b",
+      "entity_id": "clarity-retail-b",
+      "attribute": "candidate_description",
+      "text": "The fictional fixture describes candidate B as associated with office furniture in Canada; it does not establish that B is the buyer.",
+      "classification": "INFERENCE",
+      "source_ids": [
+        "synthetic-e2-source"
+      ],
+      "excerpt": "A separate Clarity Retail B describes office furniture in Canada."
+    },
+    {
+      "claim_id": "candidate-selection",
+      "entity_id": "inquiry-buyer-unresolved",
+      "attribute": "identity",
+      "text": "Neither same-name candidate can be selected as the buyer on the supplied evidence.",
+      "classification": "UNKNOWN",
+      "source_ids": [
+        "synthetic-e2-source"
+      ],
+      "excerpt": "The inquiry does not identify which entity is the buyer."
+    },
+    {
+      "claim_id": "specification-gaps",
+      "entity_id": "inquiry-buyer-unresolved",
+      "attribute": "product_specifications",
+      "text": "Capacity, dimensions, finish and packaging remain unspecified.",
+      "classification": "UNKNOWN",
+      "source_ids": [
+        "synthetic-inquiry-source"
+      ],
+      "excerpt": "Please ask for capacity, dimensions, finish, packaging, delivery date and confirmed company identity."
+    },
+    {
+      "claim_id": "verification-gaps",
+      "entity_id": "inquiry-buyer-unresolved",
+      "attribute": "verification",
+      "text": "Supplier capability, price, certification, legal compliance and email identity are not verified.",
+      "classification": "UNKNOWN",
+      "source_ids": [
+        "synthetic-inquiry-source"
+      ],
+      "excerpt": "No supplier capability, price, certification, legal compliance or email identity has been verified."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "synthetic-inquiry-source",
+      "url": "https://synthetic.example.invalid/inquiry",
+      "source_type": "user_provided_unverified",
+      "title": "Fictional inquiry input",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "text": "SYNTHETIC E2 TEST ONLY. Buyer Clarity Retail requests 250 unprinted stainless steel drink bottles for France. Please ask for capacity, dimensions, finish, packaging, delivery date and confirmed company identity. No supplier capability, price, certification, legal compliance or email identity has been verified.",
+      "sha256": "427238c4b5690e25c8aefce97a65ce6b9500d216b5d73ffee5a8aea08af53f46",
+      "status": "fetched",
+      "gap_reason": "",
+      "is_synthetic": true,
+      "license_status": "permitted",
+      "authority": "user_provided_unverified",
+      "document_version": null,
+      "valid_until": null,
+      "document_hash": null
+    },
+    {
+      "source_id": "synthetic-e2-source",
+      "url": "https://synthetic.example.invalid/followup",
+      "source_type": "user_provided_unverified",
+      "title": "Fictional ambiguity fixture",
+      "captured_at": "2026-10-31T10:08:19.953379+00:00",
+      "text": "SYNTHETIC E2 SOURCE ONLY. Clarity Retail A describes reusable drinkware in France. A separate Clarity Retail B describes office furniture in Canada. These are distinct fictional entities. The inquiry does not identify which entity is the buyer. Requested quantity is 250 unprinted bottles. No official registry, corporate contact, product specification or compliance evidence is supplied.",
+      "sha256": "03dda9460f85c8d458d5d62665f2273a5fd91a86897e363dd5b2f3aa6241fde6",
+      "status": "fetched",
+      "gap_reason": "",
+      "is_synthetic": true,
+      "license_status": "permitted",
+      "authority": "user_provided_unverified",
+      "document_version": null,
+      "valid_until": null,
+      "document_hash": null
+    }
+  ],
+  "unresolved_questions": [
+    "Which entity is the buyer? Please provide its full legal name, registered address, registration number and country.",
+    "What is the purchaser's name and role, and what verified company contact details should be used?",
+    "What bottle capacity, dimensions, finish and packaging are required?",
+    "What delivery date and delivery location in France are required?",
+    "Are 250 unprinted bottles the confirmed quantity and printing requirement?",
+    "What product documentation or certifications does the buyer require, and what applicable requirements must be independently verified?",
+    "Can a supplier fulfill the specifications, and what price and terms would it offer?"
+  ],
+  "conflicts": [
+    "The fictional fixture describes two distinct same-name candidates: A in reusable drinkware in France and B in office furniture in Canada. The inquiry does not identify either as the buyer; neither candidate is selected."
+  ],
+  "coverage": {
+    "identity": 0.1,
+    "company": 0.1,
+    "intent": 0.4
+  },
+  "stop_reason": "Only fictional, user-provided unverified sources were supplied. No official registry, corporate contact, detailed specifications or compliance evidence was available; independent verification and candidate selection remain open.",
+  "agent_run_id": "bef580b06b264714ab3f135125097463",
+  "provider": "openai-agents",
+  "model": "gpt-6.1-terra",
+  "token_usage": {
+    "total_tokens": 3347
+  },
+  "cost_usd": 0.016735,
+  "cost_is_estimate": true,
+  "error_class": null,
+  "tool_events": [
+    {
+      "agent_run_id": "bef580b06b264714ab3f135125097463",
+      "sequence": 1,
+      "event_type": "run_started",
+      "created_at": "2026-10-31T10:08:27.275082Z",
+      "data_redacted": {
+        "provider": "openai-agents",
+        "synthetic": false
+      }
+    },
+    {
+      "agent_run_id": "bef580b06b264714ab3f135125097463",
+      "sequence": 2,
+      "event_type": "model_started",
+      "created_at": "2026-10-31T10:08:27.325984Z",
+      "data_redacted": {
+        "input_upper_bound": 18247
+      }
+    },
+    {
+      "agent_run_id": "bef580b06b264714ab3f135125097463",
+      "sequence": 3,
+      "event_type": "model_completed",
+      "created_at": "2026-10-31T10:08:47.637412Z",
+      "data_redacted": {
+        "total_tokens": 3347
+      }
+    },
+    {
+      "agent_run_id": "bef580b06b264714ab3f135125097463",
+      "sequence": 4,
+      "event_type": "run_completed",
+      "created_at": "2026-10-31T10:08:47.705335Z",
+      "data_redacted": {
+        "status": "PARTIAL"
+      }
+    }
+  ],
+  "synthetic": true,
+  "provenance": {
+    "input_sha256": "6893f609b517edc948e79663d2af1259c5a293abbfdae51e9d72443b0d9274a0",
+    "prompt_sha256": "6c151dd48d03fe5977d60ee81e0cb3f7c72886382a6be02c6f597d3baef8c5b8",
+    "skill_versions": [
+      {
+        "name": "buyer-research",
+        "sha256": "2eacf16af32ce1dab21ae12ffae96c3c9087fb008dc9ef8ac37561262161988e"
+      }
+    ]
+  }
+}

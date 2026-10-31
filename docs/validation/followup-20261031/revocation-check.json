@@ -1,0 +1,74 @@
+[
+  {
+    "attempt": "tradecase-live",
+    "preflight_after_revocation": {
+      "system": "tradecase",
+      "configuration": {
+        "provider": "openai",
+        "model": "gpt-6.1-terra",
+        "required_domain": "api.openai.com",
+        "capability_verified_live": false,
+        "environment": "live_sandbox",
+        "data_classification": "synthetic",
+        "action": "submit_model"
+      },
+      "approved_limits": null,
+      "status": "blocked",
+      "reasons": [
+        "APPROVAL_HASH_MISMATCH"
+      ],
+      "token_present": false,
+      "external_writes": false,
+      "live_executed": false,
+      "approved_grant_sha256": "f894d95135ef47d09d4680e42adf499238567450d646a648802ce04b60884b63"
+    }
+  },
+  {
+    "attempt": "attempt-02",
+    "preflight_after_revocation": {
+      "system": "tradecase",
+      "configuration": {
+        "provider": "openai",
+        "model": "gpt-6.1-terra",
+        "required_domain": "api.openai.com",
+        "capability_verified_live": false,
+        "environment": "live_sandbox",
+        "data_classification": "synthetic",
+        "action": "submit_model"
+      },
+      "approved_limits": null,
+      "status": "blocked",
+      "reasons": [
+        "APPROVAL_HASH_MISMATCH"
+      ],
+      "token_present": false,
+      "external_writes": false,
+      "live_executed": false,
+      "approved_grant_sha256": "9dd9e1eac2fc0750ce8428f76999b7a0f4d02ca9cdf188b3d6f0b1609b54b457"
+    }
+  },
+  {
+    "attempt": "attempt-03",
+    "preflight_after_revocation": {
+      "system": "tradecase",
+      "configuration": {
+        "provider": "openai",
+        "model": "gpt-6.1-terra",
+        "required_domain": "api.openai.com",
+        "capability_verified_live": false,
+        "environment": "live_sandbox",
+        "data_classification": "synthetic",
+        "action": "submit_model"
+      },
+      "approved_limits": null,
+      "status": "blocked",
+      "reasons": [
+        "APPROVAL_HASH_MISMATCH"
+      ],
+      "token_present": false,
+      "external_writes": false,
+      "live_executed": false,
+      "approved_grant_sha256": "684308b7d64989ba84e063840ae2e9bdd094955e83d75bb393dde771bd751452"
+    }
+  }
+]
