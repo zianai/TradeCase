@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "tested_commit": "381fbc182429562046461dd518bcb4d8851ff77e",
+  "scope": "actual E1 browser/API, synthetic data; design_pending",
+  "captures": [
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/case-desktop.png",
+      "sha256": "15c97ffa98d5991003e6695afddb9d94d3eafae7f57597c671ba3780f9728abf"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/case-mobile.png",
+      "sha256": "910fdb1fa6ee3742801564cf47ed2985a9e6bf4ed43b1cfe002df5677816a2f8"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/dashboard-desktop.png",
+      "sha256": "096cea77c7be95290c9f0b4088affb35714e7f5e1c36fdbd5d3ff1ce874c4889"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/dashboard-mobile.png",
+      "sha256": "0cb5bebfd82f41b4c02d8a2e2537fae8966704f2ed8beea2189ee88f8d8742fd"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/draft-approval-desktop.png",
+      "sha256": "1601155356c7f6cf6f4c523eb64d7ebe44a5427ad9b2304e700867a40d6ace52"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/knowledge-versions.png",
+      "sha256": "a9c3b4f013989304b0f5cc65a50976a7353d95756698dc2365bcfc293299675f"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/manual-source-review.png",
+      "sha256": "3e8e8eb72357343a9c82530f47b2dc436441363ed775dba6e8b2ad533daf3036"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/provenance-desktop.png",
+      "sha256": "f1f63e0a911784f763d2ed85f7cbf05565eec9eaab9e586020b57b83f9782577"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/provenance-mobile.png",
+      "sha256": "dc50954ccde6a721db904d1ed15d333b1f52be8d9044df4b95810ad76338dd0d"
+    },
+    {
+      "path": "docs/validation/p8-p10/evidence/final-v2-browser/render/source-snapshot.png",
+      "sha256": "9693d9e222e332c8ff2376f421672cad6979c258a954ffe3c58e4237041a0e48"
+    }
+  ]
+}

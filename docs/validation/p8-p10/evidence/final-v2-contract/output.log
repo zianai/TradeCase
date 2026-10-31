@@ -1,0 +1,5 @@
+python contracts/visual-task/verify.py
+Contract 1.0.0: release integrity and baseline passed
+python -m pytest contracts/visual-task/test_consumer.py contracts/visual-task/test_verifier.py -q
+...........................................                              [100%]
+43 passed in 2.91s

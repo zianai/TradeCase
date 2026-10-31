@@ -1,0 +1,28 @@
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261028_0001, Create tenant business records and durable execution leases
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0001 -> 20261028_0002, Tenant and permission-scoped read cache, no business scheduling state.
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0002 -> 20261030_0003, Independent visual business domain; no old Case columns changed.
+
+Running 18 tests using 1 worker
+
+  ✓   1 tests/business-language.spec.ts:113:5 › dashboard names the customer and task instead of an internal case ID (1.8s)
+  ✓   2 tests/business-language.spec.ts:125:5 › priority explains itself and never presents an unassessed 0 as a score (563ms)
+  ✓   3 tests/business-language.spec.ts:138:5 › assessment reads as a conclusion; raw record and hash stay available but folded (771ms)
+  ✓   4 tests/business-language.spec.ts:161:5 › draft review shows the current version first and folds hash and history (420ms)
+  ✓   5 tests/business-language.spec.ts:180:5 › QA reads as passed only on an explicit pass with nothing outstanding (5ms)
+  ✓   6 tests/draft-actions.spec.ts:93:5 › three courtesy tones preserve facts and signature, remain unsaved, and save only through the versioned editor (720ms)
+  ✓   7 tests/draft-actions.spec.ts:132:5 › reviewer cancels only a pending external action with a reason and current case version (465ms)
+  ✓   8 tests/draft-actions.spec.ts:160:5 › viewer cannot see the queued action cancellation control (421ms)
+  ✓   9 tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up (8.5s)
+  ✓  10 tests/live-e2e.spec.ts:226:5 › real API knowledge versions remain separate and explicitly unverified (38.7s)
+  ✓  11 tests/manual-review.spec.ts:10:5 › manual snapshot and reviewer input preserve unknown status and require explicit source confirmations (48.0s)
+  ✓  12 tests/p8-provenance.spec.ts:11:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile (5.7s)
+  ✓  13 tests/ui.spec.ts:20:5 › empty workbench remains truthful, keyboard dialog closes and narrow layout has no overflow (926ms)
+  ✓  14 tests/ui.spec.ts:61:5 › untrusted source content stays text and cannot trigger an outbound request (738ms)
+  ✓  15 tests/ui.spec.ts:138:7 › approval reject carries exact hash/version and never calls send (838ms)
+  ✓  16 tests/ui.spec.ts:138:7 › approval request_changes carries exact hash/version and never calls send (899ms)
+  ✓  17 tests/ui.spec.ts:138:7 › approval request_evidence carries exact hash/version and never calls send (1.2s)
+  ✓  18 tests/ui.spec.ts:190:5 › switching workspace credentials discards late responses from the previous tenant (1.3s)
+
+  18 passed (2.0m)

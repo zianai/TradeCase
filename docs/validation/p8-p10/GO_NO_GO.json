@@ -1,0 +1,21 @@
+{
+  "project": "tradecase",
+  "tested_commit": "381fbc182429562046461dd518bcb4d8851ff77e",
+  "G-ENG": "local_tests_passed; coordinator integration review required",
+  "G-BIZ": "HOLD",
+  "G-COST": "HOLD",
+  "G-PROD": "HOLD",
+  "business_status": "not_evaluable",
+  "real_inquiries_evaluated": 0,
+  "independent_business_reviewers": 0,
+  "net_human_time_savings": null,
+  "human_approval": false,
+  "external_effects": "none",
+  "new_paid_calls": 0,
+  "blocked_tests": [
+    "P8-T014",
+    "P8-T015",
+    "P10-T012"
+  ],
+  "reason": "Authorized real data, independent reviewers, paired baseline and production authorization unavailable."
+}

@@ -1,0 +1,391 @@
+{
+  "repo": "tradecase",
+  "tested_commit": "381fbc182429562046461dd518bcb4d8851ff77e",
+  "evidence_modes": [
+    "E0",
+    "E1"
+  ],
+  "results": [
+    {
+      "id": "P8-T010",
+      "state": "passed",
+      "test_nodes": [
+        "tests/integration/test_buyer_research.py::test_same_name_different_domains_are_separate_candidates",
+        "tests/integration/test_buyer_research.py::test_conflict_summary_preserves_country_registry_and_domain_differences",
+        "tests/unit/test_assessment.py::test_entity_fields_cannot_hide_conflict_behind_supported_signals",
+        "tests/platform/test_p8_p10.py::test_same_name_injection_unknown_sources_never_unlock_send"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": null
+    },
+    {
+      "id": "P8-T011",
+      "state": "passed",
+      "test_nodes": [
+        "tests/unit/test_procurement_deadline.py::test_expired_case_becomes_needs_review_and_gets_internal_draft",
+        "tests/platform/test_p8_p10.py::test_source_intake_precise_locator_expiration_and_approval_invalidation",
+        "tests/platform/test_p8_p10.py::test_expired_snapshot_cannot_support_current_review",
+        "tests/e2e/test_demo.py::test_complete_offline_case_from_cli[case_regulation_unknown]"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": null
+    },
+    {
+      "id": "P8-T012",
+      "state": "passed",
+      "test_nodes": [
+        "tests/platform/test_runtime.py::test_sdk_real_tool_loop_inert_prompt_injection_and_quote_validation",
+        "tests/integration/test_buyer_research.py::test_untrusted_page_text_never_executes_or_confirms_identity",
+        "tests/unit/test_p7_policy.py::test_missing_auth_and_injection_no_authority",
+        "tests/platform/test_p8_p10.py::test_same_name_injection_unknown_sources_never_unlock_send"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": null
+    },
+    {
+      "id": "P8-T013",
+      "state": "passed",
+      "test_nodes": [
+        "tests/platform/test_p8_p10.py::test_synthetic_inquiry_without_sources_stays_unknown",
+        "tests/unit/test_assessment.py::test_assess_case_with_no_agent_signals_persists_unknown_result"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": null
+    },
+    {
+      "id": "P8-T014",
+      "state": "BLOCKED_EXTERNAL",
+      "test_nodes": [],
+      "evidence_refs": [],
+      "reason": "No ten-inquiry authorized real dataset or two independent blinded business reviewers."
+    },
+    {
+      "id": "P8-T015",
+      "state": "BLOCKED_EXTERNAL",
+      "test_nodes": [],
+      "evidence_refs": [],
+      "reason": "No paired real manual/assisted timing and correction records; metrics remain null."
+    },
+    {
+      "id": "P10-T012",
+      "state": "BLOCKED_EXTERNAL",
+      "test_nodes": [],
+      "evidence_refs": [],
+      "reason": "No exact E3 report accepted by a human lead-pilot owner, two reviewers or paired baseline."
+    },
+    {
+      "id": "P9-T001",
+      "state": "passed",
+      "test_nodes": [
+        "tests/unit/test_providers.py::test_reject_all_dns_results_if_any_unsafe",
+        "tests/unit/test_providers.py::test_failed_content_never_has_supported_evidence",
+        "tests/unit/test_providers.py::test_redirect_checks_private_target_before_connecting",
+        "tests/platform/test_runtime.py::test_tool_network_failure_is_explicit_and_redacted",
+        "tests/platform/test_workflow.py::test_partial_source_failure_bounded_followup"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": "Real adapter code fault-injected with local synthetic transport; no live source reliability or real company fact is claimed."
+    },
+    {
+      "id": "P9-T002",
+      "state": "passed",
+      "test_nodes": [
+        "tests/platform/test_deployment.py::test_postgres_competing_workers_and_crash_fencing",
+        "tests/platform/test_deployment.py::test_real_arq_delivery_uses_database_idempotency"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-infrastructure/result.json"
+      ],
+      "reason": null
+    },
+    {
+      "id": "P9-T003",
+      "state": "passed",
+      "test_nodes": [
+        "tests/platform/test_p8_p10.py::test_source_intake_precise_locator_expiration_and_approval_invalidation",
+        "tests/platform/test_api.py::test_idempotency_mismatch_and_stale_draft",
+        "tests/platform/test_actions.py::test_edit_after_enqueue_invalidates_at_dispatch",
+        "frontend/tests/live-e2e.spec.ts::real API import → research → source → review → draft revision → follow-up"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-browser/result.json"
+      ],
+      "reason": null
+    },
+    {
+      "id": "P9-T004",
+      "state": "passed",
+      "test_nodes": [
+        "frontend/tests/p8-provenance.spec.ts::P9-T004 provenance and conflicts remain reviewable on desktop and mobile"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-browser/result.json"
+      ],
+      "reason": "Actual API/SQLite/Chromium; current version/unknown identity, claim-specific locator/quote, conflict, expiry, keyboard close and 390/1440px rendering. Human design approval pending."
+    },
+    {
+      "id": "P10-T004",
+      "state": "passed",
+      "test_nodes": [
+        "tests/platform/test_deployment.py::test_postgres_dump_restore_objects_and_interrupted_checkpoint"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-infrastructure/result.json"
+      ],
+      "reason": "Actual pg_dump/restore into a new database in an owned temporary PG container and new object root; source/artifact/approval hash plus checkpoint resume; uncertain mail never reaches the inert connector. No production volume touched."
+    },
+    {
+      "id": "P8-T004",
+      "state": "partial",
+      "test_nodes": [
+        "tests/unit/test_p7_policy.py::test_missing_auth_and_injection_no_authority",
+        "tests/unit/test_p7_policy.py::test_public_reader_stops_before_socket_without_authority",
+        "tests/platform/test_p8_p10.py::test_pilot_real_data_requires_independent_grant_before_storage"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P8-T005",
+      "state": "partial",
+      "test_nodes": [
+        "tests/unit/test_p7_policy.py::test_exact_scope_and_capability_denials",
+        "tests/unit/test_p7_policy.py::test_expired_revoked_hash_and_price",
+        "tests/platform/test_p8_p10.py::test_pilot_export_rechecks_real_scope_and_retention_using_only_synthetic_bytes"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P8-T024",
+      "state": "partial",
+      "test_nodes": [
+        "contracts/visual-task/test_consumer.py::test_actual_adapter_enforces_asset_provenance_and_qa",
+        "contracts/visual-task/test_consumer.py::test_binary_integrity_and_fixed_origin"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "TC contract guard checked; actual simultaneous HTTP/stale-source/outage composition is owned by coordinator/CE.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P9-T025",
+      "state": "partial",
+      "test_nodes": [
+        "contracts/visual-task/test_consumer.py::test_actual_adapter_enforces_asset_provenance_and_qa",
+        "contracts/visual-task/test_consumer.py::test_unknown_or_invalid_cost_is_never_reported_as_zero",
+        "contracts/visual-task/test_consumer.py::test_omitted_cost_is_not_a_free_execution_receipt"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P9-T026",
+      "state": "partial",
+      "test_nodes": [
+        "contracts/visual-task/test_consumer.py::test_additive_provider_fields_are_compatible",
+        "contracts/visual-task/test_verifier.py::test_json_numbers_and_additive_fields_are_supported"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P9-T027",
+      "state": "partial",
+      "test_nodes": [
+        "contracts/visual-task/test_verifier.py::test_released_artifact_cannot_be_rebaselined",
+        "contracts/visual-task/test_consumer.py::test_contract_gate_rejects_incompatible_provider_mutations"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P9-T028",
+      "state": "partial",
+      "test_nodes": [
+        "ops/p8_ce_http_smoke.py::smoke"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "TC parameterized consumer is implemented; its real simultaneous CE/LC run and command log are in the coordinator, not this repository evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P9-T029",
+      "state": "partial",
+      "test_nodes": [
+        "tools/scan_git.py (coordinator operator tool)",
+        "tests/platform/test_p8_p10.py::test_validation_error_does_not_echo_untrusted_private_field",
+        "tests/unit/test_p7_policy.py::test_secret_never_echoed_and_path_rejected"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-git-scan/result.json",
+        "docs/validation/p8-p10/SAFE_ARTIFACT_SCAN.json"
+      ],
+      "reason": "Bounded Git pattern scan and negative reflection tests passed; coordinator owns aggregate final committed evidence scan. No exhaustive PII certification.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T001",
+      "state": "partial",
+      "test_nodes": [
+        "ops/p8_browser_acceptance.py::main",
+        "ops/p8_tls_acceptance.py::main"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-browser/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-tls/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-infrastructure/result.json"
+      ],
+      "reason": "Actual independent TC services pass; coordinator owns simultaneous three-system clean staging and auth boundary proof.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T002",
+      "state": "partial",
+      "test_nodes": [
+        "ops/p8_tls_acceptance.py::main",
+        "tests/platform/test_api.py::test_tenant_and_roles",
+        "contracts/visual-task/test_consumer.py::test_binary_integrity_and_fixed_origin"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-tls/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T003",
+      "state": "partial",
+      "test_nodes": [
+        "tests/platform/test_p8_p10.py::test_validation_error_does_not_echo_untrusted_private_field",
+        "tests/platform/test_runtime.py::test_runtime_error_does_not_leak_secrets",
+        "tests/platform/test_api.py::test_default_outbound_off_and_redacted_events"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-git-scan/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-browser/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T007",
+      "state": "partial",
+      "test_nodes": [
+        "tests/unit/test_p7_policy.py::test_queued_request_rechecks_revocation_before_reservation",
+        "tests/platform/test_p8_p10.py::test_pilot_export_rechecks_real_scope_and_retention_using_only_synthetic_bytes"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T008",
+      "state": "partial",
+      "test_nodes": [
+        "tests/platform/test_actions.py::test_scope_and_synthetic_live_provider_gate",
+        "tests/platform/test_p8_p10.py::test_pilot_import_deduplicates_preserves_origin_and_export_is_not_acceptance",
+        "tests/platform/test_p8_p10.py::test_manual_source_cannot_inherit_synthetic_case_export_authority"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json"
+      ],
+      "reason": "TC synthetic output cannot unlock live connector or mixed-source export; coordinator owns independent reviewer attestation and E3/production gate proof.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T009",
+      "state": "partial",
+      "test_nodes": [
+        "tests/platform/test_workflow.py::test_actual_process_restart_preserves_cursor",
+        "tests/platform/test_deployment.py::test_real_arq_delivery_uses_database_idempotency",
+        "contracts/visual-task/test_consumer.py::test_ambiguous_submission_has_no_automatic_retry"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-check/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-infrastructure/result.json",
+        "docs/validation/p8-p10/evidence/final-v2-contract/result.json"
+      ],
+      "reason": "Local durable cursor/duplicate/ambiguous submission tests pass; coordinator owns simultaneous CE outage and actual reset/reconnect composition.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T010",
+      "state": "partial",
+      "test_nodes": [
+        "tests/platform/test_deployment.py::test_postgres_migration_round_trip",
+        "tests/platform/test_deployment.py::test_postgres_dump_restore_objects_and_interrupted_checkpoint"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-infrastructure/result.json"
+      ],
+      "reason": "TradeCase component checked; coordinator must combine other repositories and cross-system evidence.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    },
+    {
+      "id": "P10-T011",
+      "state": "partial",
+      "test_nodes": [
+        "frontend/tests/p8-provenance.spec.ts::P9-T004 provenance and conflicts remain reviewable on desktop and mobile",
+        "frontend/tests/live-e2e.spec.ts::real API import → research → source → review → draft revision → follow-up"
+      ],
+      "evidence_refs": [
+        "docs/validation/p8-p10/evidence/final-v2-browser/result.json"
+      ],
+      "reason": "TC approval/provenance desktop/mobile API flow passed; CE unknown-cost screen and aggregate accessibility proof are owned by CE/coordinator.",
+      "component_state": "passed",
+      "scope": "TradeCase component only; coordinator owns combined three-system acceptance"
+    }
+  ],
+  "cross_system_policy": "Partial rows identify TC evidence and delegate only combined acceptance to coordinator; they are not full cross-system passes."
+}

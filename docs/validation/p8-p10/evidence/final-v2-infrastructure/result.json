@@ -1,0 +1,21 @@
+{
+  "command": [
+    "env",
+    "P7_OFFLINE_DOCKER=1",
+    ".venv/bin/python",
+    "ops/verify_infrastructure.py"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T09:07:39.195693+00:00",
+  "duration_seconds": 50.895,
+  "exit_code": 0,
+  "source_sha": "381fbc182429562046461dd518bcb4d8851ff77e",
+  "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dirty_paths": [
+    "?? docs/validation/p8-p10/"
+  ],
+  "log_sha256": "c5f0d5a8f5fec8f21e2951f065972a1933a973638bb0466a6b81fd0e2fdbc655",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

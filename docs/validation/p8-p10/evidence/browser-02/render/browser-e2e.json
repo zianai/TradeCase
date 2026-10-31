@@ -1,0 +1,23 @@
+{
+  "case_id": "2bad9df791f3461c8c1266d0f3c3c90f",
+  "title": "Browser acceptance · synthetic 1793436896524",
+  "verified": [
+    "real Postgres API through Next proxy",
+    "explicit synthetic import",
+    "versioned priority and tag editing",
+    "research workflow",
+    "source snapshot",
+    "two risk checks",
+    "version-bound review",
+    "unsaved courtesy tone preview then versioned save",
+    "draft edit invalidated prior approval",
+    "reapproval",
+    "followup create and complete",
+    "JSON export",
+    "refresh recovery",
+    "390px no overflow"
+  ],
+  "page_errors": [],
+  "external_sends": 0,
+  "mode": "synthetic_offline"
+}

@@ -1,0 +1,13 @@
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261028_0001, Create tenant business records and durable execution leases
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0001 -> 20261028_0002, Tenant and permission-scoped read cache, no business scheduling state.
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0002 -> 20261030_0003, Independent visual business domain; no old Case columns changed.
+
+Running 3 tests using 1 worker
+
+  ✓  1 tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up (7.0s)
+  ✓  2 tests/live-e2e.spec.ts:224:5 › real API knowledge versions remain separate and explicitly unverified (794ms)
+  ✓  3 tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile (1.3s)
+
+  3 passed (10.4s)

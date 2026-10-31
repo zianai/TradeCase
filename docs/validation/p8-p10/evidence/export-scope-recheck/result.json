@@ -1,0 +1,27 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/platform/test_p8_p10.py",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T09:06:52.478143+00:00",
+  "duration_seconds": 21.956,
+  "exit_code": 0,
+  "source_sha": "4e08d69c363813abf38888ead0565f012a221994",
+  "tracked_diff_sha256": "a7f66cd4bf68d20dfd37ce4af742e49ebeb5f911a995895cef9ee75030541d57",
+  "dirty_paths": [
+    " M frontend/tests/p8-provenance.spec.ts",
+    " M src/tradecase/platform/api.py",
+    " M src/tradecase/platform/pilot.py",
+    " M tests/platform/test_p8_p10.py",
+    "?? docs/validation/p8-p10/"
+  ],
+  "log_sha256": "b56c1f65f3b7f989188b5503bca990e29cb38f86de3882ce89b49cfb7bc6f00b",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

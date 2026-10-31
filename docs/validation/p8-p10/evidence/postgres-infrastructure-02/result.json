@@ -1,0 +1,38 @@
+{
+  "command": [
+    "env",
+    "P7_OFFLINE_DOCKER=1",
+    ".venv/bin/python",
+    "ops/verify_infrastructure.py"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T08:55:04.029530+00:00",
+  "duration_seconds": 29.861,
+  "exit_code": 0,
+  "source_sha": "46d65cd5bce416e5036221a95c353eb13b1b6ef4",
+  "tracked_diff_sha256": "f10a8b43f6f9669737af0c5eb646d41d4a762c8dc226bf04995661b6789ab69a",
+  "dirty_paths": [
+    " M .gitignore",
+    " M frontend/components/workbench.tsx",
+    " M project/state.yaml",
+    " M src/tradecase/platform/api.py",
+    " M src/tradecase/platform/coordinator.py",
+    " M src/tradecase/platform/review_inputs.py",
+    " M src/tradecase/platform/runtime.py",
+    " M src/tradecase/platform/services.py",
+    " M src/tradecase/platform/source_intake.py",
+    " M tests/platform/test_deployment.py",
+    " M tests/platform/test_runtime.py",
+    "?? docs/validation/p8-p10/",
+    "?? docs/validation/post-p7/",
+    "?? frontend/tests/p8-provenance.spec.ts",
+    "?? ops/p8_browser_acceptance.py",
+    "?? src/tradecase/platform/pilot.py",
+    "?? tests/platform/test_p8_p10.py",
+    "?? work/active/T-011-p8-p10/"
+  ],
+  "log_sha256": "cd6dde8ad821391d9663fa635c92aad701026ccc3bdb2e9a7544db9fdb041b9c",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

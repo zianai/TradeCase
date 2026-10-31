@@ -1,0 +1,7 @@
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261028_0001, Create tenant business records and durable execution leases
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0001 -> 20261028_0002, Tenant and permission-scoped read cache, no business scheduling state.
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0002 -> 20261030_0003, Independent visual business domain; no old Case columns changed.
+Business and checkpoint migrations applied
+{"mode": "E1 synthetic", "binding": "127.0.0.1", "verified_tls_health": 200, "unauthorized_case_and_asset": 401, "unknown_ca_rejected": true, "security_headers": ["nosniff", "no-store", "no-referrer"], "paid_calls": 0, "certificate_scope": "disposable one-day self-signed local CA; no production TLS claim"}

@@ -1,0 +1,25 @@
+
+> tradecase-workbench@1.0.0 build
+> NEXT_TELEMETRY_DISABLED=1 next build
+
+▲ Next.js 16.4.3 (Turbopack)
+✓ Running next.config.ts took 551ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.4s
+  Running TypeScript ...
+  Finished TypeScript in 4.6s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/2) ...
+✓ Generating static pages using 5 workers (2/2) in 362ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /_not-found
+├ ƒ /[[...path]]
+└ ƒ /api/[...path]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

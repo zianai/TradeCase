@@ -1,0 +1,35 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase/frontend",
+  "started_at": "2026-10-31T08:54:02.528007+00:00",
+  "duration_seconds": 16.531,
+  "exit_code": 0,
+  "source_sha": "46d65cd5bce416e5036221a95c353eb13b1b6ef4",
+  "tracked_diff_sha256": "265e678197f9e45ee3ee414cf55752c4bddfc8ef444eac3628a3500700fdb6b8",
+  "dirty_paths": [
+    " M frontend/components/workbench.tsx",
+    " M project/state.yaml",
+    " M src/tradecase/platform/api.py",
+    " M src/tradecase/platform/coordinator.py",
+    " M src/tradecase/platform/review_inputs.py",
+    " M src/tradecase/platform/runtime.py",
+    " M src/tradecase/platform/services.py",
+    " M src/tradecase/platform/source_intake.py",
+    " M tests/platform/test_runtime.py",
+    "?? docs/validation/p8-p10/",
+    "?? docs/validation/post-p7/",
+    "?? frontend/tests/p8-provenance.spec.ts",
+    "?? ops/p8_browser_acceptance.py",
+    "?? src/tradecase/platform/pilot.py",
+    "?? tests/platform/test_p8_p10.py",
+    "?? work/active/T-011-p8-p10/"
+  ],
+  "log_sha256": "f117f000cee8ed7fca1a2ffb89b6926c302d2426b4607ddefc89e3f6dabd6ed8",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

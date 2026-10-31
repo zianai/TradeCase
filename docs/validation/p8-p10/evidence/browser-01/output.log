@@ -1,0 +1,59 @@
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261028_0001, Create tenant business records and durable execution leases
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0001 -> 20261028_0002, Tenant and permission-scoped read cache, no business scheduling state.
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0002 -> 20261030_0003, Independent visual business domain; no old Case columns changed.
+
+Running 3 tests using 1 worker
+
+  ✘  1 tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up (1ms)
+  ✘  2 tests/live-e2e.spec.ts:224:5 › real API knowledge versions remain separate and explicitly unverified (1ms)
+  ✘  3 tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile (0ms)
+
+
+  1) tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase/docs/validation/p8-p10/evidence/browser-01/home/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/live-e2e-real-API-import-→-53e2a--draft-revision-→-follow-up/error-context.md
+
+  2) tests/live-e2e.spec.ts:224:5 › real API knowledge versions remain separate and explicitly unverified 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase/docs/validation/p8-p10/evidence/browser-01/home/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/live-e2e-real-API-knowledg-5433e-e-and-explicitly-unverified/error-context.md
+
+  3) tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile 
+
+    Error: browserType.launch: Executable doesn't exist at /Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase/docs/validation/p8-p10/evidence/browser-01/home/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell
+    ╔════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright was just installed or updated.       ║
+    ║ Please run the following command to download new browsers: ║
+    ║                                                            ║
+    ║     npx playwright install                                 ║
+    ║                                                            ║
+    ║ <3 Playwright Team                                         ║
+    ╚════════════════════════════════════════════════════════════╝
+
+    Error Context: test-results/p8-provenance-P9-T004-prov-ebb95-wable-on-desktop-and-mobile/error-context.md
+
+  3 failed
+    tests/live-e2e.spec.ts:11:5 › real API import → research → source → review → draft revision → follow-up 
+    tests/live-e2e.spec.ts:224:5 › real API knowledge versions remain separate and explicitly unverified 
+    tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile 

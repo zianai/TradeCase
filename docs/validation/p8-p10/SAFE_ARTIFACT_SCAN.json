@@ -1,0 +1,8 @@
+{
+  "tested_commit": "381fbc182429562046461dd518bcb4d8851ff77e",
+  "scope": "task evidence/documents only; known credential patterns and forbidden runtime extensions; not exhaustive PII certification",
+  "files_scanned": 147,
+  "findings": [],
+  "secret_values_emitted": false,
+  "status": "passed"
+}

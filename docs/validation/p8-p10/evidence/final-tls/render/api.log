@@ -1,0 +1,11 @@
+INFO:     Started server process [79347]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://127.0.0.1:53480 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53519 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53519 - "GET /api/cases HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:53519 - "GET /api/cases/unknown/sources/unknown/snapshot HTTP/1.1" 401 Unauthorized
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [79347]

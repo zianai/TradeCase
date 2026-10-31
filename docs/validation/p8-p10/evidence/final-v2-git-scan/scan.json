@@ -1,0 +1,11 @@
+{
+  "repo": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "revision": "HEAD",
+  "blobs_scanned": 837,
+  "findings": [],
+  "skipped": [],
+  "status": "passed",
+  "scope": "committed blobs reachable from public P7 baseline; patterns, not exhaustive PII certification",
+  "secret_values_emitted": false,
+  "history_modified": false
+}

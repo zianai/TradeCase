@@ -1,0 +1,11 @@
+# Independent CreativeEngine engineering review
+
+Reviewer: `/root/tradecase` agent, read-only; implementation owner: `/root/creative_engine`. Code subject inspected with Git: `bf18ba8b919e33f08a68749380c474c40a21c621`. This record is context for coordinator integration; it does not govern or mutate the independent CreativeEngine repository.
+
+Scope: core worker/recovery, service approval/export/source checks, operations backup/restore, evaluation export/validation, provider receipt files, HTTP auth/error handling, crash/recovery and operations test content. Reviewed the actual pending-desktop and approved-mobile screenshots supplied by CreativeEngine. No independent execution of CreativeEngine's test suite is claimed by this reviewer; its owner retains command/exit-code evidence.
+
+Finding closed: protocol-2 receipts originally treated artifact_sha256/attempt_id as optional and could fall back to legacy receipt behavior when fields were missing. The inspected commit requires a hash and an exact attempt identity for protocol 2, retains explicit legacy compatibility, and adds actual child-process saved-crash tests that delete each field and recover twice. Those cases require reconciling state, no promoted asset, null actual cost and only one provider call. Restore relocates path values while preserving receipt hash and attempt binding.
+
+The reviewed code preserves unknown liabilities, rechecks current source rights/output hashes at approval/export/download, verifies restored asset/package hashes in a new directory and refuses active-queue backup. No additional blocking finding was identified within this review scope. Local operator filesystem integrity remains a trust boundary; this is not a production security certification.
+
+Screenshot observations: Mock status, QA warning and the distinction between synthetic test review and real business acceptance are readable at desktop/mobile widths. No obvious horizontal truncation appeared in the two inspected captures. They are engineering readability evidence, not human design approval, product-fact approval or E3 business acceptance. Final screenshot-to-code binding remains the CreativeEngine release report's responsibility.

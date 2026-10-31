@@ -1,0 +1,36 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/platform/test_p8_p10.py",
+    "tests/platform/test_runtime.py",
+    "-q",
+    "--tb=short"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T08:53:32.773315+00:00",
+  "duration_seconds": 13.615,
+  "exit_code": 0,
+  "source_sha": "46d65cd5bce416e5036221a95c353eb13b1b6ef4",
+  "tracked_diff_sha256": "2740ae5e3aaeaa01b6f3e38bcf5ed1fb96e3a41fac575b0a2ba5f1eba7e837ab",
+  "dirty_paths": [
+    " M frontend/components/workbench.tsx",
+    " M project/state.yaml",
+    " M src/tradecase/platform/api.py",
+    " M src/tradecase/platform/coordinator.py",
+    " M src/tradecase/platform/review_inputs.py",
+    " M src/tradecase/platform/runtime.py",
+    " M src/tradecase/platform/services.py",
+    " M src/tradecase/platform/source_intake.py",
+    " M tests/platform/test_runtime.py",
+    "?? docs/validation/p8-p10/",
+    "?? docs/validation/post-p7/",
+    "?? src/tradecase/platform/pilot.py",
+    "?? tests/platform/test_p8_p10.py",
+    "?? work/active/T-011-p8-p10/"
+  ],
+  "log_sha256": "18e116c2202398845619f56f8df59d3876540f93ba08d97357ce8a931c70fe9b",
+  "scope": "local E0/E1; service credentials not inherited",
+  "new_paid_calls_authorized": false
+}

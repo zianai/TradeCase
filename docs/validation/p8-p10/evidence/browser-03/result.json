@@ -1,0 +1,42 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "ops/p8_browser_acceptance.py",
+    "--evidence",
+    "docs/validation/p8-p10/evidence/browser-03/render",
+    "--tests",
+    "p8-provenance.spec.ts"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T08:56:06.153939+00:00",
+  "duration_seconds": 27.89,
+  "exit_code": 1,
+  "source_sha": "46d65cd5bce416e5036221a95c353eb13b1b6ef4",
+  "tracked_diff_sha256": "add8bf12320e608bcbd52102fe10453323d7244a9ca85efd39625f0d2128aabc",
+  "dirty_paths": [
+    " M .gitignore",
+    " M frontend/components/workbench.tsx",
+    " M frontend/tests/live-e2e.spec.ts",
+    " M project/state.yaml",
+    " M src/tradecase/platform/api.py",
+    " M src/tradecase/platform/coordinator.py",
+    " M src/tradecase/platform/review_inputs.py",
+    " M src/tradecase/platform/runtime.py",
+    " M src/tradecase/platform/services.py",
+    " M src/tradecase/platform/source_intake.py",
+    " M tests/platform/test_deployment.py",
+    " M tests/platform/test_runtime.py",
+    "?? docs/validation/p8-p10/",
+    "?? docs/validation/post-p7/",
+    "?? frontend/tests/p8-provenance.spec.ts",
+    "?? ops/p8_browser_acceptance.py",
+    "?? ops/p8_ce_http_smoke.py",
+    "?? src/tradecase/platform/pilot.py",
+    "?? tests/platform/test_p8_p10.py",
+    "?? work/active/T-011-p8-p10/"
+  ],
+  "log_sha256": "f58920f8cf895fc7e13cc3d02fdc78233dec95d95023ce504f58ba1d387849bf",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

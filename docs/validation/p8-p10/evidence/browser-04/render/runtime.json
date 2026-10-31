@@ -1,0 +1,23 @@
+{
+  "mode": "E1 synthetic",
+  "db": "fresh SQLite via Alembic",
+  "binding": "127.0.0.1",
+  "health_latency_ms": [
+    3.388,
+    2.854,
+    5.114,
+    3.245,
+    2.542,
+    2.828,
+    3.365,
+    3.362,
+    3.279,
+    2.519
+  ],
+  "scope": "10 sequential loopback health probes; not an SLA",
+  "browser_exit_code": 0,
+  "paid_calls": 0,
+  "external_business_writes": 0,
+  "design_approval": "pending",
+  "secret_environment_inherited": false
+}

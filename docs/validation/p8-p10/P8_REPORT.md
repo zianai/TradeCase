@@ -1,0 +1,13 @@
+# P8 TradeCase implementation
+
+Tested engineering subject: `381fbc182429562046461dd518bcb4d8851ff77e`. Parent baseline: `46d65cd5bce416e5036221a95c353eb13b1b6ef4`. This worktree is independent of the original dirty checkout. Historical P7 files and the frozen HTTP 1.0.0 release were not edited.
+
+The pilot adapter adds authenticated `POST /api/pilot/cases` and read-only `GET /api/cases/{id}/pilot-export` over the existing Case/Evidence services. Intake binds input hash, origin locator, rights reference, classification and retention; repeated identical metadata resolves to one Case. Synthetic inputs remain explicitly synthetic and use no business-quality claim. Non-synthetic import and export require the existing private operator grant with exact tenant/dataset/input/rights scope, current retention and nonzero read capability. Existing real cases without pilot provenance fail closed on this new export. Ordinary business APIs retain their existing tenant authorization.
+
+The export freezes claim/quote/source/locator/snapshot hashes, captured time, source validity, conflicts, Case version and available AgentRun model/input/prompt/Skill hashes. Missing historical model provenance stays absent. Review status remains pending; actual time savings, critical-error rates and business evaluation remain null. Export is private-review-only and never authorizes external sending.
+
+Local E0/E1 checks include missing/expired/altered grants, same-name conflicts, expired procurement/unknown policy, untrusted instructions, and an inquiry without useful evidence. The local SDK tests use the actual Agents SDK with a scripted Model to exercise contracts and tool boundaries; these are synthetic engineering tests, not real model quality or business success. Exact nodes and exit-code records are in `acceptance-results.json`.
+
+P8-T014 and P8-T015 are BLOCKED_EXTERNAL: no authorized set of ten real inquiries, two independent blinded business reviewers or paired manual/assisted timing was supplied. No new E2/E3 run occurred and no prior P7 grant was reused.
+
+The export authorization is a distinct current subject: Case ID/version, original inquiry hash, all claims, links, sources and snapshot hashes form input_hash, with a separate current rights_hash. `GET /api/cases/{id}/pilot-export-scope` returns only IDs/version/hashes/classification for the operator to pin; it never creates a grant or returns titles/quotes. An intake grant cannot authorize the export. Any manually uploaded or non-synthetic/unknown source makes the whole export require an explicit current data-read grant; a synthetic Case label is never inherited by an added source. New sources, rights changes, expiry/revocation during reads and legacy unknown origin fail closed.

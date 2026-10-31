@@ -1,0 +1,12 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_validation_error_does_not_echo_untrusted_private_field __________
+tests/platform/test_p8_p10.py:119: in test_validation_error_does_not_echo_untrusted_private_field
+    assert sentinel not in response.text
+E   assert 'SYNTHETIC-S...-DO-NOT-ECHO' not in '{"detail":[...NOT-ECHO"}]}'
+E     
+E     'SYNTHETIC-SECRET-CANARY-DO-NOT-ECHO' is contained here:
+E       ,"input":"SYNTHETIC-SECRET-CANARY-DO-NOT-ECHO"}]}
+=========================== short test summary info ============================
+FAILED tests/platform/test_p8_p10.py::test_validation_error_does_not_echo_untrusted_private_field
+1 failed in 3.27s

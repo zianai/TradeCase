@@ -1,0 +1,28 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "ops/p8_browser_acceptance.py",
+    "--evidence",
+    "docs/validation/p8-p10/evidence/final-v2-browser/render",
+    "--tests",
+    "p8-provenance.spec.ts",
+    "live-e2e.spec.ts",
+    "business-language.spec.ts",
+    "draft-actions.spec.ts",
+    "ui.spec.ts",
+    "manual-review.spec.ts"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T09:07:39.196435+00:00",
+  "duration_seconds": 44.964,
+  "exit_code": 0,
+  "source_sha": "381fbc182429562046461dd518bcb4d8851ff77e",
+  "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dirty_paths": [
+    "?? docs/validation/p8-p10/"
+  ],
+  "log_sha256": "80277abd24647419cebd7ba8c739e6884898e6d495c7e7ca02a263c9c6cae8b6",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

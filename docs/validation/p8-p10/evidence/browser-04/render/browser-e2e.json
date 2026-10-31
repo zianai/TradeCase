@@ -1,0 +1,23 @@
+{
+  "case_id": "b64e3bf4b2d84f6c8fef060c5cf056cf",
+  "title": "Browser acceptance · synthetic 1793437084395",
+  "verified": [
+    "real local API and isolated database through Next proxy",
+    "explicit synthetic import",
+    "versioned priority and tag editing",
+    "research workflow",
+    "source snapshot",
+    "two risk checks",
+    "version-bound review",
+    "unsaved courtesy tone preview then versioned save",
+    "draft edit invalidated prior approval",
+    "reapproval",
+    "followup create and complete",
+    "JSON export",
+    "refresh recovery",
+    "390px no overflow"
+  ],
+  "page_errors": [],
+  "external_sends": 0,
+  "mode": "synthetic_offline"
+}

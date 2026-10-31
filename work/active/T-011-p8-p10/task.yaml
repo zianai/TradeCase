@@ -1,7 +1,7 @@
 schema_version: 3
 protocol_version: "3.0"
 id: T-011-p8-p10
-status: in_progress
+status: ready_for_review
 goal: Implement and verify authorized P8 through P10 local incremental engineering
 scope: [src/, packages/, apps/, frontend/, scripts/, tools/, ops/, tests/, contracts/, .github/, docs/validation/post-p7/, docs/validation/p8-p10/, project/, work/active/T-011-p8-p10/]
 non_goals: [Private business data access, Paid provider calls, Remote Git mutations, Production and external business actions]
@@ -11,9 +11,14 @@ risk_reasons: [cross-component, local-reversible]
 protected_paths: [docs/validation/p7/]
 context_refs: [docs/validation/post-p7/BASELINE.md]
 decision_refs: [docs/validation/post-p7/ADR.md]
-evidence_refs: [docs/validation/post-p7/P7_DELTA_REGISTER.json]
+evidence_refs: [docs/validation/post-p7/P7_DELTA_REGISTER.json, docs/validation/p8-p10/acceptance-results.json, docs/validation/p8-p10/TEST_SUMMARY.md, docs/validation/p8-p10/GO_NO_GO.json]
 updated: "2026-10-31"
 implementation_started: true
 external_effects: none
 conformance_status: pending
 baseline_decision_ref: docs/validation/post-p7/ADR.md
+implementation_render_subject: "sha256:cce951fbd8193edb29789576b2ee4ca5d66672d64514298a1d384030ee582669"
+implementation_render_ref: docs/validation/p8-p10/render-manifest.json
+x_visual_approval: "No human approved baseline available; independent agent readability review only"
+handoff_ref: work/active/T-011-p8-p10/handoff.md
+handoff_current: true

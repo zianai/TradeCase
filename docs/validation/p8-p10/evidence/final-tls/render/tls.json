@@ -1,0 +1,14 @@
+{
+  "mode": "E1 synthetic",
+  "binding": "127.0.0.1",
+  "verified_tls_health": 200,
+  "unauthorized_case_and_asset": 401,
+  "unknown_ca_rejected": true,
+  "security_headers": [
+    "nosniff",
+    "no-store",
+    "no-referrer"
+  ],
+  "paid_calls": 0,
+  "certificate_scope": "disposable one-day self-signed local CA; no production TLS claim"
+}

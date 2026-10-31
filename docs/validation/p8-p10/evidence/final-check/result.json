@@ -1,0 +1,19 @@
+{
+  "command": [
+    "make",
+    "check"
+  ],
+  "cwd": "/Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase",
+  "started_at": "2026-10-31T09:01:17.479459+00:00",
+  "duration_seconds": 190.781,
+  "exit_code": 0,
+  "source_sha": "4e08d69c363813abf38888ead0565f012a221994",
+  "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "dirty_paths": [
+    "?? docs/validation/p8-p10/"
+  ],
+  "log_sha256": "b997e391a6d9b897ddf35636663af58ca6454f1b82647f9b8a222e6ac247f323",
+  "scope": "local E0/E1; service credentials not inherited",
+  "public_network": "OS denied",
+  "new_paid_calls_authorized": false
+}

@@ -1,0 +1,42 @@
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 20261028_0001, Create tenant business records and durable execution leases
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0001 -> 20261028_0002, Tenant and permission-scoped read cache, no business scheduling state.
+INFO  [alembic.runtime.migration] Running upgrade 20261028_0002 -> 20261030_0003, Independent visual business domain; no old Case columns changed.
+
+Running 1 test using 1 worker
+
+  ✘  1 tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile (17.3s)
+
+
+  1) tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('有 1 处来源互相矛盾，需要人工判断。', { exact: true })
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('有 1 处来源互相矛盾，需要人工判断。', { exact: true }) with timeout 15000ms
+      - waiting for getByText('有 1 处来源互相矛盾，需要人工判断。', { exact: true })
+
+
+      37 |     await page.setViewportSize({ width, height });
+      38 |     await page.goto(`/cases/${c.id}`);
+    > 39 |     await expect(page.getByText("有 1 处来源互相矛盾，需要人工判断。", { exact: true })).toBeVisible();
+         |                                                                          ^
+      40 |     await page.locator(".claim .source-links button").first().click();
+      41 |     const modal = page.getByRole("dialog");
+      42 |     await expect(modal).toContainText("notice.txt:line:1");
+        at /Users/a/workspaces/AForeign Trade/validation-coordinator/worktrees/tradecase/frontend/tests/p8-provenance.spec.ts:39:74
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/p8-provenance-P9-T004-prov-ebb95-wable-on-desktop-and-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/p8-provenance-P9-T004-prov-ebb95-wable-on-desktop-and-mobile/error-context.md
+
+  1 failed
+    tests/p8-provenance.spec.ts:8:5 › P9-T004 provenance and conflicts remain reviewable on desktop and mobile 
