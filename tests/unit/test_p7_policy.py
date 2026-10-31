@@ -244,7 +244,8 @@ def test_source_url_list_is_bound_to_operator_grant(policy, monkeypatch):
     assert len(calls) == 1
 
 
-def test_authorized_synthetic_live_runner_accepts_original_synthetic_snapshot(policy, monkeypatch):
+@pytest.mark.parametrize("mutated_source", [False, True])
+def test_authorized_synthetic_live_runner_accepts_original_synthetic_snapshot(policy, monkeypatch, mutated_source):
     import asyncio
     from pathlib import Path
 
@@ -321,6 +322,8 @@ def test_authorized_synthetic_live_runner_accepts_original_synthetic_snapshot(po
                 "coverage": {"identity": 0, "company": 0, "intent": 0},
                 "stop_reason": "synthetic",
             }
+            if mutated_source:
+                body["sources"][0]["authority"] = "user_provided_unverified"
             msg = ResponseOutputMessage(
                 id="m",
                 type="message",
@@ -344,4 +347,7 @@ def test_authorized_synthetic_live_runner_accepts_original_synthetic_snapshot(po
     monkeypatch.setenv("TRADECASE_P7_ROOT", str(p.root))
     monkeypatch.setenv("TRADECASE_P7_APPROVED_GRANT_SHA256", p.approved_sha)
     result = asyncio.run(OpenAIAgentRunner(live_enabled=True, usd_per_token_upper_bound=rate).run(request))
-    assert result.error_class is None and result.synthetic and result.sources[0].is_synthetic and result.token_usage["total_tokens"] == 20
+    assert result.error_class == ("ValueError" if mutated_source else None)
+    assert result.synthetic and result.sources[0].is_synthetic and result.token_usage["total_tokens"] == 20
+    assert result.cost_is_estimate is True
+    assert result.sources[0].authority == source.authority
