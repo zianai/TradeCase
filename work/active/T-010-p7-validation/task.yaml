@@ -11,6 +11,6 @@ risk_reasons: [cross-component]
 protected_paths: []
 context_refs: [docs/validation/p7/ADR.md]
 decision_refs: [docs/validation/p7/ADR.md]
-evidence_refs: [docs/validation/p7/evidence-index.json, docs/validation/p7/go_no_go.json, docs/validation/p7/RV-07.md, docs/validation/p7/LIVE_SMOKE.json]
+evidence_refs: [docs/validation/p7/evidence-index.json, docs/validation/p7/go_no_go.json, docs/validation/p7/RV-07.md, docs/validation/p7/LIVE_SMOKE.json, docs/validation/p7/CURRENT_STATUS.md]
 updated: "2026-10-31"
 implementation_started: true
